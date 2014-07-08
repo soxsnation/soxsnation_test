@@ -1,0 +1,740 @@
+'use strict';
+
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Table
+
+alia.defineLayout({
+    name: 'table',
+}, function() {
+
+    var styles = {
+        'bordered': 'table-bordered',
+        'striped': 'table-striped',
+        'hover': 'table-hover',
+        'condensed': 'table-condensed'
+    };
+
+    return function(options) {
+
+        // Determine class
+        var cls = [];
+        var style;
+        if (typeof options.style === 'string') {
+            style = options.style.split(',')
+        } else if (Array.isArray(options.style)) {
+            style = options.style;
+        }
+        if (style) {
+            for (var i = 0; i < style.length; i++) {
+                if (styles.hasOwnProperty(style[i])) {
+                    cls.push(styles[style[i]])
+                }
+            }
+        }
+
+        // Append table element
+        return this.append('<table alia-context class="table :class"></table>', {
+            class: cls.join(' ')
+        });
+    };
+}());
+
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Table Row
+
+alia.defineLayout({
+    name: 'tableRow',
+}, function() {
+
+    var styles = {
+        'active': 'active',
+        'success': 'success',
+        'warning': 'warning',
+        'danger': 'danger',
+        'info': 'info'
+    };
+
+    return function(options) {
+
+        var elm;
+        if (options.type === 'heading') {
+            elm = this.append('<thead><tr alia-context></tr></thead>');
+        } else {
+            elm = this.append('<tr alia-context></tr>');
+        }
+
+        elm.defineProperty('style', options.style);
+
+        if (typeof options.selectable === 'boolean' && options.selectable) {
+            elm.css('cursor', 'pointer');
+        }
+
+        elm.style.onValue(function(value) {
+            if (typeof value === 'string' && styles.hasOwnProperty(value)) {
+                elm.attr('class', styles[value]);
+            } else {
+                elm.removeAttr('class');
+            }
+        });
+
+        return elm;
+    };
+}());
+
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Table Cell
+
+alia.defineLayout({
+    name: 'tableCell',
+}, function() {
+
+    var styles = {};
+
+    return function(options) {
+
+        // Determine type
+        var type = (options.type === 'heading') ? 'h' : 'd';
+
+        // Append table element
+        return this.append('<t:type alia-context></t:type>', {
+            type: type
+        });
+    };
+}());
+
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Table Control
+
+alia.defineControl({
+    name: 'table'
+}, function() {
+    return function(options) {
+        // Apply Defaults
+        alia.applyDefaults(options, {
+            paging: false,
+            deferred: true
+        });
+
+        // Append div element (for encapsulating widget)
+        var div = this.append('<div alia-context></div>');
+
+        // Determine headings
+        var headings = [];
+        var headingCount = 0;
+        for (var i = 0; i < options.fields.length; ++i) {
+            if (typeof options.fields[i].heading === 'string') {
+                headings.push(options.fields[i].heading);
+                headingCount++;
+            } else {
+                headings.push('');
+            }
+        }
+        if (headingCount === 0) {
+            headings = null;
+        }
+
+        // Initialize filter
+        var filter = div.defineProperty('filter', options.filter);
+
+        // Initialize data
+        var data = alia.initState(options.data);
+        div.defineProperty('data', data);
+        var rowCount = null;
+        data.onValue(function(rows) {
+            if (rows.length !== rowCount) {
+                rowCount = rows.length;
+                render();
+            }
+        });
+
+        // item, headings, options, index
+
+        function doCellContents(ctx, options, fields, data, row, col) {
+            var value = data.map('.' + row).map(fields[col].map);
+            if (typeof fields[col].map === 'function') {
+                value = data.map('.' + row).map(fields[col].map);
+            } else {
+                value = alia.project(data, '.' + row + fields[col].map);
+            }
+            var editableType = fields[col].editableType;
+
+            if (typeof editableType === 'string') {
+                switch (editableType) {
+                    case 'number':
+                    case 'text':
+                        alia.doEditableTextbox(ctx, {
+                            type: editableType,
+                            text: value,
+                            deferred: options.deferred
+                        }).onSubmit(function(event, data, resolve, reject) {
+                            var obj = {
+                                data: data,
+                                col: col,
+                                orig: item
+                            }
+                            options.onSubmit(event, obj, resolve, reject);
+                        });
+                        break;
+                    case 'boolean':
+                        alia.doEditableBoolean(ctx, {
+                            type: 'y/n',
+                            value: value,
+                            deferred: options.deferred
+                        }).onSubmit(function(event, data, resolve, reject) {
+                            var obj = {
+                                data: data,
+                                col: col,
+                                orig: item
+                            }
+                            options.onSubmit(event, obj, resolve, reject);
+                        });
+                        break;
+                    default:
+                        throw new Error('Cannot render editable type ' + field.editableType);
+                        break;
+                }
+            } else {
+                alia.doText(ctx, {
+                    text: value
+                });
+            }
+        }
+
+        function reposition() {
+            if ($('.fixed-table-wrapper').length === 0) return;
+
+            var w = $('.fixed-table-wrapper').width();
+            var offset = $('.fixed-table-wrapper').offset();
+            $('.fixedHeader').width(w);
+            $('.fixedHeader').css('top', offset.top);
+            $('.fixedHeader').css('left', offset.left);
+            $('.dataTable').width('100%');
+        }
+
+        function render() {
+            div.empty();
+            alia.layoutTable(div, options, function(table) {
+                if (headings) {
+                    alia.layoutTableRow(table, {
+                        type: 'heading'
+                    }, function(ctx) {
+                        for (var i = 0; i < headings.length; ++i) {
+                            alia.layoutTableCell(ctx, {
+                                type: 'heading'
+                            }, function(ctx) {
+                                alia.doText(ctx, {
+                                    text: headings[i]
+                                });
+                            })
+                        }
+                    });
+                }
+<<<<<<< local
+                console.log('table: data');
+                console.log(data);
+                if (data === null) return;
+                for (var i = 0; i < data.length; ++i) {
+                    var item = data[i];
+=======
+                var rows = data.get();
+                if (rows === null || rows === undefined) return;
+
+                for (var i = 0; i < rows.length; ++i) {
+                    var item = rows[i];
+>>>>>>> other
+                    alia.layoutTableRow(table, {
+                        selectable: options.selectable
+                    }, function(ctx) {
+                        // Check whether row is clickable
+                        if (options.clickable && typeof options.clickable.rowClick === 'function') {
+                            // Find columns that are clickable
+                            if (options.clickable && typeof options.clickable.columnClick === 'object' && !Array.isArray(options.clickable.columnClick)) {
+                                var clickable_cols = {}
+                                for (var j = 0; j < headings.length; ++j) {
+                                    if (options.clickable.columnClick.hasOwnProperty(headings[j])) {
+                                        clickable_cols[j] = options.clickable.columnClick[headings[j]].action;
+                                    }
+                                }
+                                ctx.onClick(item, clickable_cols, options.clickable.rowClick);
+                            } else {
+                                ctx.onClick(item, options.clickable.rowClick);
+                            }
+                        }
+                        // TODO: still need to check whether column is clickable and rows are not
+
+                        for (var j = 0; j < options.fields.length; ++j) {
+                            alia.layoutTableCell(ctx, {}, function(ctx) {
+                                // Check whether column is clickable
+                                if (options.clickable && typeof options.clickable.columnClick === 'object' && !Array.isArray(options.clickable.columnClick)) {
+                                    if (options.clickable.columnClick.hasOwnProperty(headings[j]) && options.clickable.columnClick[headings[j]].link === true) {
+                                        alia.doLink(ctx, {
+                                            text: options.view(item, headings[j])
+                                        });
+                                    } else {
+                                        doCellContents(ctx, options, options.fields, data, i, j);
+                                    }
+                                } else {
+                                    doCellContents(ctx, options, options.fields, data, i, j);
+                                }
+                            });
+                        }
+                    });
+                }
+
+                var t = $('#' + table.ids['']).DataTable({
+                    paging: options.paging,
+                    sDom: '<tlip>'
+                });
+
+
+
+                if (options.hasOwnProperty('fixedHeader') && options.fixedHeader === true) {
+
+                    div.class('add', 'fixed-table-wrapper');
+                    new $.fn.dataTable.FixedHeader(t);
+                    reposition();
+                    $('body').click(function() {
+                        if ($('#' + table.ids['']).length === 0) {
+                            $('.fixedHeader').remove();
+                        }
+                    });
+                }
+
+                if (alia.isObservable(filter)) {
+                    filter.onValue(function(value) {
+                        var search = t.search(value);
+                        if (typeof search.draw === 'function')
+                            t.search(value).draw();
+                    });
+                }
+            });
+
+            if (options.hasOwnProperty('fixedHeader') && options.fixedHeader === true) {
+                $(window).resize(function() {
+                    reposition();
+                });
+
+                $('.fixedHeader').click(function() {
+                    reposition();
+                });
+            }
+        }
+
+<<<<<<< local
+        // Bind to changes
+        if (alia.isObservable(options.headings)) {
+            options.headings.onValue(function(value) {
+                headings = value;
+                render();
+            });
+        } else {
+            headings = options.headings;
+            render();
+        }
+        if (alia.isObservable(options.data)) {
+            options.data.onValue(function(value) {
+                console.log('table onValue');
+                data = value;
+                render();
+            });
+        } else {
+            data = options.data;
+            render();
+        }
+        if (alia.isObservable(options.filter)) {
+            filter = options.filter
+        }
+=======
+
+        // if (alia.isObservable(options.data)) {
+        //     options.data.onValue(function(value) {
+        //         data = value;
+        //         render();
+        //     });
+        // } else {
+        //     data = options.data;
+        //     render();
+        // }
+
+
+        // Perform initial render
+        render();
+>>>>>>> other
+
+        div.render = function () {
+            data = options.data.get();
+            render();
+        }
+
+        // Return component
+        return div;
+    }
+}())
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Table Control
+
+alia.defineControl({
+    name: 'propertyTable'
+}, function() {
+    return function(options) {
+
+        alia.applyDefaults(options, {
+            deferred: true
+        });
+
+        var div = this.append('<div alia-context></div>');
+
+        function doNormalTextDisplay(ctx, field) {
+            var elm;
+            if (typeof field.map === 'function') {
+                elm = alia.doText(ctx, {
+                    text: field.map(data[field.name])
+                });
+            } else {
+                elm = alia.doText(ctx, {
+                    text: data[field.name]
+                });
+            }
+            elm.class('add', 'normal');
+            return elm.width() + 13;
+        }
+
+        function doEditableTextDisplay(ctx, field) {
+            var elm;
+            switch (field.editableType) {
+                case 'number':
+                case 'text':
+                    elm = alia.doEditableTextbox(ctx, {
+                        type: field.editableType,
+                        text: data[field.name],
+                        deferred: options.deferred
+                    }).onSubmit(field.onSubmit);
+                    break;
+                case 'boolean':
+                    elm = alia.doEditableBoolean(ctx, {
+                        type: 'y/n',
+                        value: data[field.name],
+                        map: field.map,
+                        deferred: options.deferred
+                    }).onSubmit(field.onSubmit);
+                    break;
+                default:
+                    throw new Error('Cannot render editable type ' + field.editableType);
+                    break;
+            }
+            return elm.width();
+        }
+
+        // Render
+        function render() {
+            div.empty();
+
+            var min = 0;
+
+            alia.layoutDiv(div, {
+                classes: 'property-list'
+            }, function(container) {
+                if (typeof data !== 'object') {
+                    return;
+                }
+
+                container.onResize(function(width) {
+                    if (width < 2 * (min + 150)) {
+                        container.class('add', 'skinny');
+                    } else {
+                        container.class('remove', 'skinny');
+                    }
+                });
+
+                alia.layoutUnorderedList(container, {}, function(list) {
+                    for (var i = 0; i < fields.length; ++i) {
+                        var field = fields[i];
+
+                        alia.layoutListItem(list, {}, function(item) {
+                            item.class('add', 'item');
+                            if (i % 2 == 1) item.class('add', 'item-right');
+
+                            alia.layoutDiv(item, {
+                                classes: 'wrap'
+                            }, function(wrap) {
+                                alia.doText(wrap, {
+                                    text: field.label + ':'
+                                }).class('add', 'name').class('add', 'text-muted');
+
+                                // Check whether field is editable
+                                if (typeof field.editableType === 'string' && typeof field.onSubmit === 'function') {
+                                    min = Math.max(doEditableTextDisplay(wrap, field), min);
+                                } else {
+                                    min = Math.max(doNormalTextDisplay(wrap, field), min);
+                                }
+                            });
+                        });
+                    }
+                });
+            });
+
+            // alia.layoutTable(div, {}, function(ctx) {
+            //     if (typeof data !== 'object') {
+            //         return;
+            //     }
+            //     for (var i = 0; i < fields.length; ++i) {
+            //         var field = fields[i];
+            //         alia.layoutTableRow(ctx, {
+
+            //         }, function(ctx) {
+            //             alia.layoutTableCell(ctx, {
+
+            //             }, function(ctx) {
+            //                 alia.doText(ctx, {
+            //                     text: field.label + ':'
+            //                 });
+            //             });
+            //             alia.layoutTableCell(ctx, {
+
+            //             }, function(ctx) {
+            //                 if (typeof field.map === 'function') {
+            //                     alia.doText(ctx, {
+            //                         text: field.map(data[field.name])
+            //                     });
+            //                 } else {
+            //                     alia.doText(ctx, {
+            //                         text: data[field.name]
+            //                     });
+            //                 }
+            //             });
+            //         })
+            //     }
+            // });
+        }
+
+        // Fields
+        var fields = null;
+        if (alia.isObservable(options.fields)) {
+            options.fields.onValue(function(value) {
+                fields = fields;
+                render();
+            });
+        } else {
+            fields = options.fields;
+            render();
+        }
+
+        // Data
+        var data = null;
+        if (alia.isObservable(options.data)) {
+            options.data.onValue(function(value) {
+                data = value;
+                render();
+            });
+        } else {
+            data = options.data;
+            render();
+        }
+
+        // Return component
+        return div;
+    }
+}())
+
+/**
+ * Options:
+ * selectionBehavior: [items, data, columns] TODO: implement this
+ */
+/*
+alia.defineControl({
+    name: 'table'
+}, function() {
+
+    var selectionBehaviors = {
+        'items': 'items',
+        'data': 'data',
+        'columns': 'columns'
+    };
+
+    return function(options) {
+        // Append div element (for encapsulating widget)
+        var div = this.append('<div alia-context></div>');
+
+        var currentItem = div.defineProperty('currentItem', null);
+        var currentRow = div.defineProperty('currentRow', null);
+
+        var headings = null;
+        var data = null;
+
+        // Define render function
+        function render() {
+            if (data === null) return;
+            div.empty();
+            alia.layoutTable(div, options, function(ctx) {
+                if (headings) {
+                    alia.layoutTableRow(ctx, {
+                        type: 'heading'
+                    }, function(ctx) {
+                        for (var i = 0; i < headings.length; ++i) {
+                            alia.layoutTableCell(ctx, {
+                                type: 'heading'
+                            }, function(ctx) {
+                                alia.doText(ctx, {
+                                    text: alia.getString(headings[i])
+                                });
+                            });
+                        }
+                    });
+                }
+                for (var i = 0; i < data.length; ++i) {
+                    var item = data[i];
+                    alia.layoutTableRow(ctx, {
+                        selectable: options.selectable,
+                        style: function(index) {
+                            return currentRow.map(function(value) {
+                                return (index === value) ? 'info' : null;
+                            });
+                        }(i)
+                    }, function(ctx) {
+                        if (options.selectable) {
+                            ctx.onClick(function(index) {
+                                return function() {
+                                    currentRow.set(index);
+                                    currentItem.set(data[index]);
+                                }
+                            }(i));
+                        }
+                        if (Array.isArray(item)) {
+                            for (var j = 0; j < item.length; ++j) {
+                                alia.layoutTableCell(ctx, {}, function (ctx) {
+                                    if (typeof item[j] === 'string') {
+                                        alia.doText(ctx, {
+                                            text: item[j]
+                                        });
+                                    } else if (typeof item[j] === 'object' && !Array.isArray(item[j])) {
+                                        alia.doText(ctx, item[j]);
+                                    }
+                                })
+                            }
+                        } else if (typeof options.view === 'function' && headings) {
+                            for (var j = 0; j < headings.length; ++j) {
+                                alia.layoutTableCell(ctx, {}, function(ctx) {
+                                    alia.doText(ctx, {
+                                        text: options.view(item, headings[j])
+                                    });
+                                });
+                            }
+                        } else {
+                            throw new Error('Cannot view data without a specified view function');
+                        }
+                    });
+                }
+            });
+        }
+
+        // Bind to changes
+        if (alia.isProperty(options.headings)) {
+            options.headings.onValue(function(value) {
+                headings = value;
+                render();
+            });
+        } else {
+            headings = options.headings;
+        }
+        if (alia.isProperty(options.data)) {
+            options.data.onValue(function(value) {
+                data = value;
+                render();
+            });
+        } else {
+            data = options.data;
+            render();
+        }
+
+        div.clearSelection = function() {
+            currentRow.set(null);
+            currentItem.set(null);
+        }
+
+        // Return component
+        return div;
+    }
+}());
+*/
+// TODO: This functionality should be integrated into the doTable widget
+// // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// // Table Widget
+
+// function setTableData(ctx, header, table, fcn) {
+//     var header_data, table_data;
+//     if (header instanceof Bacon.Property) header_data = header.get();
+//     else header_data = header;
+//     if (table instanceof Bacon.Property) table_data = table.get();
+//     else table_data = table;
+//     alia.layoutTable(ctx, {
+//         style: 'hover,condensed,bordered'
+//     }, function(ctx) {
+//         alia.layoutTableRow(ctx, {
+//             type: 'heading'
+//         }, function(ctx) {
+//             for (var i = 0; i < header_data.length; i++) {
+//                 alia.layoutTableCell(ctx, {
+//                     type: 'heading'
+//                 }, function(ctx) {
+//                     alia.layoutFormatString(ctx, {
+//                         text: header_data[i].name,
+//                         args: []
+//                     }, function(ctx) {});
+//                 });
+//             }
+//         });
+//         for (var i = 0; i < table_data.length; i++) {
+//             alia.layoutTableRow(ctx, {}, function(ctx) {
+//                 ctx.attach(table_data[i]).onClick(fcn);
+//                 for (var j = 0; j < header_data.length; j++) {
+//                     alia.layoutTableCell(ctx, {}, function(ctx) {
+//                         alia.layoutFormatString(ctx, {
+//                             text: table_data[i].value[header_data[j].key],
+//                             args: []
+//                         }, function(ctx) {});
+//                     });
+//                 }
+//             })
+//         }
+//     });
+// }
+
+// function TableWidget(ctx, header_data, table_data, fcn) {
+//     this._callback = fcn;
+//     alia.layoutDiv(ctx, {}, function(ctx) {
+//         for (var prop in ctx) {
+//             if (ctx.hasOwnProperty(prop)) {
+//                 this[prop] = ctx[prop];
+//             }
+//         }
+
+//         // Find jquery element
+//         this._$ = $('#' + this._id);
+
+//         this._header_data = header_data;
+//         this._table_data = table_data;
+//         setTableData(ctx, header_data, table_data);
+//     }.bind(this));
+//     for (var i = 1; i < arguments.length; i++) {
+//         if (arguments[i] instanceof Bacon.Property) {
+//             arguments[i].onValue(function(value) {
+//                 this.update();
+//             }.bind(this));
+//         }
+//     }
+// }
+// inherits(TableWidget, Element);
+
+// TableWidget.prototype.update = function() {
+//     this._$.empty();
+//     setTableData(this, this._header_data, this._table_data, this._callback);
+// }
+
+// alia.doTable = function(ctx, header_data, table_data, fcn) {
+//     return new TableWidget(ctx, header_data, table_data, fcn);
+// }
