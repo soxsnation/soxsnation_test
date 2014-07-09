@@ -34,7 +34,7 @@ var connect = function() {
 			}
 		}
 	}
-	mongoose.connect('mongodb://192.168.1.215/soxsnation', options)
+	mongoose.connect('mongodb://server.soxsnation.com/soxsnation', options)
 }
 connect()
 
