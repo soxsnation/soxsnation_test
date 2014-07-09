@@ -34,7 +34,8 @@ var connect = function() {
 			}
 		}
 	}
-	mongoose.connect('mongodb://server.soxsnation.com/soxsnation', options)
+
+	mongoose.connect('mongodb://server.soxsnation.com/soxsnation', options);
 }
 connect()
 
@@ -63,6 +64,6 @@ app.use('/', function(req, res, next) {
 	res.sendfile(fpath.join(__dirname, 'public', 'index.html'));
 });
 
-app.listen(3080, function() {
-	console.log('Server Ready [port 3080]')
+app.listen(3085, function() {
+	console.log('Server Ready [port 3085]')
 });

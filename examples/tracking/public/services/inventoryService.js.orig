@@ -1,0 +1,126 @@
+'use strict';
+
+alia.defineService({
+	name: 'inv',
+	dependencies: ['$request']
+}, function($request) {
+
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// Private functions
+
+	function resolveId(id) {
+		var _id = alia.isObservable(id) ? id : Bacon.constant(id);
+		var _loc = session.locate('astroid', 'dev');
+		return _loc.combine(_id, function(loc, id) {
+			return {
+				loc: loc,
+				id: id
+			};
+		});
+	};
+
+	function parseBody(res) {
+		return res.body;
+	}
+
+	function parseMeta(res) {
+		return {
+			value: res.body,
+			meta: {
+				id: res.xhr.getResponseHeader('astroid-id'),
+				revision: res.xhr.getResponseHeader('astroid-revision')
+			}
+		};
+	};
+
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// Service functions
+
+	var inv = {};
+	// var server = 'http://axon.dotdecimal.com/api/';
+	//var server = 'http://axontest.dotdecimal.com/api/';
+	var server = 'http://localhost:56902/api/';
+
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// Item functions
+
+
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// getItems
+	// partType of inventory gets all items otherwise only the specified item group is pulled
+	//
+	// status of order will only pull items that need to be ordered
+	// status of raw will return raw materials
+	// status of prepped will return prepped materials
+	inv.getItems = function(partType, status) {
+		console.log('inv.getItems()');
+		return $request.get(server + 'Item', {}, {
+			partType: partType,
+			status: status
+		}).then(parseBody);
+	};
+
+	inv.getItemsByVendor = function(vendorCode) {
+		console.log('inv.getItemsByVendor()');
+		return $request.get(server + 'Item', {}, {
+			vendor: vendorCode
+		}).then(parseBody);
+	};
+
+	inv.getOpenPurchaseOrders = function() {
+		console.log('inv.getOpenPurchaseOrders()');
+		return $request.get(server + 'PurchaseOrder', {}, {}).then(parseBody);
+	};
+
+	inv.getPurchaseOrderById = function(docNum) {
+		console.log('inv.getPurchaseOrderById()');
+		return $request.get(server + 'PurchaseOrder/:id', {
+			id: docNum
+		}, {}).then(parseBody);
+	};
+
+
+	inv.insertGoodsReceiptPO = function(goodsReceiptPO) {
+		console.log('insertGoodsReceiptPO');
+		console.log(goodsReceiptPO);
+		return $request.post(server + 'GoodsReceiptPO', goodsReceiptPO);
+	};
+
+	inv.insertPurchaseOrder = function(purchaseOrder) {
+		console.log('inv.insertPurchaseOrder');
+		return $request.post(server + 'PurchaseOrder', purchaseOrder);
+	}
+
+	inv.getWorkOrders = function() {
+		console.log('inv.getWorkOrders');
+		return $request.get(server + 'WorkOrder', {}, {}).then(parseBody);
+	}
+
+	inv.getWorkOrder = function(docNum) {
+		console.log('getWorkOrder');
+		return $request.get(server + 'WorkOrder/:id', {
+			id: docNum
+		}, {}).then(parseBody);
+	}
+
+	inv.insertWorkOrder = function(workOrder) {
+		console.log('inv.insertWorkOrder');
+		return $request.post(server + 'WorkOrder', workOrder);
+	}
+
+
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// BP functions
+
+
+	inv.getVendors = function() {
+		console.log('inv.getVendors()');
+		return $request.get(server + 'BusinessPartner', {}, {
+			type: 'vendor'
+		}).then(parseBody);
+	};
+
+
+	return inv;
+
+});
