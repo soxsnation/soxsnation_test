@@ -34,7 +34,7 @@ var connect = function() {
 			}
 		}
 	}
-	mongoose.connect('mongodb://192.168.1.215/soxsnation', options)
+	mongoose.connect('mongodb://54.201.189.1/soxsnation', options)
 }
 connect()
 
@@ -63,6 +63,6 @@ app.use('/', function(req, res, next) {
 	res.sendfile(fpath.join(__dirname, 'public', 'index.html'));
 });
 
-app.listen(3080, function() {
-	console.log('Server Ready [port 3080]')
+app.listen(3085, function() {
+	console.log('Server Ready [port 3085]')
 });
