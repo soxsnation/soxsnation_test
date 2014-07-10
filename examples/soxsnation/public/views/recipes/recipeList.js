@@ -38,31 +38,37 @@
     }
 
     function doTable(ctx, view, recipes) {
-        var table = alia.doReadTable(ctx, {
-            style: 'hover',
-            header: ['Recipe Name', 'Description', 'Made By', 'Added Date'],
-            dataType: 'object',
-            data: recipes,
+        var table = alia.doTable(ctx, {
+            style: 'hover,striped',
+            selectable: true,
+            clickable: true,
             sortable: true,
             paging: {
                 'default': 10,
-                options: [10, 50]
+                options: [10, 25, 50]
             },
-            rowClick: function(event, data) {
-                view.push('recipe', {
-                    id: data._id
-                });
-            },
+            spinner: true,
+            data: recipes,
             fields: [{
-                name: 'name'
+                heading: 'Recipe Name',
+                property: '.name'
             }, {
-                name: 'description'
-            },{
-                name: 'user'
+                heading: 'Description',
+                property: '.description'
             }, {
-                name: 'createdAt'
+                heading: 'Made By',
+                property: '.user'
+            }, {
+                heading: 'Added Date',
+                property: '.createdAt'
             }]
+        }).onRowClick(function(event, item) {
+            view.push('recipe', {
+                id: item._id
+            });
         });
+
+
     }
 
     alia.defineView({
@@ -80,7 +86,7 @@
         var recipes = alia.state(sox.getRecipes());
         // var recipes = alia.state([]);
 
-        recipes.onResolve(function(data){
+        recipes.onResolve(function(data) {
             console.log(data)
         })
 

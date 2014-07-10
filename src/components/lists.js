@@ -1,141 +1,142 @@
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// Lists
+(function($, alia, _) {
+    "use strict";
 
-alia.defineLayout({
-	name: 'unorderedList'
-}, function(options) {
-	return this.append('<ul alia-context></ul>');
-});
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Lists
 
-alia.defineLayout({
-	name: 'orderedList'
-}, function(options) {
-	return this.append('<ol alia-context></ol>');
-});
+    alia.defineLayout({
+        name: 'unorderedList'
+    }, function() {
+        return this.append('<ul alia-context></ul>');
+    });
 
-alia.defineLayout({
-	name: 'listItem'
-}, function(options) {
-	return this.append('<li alia-context></li>');
-});
+    alia.defineLayout({
+        name: 'orderedList'
+    }, function() {
+        return this.append('<ol alia-context></ol>');
+    });
 
-alia.defineLayout({
-	name: 'descriptionList'
-}, function() {
+    alia.defineLayout({
+        name: 'listItem'
+    }, function() {
+        return this.append('<li alia-context></li>');
+    });
 
-	var styles = {
-		'default': null,
-		'horizontal': 'dl-horizontal'
-	};
+    alia.defineLayout({
+        name: 'descriptionList'
+    }, function() {
 
-	return function(options) {
+        var styles = {
+            'default': null,
+            'horizontal': 'dl-horizontal'
+        };
 
-		// Set default options
-		alia.applyDefaults(options, {
-			visible: true,
-			style: 'default'
-		}, {
-			style: styles
-		});
+        return function(options) {
 
-		// Determine class
-		return this.append('<dl alia-context class=":class"></dl>', {
-			class: _.compact([
-				styles[options.style]
-			]).join('')
-		});
-	}
-}());
+            // Set default options
+            alia.applyDefaults(options, {
+                visible: true,
+                style: 'default'
+            }, {
+                style: styles
+            });
 
-alia.defineLayout({
-	name: 'descriptionTerm'
-}, function(options) {
-	return this.append('<dt alia-context></dt>');
-});
+            // Determine class
+            return this.append('<dl alia-context class=":class"></dl>', {
+                class: _.compact([
+                    styles[options.style]
+                ]).join('')
+            });
+        };
+    }());
 
-alia.defineLayout({
-	name: 'descriptionItem'
-}, function(options) {
-	return this.append('<dd alia-context></dd>');
-});
+    alia.defineLayout({
+        name: 'descriptionTerm'
+    }, function() {
+        return this.append('<dt alia-context></dt>');
+    });
 
-alia.defineControl({
-	name: 'descriptionList'
-}, function(options) {
+    alia.defineLayout({
+        name: 'descriptionItem'
+    }, function() {
+        return this.append('<dd alia-context></dd>');
+    });
 
-	var elm = alia.layoutDescriptionList(this, options, function(ctx) {
-		for (var i = 0; i < options.items.length; ++i) {
-			alia.layoutDescriptionTerm(ctx, {}, function(ctx) {
-				alia.doText(ctx, {
-					text: options.items[i].term
-				});
-			});
-			alia.layoutDescriptionItem(ctx, {}, function(ctx) {
-				alia.doText(ctx, {
-					text: options.items[i].description
-				});
-			});
-		}
-	});
+    alia.defineControl({
+        name: 'descriptionList'
+    }, function() {
+        function makeTerm(ctx, items, i) {
+            return function() {
+                alia.doText(ctx, {
+                    text: items[i].term
+                });
+            };
+        }
 
-	return elm;
+        function makeItem(ctx, items, i) {
+            return function() {
+                alia.doText(ctx, {
+                    text: items[i].description
+                });
+            };
+        }
 
-});
+        return function(options) {
 
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// List group
+            var elm = alia.layoutDescriptionList(this, options, function(ctx) {
+                for (var i = 0; i < options.items.length; ++i) {
+                    alia.layoutDescriptionTerm(ctx, {}, makeTerm(ctx, options.items, i));
+                    alia.layoutDescriptionItem(ctx, {}, makeItem(ctx, options.items, i));
+                }
+            });
 
-alia.defineLayout({
-	name: 'listGroup'
-}, function() {
+            return elm;
+        };
+    }());
 
-	return function(options) {
-		return this.append('<ul alia-context class="list-group"></ul>');
-	};
-}());
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // List group
 
-alia.defineLayout({
-	name: 'listGroupItem'
-}, function() {
+    alia.defineLayout({
+        name: 'listGroup'
+    }, function() {
+        return function() {
+            return this.append('<ul alia-context class="list-group"></ul>');
+        };
+    }());
 
-	var styles = {
-		default: null,
-		success: 'list-group-item-success',
-		info: 'list-group-item-info',
-		warning: 'list-group-item-warning',
-		danger: 'list-group-item-danger',
-	};
+    alia.defineLayout({
+        name: 'listGroupItem'
+    }, function() {
 
-	return function(options) {
+        var styles = {
+            default: null,
+            success: 'list-group-item-success',
+            info: 'list-group-item-info',
+            warning: 'list-group-item-warning',
+            danger: 'list-group-item-danger',
+        };
 
-		// Set default options
-		alia.applyDefaults(options, {
-			visible: true,
-			style: 'default'
-		}, {
-			style: styles
-		});
+        return function(options) {
 
-		var elm = this.append('<ul alia-context class=":class"></ul>', {
-			class: _.compact([
-				'list-group-item',
-				styles[options.style]
-			]).join('')
-		});
+            // Set default options
+            alia.applyDefaults(options, {
+                visible: true,
+                style: 'default'
+            }, {
+                style: styles
+            });
 
-		elm.bindVisible(options.visible);
+            var elm = this.append('<ul alia-context class=":class"></ul>', {
+                class: _.compact([
+                    'list-group-item',
+                    styles[options.style]
+                ]).join('')
+            });
 
-		return elm;
-	};
-}());
+            elm.bindVisible(options.visible);
 
-alia.defineControl({
-	name: 'listGroup'
-}, function() {
-
-
-
-	return function(options) {
-
-	};
-}());
+            return elm;
+        };
+    }());
+}($, alia, _));

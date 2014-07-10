@@ -52,7 +52,7 @@ alia.defineService({
 	// Service functions
 
 	var sox = {};
-	var server = 'http://localhost:3080/api/';
+	var server = 'http://localhost:3085/api/';
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Recipe functions
@@ -84,7 +84,23 @@ alia.defineService({
 	sox.updateRecipe = function(recipe) {
 		console.log('sox.updateRecipe');
 		return $request.post(server + 'recipes/update', recipe).then(parseBody);
-	}
+	};
+
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// Steps functions
+
+	sox.addStep = function(id, step) {
+		console.log('sox.addStep');
+		return $request.post(server + 'recipe/step/add/:id', { id: id }, {}, step).then(parseBody);
+	};
+
+		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// Ingredient functions
+
+	sox.addIngredient = function(id, ingredient) {
+		console.log('sox.addIngredient');
+		return $request.post(server + 'recipe/ingredient/add/:id', { id: id }, {}, ingredient).then(parseBody);
+	};
 
 
 	return sox;

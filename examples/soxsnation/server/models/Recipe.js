@@ -106,10 +106,12 @@ RecipeSchema.path('description').required(true, 'Recipe description cannot be bl
 RecipeSchema.methods = {
 
 	addIngredient: function(ingredient, cb) {
+console.log('addIngredient');
+console.log(ingredient);
 
 		this.ingredients.push({
 			name: ingredient.name,
-			user: ingredient.quantity
+			quantity: ingredient.quantity
 		});
 
 		this.save(cb)

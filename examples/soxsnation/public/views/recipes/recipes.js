@@ -11,9 +11,9 @@
 alia.defineMultiview({
 	path: '/recipes',
 	dependencies: [
-		'$location', '$route','sox'
+		'$location', 'sox'
 	],
-}, function(multiview, $location, $route, sox) {
+}, function(multiview, $location, sox) {
 	multiview.navigation(function(ctx) {
 		alia.layoutMultiviewNavigationLinkset(ctx, {}, function(ctx) {
 			alia.doMultiviewNavigationHeader(ctx, {
@@ -26,20 +26,7 @@ alia.defineMultiview({
 			alia.doMultiviewNavigationItem(ctx, {
 				text: 'Add Recipe',
 				view: 'addRecipe'
-			})
-			// alia.doMultiviewNavigationDivider(ctx, {});
-
-			// alia.doMultiviewNavigationHeader(ctx, {
-			//     text: 'Work Orders'
-			// });
-			// alia.doMultiviewNavigationItem(ctx, {
-			//     text: 'Past Work Orders',
-			//     view: 'past'
-			// });
-			// alia.doMultiviewNavigationItem(ctx, {
-			//     text: 'My Work Orders',
-			//     view: 'mine'
-			// });
+			});
 		});
 	}).include({
 		name: 'recipeList',

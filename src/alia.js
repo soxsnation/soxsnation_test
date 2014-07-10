@@ -1,6 +1,5 @@
-;
-(function($, Bacon, alia, undefined) {
-
+(function(alia, undefined) {
+    "use strict";
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Private variables
@@ -8,27 +7,10 @@
     var providers = {};
     var services = {};
 
-    var header = null;
-    var footer = null;
-
     var views = {};
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Private functions
-
-
-
-    // alia.toProperty = function(value) {
-    //     if (value instanceof Bacon.Property) {
-    //         return value;
-    //     } else if (value instanceof Promise) {
-    //         return Bacon.fromPromise(value).toProperty();
-    //     } else {
-    //         return Bacon.constant(value);
-    //     }
-    // }
-
-
 
     alia.applyDefaults = function(obj, defaults, options) {
         for (var p in defaults) {
@@ -37,23 +19,9 @@
                 obj[p] = defaults[p];
             }
         }
-    }
+    };
 
     alia.defaults = alia.applyDefaults;
-
-
-    // alia.project = function(subject, property) {
-    //     if (alia.isObserver(subject)) {
-    //         var lens = new Bacon.Lens(property);
-    //         return subject.lens(lens);
-    //     } else if (alia.isObservable(subject)) {
-    //         return subject.map(property);
-    //     } else if (subject.hasOwnProperty(property)) {
-    //         throw new Error("Unable to project non-observable subjects");
-    //     }
-    // };
-
-
 
     function replace(string, params) {
         for (var p in params) {
@@ -72,7 +40,6 @@
 
     alia.version = '0.1.0';
 
-
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Errors
 
@@ -82,7 +49,6 @@
         }
         return new Error(message);
     };
-
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Events
@@ -95,7 +61,7 @@
 
     Event.prototype.isDefaultPrevented = function() {
         return this.defaultPrevented;
-    }
+    };
 
     Event.prototype.preventDefault = function() {
         this.defaultPrevented = true;
@@ -109,9 +75,10 @@
             h = handlers[type] = [];
         }
         h.push(callback);
-    }
+    };
 
     alia.broadcast = function(type, params) {
+        var i;
         var event = new Event(type);
         var h = handlers[type];
         if (h) {
@@ -119,11 +86,11 @@
             if (arguments.length === 2) {
                 args = args.concat(params);
             } else if (arguments.length > 2) {
-                for (var i = 1; i < arguments.length; ++i) {
+                for (i = 1; i < arguments.length; ++i) {
                     args.push(arguments[i]);
                 }
             }
-            for (var i = 0; i < h.length; ++i) {
+            for (i = 0; i < h.length; ++i) {
                 event.result = h[i].apply(null, args);
                 if (event.isDefaultPrevented()) {
                     break;
@@ -131,21 +98,19 @@
             }
         }
         return event;
-    }
-
+    };
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Url rewriting
 
     alia.href = function(url) {
-        var $location = providers['$location'];
+        var $location = providers.$location;
         if (url.charAt(0) === '#') {
             return $location.path().substr(1) + url;
         } else {
             return url;
         }
-
-    }
+    };
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Unique identification
@@ -179,7 +144,7 @@
         }
         uid.unshift('0');
         return uid.join('');
-    };
+    }
 
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -201,24 +166,27 @@
 
     alia.currentContextType = function() {
         return currentContextType;
-    }
+    };
 
     alia.stageMultiviewContext = function() {
         viewport.empty();
         currentContextType = 'multiview';
-        return currentContext = Multiview.create(viewport);
+        currentContext = Multiview.create(viewport);
+        return currentContext;
     };
 
     alia.stageViewContext = function() {
         viewport.empty();
         currentContextType = 'view';
-        return currentContext = viewport;
+        currentContext = viewport;
+        return currentContext;
     };
 
     alia.stageWorkspaceContext = function() {
         viewport.empty();
         currentContextType = 'workspace';
-        return currentContext = Workspace.create(viewport);
+        currentContext = Workspace.create(viewport);
+        return currentContext;
     };
 
 
@@ -279,8 +247,6 @@
 
         var component = new Component();
 
-        var self = this;
-
         function rewrite() {
             var j = $(this);
             var key = j.attr('alia-context');
@@ -301,37 +267,19 @@
 
     function empty() {
         for (var key in this.ids) {
-            $('#' + this.ids[key]).empty();
+            if (this.ids.hasOwnProperty(key)) {
+                $('#' + this.ids[key]).empty();
+            }
         }
     }
 
     function onClick(callback) {
-        if (arguments.length === 1) {
-            $('#' + this.ids['']).click(this, callback);
-        } else if (arguments.length === 2) {
-            var data = arguments[0];
-            var callback = arguments[1];
-            $('#' + this.ids['']).click(data, function(event) {
-                callback(event.data);
-            });
-        } else if (arguments.length === 3) {
-            var data = arguments[0];
-            var clickable_cols = arguments[1];
-            var callback = arguments[2];
-            $('#' + this.ids['']).click(data, function(event) {
-                var index = parseInt($(this).children('td:has(#' + event.target.id + ')').index());
-                if (index >= 0 && clickable_cols.hasOwnProperty(index)) {
-                    clickable_cols[index](event.data);
-                } else {
-                    callback(event.data);
-                }
-            });
-        }
+        $('#' + this.ids['']).click(this, callback);
         return this;
     }
 
     function onClickScrollTo(name) {
-        $('#' + this.ids['']).click(this, function(event) {
+        $('#' + this.ids['']).click(this, function() {
             $('html, body').animate({
                 scrollTop: $('[name="' + name + '"]').offset().top - parseInt($('body').css('padding-top'))
             }, 300);
@@ -421,8 +369,8 @@
         var self = this;
         $('#' + button.id()).click(function() {
             $('#' + self.id()).animate(properties, opts);
-        })
-    }
+        });
+    };
 
     Component.prototype.bindCheckboxField = function(key, property) {
         if (arguments.length === 1) {
@@ -432,7 +380,7 @@
 
         // Define property and ensure we can set
         var j = $('#' + this.id(key));
-        var property = this.defineProperty('checked', property);
+        var p = this.defineProperty('checked', property);
         if (!property.isSettable()) {
             throw new Error("Attempted to bind non-settable observer to checkbox field");
         }
@@ -440,7 +388,7 @@
         var current;
 
         // One-way binding from property to checkbox        
-        property.onResolve(function(value) {
+        p.onResolve(function(value) {
             if (current !== value) {
                 current = value;
                 j.prop("checked", value);
@@ -448,7 +396,7 @@
         });
 
         // One-way binding from checkbox to property
-        j.on('change', function(event) {
+        j.on('change', function() {
             var value = j.prop("checked") || false;
             if (current !== value) {
                 current = value;
@@ -466,7 +414,7 @@
             if (value) j.slideUp(200);
             else j.slideDown(200);
         });
-    }
+    };
 
     Component.prototype.bindDisabled = function(key, property) {
         if (arguments.length === 1) {
@@ -497,58 +445,6 @@
         return this;
     };
 
-    // Component.prototype.bindText = function(key, name, property, type) {
-    //     switch (arguments.length) {
-    //         case 1:
-    //             type = 'text';
-    //             property = key;
-    //             name = 'text';
-    //             key = '';
-    //         case 2:
-    //             type = name;
-    //             property = key;
-    //             name = 'text';
-    //             key = '';
-    //             break;
-    //         case 3:
-    //             type = property;
-    //             property = name;
-    //             name = key;
-    //             key = '';
-    //             break;
-    //     }
-
-    //     // Create element binding
-    //     var j = $('#' + this.id(key));
-    //     var parser = this.defaultParser(type);
-    //     var get = function() {
-    //         var value;
-    //         try {
-    //             value = parser(j.val());
-    //         } catch (e) {
-    //             value = null;
-    //         }
-    //         return value;
-    //     };
-    //     var autofillPoller = function() {
-    //         return Bacon.interval(50).take(10).map(get).filter(alia.isNotEmptyString).take(1);
-    //     };
-    //     var keyinput = j.asEventStream('keyup input');
-    //     var clipboard = j.asEventStream("cut paste").delay(1);
-    //     var events = keyinput.merge(clipboard).merge(autofillPoller());
-    //     var model = Bacon.Binding({
-    //         get: get,
-    //         events: events,
-    //         set: function(value) {
-    //             return j.val(value);
-    //         }
-    //     });
-
-    //     // Bind model to property
-    //     model.bind(alia.state(property));
-    //     this.defineProperty(name, model);
-    // };
-
     Component.prototype.bindDate = function(key, property) {
         switch (arguments.length) {
             case 1:
@@ -557,15 +453,15 @@
         }
 
         var j = $('#' + this.id(key));
-        var get = function () {
+        var get = function() {
             return new Date(j.val());
-        }
+        };
 
         var p = this.defineProperty('date', property);
 
         var current;
 
-        j.change(function(event) {
+        j.change(function() {
             var value = get();
             if (current !== value) {
                 current = value;
@@ -579,8 +475,7 @@
                 j.datepicker('setDate', current);
             }
         });
-
-    }
+    };
 
     Component.prototype.bindText = function(key, name, property, type) {
         switch (arguments.length) {
@@ -589,6 +484,7 @@
                 property = key;
                 name = 'text';
                 key = '';
+                break;
             case 2:
                 type = name;
                 property = key;
@@ -621,7 +517,7 @@
 
         var current;
 
-        j.on('input', function(event) {
+        j.on('input', function() {
             var value = get();
             if (current !== value) {
                 current = value;
@@ -635,28 +531,9 @@
                 j.val(current);
             }
         });
-        p.onUnresolve(function (value) {
+        p.onUnresolve(function() {
             j.val('');
         });
-
-
-        // var autofillPoller = function() {
-        //     return Bacon.interval(50).take(10).map(get).filter(alia.isNotEmptyString).take(1);
-        // };
-        // var keyinput = j.asEventStream('keyup input');
-        // var clipboard = j.asEventStream("cut paste").delay(1);
-        // var events = keyinput.merge(clipboard).merge(autofillPoller());
-        // var model = Bacon.Binding({
-        //     get: get,
-        //     events: events,
-        //     set: function(value) {
-        //         return j.val(value);
-        //     }
-        // });
-
-        // Bind model to property
-        // model.bind(alia.state(property));
-        
     };
 
     Component.prototype.bindSelectValue = function(key, property) {
@@ -672,7 +549,7 @@
 
         var current;
 
-        j.on('change', function(event) {
+        j.on('change', function() {
             var value = j.val();
             if (current !== value) {
                 current = value;
@@ -686,6 +563,39 @@
                 j.val(current);
             }
         });
+    };
+
+    Component.prototype.bindOption = function(option, cb) {
+        var j = $('#' + this.id(''));
+
+        var value = option.then(function(value) {
+            if (typeof value === 'string' || typeof value === 'number') {
+                return value;
+            } else {
+                return value.value;
+            }
+        });
+
+        var text = option.then(function(value) {
+            if (typeof value === 'string' || typeof value === 'number') {
+                return value;
+            } else {
+                return value.text;
+            }
+        });
+
+        var t = this.defineProperty('text', text);
+        var v = this.defineProperty('value', value);
+
+        v.onResolve(function(value) {
+            this.attr('value', value);
+            if (typeof cb === 'function') cb();
+        }.bind(this));
+
+        t.onResolve(function(text) {
+            this.html(text);
+            if (typeof cb === 'function') cb();
+        }.bind(this));
     }
 
     Component.prototype.bindVisible = function(key, property) {
@@ -717,8 +627,6 @@
         }
     };
 
-
-
     Component.prototype.append = append;
     Component.prototype.empty = empty;
 
@@ -726,56 +634,22 @@
         return this.kattr('', name, value);
     };
 
-
-
-    // // TODO: this function should be removed
-    // Component.prototype.bindEnabled = function(key, property) {
-    //     if (arguments.length === 1) {
-    //         property = key;
-    //         key = '';
-    //     }
-    //     var initValue;
-    //     if (property instanceof Bacon.Property) {
-    //         initValue = property.get();
-    //         property.onResolve(function(value) {
-    //             var j = $('#' + this.id(key));
-    //             (value) ? j.removeAttr('disabled') : j.attr('disabled', 'disabled');
-    //         }.bind(this));
-    //     } else if (typeof property === 'boolean') {
-    //         initValue = property;
-    //     }
-    //     var j = $('#' + this.id(key));
-    //     (initValue) ? j.removeAttr('disabled') : j.attr('disabled', 'disabled');
-    //     return this;
-    // }
-
-    // Component.prototype.bindAttr = function(name, value) {
-    //     //     $('#' + this.id).attr(attributeName, value);
-    // };
-
-
-
     Component.prototype.class = function(type, value) {
         return this.kclass('', type, value);
-    }
+    };
 
     Component.prototype.doClick = function() {
         $('#' + this.ids['']).click();
-    }
+    };
 
     Component.prototype.css = function(type, value) {
         return this.kcss('', type, value);
-    }
+    };
 
     Component.prototype.defineProperty = function(name, value) {
         var property;
         if (alia.isAccessor(value)) {
             property = value;
-        // } else if (alia.isObservable(value)) {
-        //     property = new Bacon.Model();
-        //     property.addSource(value);
-        } else if (value instanceof Promise) {
-            property = alia.promise(value);
         } else {
             property = alia.state(value);
         }
@@ -812,6 +686,7 @@
             return self;
         };
         this[emit] = function(params) {
+            var i;
             var event = new Event(type);
             var h = handlers[type];
             if (h) {
@@ -819,11 +694,11 @@
                 if (arguments.length === 1) {
                     args = args.concat(params);
                 } else if (arguments.length > 1) {
-                    for (var i = 0; i < arguments.length; ++i) {
+                    for (i = 0; i < arguments.length; ++i) {
                         args.push(arguments[i]);
                     }
                 }
-                for (var i = 0; i < h.length; ++i) {
+                for (i = 0; i < h.length; ++i) {
                     event.result = h[i].apply(null, args);
                     if (event.isDefaultPrevented()) {
                         break;
@@ -834,15 +709,10 @@
         };
     };
 
-    Component.prototype.doFocus = function (key) {
+    Component.prototype.doFocus = function(key) {
         if (typeof key === 'undefined') key = '';
         $('#' + this.id(key)).focus();
-    }
-
-    // Component.prototype.hide = function(key) {
-    //     $('#' + this.id(key)).hide();
-    //     this.visible.set(false);
-    // }
+    };
 
     Component.prototype.html = function(value) {
         return this.khtml('', value);
@@ -854,7 +724,7 @@
         } else {
             return this.ids[key];
         }
-    }
+    };
 
     Component.prototype.kattr = function(key, name, value) {
         if (value) {
@@ -862,7 +732,7 @@
         } else {
             return $('#' + this.ids[key]).attr(name);
         }
-    }
+    };
 
     Component.prototype.kclass = function(key, type, value) {
         if (type === 'add') {
@@ -873,7 +743,7 @@
             $('#' + this.ids[key]).toggleClass(value);
         }
         return this;
-    }
+    };
 
     Component.prototype.kcss = function(key, type, value) {
         if (value) {
@@ -882,7 +752,7 @@
         } else {
             return $('#' + this.ids[key]).css(type);
         }
-    }
+    };
 
     Component.prototype.khtml = function(key, value) {
         if (value) {
@@ -906,38 +776,33 @@
 
     Component.prototype.removeAttr = function(name) {
         $('#' + this.id()).removeAttr(name);
-    }
+    };
 
     Component.prototype.slideDownOnClick = function(button, callback) {
         var self = this;
-        $('#' + button.id()).click(function(event) {
+        $('#' + button.id()).click(function() {
             if (callback) {
                 $('#' + self.id()).slideDown(callback);
             } else {
                 $('#' + self.id()).slideDown();
             }
         });
-    }
+    };
 
     Component.prototype.slideUpOnClick = function(button, callback) {
         var self = this;
-        $('#' + button.id()).click(function(event) {
+        $('#' + button.id()).click(function() {
             if (callback) {
                 $('#' + self.id()).slideUp(callback);
             } else {
                 $('#' + self.id()).slideUp();
             }
         });
-    }
+    };
 
     Component.prototype.width = function() {
         return $('#' + this.ids['']).width();
-    }
-
-    // Component.prototype.show = function(key) {
-    //     $('#' + this.id(key)).show();
-    //     this.visible.set(true);
-    // }
+    };
 
     // TODO: Remove this
     // Component.prototype.tab = function(state) {
@@ -969,7 +834,7 @@
      * @param {object} Options.
      */
     function Multiview(ctx) {
-        var $localStorage = providers['$localStorage'];
+        var $localStorage = providers.$localStorage;
         var leftCollapsed = $localStorage.get('leftCollapsed');
         var rightCollapsed = $localStorage.get('rightCollapsed');
         if (leftCollapsed === null) {
@@ -985,16 +850,16 @@
         this.body = ctx.append('<div alia-context class="multiview-body sticky-navigation sticky-menu"></div>');
 
         // Navigation
-        this.nav = this.body.append('<div alia-context class="multiview-navigation"></div>').onHover(function(event) {
+        this.nav = this.body.append('<div alia-context class="multiview-navigation"></div>').onHover(function() {
             this.body.class('add', 'peek-navigation');
-        }.bind(this), function(event) {
+        }.bind(this), function() {
             this.body.class('remove', 'peek-navigation');
         }.bind(this));
 
         // Menu
-        this.menu = this.body.append('<div alia-context class="multiview-menu"></div>').onHover(function(event) {
+        this.menu = this.body.append('<div alia-context class="multiview-menu"></div>').onHover(function() {
             this.body.class('add', 'peek-menu');
-        }.bind(this), function(event) {
+        }.bind(this), function() {
             this.body.class('remove', 'peek-menu');
         }.bind(this));
 
@@ -1003,10 +868,10 @@
             this.body.class('toggle', 'sticky-navigation');
             this.body.class('toggle', 'collapse-navigation');
             leftCollapsed = !leftCollapsed;
-            $localStorage.set('leftCollapsed',leftCollapsed);
-        }.bind(this)).onHover(function(event) {
+            $localStorage.set('leftCollapsed', leftCollapsed);
+        }.bind(this)).onHover(function() {
             this.body.class('add', 'peek-navigation');
-        }.bind(this), function(event) {
+        }.bind(this), function() {
             this.body.class('remove', 'peek-navigation');
         }.bind(this));
 
@@ -1014,14 +879,14 @@
         this.viewport = this.body.append('<div alia-context class="multiview-viewport"></div>');
 
         // Right Toggler
-        this.body.append('<div alia-context class="multiview-menu-draggable"></div>').onClick(function(event) {
+        this.body.append('<div alia-context class="multiview-menu-draggable"></div>').onClick(function() {
             this.body.class('toggle', 'sticky-menu');
             this.body.class('toggle', 'collapse-menu');
             rightCollapsed = !rightCollapsed;
-            $localStorage.set('rightCollapsed',rightCollapsed);
-        }.bind(this)).onHover(function(event) {
+            $localStorage.set('rightCollapsed', rightCollapsed);
+        }.bind(this)).onHover(function() {
             this.body.class('add', 'peek-menu');
-        }.bind(this), function(event) {
+        }.bind(this), function() {
             this.body.class('remove', 'peek-menu');
         }.bind(this));
 
@@ -1047,10 +912,10 @@
         this.views = {};
         this.default = null;
         this.active = null;
-    };
+    }
 
     Multiview.prototype.begin = function(name, args) {
-        var $location = providers['$location'];
+        var $location = providers.$location;
         if (!this.active && !$location.search().hasOwnProperty('view')) {
             this.push(name, args);
         }
@@ -1145,13 +1010,12 @@
             });
         }
 
-        var initializing = this.active === null;
         var aview = {
             signature: signature
         };
 
         this.active = aview;
-        var $location = providers['$location'];
+        var $location = providers.$location;
         $location.search(this.active.signature);
 
         // Return view
@@ -1258,7 +1122,7 @@
             $('#' + task.body.id()).show();
             $('#' + task.id).show();
         }
-    }
+    };
 
     /** 
      * @name Workspace#begin
@@ -1284,7 +1148,7 @@
         $('#' + viewport.ids['']).addClass('workspace');
 
         // Create root context for workspace
-        var ctx = viewport.append([
+        ctx = viewport.append([
             '<div alia-context class="container-fluid">',
             '  <div alia-context="body" class="row"></div>',
             '</div>'
@@ -1353,7 +1217,7 @@
         return this;
     };
 
-    Workspace.prototype.include = function(opts) {
+    Workspace.prototype.include = function() {
         return this;
     };
 
@@ -1448,7 +1312,7 @@
         // Update visible task and location bar
         this.active = task;
         if (parent) {
-            var $location = providers['$location'];
+            var $location = providers.$location;
             $location.search(signature);
         }
 
@@ -1548,9 +1412,9 @@
      * @description
      * Expands a visible task, making the body visible.
      */
-    Task.prototype.expand = function(task) {
+    Task.prototype.expand = function() {
         $('#' + this.body.id()).slideDown(200);
-    }
+    };
 
     /** 
      * @name Task#hasSubtask
@@ -1665,7 +1529,7 @@
             // // ------------------------------------------------------------------
             var component = ctor.call(parent, options);
             return component;
-        }
+        };
     };
 
     alia.defineHeader = function(opts, ctor) {
@@ -1701,10 +1565,10 @@
             // // ------------------------------------------------------------------
             // ctor.call(context, parent, options);
             // return callback(context);
-        }
+        };
     };
 
-    alia.defineModule = function(name) {
+    alia.defineModule = function() {
 
     };
 
@@ -1752,7 +1616,7 @@
 
     alia.defineService = function(options, constructor) {
         console.log("--- DEFINE SERVICE:", options.name);
-        var service = services[options.name] = {
+        services[options.name] = {
             dependencies: options.dependencies,
             constructor: constructor,
             accessor: alia.resolve(options.dependencies).then(function(deps) {
@@ -1786,7 +1650,7 @@
 
 
     alia.defineView = function(opts, ctor) {
-        var $route = providers['$route'];
+        var $route = providers.$route;
         if (!$route) {
             throw new Error("Missing route provider");
         }
@@ -1802,7 +1666,7 @@
 
 
 
-    alia.defineWidget = function(callback) {
+    alia.defineWidget = function() {
 
     };
 
@@ -1814,42 +1678,22 @@
         }, ctor);
     };
 
-
-
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // Public state
-
-    // alia.initState = function(initValue) {
-    //     if (alia.isObserver(initValue)) {
-    //         return initValue;
-    //     } else if (alia.isObservable(initValue)) {
-    //         var model = new Bacon.Model();
-    //         model.addSource(initValue);
-    //         return model;
-    //     } else {
-    //         return new Bacon.Model(initValue);
-    //     }
-    // };
-
-    // alia.prop = function(obj, prop) {
-    //     if (obj instanceof Bacon.Property) {
-    //         var prop_lens = new Bacon.Lens(prop);
-    //         return obj.lens(prop_lens);
-    //     } else if (obj.hasOwnProperty(prop)) {
-    //         return new Bacon.Model(obj[prop]);
-    //     } else {
-    //         return new Bacon.Model(null);
-    //     }
-    // };
-
-
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Utility functions
 
+    /**
+     * @name alia.int
+     * @module ng
+     * @function
+     *
+     * @description Converts the specified string to an integer.
+     * @param {string} string String to be converted to an integer.
+     * @returns {integer} an integer.
+     */
+
     alia.int = function(str) {
         return parseInt(str, 10);
-    }
-
+    };
 
     /**
      * @name alia.lowercase
@@ -1862,10 +1706,8 @@
      */
     alia.lowercase = function(string) {
         return alia.isString(string) ? string.toLowerCase() : string;
-    }
+    };
 
-    alia.noop = function() {}
+    alia.noop = function() {};
 
-
-
-}($, Bacon, window.alia = window.alia || {}));
+}(window.alia = window.alia || {}));

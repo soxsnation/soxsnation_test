@@ -1,55 +1,73 @@
-'use strict';
+/**
+ * @typedef {Object} AlertOptions
+ * @property {string} [type] - The type of the alert to display ('success', 'info', 'warning', 'danger')
+ * @property {number} [autohide] - The number of milliseconds to show the alert
+ * @property {(Accessor|string)} - The text content of the alert message
+ */
 
+/**
+ * Presents an alert to the user
+ * @name doAlert
+ * @function
+ * @arg {Context} ctx Any context object
+ * @arg {AlertOptions} options The options for the alert
+ * @return {Object} The alert control
+ */
 
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// Alert
+(function($, alia) {
+    "use strict";
 
-alia.defineControl({
-    name: 'alert'
-}, function () {
-    var alertTypes = {
-        'success': 'alert-success',
-        'info': 'alert-info',
-        'warning': 'alert-warning',
-        'danger': 'alert-danger'
-    };
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Alert
 
-    return function (options) {
+    alia.defineControl({
+        name: 'alert'
+    }, function() {
+        var alertTypes = {
+            'success': 'alert-success',
+            'info': 'alert-info',
+            'warning': 'alert-warning',
+            'danger': 'alert-danger'
+        };
 
-        // Determine class
-        var cls = ['alia-alert'];
-        if (typeof options.type === 'string' && alertTypes.hasOwnProperty(options.type)) {
-            cls.push(alertTypes[options.type]);
-        }
+        return function(options) {
 
-        var elm = alia.alerts.append([
-            '<div class=":class" alia-context>',
-            '  <span alia-context="content"></span>',
-            '  <button alia-context="close" type="button" class="close">&times;</button>',
-            '</div>'].join(''), {
+            // Determine class
+            var cls = ['alia-alert'];
+            if (typeof options.type === 'string' && alertTypes.hasOwnProperty(options.type)) {
+                cls.push(alertTypes[options.type]);
+            }
+
+            var elm = alia.alerts.append([
+                '<div class=":class" alia-context>',
+                '  <span alia-context="content"></span>',
+                '  <button alia-context="close" type="button" class="close">&times;</button>',
+                '</div>'
+            ].join(''), {
                 class: cls.join(' ')
             });
 
-        if (typeof options.autohide === 'number') {
-            setTimeout(function() {
-                $('#' + elm.id()).fadeOut(500, function() {
-                    $(this).remove();
+            if (typeof options.autohide === 'number') {
+                setTimeout(function() {
+                    $('#' + elm.id()).fadeOut(500, function() {
+                        $(this).remove();
+                    });
+                }.bind(this), options.autohide);
+            }
+
+            if (alia.isAccessor(options.text)) {
+                options.text.onResolve(function(value) {
+                    elm.khtml('content', value);
                 });
-            }.bind(this), options.autohide);
-        }
+            } else {
+                elm.khtml('content', options.text);
+            }
 
-        if (alia.isAccessor(options.text)) {
-            options.text.onResolve(function (value) {
-                elm.khtml('content', value);
+            $('#' + elm.id('close')).click(function() {
+                $('#' + elm.id()).remove();
             });
-        } else {
-            elm.khtml('content', options.text);
-        }
 
-        $('#' + elm.id('close')).click(function (e) {
-            $('#' + elm.id()).remove();
-        });
-
-        return elm;
-    }
-}());
+            return elm;
+        };
+    }());
+}($, alia));
