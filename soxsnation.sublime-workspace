@@ -1,0 +1,611 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"stat",
+				"statusFilter"
+			],
+			[
+				"work",
+				"workOrder"
+			],
+			[
+				"cre",
+				"credentials"
+			],
+			[
+				"current",
+				"currentUser"
+			],
+			[
+				"doTex",
+				"doTextbox"
+			],
+			[
+				"re",
+				"refresh"
+			],
+			[
+				"count",
+				"countedItems"
+			],
+			[
+				"temp",
+				"tempItem"
+			],
+			[
+				"ver",
+				"verifiedCounts"
+			],
+			[
+				"all",
+				"allitems"
+			],
+			[
+				"data",
+				"dataArr"
+			],
+			[
+				"po",
+				"po"
+			],
+			[
+				"it",
+				"items"
+			],
+			[
+				"pur",
+				"purchaseOrder"
+			],
+			[
+				"num",
+				"numItems"
+			],
+			[
+				"erros",
+				"errors"
+			],
+			[
+				"err",
+				"errorString"
+			],
+			[
+				"old",
+				"oldData"
+			],
+			[
+				"new",
+				"newItem"
+			],
+			[
+				"coun",
+				"countedItems"
+			],
+			[
+				"dis",
+				"displayDate"
+			],
+			[
+				"cou",
+				"countDate"
+			],
+			[
+				"item",
+				"itemCode"
+			],
+			[
+				"Count",
+				"Count"
+			],
+			[
+				"user",
+				"userActive"
+			],
+			[
+				"st",
+				"statusCode"
+			],
+			[
+				"cut",
+				"cutdownList"
+			],
+			[
+				"cu",
+				"cutdownList"
+			],
+			[
+				"sc",
+				"scrapWO"
+			],
+			[
+				"do",
+				"doAddScrapModal"
+			],
+			[
+				"wo",
+				"workOrderNumber"
+			],
+			[
+				"dat",
+				"dateSelected"
+			],
+			[
+				"has",
+				"hasItems"
+			],
+			[
+				"add",
+				"addButtonVisible"
+			],
+			[
+				"date",
+				"datepicker"
+			],
+			[
+				"on",
+				"onError"
+			],
+			[
+				"ven",
+				"vendorIndex"
+			],
+			[
+				"sele",
+				"selected"
+			],
+			[
+				"ve",
+				"vendors"
+			],
+			[
+				"vendor",
+				"vendorList"
+			],
+			[
+				"ar",
+				"arg1"
+			],
+			[
+				"sor",
+				"sortOrders"
+			],
+			[
+				"protp",
+				"property"
+			],
+			[
+				"un",
+				"unfilteredRows"
+			],
+			[
+				"is",
+				"isObservable"
+			],
+			[
+				"filt",
+				"filterFcn"
+			],
+			[
+				"ord",
+				"orderAmt"
+			],
+			[
+				"ite",
+				"items"
+			],
+			[
+				"se",
+				"selected"
+			],
+			[
+				"op",
+				"openPOs"
+			],
+			[
+				"g",
+				"getItems"
+			],
+			[
+				"in",
+				"initState"
+			],
+			[
+				"selec",
+				"select"
+			],
+			[
+				"inv",
+				"invData"
+			],
+			[
+				"res",
+				"resolve"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"wid",
+				"width"
+			],
+			[
+				"us",
+				"userRoles"
+			],
+			[
+				"par",
+				"partTypeList"
+			],
+			[
+				"mat",
+				"materialList"
+			],
+			[
+				"co",
+				"cookie"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 380.0,
+		"selected_items":
+		[
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"	",
+				"Package Control: Install Package"
+			],
+			[
+				"lint",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 416.0
+	},
+	"console":
+	{
+		"height": 304.0,
+		"history":
+		[
+			"node server.js",
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/views/inventory/inventoryCounts.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/views/login.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/services/inventoryService.js.orig",
+		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/views/workorders/workorders.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/views/workorders/openWorkOrders.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/views/workorders/workOrder.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/views/workorders/cutdowns.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/views/login.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/services/session.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/services/inventoryService.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/views/inventory/inventoryOrder.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/views/inventory/inventoryInStock.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/views/inventory/addPurchaseOrder.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/views/inventory/inventory.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/views/logout.js",
+		"/C/Users/abrown/Documents/Software/Alia/src/providers/request.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/views/inventory/purchaseOrder.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/views/inventory/inventoryReceive.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/views/inventory/inventoryCounts.js.orig",
+		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/views/inventory/inventoryReceive.js.orig",
+		"/C/Users/abrown/AppData/Local/dotdecimal/Axon/Data/InventoryCounts/20140708/Count_Andrew.json",
+		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/views/forbidden.js",
+		"/C/Users/abrown/AppData/Local/dotdecimal/Axon/Data/InventoryCounts/20140703/Count_Andrew.json",
+		"/C/Users/abrown/Documents/Software/Alia/src/components/forms.js",
+		"/C/Users/abrown/Documents/Software/Alia/src/components/navbar.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/navigation/nav.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/views/home.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/views/logout.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/services/session.js",
+		"/C/Users/abrown/Documents/Software/Alia/src/providers/location.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/views/workorders/workordersCurrent.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/views/workorders/workordersActive.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/views/iam/users.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/views/demo.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/index.html",
+		"/C/Users/abrown/Documents/Software/Alia/src/components/inputs.js",
+		"/C/Users/abrown/Documents/Software/Alia/src/components/modals.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/views/workorders.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/views/iam/groups.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/views/iam/organization.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/views/iam/organizations.js",
+		"/C/Users/abrown/Documents/Software/Alia/src/components/alerts.js",
+		"/C/Users/abrown/AppData/Roaming/Sublime Text 3/Packages/JsFormat/Default (Windows).sublime-keymap",
+		"/C/Users/abrown/AppData/Roaming/Sublime Text 3/Packages/User/JsFormat.sublime-settings",
+		"/C/Users/abrown/Documents/Software/Alia/package.json",
+		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/services/iam.service.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/server.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/views/workorders.js.orig",
+		"/C/Users/abrown/Documents/Software/Alia/src/components/tables.js",
+		"/C/Users/abrown/Documents/Software/Alia/src/components/lists.js",
+		"/C/Users/abrown/Documents/Software/Alia/src/accessors.js",
+		"/C/Users/abrown/Documents/Software/Alia/src/alia.js",
+		"/C/Users/abrown/Documents/Software/Alia/src/components/editables.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/index.html",
+		"/C/Users/abrown/AppData/Roaming/Sublime Text 3/Packages/User/SublimeLinter.sublime-settings",
+		"/C/Users/abrown/AppData/Roaming/Sublime Text 3/Packages/SublimeLinter/SublimeLinter.sublime-settings",
+		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/views/iam/user.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/views/iam/dashboard.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/views/iam.js",
+		"/C/Users/abrown/Documents/Software/Alia/src/utils.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/css/inventory.css",
+		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/views/appdetail.js",
+		"/C/Users/abrown/Documents/Software/Alia/src/components/buttons.js",
+		"/C/Users/abrown/Documents/Software/Alia/src/components/divs.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/views/marketplace.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/views/workspace_demo.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/views/neato.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/views/framework.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/alia.astroid.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/navigation/nav.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/views/inventoryOrder.js",
+		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/views/inventory.js",
+		"/C/Users/abrown/Documents/Software/Alia/src/components/dropdown.js",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/public/directivies/templates/tableCell.html",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/public/css/decimalInventory.css",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/public/js/inventoryService.js",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/public/controllers/orderController.js",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/modules/orderRoutes.js",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/public/directivies/templates/navbar.html",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/public/js/services.js",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/public/js/app.js",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/public/css/bootstrap.min.css",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/server/routes/routes.js",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/public/index.html",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/public/directivies/navbar.js",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/public/controllers/controllers.js",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/public/partials/home.html",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/public/js/routeConfig.js",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/public/js/directives.js",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/server/controllers/auth.js",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/server/controllers/user.js",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/server.js",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/public/partials/inventory/inventory.html",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/public/partials/workorders/developmentalWorkorders.js",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/public/js/routes.js",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/server/models/User.js",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/public/partials/inventory/instock.html",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/public/partials/workorders/workorder.html",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/node_modules/passport/lib/passport/index.js",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/package.json",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/package_v1.json",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/modules/settings.js",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/Version 1/server.js",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/server/routes/apiRoutes.js",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/public/controllers/instockController.js",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/server/routes/routeAuth.js",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/server/controllers/inventory.js",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/server_v1.js",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/Version 1/modules/settings.js",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/package_v2.json",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/modules/database.js",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/public/directivies/templates/itemTable.html",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/public/directivies/itemTable.js",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/public/partials/inventory/orderInventory.html",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/public/partials/inventory/receiveInventory.html",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/public/controllers/receiveController.js",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/node_modules/body-parser/index.js",
+		"/C/Users/abrown/Documents/Software/SAP/Axon/Tracking/node_modules/cookie-parser/index.js",
+		"/C/Users/abrown/AppData/Roaming/Sublime Text 3/Packages/Default/Default (Windows).sublime-keymap",
+		"/C/Users/abrown/AppData/Roaming/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/C/Users/abrown/Dropbox/COde/Tracking/public/directivies/itemTable.js",
+		"/C/Users/abrown/AppData/Roaming/Sublime Text 3/Packages/User/Default (Windows).sublime-keymap",
+		"/C/Users/Andrew/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/C/Users/Andrew/AppData/Roaming/Sublime Text 3/Packages/Default/Preferences.sublime-settings"
+	],
+	"find":
+	{
+		"height": 23.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+			"<project>",
+			"C:\\Users\\abrown\\Documents\\Software\\Alia\\examples\\tracking\\public",
+			"<project>"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"css",
+			"inv.getItems",
+			"insertInventoryCount",
+			"enter",
+			"doRightColumn",
+			"activeVendor",
+			"doActivePurchaseOrder",
+			"onClick",
+			"inv",
+			"session",
+			"getItemsByVendor",
+			"doCutdownView",
+			"cutDownItem",
+			"doWorkOrderItemModal",
+			"alia.doBreak",
+			"alia.do",
+			"doWorkOrder",
+			"doWorkOrderItemModal",
+			"inputType",
+			"number",
+			"resolve",
+			"doDate",
+			"createOrganization",
+			"doAlert",
+			"doSelect",
+			"progress",
+			"visib",
+			"doTable",
+			"session",
+			"onSubmit",
+			"parseBody",
+			"data:",
+			"initState",
+			"organizationViewport",
+			"organization",
+			"clickable",
+			"realmsController",
+			"task",
+			"dashboardController",
+			"task",
+			"user",
+			"userViewport",
+			"doTable",
+			"onCl",
+			"classes",
+			"modal",
+			"data",
+			"block",
+			"usersViewport",
+			"data:",
+			"doTe",
+			");\n",
+			"select",
+			"dropdown",
+			"appWidget",
+			"widget",
+			"dropdown",
+			"doButton",
+			"model",
+			"organizationViewport",
+			"organizations",
+			"usersViewport",
+			"user",
+			"authenticate"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "soxsnation.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 235.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
