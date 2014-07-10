@@ -78,7 +78,7 @@ alia.defineService({
 
 	sox.insertRecipe = function(recipe) {
 		console.log('sox.insertRecipe');
-		return 'recipes'; //$request.post(server + 'recipe', recipe).then(parseBody);
+		return $request.post(server + 'recipe/add', recipe).then(parseBody);
 	}
 
 	sox.updateRecipe = function(recipe) {

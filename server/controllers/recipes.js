@@ -9,6 +9,15 @@ var mongoose = require('mongoose'),
 	Recipe = mongoose.model('Recipe'),
 	extend = require('util')._extend;
 
+
+
+// module.exports = function() {
+
+// 	var recipes = {
+// 		step: {},
+// 		ingredient: {}
+// 	};
+
 function parse(req, callback) {
 	// Create new empty buffer
 	var buf = new Buffer('');
@@ -33,6 +42,98 @@ function parse(req, callback) {
 		callback(null, JSON.parse(buf));
 	});
 }
+
+// recipes.create = function(req, res, next) {
+// 	console.log('recipes.create');
+// 	parse(req, function(err, data) {
+// 		console.log(data);
+// 		var recipe = new Recipe(data);
+// 		recipe.save(function(err) {
+// 			if (err) {
+// 				console.log(err);
+// 				return res.send(403);
+// 			} else {
+// 				return res.json(recipe);
+// 			}
+// 		})
+// 	})
+// };
+
+// recipes.list = function(req, res, next) {
+// 	console.log('recipes.recipe');
+// 	Recipe.find({}).exec(function(err, recipes) {
+// 		if (err) {
+// 			return next(err);
+// 		}
+// 		if (!recipes) {
+// 			return next(new Error('Failed to load recipe ' + id));
+// 		}
+
+// 		res.json(recipes);
+// 	})
+// };
+
+// recipes.recipe = function(req, res, next) {
+// 	// console.log('recipes.recipe');
+// 	Recipe.findOne({
+// 		_id: req.params.id
+// 	}).exec(function(err, recipe) {
+// 		if (err) {
+// 			next(err);
+// 		}
+// 		if (!recipe) {
+// 			next(new Error('Failed to load recipe ' + req.params.id));
+// 		}
+// 		res.json(recipe);
+// 	})
+// }
+
+// /***********************************************************************************************************************
+//  * Step Exports
+//  ***********************************************************************************************************************/
+// recipes.step.add = function(req, res, next) {
+// 	parse(req, function(err, step) {
+// 		Recipe.findOne({
+// 			_id: req.params.id
+// 		}).exec(function(err, recipe) {
+// 			if (err) {
+// 				return next(err);
+// 			} else {
+// 				recipe.addStep(step, function(data) {
+// 					res.send(200);
+// 					// res.json(recipe);
+// 				});
+// 			}
+// 		});
+// 	});
+// }
+
+// /***********************************************************************************************************************
+//  * Ingredient Exports
+//  ***********************************************************************************************************************/
+
+// recipes.ingredient.add = function(req, res, next) {
+// 	parse(req, function(err, ingredient) {
+// 		Recipe.findOne({
+// 			_id: req.params.id
+// 		}).exec(function(err, recipe) {
+// 			if (err) {
+// 				return next(err);
+// 			} else {
+// 				recipe.addIngredient(ingredient, function(data) {
+// 					console.log(data);
+// 					res.send(200);
+// 					// res.json(recipe);
+// 				});
+// 			}
+// 		});
+// 	});
+// }
+
+
+
+// 	return recipes;
+// }
 
 /**
  * Create recipe
@@ -95,28 +196,34 @@ exports.recipe = function(req, res, next) {
  * Update recipe
  */
 
-exports.update = function(req, res, next) {
+// exports.update = function(req, res, next) {
 
-	parse(req, function(err, data) {
-		console.log('Update Recipe');
-		// data['user'] = 'Andrew';
-		if (data._id == null) {
-			res.send(405);
-		} else {
-			var recipe = new Recipe(data);
-			console.log(recipe);
+// 	parse(req, function(err, data) {
+// 		console.log('Update Recipe');
+// 		// data['user'] = 'Andrew';
+// 		if (data._id == null) {
+// 			res.send(405);
+// 		} else {
+// 			var recipe = new Recipe(data);
+// 			console.log(recipe);
 
-			recipe.save(function(err) {
-				if (err) {
-					console.log(err);
-					return res.send(403);
-				} else {
-					return res.json(recipe);
-				}
-			})
-		}
-	});
-}
+// 			recipe.save(function(err) {
+// 				if (err) {
+// 					console.log(err);
+// 					return res.send(403);
+// 				} else {
+// 					return res.json(recipe);
+// 				}
+// 			})
+// 		}
+// 	});
+// }
+
+/***********************************************************************************************************************
+ * Functions
+ ***********************************************************************************************************************/
+
+
 
 /***********************************************************************************************************************
  * Step Exports
@@ -124,61 +231,40 @@ exports.update = function(req, res, next) {
 
 exports.stepadd = function(req, res, next) {
 	parse(req, function(err, step) {
-		var id = req.params.id;
-		console.log(id);
-		if (id == null) {
-			res.send(405);
-		} else {
-
-			Recipe.findOne({
-				_id: id
-			}).exec(function(err, recipe) {
-				if (err) {
-					return next(err);
-				} else if (!recipe) {
-					return next(new Error('Failed to add step ' + req.params.id));
-				} else {
-					recipe.addStep(step, function(data) {
-						console.log(data);
-						res.send(200);
-						// res.json(recipe);
-					});
-				}
-
-			})
-		}
+		Recipe.findOne({
+			_id: req.params.id
+		}).exec(function(err, recipe) {
+			if (err) {
+				return next(err);
+			} else {
+				recipe.addStep(step, function(data) {
+					res.send(200);
+					// res.json(recipe);
+				});
+			}
+		});
 	});
 }
 
 
 /***********************************************************************************************************************
-	 * Ingredient Exports
-	 ***********************************************************************************************************************/
+ * Ingredient Exports
+ ***********************************************************************************************************************/
 
 exports.ingredientadd = function(req, res, next) {
 	parse(req, function(err, ingredient) {
-		var id = req.params.id;
-		console.log(id);
-		if (id == null) {
-			res.send(405);
-		} else {
-
-			Recipe.findOne({
-				_id: id
-			}).exec(function(err, recipe) {
-				if (err) {
-					return next(err);
-				} else if (!recipe) {
-					return next(new Error('Failed to add Ingredient ' + req.params.id));
-				} else {
-					recipe.addIngredient(ingredient, function(data) {
-						console.log(data);
-						res.send(200);
-						// res.json(recipe);
-					});
-				}
-
-			})
-		}
+		Recipe.findOne({
+			_id: req.params.id
+		}).exec(function(err, recipe) {
+			if (err) {
+				return next(err);
+			} else {
+				recipe.addIngredient(ingredient, function(data) {
+					console.log(data);
+					res.send(200);
+					// res.json(recipe);
+				});
+			}
+		});
 	});
 }

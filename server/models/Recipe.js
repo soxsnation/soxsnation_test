@@ -22,7 +22,7 @@ var getTags = function(tags) {
  */
 
 var setTags = function(tags) {
-	return '';//tags.split(',')
+	return ''; //tags.split(',')
 }
 
 /**
@@ -105,9 +105,8 @@ RecipeSchema.path('description').required(true, 'Recipe description cannot be bl
 
 RecipeSchema.methods = {
 
+
 	addIngredient: function(ingredient, cb) {
-console.log('addIngredient');
-console.log(ingredient);
 
 		this.ingredients.push({
 			name: ingredient.name,
@@ -115,6 +114,10 @@ console.log(ingredient);
 		});
 
 		this.save(cb)
+	},
+	removeIngredient: function(ingredient, cb) {
+
+		this.save(cb);
 	},
 	addStep: function(step, cb) {
 
@@ -124,6 +127,10 @@ console.log(ingredient);
 		});
 
 		this.save(cb)
+	},
+	removeStep: function(step, cb) {
+
+		this.save(cb);
 	},
 
 };

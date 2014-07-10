@@ -53,25 +53,26 @@ module.exports = function(app) {
 	 * Recipe Routes
 	 *****************************************************************************************/
 
-	app.post('/api/recipe', recipes.create);
+	// app.post('/api/recipe/add', recipes.create);
+
 	app.get('/api/recipes/list', recipes.list);
-	app.get('/api/recipes/:id', recipes.recipe);
-	app.post('/api/recipes/update', recipes.update);
-	app.post('/api/recipes/update', recipes.update);
+	// app.get('/api/recipes/:id', recipes.recipe);
+	// app.post('/api/recipes/update', recipes.update);
+	// app.post('/api/recipes/update', recipes.update);
 	
 
 	/****************************************************
 	 * Step Routes
 	 ****************************************************/
 
-	app.post('/api/recipe/step/add/:id', recipes.stepadd);
+	// app.post('/api/recipe/step/add/:id', recipes.step.add);
 
 
 	/****************************************************
 	 * Ingredient Routes
 	 ****************************************************/
 
-	app.post('/api/recipe/ingredient/add/:id', recipes.ingredientadd);
+	// app.post('/api/recipe/ingredient/add/:id', recipes.ingredient.add);
 	
 
 }
