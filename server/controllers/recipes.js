@@ -11,13 +11,6 @@ var mongoose = require('mongoose'),
 
 
 
-// module.exports = function() {
-
-// 	var recipes = {
-// 		step: {},
-// 		ingredient: {}
-// 	};
-
 function parse(req, callback) {
 	// Create new empty buffer
 	var buf = new Buffer('');
@@ -42,98 +35,6 @@ function parse(req, callback) {
 		callback(null, JSON.parse(buf));
 	});
 }
-
-// recipes.create = function(req, res, next) {
-// 	console.log('recipes.create');
-// 	parse(req, function(err, data) {
-// 		console.log(data);
-// 		var recipe = new Recipe(data);
-// 		recipe.save(function(err) {
-// 			if (err) {
-// 				console.log(err);
-// 				return res.send(403);
-// 			} else {
-// 				return res.json(recipe);
-// 			}
-// 		})
-// 	})
-// };
-
-// recipes.list = function(req, res, next) {
-// 	console.log('recipes.recipe');
-// 	Recipe.find({}).exec(function(err, recipes) {
-// 		if (err) {
-// 			return next(err);
-// 		}
-// 		if (!recipes) {
-// 			return next(new Error('Failed to load recipe ' + id));
-// 		}
-
-// 		res.json(recipes);
-// 	})
-// };
-
-// recipes.recipe = function(req, res, next) {
-// 	// console.log('recipes.recipe');
-// 	Recipe.findOne({
-// 		_id: req.params.id
-// 	}).exec(function(err, recipe) {
-// 		if (err) {
-// 			next(err);
-// 		}
-// 		if (!recipe) {
-// 			next(new Error('Failed to load recipe ' + req.params.id));
-// 		}
-// 		res.json(recipe);
-// 	})
-// }
-
-// /***********************************************************************************************************************
-//  * Step Exports
-//  ***********************************************************************************************************************/
-// recipes.step.add = function(req, res, next) {
-// 	parse(req, function(err, step) {
-// 		Recipe.findOne({
-// 			_id: req.params.id
-// 		}).exec(function(err, recipe) {
-// 			if (err) {
-// 				return next(err);
-// 			} else {
-// 				recipe.addStep(step, function(data) {
-// 					res.send(200);
-// 					// res.json(recipe);
-// 				});
-// 			}
-// 		});
-// 	});
-// }
-
-// /***********************************************************************************************************************
-//  * Ingredient Exports
-//  ***********************************************************************************************************************/
-
-// recipes.ingredient.add = function(req, res, next) {
-// 	parse(req, function(err, ingredient) {
-// 		Recipe.findOne({
-// 			_id: req.params.id
-// 		}).exec(function(err, recipe) {
-// 			if (err) {
-// 				return next(err);
-// 			} else {
-// 				recipe.addIngredient(ingredient, function(data) {
-// 					console.log(data);
-// 					res.send(200);
-// 					// res.json(recipe);
-// 				});
-// 			}
-// 		});
-// 	});
-// }
-
-
-
-// 	return recipes;
-// }
 
 /**
  * Create recipe
@@ -229,7 +130,7 @@ exports.recipe = function(req, res, next) {
  * Step Exports
  ***********************************************************************************************************************/
 
-exports.stepadd = function(req, res, next) {
+exports.addStep = function(req, res, next) {
 	parse(req, function(err, step) {
 		Recipe.findOne({
 			_id: req.params.id
@@ -251,7 +152,7 @@ exports.stepadd = function(req, res, next) {
  * Ingredient Exports
  ***********************************************************************************************************************/
 
-exports.ingredientadd = function(req, res, next) {
+exports.addIngredient = function(req, res, next) {
 	parse(req, function(err, ingredient) {
 		Recipe.findOne({
 			_id: req.params.id

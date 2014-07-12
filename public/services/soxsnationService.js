@@ -78,7 +78,7 @@ alia.defineService({
 
 	sox.insertRecipe = function(recipe) {
 		console.log('sox.insertRecipe');
-		return $request.post(server + 'recipe/add', recipe).then(parseBody);
+		return $request.post(server + 'recipes/add', recipe).then(parseBody);
 	}
 
 	sox.updateRecipe = function(recipe) {
@@ -91,15 +91,19 @@ alia.defineService({
 
 	sox.addStep = function(id, step) {
 		console.log('sox.addStep');
-		return $request.post(server + 'recipe/step/add/:id', { id: id }, {}, step).then(parseBody);
+		return $request.post(server + 'recipe/step/add/:id', {
+			id: id
+		}, {}, step).then(parseBody);
 	};
 
-		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Ingredient functions
 
 	sox.addIngredient = function(id, ingredient) {
 		console.log('sox.addIngredient');
-		return $request.post(server + 'recipe/ingredient/add/:id', { id: id }, {}, ingredient).then(parseBody);
+		return $request.post(server + 'recipe/ingredient/add/:id', {
+			id: id
+		}, {}, ingredient).then(parseBody);
 	};
 
 

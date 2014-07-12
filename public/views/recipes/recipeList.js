@@ -9,7 +9,7 @@
 
 (function() {
 
-    function doAddRecipeModal(ctx, sox) {
+    function doAddRecipeModal(ctx, sox, view) {
         return alia.doModalForm(ctx, {
             title: 'Add Recipe',
             size: 'large',
@@ -33,7 +33,7 @@
             var req = sox.insertRecipe(recipe);
             req.onResolve(function(data) {
                 console.log(data._id);
-                ctx.push('recipe', {
+                view.push('recipe', {
                     id: data._id
                 });
                 // resolve();
@@ -56,14 +56,14 @@
         });
     }
 
-    function doSubheader(ctx, sox) {
+    function doSubheader(ctx, sox, view) {
         alia.layoutDiv(ctx, {
             classes: 'fancy-subheader'
         }, function(ctx) {
             alia.doButton(ctx, {
                 text: 'Add Recipe'
             }).onClick(function(event) {
-                doAddRecipeModal(ctx, sox).show();
+                doAddRecipeModal(ctx, sox, view).show();
             });
 
 
@@ -124,7 +124,7 @@
         })
 
         doHeader(ctx);
-        doSubheader(ctx, sox);
+        doSubheader(ctx, sox, view);
 
         alia.layoutDiv(ctx, {
             classes: 'fancy-viewport-content'
