@@ -14,28 +14,54 @@ alia.defineMultiview({
 		'$location', 'sox'
 	],
 }, function(multiview, $location, sox) {
+	console.log('recipes');
 	multiview.navigation(function(ctx) {
-		alia.layoutMultiviewNavigationLinkset(ctx, {}, function(ctx) {
-			alia.doMultiviewNavigationHeader(ctx, {
-				text: 'Recipes'
-			});
-			alia.doMultiviewNavigationItem(ctx, {
-				text: 'Recipe List',
-				view: 'recipeList'
-			});
-			alia.doMultiviewNavigationItem(ctx, {
-				text: 'Add Recipe',
-				view: 'addRecipe'
-			});
-		});
-	}).include({
-		name: 'recipeList',
-		path: '/recipeList'
-	}).include({
-		name: 'addRecipe',
-		path: '/addRecipe'
-	}).include({
-		name: 'recipe',
-		path: '/recipe'
-	}).begin('recipeList');
+	// 	alia.layoutMultiviewNavigationLinkset(ctx, {}, function(ctx) {
+	// 		alia.doMultiviewNavigationHeader(ctx, {
+	// 			text: 'Recipes'
+	// 		});
+	// 		alia.doMultiviewNavigationItem(ctx, {
+	// 			text: 'Recipe List',
+	// 			view: 'recipeList'
+	// 		});
+	// 		alia.doMultiviewNavigationItem(ctx, {
+	// 			text: 'Add Recipe',
+	// 			view: 'addRecipe'
+	// 		});
+	// 	});
+	// }).include({
+	// 	name: 'recipeList',
+	// 	path: '/recipeList'
+	// }).include({
+	// 	name: 'addRecipe',
+	// 	path: '/addRecipe'
+	// }).include({
+	// 	name: 'recipe',
+	// 	path: '/recipe'
+	// }).begin('recipeList');
+
+	alia.layoutMultiviewNavigationLinkset(ctx, {}, function(ctx) {
+            alia.doMultiviewNavigationHeader(ctx, {
+                text: 'Recipes'
+            });
+            alia.doMultiviewNavigationItem(ctx, {
+                text: 'Recipe List',
+                view: 'recipeList'
+            });
+            alia.doMultiviewNavigationItem(ctx, {
+                text: 'Add Recipe',
+                view: 'addRecipe'
+            });
+            
+        });
+    }).include({
+        name: 'recipeList',
+        path: '/recipeList'
+    }).include({
+        name: 'addRecipe',
+        path: '/addRecipe'
+    }).include({
+        name: 'recipe',
+        path: '/recipe'
+    }).begin('recipeList');
 });

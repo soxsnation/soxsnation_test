@@ -13,41 +13,6 @@ alia.defineService({
 		return res.body;
 	};
 
-	function recipeList() {
-		return [{
-				name: 'Corn Beef',
-				user: 'Andrew',
-				date: new Date(),
-				ingredients: [{
-					name: 'Corn Beef'
-				}, {
-					name: 'Carrots'
-				}, {
-					name: 'Potatoes'
-				}],
-				steps: [{
-					number: 1,
-					text: 'Boil the corn beef'
-				}, {
-					number: 2,
-					text: 'Chop up the veggies'
-				}, {
-					number: 3,
-					text: 'Add the veggies to the boiling water'
-				}]
-			}, {
-				name: 'Chicken',
-				user: 'Joan',
-				date: new Date()
-			}, {
-				name: 'Chex Mix',
-				user: 'Joan',
-				date: new Date()
-			}
-
-		]
-	}
-
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Service functions
 
@@ -106,7 +71,7 @@ alia.defineService({
 		}, {}, ingredient).then(parseBody);
 	};
 
-
+console.log('RETURN SOX');
 	return sox;
 
 });

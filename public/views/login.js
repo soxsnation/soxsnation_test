@@ -82,8 +82,26 @@
 			'$location', 'session'
 		]
 	}, function(ctx, $location, session) {
-		layoutLoginForm(ctx, function(ctx) {
+		var btn = null;
 
+		alia.doBreak(ctx, {});
+		alia.doBreak(ctx, {});
+
+		var form = layoutLoginForm(ctx, function(ctx) {
+			var password = alia.state('');
+			var username = alia.state('');
+			var submitting = alia.state(false);
+
+			var credentials = alia.join(username, password, function(uname, pword) {
+				if (alia.isEmptyString(uname) || alia.isEmptyString(pword)) {
+					return void 0;
+				} else {
+					return {
+						username: uname,
+						password: pword
+					};
+				}
+			});
 			// Username field
 			alia.layoutFormField(ctx, {
 				width: width
@@ -107,22 +125,23 @@
 				});
 			});
 
+			alia.doBreak(ctx, {});
 			// Remember me field
-			alia.layoutFormField(ctx, {
-				special: 'checkbox',
-				width: width,
-				offset: {
-					large: 3,
-					small: 4
-				}
-			}, function(ctx) {
-				alia.doCheckbox(ctx, {
-					checked: true
-				});
-				alia.doText(ctx, {
-					text: ' Remember Me'
-				});
-			});
+			// alia.layoutFormField(ctx, {
+			// 	special: 'checkbox',
+			// 	width: width,
+			// 	offset: {
+			// 		large: 3,
+			// 		small: 4
+			// 	}
+			// }, function(ctx) {
+			// 	alia.doCheckbox(ctx, {
+			// 		checked: true
+			// 	});
+			// 	alia.doText(ctx, {
+			// 		text: ' Remember Me'
+			// 	});
+			// });
 
 			// Sign in button
 			alia.layoutFormField(ctx, {
@@ -133,35 +152,38 @@
 					small: 4
 				}
 			}, function(ctx) {
-				var btn = alia.doButton(ctx, {
+				btn = alia.doButton(ctx, {
 					text: "Sign In",
 					style: 'primary',
 					loading: submitting,
 					loadingStyle: 'expand-right',
-					disabled: username.combine(password, function(username, password) {
-						return alia.isEmptyString(username) || alia.isEmptyString(password);
-					})
+					disabled: credentials.isUndefined().startWith(true) //false
 				}).onClick(function() {
-					console.log("onclick");
+					// console.log("onclick");
 					submitting.set(true);
 
-					credentials.onValue(function(creds) {
-						console.log('credentials.onValue');
-						console.log(creds);
-						session.login(creds.username, creds.password).onValue(function(res) {
-							submitting.set(false);
-							var dest = session.destination();
-							if (dest && dest !== '' && dest !== '/login') {
-								$location.path(dest);
-							} else {
-								console.log('home');
-								$location.path('/');
-							}
-						}, function(err) {
-							console.log("Failed to login");
-							console.log(err);
+					// credentials.onResolve(function(creds) {
+
+					var creds = credentials.get();
+					session.login(creds.username, creds.password).onResolve(function(res) {
+						submitting.set(false);
+						var dest = session.destination();
+						if (dest && dest !== '' && dest !== '/login') {
+							$location.path(dest);
+						} else {
+							$location.path('/');
+						}
+					}).onError(function(err) {
+						submitting.set(false);
+						return;
+						// password.set('');
+						alia.doAlert(ctx, {
+							type: 'danger',
+							text: 'Incorrect username or password. Please try again',
+							autohide: 5000
 						});
 					});
+					// });
 
 
 					// session.login(creds.username, creds.password).onValue(function(res) {
@@ -173,6 +195,16 @@
 					// });
 				});
 			});
+		})
+
+		$('form').bind('keypress', function(e) {
+			// if (!credentials.isUndefined()) {
+			if (e.keyCode == 13) {
+				console.log('LOGIN ENTER Pressed');
+				btn.doClick();
+			}
+			// }
 		});
+
 	});
 }());

@@ -85,31 +85,6 @@ alia.defineHeader({
 						text: 'Billing Management'
 					});
 				});
-
-				
-
-				// --------------------------------------------------
-				// Help menu
-
-				alia.layoutNavbarDropdown(ctx, {
-					text: '<span class="glyphicon glyphicon-question-sign"></span>'
-				}, function(ctx) {
-					alia.doDropdownHeader(ctx, {
-						text: 'Help'
-					});
-					alia.doDropdownItem(ctx, {
-						link: '#',
-						text: 'Forums'
-					});
-					alia.doDropdownItem(ctx, {
-						link: '#',
-						text: 'Support'
-					});
-					alia.doDropdownItem(ctx, {
-						link: 'documentation',
-						text: 'Documentation'
-					});
-				});
 			})
 		});
 	};

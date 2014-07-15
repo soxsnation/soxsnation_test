@@ -1,13 +1,14 @@
 /* User.js
  *
- * Author(s):  Andrew Brown 
+ * Author(s):  Andrew Brown
  * Date:       6/10/2014
  *
  */
 
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
-	crypto = require('crypto');
+	crypto = require('crypto'),
+	hash = require('../lib/hash');
 
 
 /**
@@ -126,6 +127,31 @@ UserSchema.pre('save', function(next) {
  * Methods
  */
 
+UserSchema.statics.isValidUserPassword= function(email, password, done) {
+	console.log('isValidUserPassword');
+	console.log(email);
+	console.log(password);
+	this.findOne({
+		email: email
+	}, function(err, user) {
+		if (err) {
+			return done(err);
+		}
+		if (!user) {
+			return done(null, false, {
+				message: 'Incorrect email.'
+			})
+		}
+		if (password === user.hashed_password) {
+			return done(null, user);
+		} else {
+			return done(null, false, {
+				message: 'Incorrect password'
+			});
+		}
+	})
+}
+
 UserSchema.methods = {
 
 	/**
@@ -135,6 +161,8 @@ UserSchema.methods = {
 	 * @return {Boolean}
 	 * @api public
 	 */
+
+
 
 	authenticate: function(plainText) {
 		return this.encryptPassword(plainText) === this.hashed_password

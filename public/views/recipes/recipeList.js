@@ -109,6 +109,7 @@
         dependencies: ['$location', 'sox']
     }, function(ctx, $location, sox) {
         var view = ctx;
+        console.log('recipeList');
 
         // alia.doButton(ctx, {
         //     text: 'Add Recipe'

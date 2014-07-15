@@ -13,12 +13,14 @@ var users = require('../controllers/users');
 var recipes = require('../controllers/recipes');
 var express = require('express');
 var fpath = require('path');
+var User = require('../models/User');
+var Auth = require('../lib/authorization');
 
 /**
  * Expose routes
  */
 
-module.exports = function(app) {
+module.exports = function(app, passport) {
 
 	// TODO: I had to add this in to support CORS requests. I'm not sure this is the way to do this.
 	app.use(function(req, res, next) {
@@ -43,6 +45,15 @@ module.exports = function(app) {
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	/***********************************************************************************************************************
+	 * Session Routes
+	 ***********************************************************************************************************************/
+
+	app.post('/api/login', passport.authenticate('local'),
+		function(req, res) {
+			res.send(200);
+		})
+
+	/***********************************************************************************************************************
 	 * API Routes
 	 ***********************************************************************************************************************/
 	app.get('/api/users/:id', users.user);
@@ -59,7 +70,7 @@ module.exports = function(app) {
 	app.get('/api/recipes/:id', recipes.recipe);
 	// app.post('/api/recipes/update', recipes.update);
 	// app.post('/api/recipes/update', recipes.update);
-	
+
 
 	/****************************************************
 	 * Step Routes
@@ -73,6 +84,6 @@ module.exports = function(app) {
 	 ****************************************************/
 
 	app.post('/api/recipe/ingredient/add/:id', recipes.addIngredient);
-	
+
 
 }

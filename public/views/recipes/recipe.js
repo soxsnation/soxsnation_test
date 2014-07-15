@@ -14,6 +14,7 @@
         return alia.doModalForm(ctx, {
             title: 'Add Step',
             size: 'large',
+            onEnterKeySubmit: true,
             fields: [{
                 name: 'number',
                 label: "Step Number",
@@ -49,6 +50,7 @@
         return alia.doModalForm(ctx, {
             title: 'Add Ingredient',
             size: 'large',
+            onEnterKeySubmit: true,
             fields: [{
                 name: 'name',
                 label: 'Name',
@@ -156,44 +158,38 @@
         //     text: 'Steps'
         // })
 
-        alia.layoutColumn(ctx, {
-            width: {
-                xsmall: 12,
-                small: 6
-            }
+        alia.layoutPanel(ctx, {
+            header: 'Steps',
+            headerStyle: 'h1',
+            collapsible: true,
+            visible: true
         }, function(ctx) {
-            alia.layoutPanel(ctx, {
-                header: 'Steps',
-                headerStyle: 'h1',
-                collapsible: true,
-                visible: true
-            }, function(ctx) {
 
-                var table = alia.doTable(ctx, {
-                    style: 'hover,striped',
-                    selectable: false,
-                    sortable: true,
-                    spinner: true,
-                    data: steps,
-                    fields: [{
-                        heading: '#',
-                        property: '.number'
-                    }, {
-                        heading: 'Step Directions',
-                        property: '.description'
-                    }]
-                });
-
-                var button = alia.doButton(ctx, {
-                    text: 'Add Step'
-                }).onClick(function() {
-
-                    var stepModal = doAddStepModal(ctx, recipe.property('._id'), sox, steps.get().length + 1, refreshRecipe);
-                    stepModal.show();
-                });
-
+            var table = alia.doTable(ctx, {
+                style: 'hover,striped',
+                selectable: false,
+                sortable: true,
+                spinner: true,
+                data: steps,
+                fields: [{
+                    heading: '#',
+                    property: '.number'
+                }, {
+                    heading: 'Step Directions',
+                    property: '.description'
+                }]
             });
+
+            var button = alia.doButton(ctx, {
+                text: 'Add Step'
+            }).onClick(function() {
+
+                var stepModal = doAddStepModal(ctx, recipe.property('._id'), sox, steps.get().length + 1, refreshRecipe);
+                stepModal.show();
+            });
+
         });
+
     }
 
 
@@ -203,7 +199,7 @@
         dependencies: ['sox', '$query']
     }, function(ctx, sox, $query) {
         var view = ctx;
-
+console.log('here');
         var recipe = alia.state(sox.getRecipeById($query.id));
         // var ingredients = recipe.property('.ingredients');
         var refreshRecipe = alia.state(false);

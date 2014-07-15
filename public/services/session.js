@@ -9,16 +9,15 @@
 
 alia.defineService({
 	name: 'session',
-	dependencies: ['$location', '$promise', '$request']
-}, function($location, $promise, $request) {
+	dependencies: ['$location', '$request']
+}, function($location, $request) {
 
-	var currentSession = new Bacon.Model(null);
-	var currentUser = new Bacon.Model(null);
+	var currentSession = alia.state();
+	var currentUser = alia.state();
 
 	var destination = null;
 
-	var server = 'http://localhost:56902/api/TrackingUser/';
-	var server2 = 'http://localhost:56902/api/TrackingUser/2';
+var server = 'http://localhost:3085/api/Session/';
 
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -37,22 +36,23 @@ alia.defineService({
 
 	function init() {
 		console.log("SESSION INIT");
-		// return $request.get(server.get_session).flatMapLatest(function(res) {
-		// return $request.get(server2).flatMapLatest(function(res) {
-		// 	var csession = res.body;
-		// 	console.log('init Session');
-		// 	console.log(csession);
-		// 	return $request.get(server2, {
-		// 		// id: 2 //csession.user_id
-		// 	}).map(function(res) {
-		// 		var cuser = res.body;
-		// 		console.log('cuser');
-		// 		console.log(cuser);
-		// 		currentUser.set(cuser);
-		// 		currentSession.set(csession);
-		// 	});
-		// });
-	}
+		return $request.get(server, {}, {
+			type: 'session'
+		}).then(function(res) {
+			var csession = res.body;
+			return $request.get(server, {}, {
+				type: 'user'
+			}).then(function(res) {
+				var cuser = res.body;
+				console.log('cuser');
+				console.log(cuser);
+				console.log(csession);
+				currentUser.set(cuser);
+				currentSession.set(csession);
+			});
+		})
+
+	};
 
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -78,20 +78,48 @@ alia.defineService({
 		console.log(h);
 
 		return $request({
-				url: server,
-				method: 'GET',
-				headers: {
-					Authorization: h
-				},
-				xhrFields: {
-					withCredentials: true
-				}
-			})
-			.flatMapLatest(function(res) {
-				console.log("login");
-				console.log(res);
-				return init();
-			});
+			url: server,
+			method: 'GET',
+			headers: {
+				Authorization: 'Basic ' + Base64.encode(username + ':' + password)
+			},
+			xhrFields: {
+				withCredentials: true
+			}
+		}).then(function(res) {
+			console.log("login");
+			console.log(res);
+			return init();
+		});
+	};
+
+	session.verify = function(password) {
+
+		return $request.get(server, {}, {
+			type: 'verify',
+			username: currentUser.get().username,
+			password: password
+		}).then(function(res) {
+
+		});
+	}
+
+	session.logout = function() {
+		return $request.get(server, {}, {
+			type: 'logout'
+		}).then(function(res) {
+			console.log('cuser');
+			console.log(res.body);
+			currentSession.set(null);
+			currentUser.set(null);
+			$location.path('/login');
+			// if (res.statusCode === 205) {
+			// 	$location.path('/login');
+			// } else if (res.statusCode === 406) {
+			// 	event.preventDefault();
+			// 	$location.path('/login');
+			// }
+		});
 	};
 
 
@@ -101,22 +129,32 @@ alia.defineService({
 	alia.on('requestError', function(event, res) {
 		console.log("session request error");
 		console.log(res.statusCode);
-		if (481 <= res.statusCode && res.statusCode <= 485) {
+		// if (481 <= res.statusCode && res.statusCode <= 485) {
+		if (res.statusCode === 403) {
 			console.log("session.on(requestError):", res.statusCode);
 			// session = null;
-			destination = ($location.path() === '/logout') ? '/home' : $location.path();
+			destination = ($location.path() === '/logout') ? '/login' : $location.path();
 			console.log(destination);
 			event.preventDefault();
-			console.log(destination);
+
 			// TODO: Figure out how to remove the need for this timeout
 			// Without it, the initial page still loads, as well as the redirected one
 			setTimeout(function() {
 				console.log("timeout");
 				$location.path('/login');
 			}, 10);
+		} else if (res.statusCode === 406) {
+			// No credentials provided
+			event.preventDefault();
+			$location.path('/login');
 		} else if (res.statusCode === 403) {
 			event.preventDefault();
 			$location.path('/forbidden');
+		} else if (res.statusCode === 402) {
+			// Valid user, but they don't have permission for this request
+			console.log('Valid user, but they dont have permission for this request');
+			event.preventDefault();
+			$location.path('/');
 		}
 	});
 
@@ -126,15 +164,13 @@ alia.defineService({
 
 	console.log("SESSION CONSTRUCTION");
 
-	// return Bacon.fromBinder(function(sink) {
-	// 	var observable = init();
-	// 	observable.onValue(function() {
-	// 		sink(session);
-	// 	});
-	// 	observable.onError(function() {
-	// 		sink(session);
-	// 	});
-	// });
+	return alia.deferred(function(resolve, reject) {
+		init().observe(function(value) {
+			resolve(session);
+		}, null, function() {
+			resolve(session);
+		});
+	});
 
 
 

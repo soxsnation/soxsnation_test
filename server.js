@@ -23,7 +23,6 @@ var fs = require('fs');
 
 
 
-
 // Bootstrap db connection
 // Connect to mongodb
 var connect = function() {
@@ -55,13 +54,30 @@ fs.readdirSync(models_path).forEach(function(file) {
 	if (~file.indexOf('.js')) require(models_path + '/' + file)
 });
 
-// Bootstrap routes
-require('./server/routes/routes')(app);
 
-app.use('/alia', express.static('../../src'));
+var passport = require('passport');
+require('./server/lib/passport')(passport)
+app.use(express.cookieParser());
+app.use(express.bodyParser());
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Bootstrap routes
+require('./server/routes/routes')(app, passport);
+
+app.use('/alia', express.static('./public/lib'));
 app.use('/', express.static('./public'));
 app.use('/', function(req, res, next) {
-	res.sendfile(fpath.join(__dirname, 'public', 'index.html'));
+	if (true) {
+		res.sendfile(fpath.join(__dirname, 'public', 'index.html'));
+	} else {
+		if (req.isAuthenticated()) {
+			res.sendfile(fpath.join(__dirname, 'public', 'index.html'));
+		} else {
+			console.log('NEED TO LOG IN');
+		}
+	}
+
 });
 
 app.listen(3085, function() {

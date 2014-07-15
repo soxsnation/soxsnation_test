@@ -4662,7 +4662,7 @@
         return function(options) {
             var elm = this.append('<option alia-context></option>');
 
-            elm.bindOption(options.option, function () {
+            elm.bindOption(options.option, function() {
                 $('#' + this.id()).trigger('change');
             }.bind(this));
 
@@ -4688,6 +4688,9 @@
             $('#' + elm.id()).datepicker({
                 startDate: options.startDate,
                 endDate: options.endDate
+            }).on('changeDate', function(){
+                console.log('changeDate: ' + '#' + elm.id());
+                $('#' + elm.id()).datepicker('hide');
             });
 
             // Set attributes
@@ -5141,6 +5144,192 @@
         };
     }());
 }($, alia));;(function($, alia) {
+	"use strict";
+
+
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// Modal 
+
+	alia.defineControl({
+		name: 'modalValidate'
+	}, function() {
+
+		var fieldTypes = {
+			'text': {
+				type: 'string',
+				default: '',
+				inputType: 'textbox'
+			},
+			'password': {
+				type: 'password',
+				default: '',
+				inputType: 'textbox'
+			},
+			'number': {
+				type: 'number',
+				default: 0,
+				inputType: 'textbox'
+			},
+			'boolean': {
+				type: 'boolean',
+				default: true,
+				inputType: 'checkbox'
+			},
+			'typeahead': {
+				default: '',
+				inputType: 'typeahead'
+			},
+			'datepicker': {
+				default: '',
+				inputType: 'datepicker'
+			}
+		};
+
+		function getResolvedEmitName(name) {
+			var emit = 'emit' + name.charAt(0).toUpperCase() + name.slice(1);
+			return emit;
+		}
+
+		function makeClickHandler(form, name, submitting, message, modal) {
+			return function() {
+				submitting.set(true);
+				var data = form.getData();
+				var resolve = function() {
+					submitting.set(false);
+					message.set(null);
+					modal.hide();
+					form.refresh();
+				};
+				var reject = function(msg) {
+					submitting.set(false);
+					message.set(msg);
+				};
+				modal[getResolvedEmitName(name)](data, resolve, reject);
+			};
+		}
+
+		return function(options) {
+
+			var userNameField = {
+				type: fieldTypes.text,
+				label: 'Username',
+				lens: '.username',
+				datatype: 'text',
+				placeholder: options.username,
+				disabled: true
+			};
+
+			var passwordField = {
+				type: fieldType.password,
+				label: 'Password',
+				lens: '.password',
+				datatype: 'text',
+				placeholder: '',
+				disabled: false
+			};
+
+			// Initialize state
+			var submitting = alia.state(false);
+			var message = alia.state(null);
+
+			// Layout modal
+			var modal = alia.layoutModal(this, {
+				size: 'small',
+				title: 'User Verification'
+			}, function(ctx) {
+				var modalCtx = ctx;
+
+				alia.layoutModalHeader(ctx, {}, function(ctx) {
+					alia.doButton(ctx, {
+						close: true,
+						text: '&times;'
+					}).onClick(function() {
+						submitting.set(false);
+						message.set(null);
+						modal.hide();
+					});
+					alia.doHeading(ctx, {
+						type: 4,
+						text: 'User Verificationn'
+					});
+				});
+				var formdata = {};
+				var form;
+
+				alia.layoutModalBody(ctx, {}, function(ctx) {
+					form = alia.doForm(ctx, {
+						label: {
+							large: 3,
+							small: 4
+						},
+						control: {
+							large: 9,
+							small: 8
+						},
+						model: formdata,
+						fields: [userNameField, passwordField]
+					});
+				});
+
+				alia.layoutModalFooter(ctx, {}, function(ctx) {					
+
+					alia.doText(ctx, {
+						text: message,
+						style: 'danger',
+						visible: message.then(alia.isNotEmptyString)
+					});
+					alia.doText(ctx, {
+						text: '&nbsp;&nbsp;&nbsp;',
+					});
+					alia.doButton(ctx, {
+						text: 'Cancel',
+						disabled: submitting
+					}).onClick(function() {
+						form.refresh();
+						message.set(null);
+						modal.hide();
+					});
+
+					var saveBtn = alia.doButton(ctx, {
+						text: 'Submit',
+						style: 'primary',
+						loading: submitting,
+						loadingStyle: 'expand-right'
+					}).onClick(function() {
+						submitting.set(true);
+						var data = form.getData();
+						var resolve = function() {
+							submitting.set(false);
+							message.set(null);
+							modal.hide();
+							form.refresh();
+						};
+						var reject = function(msg) {
+							submitting.set(false);
+							message.set(msg);
+						};
+						modal.emitSubmit(data, resolve, reject);
+					});
+
+					if (options.onEnterKeySubmit) {
+						modalCtx.onEnterKey(function() {
+							saveBtn.doClick();
+						});
+					}
+				});
+			});
+
+			// Define events
+			modal.defineEvent('Submit');			
+
+			// Return modal
+			return modal;
+		};
+	}());
+
+
+
+}($, alia));;(function($, alia) {
     "use strict";
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -5452,6 +5641,123 @@
             return modal;
         };
     }());
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Modal 
+
+    alia.defineControl({
+        name: 'modalValidate'
+    }, function() {
+
+        return function(options) {
+
+            var userNameField = {
+                type: 'textbox',
+                label: 'Username&nbsp;&nbsp;',
+                lens: '.username',
+                datatype: 'string',
+                placeholder: options.username,
+                disabled: true
+            };
+
+            var passwordField = {
+                type: 'textbox',
+                label: 'Password&nbsp;&nbsp;',
+                lens: '.password',
+                datatype: 'password',
+                placeholder: '',
+                disabled: false
+            };
+
+            // Initialize state
+            var submitting = alia.state(false);
+            var message = alia.state(null);
+
+            // Layout modal
+            var modal = alia.layoutModal(this, {
+                size: 'small',
+                title: 'User Verify'
+            }, function(ctx) {
+                var modalCtx = ctx;
+
+                alia.layoutModalHeader(ctx, {}, function(ctx) {
+                    alia.doHeading(ctx, {
+                        type: 4,
+                        text: 'User Verify'
+                    });
+                });
+                var formdata = {};
+                var form;
+
+                alia.layoutModalBody(ctx, {}, function(ctx) {
+                    form = alia.doForm(ctx, {
+                        label: {
+                            large: 3,
+                            small: 4
+                        },
+                        control: {
+                            large: 9,
+                            small: 8
+                        },
+                        model: formdata,
+                        fields: [userNameField, passwordField]
+                    });
+                });
+
+                alia.layoutModalFooter(ctx, {}, function(ctx) {
+
+                    alia.doText(ctx, {
+                        text: message,
+                        style: 'danger',
+                        visible: message.then(alia.isNotEmptyString)
+                    });
+                    alia.doText(ctx, {
+                        text: '&nbsp;&nbsp;&nbsp;',
+                    });
+                    alia.doButton(ctx, {
+                        text: 'Cancel',
+                        disabled: submitting
+                    }).onClick(function() {
+                        form.refresh();
+                        message.set(null);
+                        modal.hide();
+                    });
+
+                    var saveBtn = alia.doButton(ctx, {
+                        text: 'Submit',
+                        style: 'primary',
+                        loading: submitting,
+                        loadingStyle: 'expand-right'
+                    }).onClick(function() {
+                        submitting.set(true);
+                        var data = form.getData();
+                        var resolve = function() {
+                            submitting.set(false);
+                            message.set(null);
+                            modal.hide();
+                            form.refresh();
+                        };
+                        var reject = function(msg) {
+                            submitting.set(false);
+                            message.set(msg);
+                        };
+                        modal.emitSubmit(data, resolve, reject);
+                    });
+
+                    modalCtx.onEnterKey(function() {
+                        saveBtn.doClick();
+                    });
+                });
+            });
+
+            // Define events
+            modal.defineEvent('Submit');
+
+            // Return modal
+            return modal;
+        };
+    }());
+
 }($, alia));;(function($, alia) {
     "use strict";
 

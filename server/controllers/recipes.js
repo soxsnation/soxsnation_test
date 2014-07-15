@@ -7,34 +7,34 @@
 
 var mongoose = require('mongoose'),
 	Recipe = mongoose.model('Recipe'),
-	extend = require('util')._extend;
+	Utils = require('../lib/Utils')
 
 
 
-function parse(req, callback) {
-	// Create new empty buffer
-	var buf = new Buffer('');
+// function parse(req, callback) {
+// 	// Create new empty buffer
+// 	var buf = new Buffer('');
 
-	// Concatenate data to buffer
-	req.on('data', function(data) {
-		buf = Buffer.concat([buf, data]);
-	});
+// 	// Concatenate data to buffer
+// 	req.on('data', function(data) {
+// 		buf = Buffer.concat([buf, data]);
+// 	});
 
-	// Parse object
-	req.on('end', function(data) {
-		var obj;
-		try {
-			obj = JSON.parse(buf);
-		} catch (e) {
-			callback({
-				status_code: 400,
-				message: 'Invalid JSON'
-			}, null);
-			return;
-		}
-		callback(null, JSON.parse(buf));
-	});
-}
+// 	// Parse object
+// 	req.on('end', function(data) {
+// 		var obj;
+// 		try {
+// 			obj = JSON.parse(buf);
+// 		} catch (e) {
+// 			callback({
+// 				status_code: 400,
+// 				message: 'Invalid JSON'
+// 			}, null);
+// 			return;
+// 		}
+// 		callback(null, JSON.parse(buf));
+// 	});
+// }
 
 /**
  * Create recipe
@@ -42,7 +42,7 @@ function parse(req, callback) {
 
 exports.create = function(req, res, next) {
 	console.log('recipes.create');
-	parse(req, function(err, data) {
+	Utils.parse(req, function(err, data) {
 		console.log(data);
 		var recipe = new Recipe(data);
 		recipe.save(function(err) {
@@ -131,7 +131,7 @@ exports.recipe = function(req, res, next) {
  ***********************************************************************************************************************/
 
 exports.addStep = function(req, res, next) {
-	parse(req, function(err, step) {
+	Utils.parse(req, function(err, step) {
 		Recipe.findOne({
 			_id: req.params.id
 		}).exec(function(err, recipe) {
@@ -153,7 +153,7 @@ exports.addStep = function(req, res, next) {
  ***********************************************************************************************************************/
 
 exports.addIngredient = function(req, res, next) {
-	parse(req, function(err, ingredient) {
+	Utils.parse(req, function(err, ingredient) {
 		Recipe.findOne({
 			_id: req.params.id
 		}).exec(function(err, recipe) {
