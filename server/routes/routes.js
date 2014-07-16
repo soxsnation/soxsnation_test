@@ -51,7 +51,22 @@ module.exports = function(app, passport) {
 	app.post('/api/login', passport.authenticate('local'),
 		function(req, res) {
 			res.send(200);
-		})
+		});
+
+	app.post('/api/session/login', passport.authenticate('local'),
+		function(req, res) {
+			res.send(req.user);
+		});
+
+	app.post('/api/session/session', passport.authenticate('local'),
+		function(req, res) {
+			res.send(req.user);
+		});
+
+	app.post('/api/session/user', passport.authenticate('local'),
+		function(req, res) {
+			res.send(req.user);
+		});
 
 	/***********************************************************************************************************************
 	 * API Routes

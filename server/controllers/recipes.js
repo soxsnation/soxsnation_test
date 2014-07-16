@@ -7,34 +7,35 @@
 
 var mongoose = require('mongoose'),
 	Recipe = mongoose.model('Recipe'),
-	Utils = require('../lib/Utils')
+	extend = require('util')._extend;
+	// Utils = require('../lib/Utils');
 
 
 
-// function parse(req, callback) {
-// 	// Create new empty buffer
-// 	var buf = new Buffer('');
+function parse(req, callback) {
+	// Create new empty buffer
+	var buf = new Buffer('');
 
-// 	// Concatenate data to buffer
-// 	req.on('data', function(data) {
-// 		buf = Buffer.concat([buf, data]);
-// 	});
+	// Concatenate data to buffer
+	req.on('data', function(data) {
+		buf = Buffer.concat([buf, data]);
+	});
 
-// 	// Parse object
-// 	req.on('end', function(data) {
-// 		var obj;
-// 		try {
-// 			obj = JSON.parse(buf);
-// 		} catch (e) {
-// 			callback({
-// 				status_code: 400,
-// 				message: 'Invalid JSON'
-// 			}, null);
-// 			return;
-// 		}
-// 		callback(null, JSON.parse(buf));
-// 	});
-// }
+	// Parse object
+	req.on('end', function(data) {
+		var obj;
+		try {
+			obj = JSON.parse(buf);
+		} catch (e) {
+			callback({
+				status_code: 400,
+				message: 'Invalid JSON'
+			}, null);
+			return;
+		}
+		callback(null, JSON.parse(buf));
+	});
+}
 
 /**
  * Create recipe
@@ -131,20 +132,25 @@ exports.recipe = function(req, res, next) {
  ***********************************************************************************************************************/
 
 exports.addStep = function(req, res, next) {
-	Utils.parse(req, function(err, step) {
+	console.log('addStep');
+	console.log(req.params.id);
+	console.log(req.body);
+	// parse(req, function(err, step) {
 		Recipe.findOne({
 			_id: req.params.id
 		}).exec(function(err, recipe) {
 			if (err) {
+				console.log(err);
 				return next(err);
 			} else {
-				recipe.addStep(step, function(data) {
+				console.log('found recipe, now to add step')
+				recipe.addStep(req.body, function(data) {
 					res.send(200);
 					// res.json(recipe);
 				});
 			}
 		});
-	});
+	// });
 }
 
 
@@ -153,19 +159,19 @@ exports.addStep = function(req, res, next) {
  ***********************************************************************************************************************/
 
 exports.addIngredient = function(req, res, next) {
-	Utils.parse(req, function(err, ingredient) {
+	// parse(req, function(err, ingredient) {
 		Recipe.findOne({
 			_id: req.params.id
 		}).exec(function(err, recipe) {
 			if (err) {
 				return next(err);
 			} else {
-				recipe.addIngredient(ingredient, function(data) {
+				recipe.addIngredient(req.body, function(data) {
 					console.log(data);
 					res.send(200);
 					// res.json(recipe);
 				});
 			}
 		});
-	});
+	// });
 }

@@ -120,7 +120,7 @@ RecipeSchema.methods = {
 		this.save(cb);
 	},
 	addStep: function(step, cb) {
-
+console.log(step);
 		this.steps.push({
 			number: step.number,
 			description: step.description

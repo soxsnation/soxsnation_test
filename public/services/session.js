@@ -15,9 +15,9 @@ alia.defineService({
 	var currentSession = alia.state();
 	var currentUser = alia.state();
 
-	var destination = null;
+	var destination = '/recipes';
 
-var server = 'http://localhost:3085/api/Session/';
+	var server = 'http://localhost:3085/api/session/';
 
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -36,19 +36,21 @@ var server = 'http://localhost:3085/api/Session/';
 
 	function init() {
 		console.log("SESSION INIT");
-		return $request.get(server, {}, {
-			type: 'session'
+		return $request.get(server + 'session', {}, {
+			// email: currentUser.get().email,
+			// password: currentUser.get().hashed_password
 		}).then(function(res) {
 			var csession = res.body;
-			return $request.get(server, {}, {
-				type: 'user'
+			return $request.get(server + 'user', {}, {
+				// email: currentUser.get().email,
+				// password: currentUser.get().hashed_password
 			}).then(function(res) {
-				var cuser = res.body;
-				console.log('cuser');
-				console.log(cuser);
-				console.log(csession);
-				currentUser.set(cuser);
-				currentSession.set(csession);
+				// var cuser = res.body;
+				// console.log('cuser');
+				// console.log(cuser);
+				// console.log(csession);
+				// currentUser.set(cuser);
+				// currentSession.set(csession);
 			});
 		})
 
@@ -74,23 +76,37 @@ var server = 'http://localhost:3085/api/Session/';
 
 	session.login = function(username, password, options) {
 		console.log("session.login:", username, password);
-		var h = 'Basic ' + Base64.encode(username + ':' + password);
-		console.log(h);
+		// var h = 'Basic ' + Base64.encode(username + ':' + password);
+		// console.log(h);
 
-		return $request({
-			url: server,
-			method: 'GET',
-			headers: {
-				Authorization: 'Basic ' + Base64.encode(username + ':' + password)
-			},
-			xhrFields: {
-				withCredentials: true
-			}
-		}).then(function(res) {
-			console.log("login");
-			console.log(res);
+		var creds = {
+			email: username,
+			password: password
+		}
+		console.log(creds);
+		return $request.post(server + 'login', creds).then(function(res) {
+			console.log('login');
+			var cuser = res.body;
+			console.log('cuser');
+			console.log(cuser);
+			currentUser.set(cuser);
 			return init();
 		});
+
+		// return $request({
+		// 	url: server,
+		// 	method: 'GET',
+		// 	headers: {
+		// 		Authorization: 'Basic ' + Base64.encode(username + ':' + password)
+		// 	},
+		// 	xhrFields: {
+		// 		withCredentials: true
+		// 	}
+		// }).then(function(res) {
+		// 	console.log("login");
+		// 	console.log(res);
+		// 	return init();
+		// });
 	};
 
 	session.verify = function(password) {

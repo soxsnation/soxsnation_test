@@ -1,10 +1,19 @@
 alia.defineHeader({
 	dependencies: ['session', 'nav']
 }, function(session, nav) {
+
+var usersName = alia.state('');
+var user = session.currentUser();
+user.onResolve(function(data){
+	usersName.set(data.firstName + ' ' + data.lastName);
+})
+
+
 	return function(ctx) {
 
 		alia.layoutNavbar(ctx, {
-			fixed: 'top' //,
+			fixed: 'top',
+			brand: 'soxsnation'
 			// style: 'inverse'
 		}, function(ctx) {
 
@@ -40,8 +49,8 @@ alia.defineHeader({
 				// Account menu
 
 				alia.layoutNavbarDropdown(ctx, {
-					text: 'Andrew Brown',
-					visible: true
+					text: usersName, //'Andrew Brown',
+					visible: true //user.get()
 				}, function(ctx) {
 					alia.doDropdownHeader(ctx, {
 						text: 'Account'

@@ -113,6 +113,15 @@
         //     text: 'Ingredients'
         // });
 
+// ingredients.onResolve(function(data){
+//     for (var i = 0; i < data.length; ++i) {
+//         alia.doText(ctx, {
+//             text: data[i].name
+//         });
+//         alia.doBreak(ctx, {});
+//     }
+// })
+
         alia.layoutPanel(ctx, {
             header: 'Ingredients',
             headerStyle: 'h1',

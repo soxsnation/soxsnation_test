@@ -16,7 +16,11 @@ var mongoose = require('mongoose'),
  */
 
 var UserSchema = new Schema({
-	name: {
+	firstName: {
+		type: String,
+		default: ''
+	},
+	lastName: {
 		type: String,
 		default: ''
 	},
@@ -73,7 +77,7 @@ var validatePresenceOf = function(value) {
 
 // the below 5 validations only apply if you are signing up traditionally
 
-UserSchema.path('name').validate(function(name) {
+UserSchema.path('firstName').validate(function(name) {
 	if (this.doesNotRequireValidation()) return true
 	return name.length
 }, 'Name cannot be blank')

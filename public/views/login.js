@@ -89,7 +89,7 @@
 
 		var form = layoutLoginForm(ctx, function(ctx) {
 			var password = alia.state('');
-			var username = alia.state('');
+			var username = alia.state('soxsnation@gmail.com');
 			var submitting = alia.state(false);
 
 			var credentials = alia.join(username, password, function(uname, pword) {
@@ -168,6 +168,7 @@
 					session.login(creds.username, creds.password).onResolve(function(res) {
 						submitting.set(false);
 						var dest = session.destination();
+						console.log(dest);
 						if (dest && dest !== '' && dest !== '/login') {
 							$location.path(dest);
 						} else {
