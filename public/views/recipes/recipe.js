@@ -122,42 +122,47 @@
 //     }
 // })
 
-        alia.layoutPanel(ctx, {
-            header: 'Ingredients',
-            headerStyle: 'h1',
-            collapsible: true,
-            visible: true
-        }, function(ctx) {
-
-            var table = alia.doTable(ctx, {
-                style: 'hover,striped',
-                selectable: false,
-                sortable: true,
-                // paging: {
-                //     'default': 10,
-                //     options: [10, 25, 50]
-                // },
-                spinner: true,
-                data: ingredients,
-                fields: [{
-                    heading: 'Ingredient',
-                    property: '.name'
-                }, {
-                    heading: 'Quantity',
-                    property: '.quantity'
-                }]
-            });
-
-            var button = alia.doButton(ctx, {
-                text: 'Add Ingredient'
-            }).onClick(function() {
-
-                doAddIngredientModal(ctx, recipe.property('._id'), sox, refreshRecipe).show();
-                // ingredientModal.show();
-            });
+        alia.doRecipe(ctx, {
+            data: recipe
+        })
 
 
-        });
+        // alia.layoutPanel(ctx, {
+        //     header: 'Ingredients',
+        //     headerStyle: 'h1',
+        //     collapsible: true,
+        //     visible: true
+        // }, function(ctx) {
+
+        //     var table = alia.doTable(ctx, {
+        //         style: 'hover,striped',
+        //         selectable: false,
+        //         sortable: true,
+        //         // paging: {
+        //         //     'default': 10,
+        //         //     options: [10, 25, 50]
+        //         // },
+        //         spinner: true,
+        //         data: ingredients,
+        //         fields: [{
+        //             heading: 'Ingredient',
+        //             property: '.name'
+        //         }, {
+        //             heading: 'Quantity',
+        //             property: '.quantity'
+        //         }]
+        //     });
+
+        //     var button = alia.doButton(ctx, {
+        //         text: 'Add Ingredient'
+        //     }).onClick(function() {
+
+        //         doAddIngredientModal(ctx, recipe.property('._id'), sox, refreshRecipe).show();
+        //         // ingredientModal.show();
+        //     });
+
+
+        // });
     }
 
     function doSteps(ctx, recipe, sox, refreshRecipe) {
@@ -208,7 +213,7 @@
         dependencies: ['sox', '$query']
     }, function(ctx, sox, $query) {
         var view = ctx;
-console.log('here');
+        
         var recipe = alia.state(sox.getRecipeById($query.id));
         // var ingredients = recipe.property('.ingredients');
         var refreshRecipe = alia.state(false);
@@ -248,7 +253,7 @@ console.log('here');
             classes: 'fancy-viewport-content'
         }, function(ctx) {
             doIngredients(ctx, recipe, sox, refreshRecipe);
-            doSteps(ctx, recipe, sox, refreshRecipe);
+            // doSteps(ctx, recipe, sox, refreshRecipe);
         });
     });
 }());
