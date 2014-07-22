@@ -15,7 +15,41 @@
 		name: 'recipe'
 	}, function() {
 
+		function doIngredientModal(ctx, ingredient) {
+			return alia.doModalForm(ctx, {
+            title: 'Update Ingredient',
+            size: 'large',
+            fields: [{
+                name: 'name',
+                label: "Recipe Name",
+                initValue: ''
+            }, {
+                name: 'quantity',
+                label: 'Quantity',
+                initValue: ''
+            }]
+        }).onSubmit(function(event, value, resolve, reject) {
+            console.log(value);
+            var recipe = {
+                description: value.description,
+                name: value.name,
+                createdAt: new Date()
+            }
 
+            var req = sox.insertRecipe(recipe);
+            req.onResolve(function(data) {
+                console.log(data._id);
+                view.push('recipe', {
+                    id: data._id
+                });
+                // resolve();
+            });
+            req.onError(function(err) {
+                reject(err);
+            });
+
+        });
+		}
 
 		function makeListItem(listData, field, field2, index) {
 			return function(item) {
