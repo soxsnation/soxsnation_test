@@ -43,9 +43,9 @@ function parse(req, callback) {
 
 exports.create = function(req, res, next) {
 	console.log('recipes.create');
-	Utils.parse(req, function(err, data) {
-		console.log(data);
-		var recipe = new Recipe(data);
+	// Utils.parse(req, function(err, data) {
+		// console.log(data);
+		var recipe = new Recipe(req.body);
 		recipe.save(function(err) {
 			if (err) {
 				console.log(err);
@@ -54,7 +54,7 @@ exports.create = function(req, res, next) {
 				return res.json(recipe);
 			}
 		})
-	})
+	// })
 }
 
 /**

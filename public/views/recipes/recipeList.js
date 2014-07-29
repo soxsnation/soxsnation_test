@@ -23,6 +23,7 @@
                 initValue: ''
             }]
         }).onSubmit(function(event, value, resolve, reject) {
+            resolve();
             console.log(value);
             var recipe = {
                 description: value.description,
@@ -33,10 +34,11 @@
             var req = sox.insertRecipe(recipe);
             req.onResolve(function(data) {
                 console.log(data._id);
+
                 view.push('recipe', {
                     id: data._id
                 });
-                // resolve();
+                
             });
             req.onError(function(err) {
                 reject(err);
