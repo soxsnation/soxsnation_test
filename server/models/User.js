@@ -9,7 +9,7 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
 	crypto = require('crypto'),
 	hash = require('../lib/hash');
-
+var guid = require('guid');
 
 /**
  * User Schema
@@ -45,6 +45,10 @@ var UserSchema = new Schema({
 		default: ''
 	},
 	authToken: {
+		type: String,
+		default: ''
+	},
+	sessionId: {
 		type: String,
 		default: ''
 	}
@@ -131,7 +135,7 @@ UserSchema.pre('save', function(next) {
  * Methods
  */
 
-UserSchema.statics.isValidUserPassword= function(email, password, done) {
+UserSchema.statics.isValidUserPassword = function(email, password, done) {
 	console.log('isValidUserPassword');
 	console.log(email);
 	console.log(password);
@@ -200,6 +204,19 @@ UserSchema.methods = {
 		} catch (err) {
 			return ''
 		}
+	},
+
+	login: function(cb) {
+		var sess = guid.create();
+		console.log(sess.value);
+		console.log(this);
+		this.sessionId = sess.value;
+		this.save(cb);
+	},
+
+	logout: function(cb) {
+		this.sessionId = '';
+		this.save(cb);
 	},
 
 	/**

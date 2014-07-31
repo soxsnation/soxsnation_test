@@ -9,6 +9,7 @@
  * Controllers
  */
 
+var session = require('../controllers/sessionController');
 var users = require('../controllers/users');
 var recipes = require('../controllers/recipes');
 var express = require('express');
@@ -48,30 +49,45 @@ module.exports = function(app, passport) {
 	 * Session Routes
 	 ***********************************************************************************************************************/
 
-	app.post('/api/login', passport.authenticate('local'),
-		function(req, res) {
-			res.send(200);
-		});
+	// app.post('/api/login', passport.authenticate('local'),
+	// 	function(req, res) {
+	// 		res.send(200);
+	// 	});
 
-	app.post('/api/session/login', passport.authenticate('local'),
-		function(req, res) {
-			res.send(req.user);
-		});
+	// app.post('/api/session/login', passport.authenticate('local'),
+	// 	function(req, res) {
+	// 		res.send(req.user);
+	// 	});
 
-	app.post('/api/session/session', passport.authenticate('local'),
-		function(req, res) {
-			res.send(req.user);
-		});
+	// app.post('/api/session/session', passport.authenticate('local'),
+	// 	function(req, res) {
+	// 		res.send(req.user);
+	// 	});
 
-	app.post('/api/session/user', passport.authenticate('local'),
-		function(req, res) {
-			res.send(req.user);
-		});
+	// app.post('/api/session/user', passport.authenticate('local'),
+	// 	function(req, res) {
+	// 		res.send(req.user);
+	// 	});
 
 	/***********************************************************************************************************************
 	 * API Routes
 	 ***********************************************************************************************************************/
-	app.get('/api/users/:id', users.user);
+
+	/*****************************************************************************************
+	 * Session Routes
+	 *****************************************************************************************/
+
+	
+	app.get('/api/session/login/:id', session.login);
+	app.get('/api/session/logout/:id', session.logout);
+	app.get('/api/session/user/:id', session.getUser);
+	app.get('/api/session/get/:id', session.getSession);
+
+	/*****************************************************************************************
+	 * User Routes
+	 *****************************************************************************************/
+
+	app.get('/api/user/:id', users.user);
 	app.post('/api/user', users.create);
 
 

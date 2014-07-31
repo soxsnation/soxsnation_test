@@ -4,7 +4,7 @@ alia.defineView({
         'session','$location'
     ]
 }, function(ctx, session, $location) {
-console.log(session.currentUser().get());
+// console.log(session.currentUser().get());
 // if (session.currentUser().get() === null) {
 //     $location.path('/login');
 // }

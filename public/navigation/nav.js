@@ -5,6 +5,7 @@ alia.defineHeader({
 var usersName = alia.state('');
 var user = session.currentUser();
 user.onResolve(function(data){
+	console.log(data);
 	usersName.set(data.firstName + ' ' + data.lastName);
 })
 

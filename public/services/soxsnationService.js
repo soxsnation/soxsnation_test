@@ -2,8 +2,8 @@
 
 alia.defineService({
 	name: 'sox',
-	dependencies: ['$request']
-}, function($request) {
+	dependencies: ['session', '$request']
+}, function(session, $request) {
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Private functions

@@ -14,20 +14,20 @@ alia.defineView({
 }, function(ctx, $location, session) {
 
 	// Initiate logout
-	// session.logout();
+	session.logout();
 
 	// Layout view
-	alia.layoutContainer(ctx, {
-		type: 'fluid'
-	}, function(ctx) {
+	// alia.layoutContainer(ctx, {
+	// 	type: 'fluid'
+	// }, function(ctx) {
 
-		alia.doParagraph(ctx, {
-			text: 'Please wait while we log you out of the framework...'
-		})
+	// 	alia.doParagraph(ctx, {
+	// 		text: 'Please wait while we log you out of the framework...'
+	// 	})
 
-		alia.doParagraph(ctx, {
-			text: "you are logged out",
-			// visible: session.currentSession.map('.id').map(alia.isUndefined)
-		})
-	});
+	// 	alia.doParagraph(ctx, {
+	// 		text: "you are logged out",
+	// 		// visible: session.currentSession.map('.id').map(alia.isUndefined)
+	// 	})
+	// });
 });

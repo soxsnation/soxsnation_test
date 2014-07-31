@@ -44,9 +44,10 @@ function parse(req, callback) {
 
 exports.create = function(req, res, next) {
 	console.log('users.create');
-	parse(req, function(err, data) {
+	var data = req.body;
+	// parse(req, function(err, data) {
 		console.log(data);
-		var user = new User(data)
+		var user = new User(data);
 		user.save(function(err) {
 			if (err) {
 				console.log(err);
@@ -60,7 +61,7 @@ exports.create = function(req, res, next) {
 			//   return res.redirect('/')
 			// })
 		})
-	})
+	// })
 }
 
 /**
@@ -69,6 +70,7 @@ exports.create = function(req, res, next) {
 
 exports.user = function(req, res, next) { //, next, id) {
 	console.log('users.user');
+	console.log(req.params.id);
 	User.findOne({
 		username: req.params.id
 	}).exec(function(err, user) {
