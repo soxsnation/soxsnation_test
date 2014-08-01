@@ -8,6 +8,8 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var jwt = require('jwt-simple');
 
+var soxsAuth = require('../lib/soxsAuthentication');
+
 
 var Base64 = {
 	_keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
@@ -48,32 +50,57 @@ function getToken(sessionId) {
 
 exports.login = function(req, res, next) {
 	console.log('session login');
-	var autho = req.headers.authorization.substring(req.headers.authorization.indexOf(' ') + 1);
-	var creds = Base64.decode(autho);
-	var username = creds.substring(0, creds.indexOf(':'));
-	var password = creds.substring(creds.indexOf(':') + 1, creds.length);
 
-	User.findOne({
-		username: username
-	}).exec(function(err, user) {
+	soxsAuth.login(req.headers.authorization, function(err, token) {
 		if (err) {
-			res.send(406);
-		}
-		if (!user) {
-			res.send(403);
-		}
-		if (user.hashed_password === password) {
-			user.login(function(data) {
-				res.json(getToken(user.sessionId));
-			})
-
+			res.send(err);
+		} else if (!token) {
+			res.send(401);
 		} else {
-			res.send(409);
+			res.json(token);
 		}
-		// res.json(user);
 	})
+
+	// var autho = req.headers.authorization.substring(req.headers.authorization.indexOf(' ') + 1);
+	// var creds = Base64.decode(autho);
+	// var username = creds.substring(0, creds.indexOf(':'));
+	// var password = creds.substring(creds.indexOf(':') + 1, creds.length);
+
+	// User.findOne({
+	// 	username: username
+	// }).exec(function(err, user) {
+	// 	if (err) {
+	// 		res.send(406);
+	// 	}
+	// 	if (!user) {
+	// 		res.send(403);
+	// 	}
+	// 	if (user.password === password) {
+	// 		user.login(function(data) {
+	// 			res.json(getToken(user.sessionId));
+	// 		})
+
+	// 	} else {
+	// 		res.send(409);
+	// 	}
+	// 	// res.json(user);
+	// })
 }
 
+exports.validate = function(req, res, next) {
+	if (req.headers.authorization === undefined) {
+		res.send(401);
+	}
+	soxsAuth.validateToken(req.headers.authorization, function(err, token) {
+		if (err) {
+			res.send(err);
+		} else if (!token) {
+			res.send(401);
+		} else {
+			res.json(token);
+		}
+	})
+}
 
 exports.getSession = function(req, res, next) {
 	console.log('getSession');
@@ -108,48 +135,60 @@ exports.getSession = function(req, res, next) {
 
 exports.getUser = function(req, res, next) {
 	console.log('getUser');
-	if (req.params.id === undefined) {
-		res.send(401);
-	} else {
-		var sessionId = jwt.decode(req.params.id, 'secret').foo;
-		console.log(sessionId);
+	// console.log(req.params.id);
+	// if (req.params.id === undefined || req.params.id === '1') {
+	// 	res.send(401);
+	// } else {
+	// 	var sessionId = jwt.decode(req.params.id, 'secret').foo;
+	// 	console.log(sessionId);
 
-		User.findOne({
-			sessionId: sessionId
-		}).exec(function(err, user) {
-			console.log(err);
-			console.log(user);
-			if (err) {
-				res.send(401);
-			}
-			if (!user) {
-				res.send(401);
-			} else {
-				console.log(user);
-				res.json(user);
-			}
-		});
-	}
+	// 	User.findOne({
+	// 		sessionId: sessionId
+	// 	}).exec(function(err, user) {
+	// 		console.log(err);
+	// 		console.log(user);
+	// 		if (err) {
+	// 			res.send(401);
+	// 		}
+	// 		if (!user) {
+	// 			res.send(401);
+	// 		} else {
+	// 			console.log(user);
+	// 			res.json(user);
+	// 		}
+	// 	});
+	// }
 }
 
 exports.logout = function(req, res, next) {
-	console.log('getSession');
-	var sessionId = req.params.id;
-	console.log(sessionId);
+	console.log('logout');
+	// var sessionId = req.params.id;
+	// console.log(sessionId);
 
-	User.findOne({
-		sessionId: sessionId
-	}).exec(function(err, user) {
+	// User.findOne({
+	// 	sessionId: sessionId
+	// }).exec(function(err, user) {
+	// 	if (err) {
+	// 		res.send(401);
+	// 	}
+	// 	if (!user) {
+	// 		res.send(401);
+	// 	}
+
+	// 	user.logout(function(data) {
+	// 		res.send(200);
+	// 	})
+
+	// });
+
+
+	soxsAuth.logout(req.headers.authorization, function(err, token) {
 		if (err) {
-			res.send(401);
-		}
-		if (!user) {
-			res.send(401);
-		}
-
-		user.logout(function(data) {
+			res.send(err);
+		} else if (!token) {
+			res.send(404);
+		} else {
 			res.send(200);
-		})
-
-	});
+		}
+	})
 }

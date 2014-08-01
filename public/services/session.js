@@ -14,6 +14,7 @@ alia.defineService({
 
 	var currentSession = alia.state('1');
 	var currentUser = alia.state();
+	var currentToken = alia.state();
 
 	var destination = '/recipes';
 
@@ -39,23 +40,38 @@ alia.defineService({
 		console.log(currentSession.get());
 		// return $request.get(server + 'session', {}, {
 		// 	// email: currentUser.get().email,
-		// 	// password: currentUser.get().hashed_password
+		// 	// password: currentUser.get().password
 		// }).then(function(res) {
 		// var csession = res.body;
-		var reqUrl = server + 'user/' + currentSession.get();
-		console.log(reqUrl);
-		return $request.get(reqUrl, {}, {
-			// email: currentUser.get().email,
-			// password: currentUser.get().hashed_password
+		// var reqUrl = server + 'validate';
+		// console.log(reqUrl);
+		// return $request.get(reqUrl, {}, {
+		// 	// email: currentUser.get().email,
+		// 	// password: currentUser.get().password
+		// }).then(function(res) {
+		// 	var cuser = res.body;
+		// 	console.log('cuser');
+		// 	console.log(cuser);
+		// 	// console.log(csession);
+		// 	currentUser.set(cuser);
+		// 	// currentSession.set(csession);
+		// });
+		// // })
+
+		return $request({
+			url: server + 'validate',
+			method: 'GET',
+			headers: {
+				Authorization: currentToken.get()
+			},
+			xhrFields: {
+				withCredentials: true
+			}
 		}).then(function(res) {
-			var cuser = res.body;
-			console.log('cuser');
-			console.log(cuser);
-			// console.log(csession);
-			currentUser.set(cuser);
-			// currentSession.set(csession);
+			console.log("init complete");
+			console.log(res.body);
+			currentToken.set(res.body);
 		});
-		// })
 
 	};
 
@@ -97,7 +113,7 @@ alia.defineService({
 		// });
 
 		return $request({
-			url: server + 'login/2',
+			url: server + 'login',
 			method: 'GET',
 			headers: {
 				Authorization: 'Basic ' + Base64.encode(username + ':' + password)
@@ -109,13 +125,13 @@ alia.defineService({
 			console.log("login");
 			console.log(res);
 			console.log(res.body);
-			currentSession.set(res.body);
+			currentToken.set(res.body);
 			return init();
 		});
 	};
 
 	session.verify = function(password) {
-console.log('verify');
+		console.log('verify');
 		return $request.get(server, {}, {
 			type: 'verify',
 			username: currentUser.get().username,
@@ -142,14 +158,28 @@ console.log('verify');
 		// 	// }
 		// });
 		console.log('logout')
+		// return $request({
+		// 	url: server + 'logout',
+		// 	method: 'GET',
+		// }).then(function(res) {
+		// 	console.log("logout");
+		// 	currentSession.set(null);
+		// 	currentUser.set(null);
+		// 	$location.path('/login');
+		// });
+
 		return $request({
-			url: server + 'logout/' + currentSession.get(),
+			url: server + 'logout',
 			method: 'GET',
+			headers: {
+				Authorization: currentToken.get()
+			},
+			xhrFields: {
+				withCredentials: true
+			}
 		}).then(function(res) {
-			console.log("logout");
-			currentSession.set(null);
-			currentUser.set(null);
-			$location.path('/login');
+			console.log("logout complete");
+			currentToken.set('');
 		});
 	};
 

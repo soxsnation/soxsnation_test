@@ -36,7 +36,7 @@ var UserSchema = new Schema({
 		type: String,
 		default: ''
 	},
-	hashed_password: {
+	password: {
 		type: String,
 		default: ''
 	},
@@ -51,7 +51,30 @@ var UserSchema = new Schema({
 	sessionId: {
 		type: String,
 		default: ''
-	}
+	},
+	tokens: {
+		// tokenId: {
+			type: String,
+			default: ''
+		// }
+		// ,
+		// username: {
+		// 	type: String,
+		// 	default: ''
+		// },
+		// name: {
+		// 	type: String,
+		// 	default: ''
+		// },
+		// email: {
+		// 	type: String,
+		// 	default: ''
+		// },
+		// expiration: {
+		// 	type: Number,
+		// 	default: Date.UTC(2014, 07, 01)
+		// }		
+	},
 })
 
 
@@ -59,16 +82,16 @@ var UserSchema = new Schema({
  * Virtuals
  */
 
-UserSchema
-	.virtual('password')
-	.set(function(password) {
-		this._password = password
-		this.salt = this.makeSalt()
-		this.hashed_password = this.encryptPassword(password)
-	})
-	.get(function() {
-		return this._password
-	})
+// UserSchema
+// 	.virtual('password')
+// 	.set(function(password) {
+// 		this._password = password
+// 		this.salt = this.makeSalt()
+// 		this.password = this.encryptPassword(password)
+// 	})
+// 	.get(function() {
+// 		return this._password
+// 	})
 
 
 /**
@@ -110,9 +133,9 @@ UserSchema.path('username').validate(function(username) {
 	return username.length
 }, 'Username cannot be blank')
 
-UserSchema.path('hashed_password').validate(function(hashed_password) {
+UserSchema.path('password').validate(function(password) {
 	if (this.doesNotRequireValidation()) return true
-	return hashed_password.length
+	return password.length
 }, 'Password cannot be blank')
 
 
@@ -150,7 +173,7 @@ UserSchema.statics.isValidUserPassword = function(email, password, done) {
 				message: 'Incorrect email.'
 			})
 		}
-		if (password === user.hashed_password) {
+		if (password === user.password) {
 			return done(null, user);
 		} else {
 			return done(null, false, {
@@ -173,7 +196,7 @@ UserSchema.methods = {
 
 
 	authenticate: function(plainText) {
-		return this.encryptPassword(plainText) === this.hashed_password
+		return this.encryptPassword(plainText) === this.password
 	},
 
 	/**
@@ -206,16 +229,23 @@ UserSchema.methods = {
 		}
 	},
 
-	login: function(cb) {
-		var sess = guid.create();
-		console.log(sess.value);
-		console.log(this);
-		this.sessionId = sess.value;
+	login: function(token, cb) {
+console.log('User.login');
+console.log(token);
+		this.tokens = token;
 		this.save(cb);
 	},
 
-	logout: function(cb) {
-		this.sessionId = '';
+	logout: function(token, cb) {
+		// var index = this.tokens.indexOf(token);
+		// this.tokens.splice(index, 1);
+		this.tokens = '';
+		this.save(cb);
+	},
+	removeToken: function(token, cb) {
+		// var index = this.tokens.indexOf(token);
+		// this.tokens.splice(index, 1);
+		this.tokens = '';
 		this.save(cb);
 	},
 

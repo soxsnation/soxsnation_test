@@ -77,11 +77,12 @@ module.exports = function(app, passport) {
 	 * Session Routes
 	 *****************************************************************************************/
 
+	app.get('/api/session/validate', session.validate);
+	app.get('/api/session/login', session.login);
+	app.get('/api/session/logout', session.logout);
 	
-	app.get('/api/session/login/:id', session.login);
-	app.get('/api/session/logout/:id', session.logout);
-	app.get('/api/session/user/:id', session.getUser);
-	app.get('/api/session/get/:id', session.getSession);
+	// app.get('/api/session/user/:id', session.getUser);
+	// app.get('/api/session/get/:id', session.getSession);
 
 	/*****************************************************************************************
 	 * User Routes
