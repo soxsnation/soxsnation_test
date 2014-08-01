@@ -10,7 +10,7 @@
  */
 
 var mongoose = require('mongoose'),
-	User = mongoose.model('User')
+	User = mongoose.model('User');
 
 function parse(req, callback) {
 	// Create new empty buffer

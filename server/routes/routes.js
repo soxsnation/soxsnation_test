@@ -10,6 +10,7 @@
  */
 
 var session = require('../controllers/sessionController');
+var authControl = require('../controllers/authController');
 var users = require('../controllers/users');
 var recipes = require('../controllers/recipes');
 var express = require('express');
@@ -77,9 +78,10 @@ module.exports = function(app, passport) {
 	 * Session Routes
 	 *****************************************************************************************/
 
-	app.get('/api/session/validate', session.validate);
-	app.get('/api/session/login', session.login);
-	app.get('/api/session/logout', session.logout);
+	app.get('/api/session/validate', authControl.validate);
+	app.get('/api/session/login', authControl.login);
+	app.get('/api/session/logout', authControl.logout);
+	app.get('/api/session/user', authControl.getUser);
 	
 	// app.get('/api/session/user/:id', session.getUser);
 	// app.get('/api/session/get/:id', session.getSession);

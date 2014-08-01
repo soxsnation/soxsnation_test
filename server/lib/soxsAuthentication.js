@@ -15,6 +15,7 @@ var User = mongoose.model('User');
 
 var secret = "bostonredsox";
 var tokenLength = 3;
+var renewLength = 2;
 
 function findUserByUsername(username, cb) {
 	User.findOne({
@@ -34,25 +35,31 @@ function generateToken(user) {
 	var d = new Date();
 	var tokenData = {
 		tokenId: guid.create().value,
+		expiration: Date.UTC(d.getYear(), d.getMonth(), d.getDay(), d.getHours(), d.getMinutes() + tokenLength, d.getSeconds(), 0),
 		username: user.username,
 		name: user.firstName + ' ' + user.lastName,
 		email: user.email,
-		expiration: Date.UTC(d.getYear(), d.getMonth(), d.getDay(), d.getHours(), d.getMinutes() + tokenLength, d.getSeconds(), 0)
+		permissions: user.permissions
 	};
 
 	var token = jwt.encode(tokenData, secret);
 	return token;
 }
 
+exports.getUser = function(reqHeader, cb) {
+	console.log('soxsAuthentication.getUser');
+	// console.log(reqHeader);
+	var token = jwt.decode(reqHeader, secret);
+	console.log(token);
+	findUserByUsername(token.username, cb);
+}
+
 
 exports.login = function(reqHeader, cb) {
 	console.log('soxsAuthentication.login');
-	console.log(reqHeader);
 	var au = reqHeader;
 	var creds = utils.Base64().decode(au.substring(au.indexOf(' ') + 1));
-	console.log(creds);
 	var username = creds.substring(0, creds.indexOf(':'));
-	console.log(username);
 	var password = creds.substring(creds.indexOf(':') + 1, creds.length);
 
 	findUserByUsername(username, function(err, user) {
@@ -60,9 +67,10 @@ exports.login = function(reqHeader, cb) {
 			cb(err, user);
 		} else {
 			if (user.password === password) {
+				console.log('valid user');
+				console.log(utils.getPermissionNames(user.permissions));
 				var token = generateToken(user);
 				user.login(token, function(err) {
-					console.log(err);
 					cb(null, token);
 				})
 			} else {
@@ -91,19 +99,15 @@ exports.validateToken = function(reqHeader, cb) {
 	}
 
 	var token = jwt.decode(reqHeader, secret);
-	console.log('token');
-	console.log(token);
 
 	findUserByUsername(token.username, function(err, user) {
-		console.log(user.tokens);
 		if (user.tokens === token) {
 			console.log('token not found');
 			cb(401, null);
 		} else {
-			cb(null, token);
+			console.log(token);
+			cb(null, reqHeader);
 			//Check if token needs to be renewed
 		}
 	})
-
-
 }

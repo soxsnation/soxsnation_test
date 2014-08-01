@@ -68,9 +68,23 @@ alia.defineService({
 				withCredentials: true
 			}
 		}).then(function(res) {
-			console.log("init complete");
+			console.log("init is valid");
 			console.log(res.body);
 			currentToken.set(res.body);
+			return $request({
+				url: server + 'user',
+				method: 'GET',
+				headers: {
+					Authorization: currentToken.get()
+				},
+				xhrFields: {
+					withCredentials: true
+				}
+			}).then(function(res) {
+				console.log("init gotuser");
+				console.log(res.body);
+				currentUser.set(res.body);
+			});
 		});
 
 	};
@@ -123,8 +137,7 @@ alia.defineService({
 			}
 		}).then(function(res) {
 			console.log("login");
-			console.log(res);
-			console.log(res.body);
+			// console.log(res.body);
 			currentToken.set(res.body);
 			return init();
 		});
@@ -180,6 +193,8 @@ alia.defineService({
 		}).then(function(res) {
 			console.log("logout complete");
 			currentToken.set('');
+			currentUser.set(null);
+			$location.path('/login');
 		});
 	};
 

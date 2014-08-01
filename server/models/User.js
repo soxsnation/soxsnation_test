@@ -52,10 +52,14 @@ var UserSchema = new Schema({
 		type: String,
 		default: ''
 	},
+	permissions: {
+		type: Number,
+		default: 0
+	},
 	tokens: {
 		// tokenId: {
-			type: String,
-			default: ''
+		type: String,
+		default: ''
 		// }
 		// ,
 		// username: {
@@ -230,8 +234,7 @@ UserSchema.methods = {
 	},
 
 	login: function(token, cb) {
-console.log('User.login');
-console.log(token);
+		console.log('User.login');
 		this.tokens = token;
 		this.save(cb);
 	},
