@@ -1,0 +1,6 @@
+{
+   "name": "task",
+   "description": "things to get done",
+   "fields": '{"name":"String", "description":"String", "complete":"Boolean"}'  
+}
+

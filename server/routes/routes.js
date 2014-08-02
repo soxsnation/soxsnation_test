@@ -10,6 +10,7 @@
  */
 
 var session = require('../controllers/sessionController');
+var soxsController = require('../controllers/soxsController');
 var authControl = require('../controllers/authController');
 var users = require('../controllers/users');
 var recipes = require('../controllers/recipes');
@@ -85,6 +86,14 @@ module.exports = function(app, passport) {
 	
 	// app.get('/api/session/user/:id', session.getUser);
 	// app.get('/api/session/get/:id', session.getSession);
+
+	/*****************************************************************************************
+	 * soxsObjects Routes
+	 *****************************************************************************************/
+
+	 app.post('/api/soxs/create/:type', soxsController.create);
+	 app.get('/api/soxs/get/:type/:id', soxsController.get);
+	 app.get('/api/soxs/getall/:type', soxsController.getall);
 
 	/*****************************************************************************************
 	 * User Routes
