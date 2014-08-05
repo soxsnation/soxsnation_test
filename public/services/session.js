@@ -181,6 +181,9 @@ alia.defineService({
 		// 	$location.path('/login');
 		// });
 
+		currentToken.set('');
+		currentUser.set(null);
+
 		return $request({
 			url: server + 'logout',
 			method: 'GET',
@@ -192,8 +195,6 @@ alia.defineService({
 			}
 		}).then(function(res) {
 			console.log("logout complete");
-			currentToken.set('');
-			currentUser.set(null);
 			$location.path('/login');
 		});
 	};

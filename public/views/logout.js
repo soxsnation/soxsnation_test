@@ -8,10 +8,10 @@
 alia.defineView({
 	path: '/logout',
 	dependencies: [
-		'$location',
-		'session'
+		'session', '$location'
+		
 	]
-}, function(ctx, $location, session) {
+}, function(ctx, session, $location) {
 
 	// Initiate logout
 	session.logout();

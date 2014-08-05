@@ -1,14 +1,21 @@
 alia.defineHeader({
-	dependencies: ['session', 'nav']
-}, function(session, nav) {
+	dependencies: ['session', 'nav', 'sox']
+}, function(session, nav, sox) {
 
+	var userActive = alia.state(false);
 	var usersName = alia.state('');
-	var user = session.currentUser();
+	var user = alia.state(session.currentUser());
 	var permission = alia.state(0);
 	user.onResolve(function(data) {
 		// console.log(data);
-		usersName.set(data.firstName + ' ' + data.lastName);
-		permission.set(data.permissions);
+		if (data === null) {
+			userActive.set(false);
+			usersName.set('');
+		} else {
+			userActive.set(true);
+			usersName.set(data.firstName + ' ' + data.lastName);
+			permission.set(data.permissions);
+		}
 	})
 
 
@@ -67,11 +74,8 @@ alia.defineHeader({
 				// Account menu
 
 				alia.layoutNavbarDropdown(ctx, {
-					text: usersName, 
-					visible: permission.onResolve(function(v){
-						console.log('logged in: ' + ((v & 1) == 1))
-						return v & 1 == 1;
-					})
+					text: usersName,
+					visible: userActive
 				}, function(ctx) {
 					alia.doDropdownHeader(ctx, {
 						text: 'Account'
@@ -89,7 +93,7 @@ alia.defineHeader({
 						link: 'logout',
 						text: 'Logout'
 					}).onClick(function() {
-						console.log("clicked");
+						// console.log("clicked");
 					});
 				});
 
@@ -97,7 +101,8 @@ alia.defineHeader({
 				// Administration menu
 
 				alia.layoutNavbarDropdown(ctx, {
-					text: '<span class="glyphicon glyphicon-cog"></span>'
+					text: '<span class="glyphicon glyphicon-cog"></span>',
+					visible: userActive
 				}, function(ctx) {
 					alia.doDropdownHeader(ctx, {
 						text: 'Administration'

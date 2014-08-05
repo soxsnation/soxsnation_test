@@ -15,12 +15,20 @@ alia.defineMultiview({
 	],
 }, function(multiview, session, $location, sox) {
 	console.log('recipes');
-	var p = session.currentUser().get().permissions;
-	console.log(p)
-	if ((p & 4) !== 4) {
-		console.log('do not have permission')
-		$location.path('/');
-	}
+	var user = alia.state(session.currentUser());
+	user.onResolve(function(data) {
+		if (data === null) {
+			$location.path('/');
+		} else {
+			var p = data.permissions;
+			console.log(p)
+			if ((p & 4) !== 4) {
+				console.log('do not have permission')
+				$location.path('/');
+			}
+		}
+	})
+
 	multiview.navigation(function(ctx) {
 		// 	alia.layoutMultiviewNavigationLinkset(ctx, {}, function(ctx) {
 		// 		alia.doMultiviewNavigationHeader(ctx, {

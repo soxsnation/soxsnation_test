@@ -1,3 +1,10 @@
+/* home.js
+ *
+ * Author(s):  Andrew Brown
+ * Date:       6/10/2014
+ *
+ */
+
 alia.defineView({
     path: '/',
     dependencies: [

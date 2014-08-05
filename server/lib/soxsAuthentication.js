@@ -81,33 +81,37 @@ exports.login = function(reqHeader, cb) {
 }
 
 exports.logout = function(reqHeader, cb) {
-	console.log('soxsAuthentication.validateToken');
+	console.log('soxsAuthentication.logout');
+	if (reqHeader.indexOf('.') == -1) {
+		cb(401, null);
+	} else {
+		var token = jwt.decode(reqHeader, secret);
+		findUserByUsername(token.username, function(err, user) {
+			user.logout(token, function() {
 
-	var token = jwt.decode(reqHeader, secret);
-	findUserByUsername(token.username, function(err, user) {
-		user.logout(token, function() {
-
+			})
 		})
-	})
+	}
 }
 
 exports.validateToken = function(reqHeader, cb) {
 	console.log('soxsAuthentication.validateToken');
 	if (reqHeader === undefined) {
 		cb(401, null);
-		return;
+	} else if (reqHeader.indexOf('.') == -1) {
+		cb(401, null);
+	} else {
+		var token = jwt.decode(reqHeader, secret);
+
+		findUserByUsername(token.username, function(err, user) {
+			if (user.tokens === token) {
+				console.log('token not found');
+				cb(401, null);
+			} else {
+				console.log(token);
+				cb(null, reqHeader);
+				//Check if token needs to be renewed
+			}
+		})
 	}
-
-	var token = jwt.decode(reqHeader, secret);
-
-	findUserByUsername(token.username, function(err, user) {
-		if (user.tokens === token) {
-			console.log('token not found');
-			cb(401, null);
-		} else {
-			console.log(token);
-			cb(null, reqHeader);
-			//Check if token needs to be renewed
-		}
-	})
 }
