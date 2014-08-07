@@ -102,7 +102,11 @@ alia.defineHeader({
 
 				alia.layoutNavbarDropdown(ctx, {
 					text: '<span class="glyphicon glyphicon-cog"></span>',
-					visible: userActive
+					visible: permission.then(function(p){
+						console.log(p);
+						console.log(((p & 2) === 2));
+						return ((p & 2) === 2);
+					})
 				}, function(ctx) {
 					alia.doDropdownHeader(ctx, {
 						text: 'Administration'

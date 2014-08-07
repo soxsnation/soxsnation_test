@@ -153,6 +153,23 @@ exports.addStep = function(req, res, next) {
 	// });
 }
 
+exports.editStep = function(req, res, next) {
+	console.log('exports.editStep');
+	Recipe.findOne({
+			_id: req.params.id
+		}).exec(function(err, recipe) {
+			if (err) {
+				return next(err);
+			} else {
+				recipe.editStep(req.body, function(data) {
+					console.log(data);
+					res.send(200);
+					// res.json(recipe);
+				});
+			}
+		});
+}
+
 
 /***********************************************************************************************************************
  * Ingredient Exports
@@ -167,6 +184,25 @@ exports.addIngredient = function(req, res, next) {
 				return next(err);
 			} else {
 				recipe.addIngredient(req.body, function(data) {
+					console.log(data);
+					res.send(200);
+					// res.json(recipe);
+				});
+			}
+		});
+	// });
+}
+
+exports.editIngredient = function(req, res, next) {
+	console.log('exports.editIngredient');
+	// parse(req, function(err, ingredient) {
+		Recipe.findOne({
+			_id: req.params.id
+		}).exec(function(err, recipe) {
+			if (err) {
+				return next(err);
+			} else {
+				recipe.editIngredient(req.body, function(data) {
 					console.log(data);
 					res.send(200);
 					// res.json(recipe);

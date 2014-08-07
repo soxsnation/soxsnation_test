@@ -61,12 +61,26 @@ alia.defineService({
 		}, {}, step).then(parseBody);
 	};
 
+	sox.editStep = function(id, step) {
+		console.log('sox.editStep');
+		return $request.post(server + 'recipe/step/edit/:id', {
+			id: id
+		}, {}, step).then(parseBody);
+	};
+
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Ingredient functions
 
 	sox.addIngredient = function(id, ingredient) {
 		console.log('sox.addIngredient');
 		return $request.post(server + 'recipe/ingredient/add/:id', {
+			id: id
+		}, {}, ingredient).then(parseBody);
+	};
+
+	sox.editIngredient = function(id, ingredient) {
+		console.log('sox.editIngredient');
+		return $request.post(server + 'recipe/ingredient/edit/:id', {
 			id: id
 		}, {}, ingredient).then(parseBody);
 	};

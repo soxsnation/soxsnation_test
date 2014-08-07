@@ -40,11 +40,11 @@ var RecipeSchema = new Schema({
 		default: '',
 		trim: true
 	},
-	// user: {
-	// 	type: String,
-	// 	default: 'Andrew',
-	// 	trim: true
-	// },
+	user: {
+		type: String,
+		default: '',
+		trim: true
+	},
 	ingredients: [{
 		name: {
 			type: String,
@@ -115,18 +115,44 @@ RecipeSchema.methods = {
 
 		this.save(cb)
 	},
+	editIngredient: function(ingredient, cb) {
+		console.log('model.editIngredient: ' + this.ingredients.length);
+		for (var i = 0; i < this.ingredients.length; ++i) {
+			if (this.ingredients[i]._id == ingredient._id) {
+				this.ingredients[i].name = ingredient.name;
+				this.ingredients[i].quantity = ingredient.quantity;
+				break;
+			}
+		}
+
+		// this.update({_id: this._id}, this.ingredients, cb);
+
+		this.save(cb);
+	},
 	removeIngredient: function(ingredient, cb) {
 
 		this.save(cb);
 	},
 	addStep: function(step, cb) {
-console.log(step);
+		console.log(step);
 		this.steps.push({
 			number: step.number,
 			description: step.description
 		});
 
 		this.save(cb)
+	},
+	editStep: function(step, cb) {
+		console.log('model.editStep');
+		for (var i = 0; i < this.steps.length; ++i) {
+			if (this.steps[i]._id == step._id) {
+				this.steps[i].name = step.name;
+				this.steps[i].description = step.description;
+				break;
+			}
+		}
+		this.save(cb);
+
 	},
 	removeStep: function(step, cb) {
 

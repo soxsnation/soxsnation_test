@@ -120,6 +120,7 @@ module.exports = function(app, passport) {
 	 ****************************************************/
 
 	app.post('/api/recipe/step/add/:id', recipes.addStep);
+	app.post('/api/recipe/step/edit/:id', recipes.editStep);
 
 
 	/****************************************************
@@ -127,6 +128,7 @@ module.exports = function(app, passport) {
 	 ****************************************************/
 
 	app.post('/api/recipe/ingredient/add/:id', recipes.addIngredient);
+	app.post('/api/recipe/ingredient/edit/:id', recipes.editIngredient);
 
 
 }

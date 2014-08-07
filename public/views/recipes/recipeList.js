@@ -9,7 +9,7 @@
 
 (function() {
 
-    function doAddRecipeModal(ctx, sox, view) {
+    function doAddRecipeModal(ctx, session, sox, view) {
         return alia.doModalForm(ctx, {
             title: 'Add Recipe',
             size: 'large',
@@ -25,10 +25,13 @@
         }).onSubmit(function(event, value, resolve, reject) {
             resolve();
             console.log(value);
+            var name = session.currentUser().get().firstName + ' ' + session.currentUser().get().lastName;
+            console.log(name);
             var recipe = {
                 description: value.description,
                 name: value.name,
-                createdAt: new Date()
+                createdAt: new Date(),
+                user: name
             }
 
             var req = sox.insertRecipe(recipe);
@@ -58,14 +61,14 @@
         });
     }
 
-    function doSubheader(ctx, sox, view) {
+    function doSubheader(ctx, session, sox, view) {
         alia.layoutDiv(ctx, {
             classes: 'fancy-subheader'
         }, function(ctx) {
             alia.doButton(ctx, {
                 text: 'Add Recipe'
             }).onClick(function(event) {
-                doAddRecipeModal(ctx, sox, view).show();
+                doAddRecipeModal(ctx, session, sox, view).show();
             });
 
 
@@ -108,8 +111,8 @@
 
     alia.defineView({
         path: '/recipeList',
-        dependencies: ['$location', 'sox']
-    }, function(ctx, $location, sox) {
+        dependencies: ['session', 'sox']
+    }, function(ctx, session, sox) {
         var view = ctx;
         console.log('recipeList');
 
@@ -127,7 +130,7 @@
         })
 
         doHeader(ctx);
-        doSubheader(ctx, sox, view);
+        doSubheader(ctx, session, sox, view);
 
         alia.layoutDiv(ctx, {
             classes: 'fancy-viewport-content'

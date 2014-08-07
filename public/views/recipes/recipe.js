@@ -46,6 +46,43 @@
         });
     }
 
+    function doEditStepModal(ctx, step, id, sox, refreshRecipe) {
+return alia.doModalForm(ctx, {
+            title: 'Edit Step',
+            size: 'large',
+            onEnterKeySubmit: true,
+            fields: [{
+                name: 'number',
+                label: "Step Number",
+                type: 'number',
+                initValue: step.number,
+                disabled: true
+            }, {
+                name: 'description',
+                label: 'Step Instructions',
+                initValue: step.description
+            }]
+        }).onSubmit(function(event, value, resolve, reject) {
+            console.log(value);
+            var newStep = {
+                description: value.description,
+                number: value.number,
+                _id: step._id
+            }
+
+            var req = sox.editStep(id.get(), newStep);
+            req.onResolve(function(data) {
+                console.log(data);
+                refreshRecipe.set(true);
+                resolve();
+            });
+            req.onError(function(err) {
+                reject(err);
+            });
+
+        }).show();
+    }
+
     function doAddIngredientModal(ctx, id, sox, refreshRecipe) {
         return alia.doModalForm(ctx, {
             title: 'Add Ingredient',
@@ -80,6 +117,40 @@
         });
     }
 
+    function doUpdateIngredientModal(ctx, id, sox, refreshRecipe) {
+        return alia.doModalForm(ctx, {
+            title: 'Edit Ingredient',
+            size: 'large',
+            onEnterKeySubmit: true,
+            fields: [{
+                name: 'name',
+                label: 'Name',
+                initValue: ''
+            }, {
+                name: 'quantity',
+                label: "Quantity",
+                initValue: ''
+            }]
+        }).onSubmit(function(event, value, resolve, reject) {
+            console.log(value);
+            var ingredient = {
+                name: value.name,
+                quantity: value.quantity
+            }
+
+            var req = sox.editIngredient(id.get(), ingredient);
+            req.onResolve(function(data) {
+                console.log(data);
+                refreshRecipe.set(true);
+                resolve();
+            });
+            req.onError(function(err) {
+                reject(err);
+            });
+
+        });
+    }
+
     function doEditIngredientModal(ctx, ingredient, id, sox, refreshRecipe) {
         return alia.doModalForm(ctx, {
             title: 'Add Ingredient',
@@ -96,12 +167,13 @@
             }]
         }).onSubmit(function(event, value, resolve, reject) {
             console.log(value);
-            var ingredient = {
+            var newIngredient = {
                 name: value.name,
-                quantity: value.quantity
+                quantity: value.quantity,
+                _id: ingredient._id
             }
 
-            var req = sox.addIngredient(id.get(), ingredient);
+            var req = sox.editIngredient(id.get(), newIngredient);
             req.onResolve(function(data) {
                 console.log(data);
                 refreshRecipe.set(true);
@@ -144,12 +216,13 @@
         return function(item) {
             item.class('add', 'item');
             console.log('createIngredientItem' + index);
-            var text = recipe.get().ingredients[index].quantity + ' ' + recipe.get().ingredients[index].name;
+            var text = recipe.get().ingredients[index].quantity + ' ' + recipe.get().ingredients[index].name;// + ' ' + recipe.get().ingredients[index]._id;
             console.log(text);
             alia.doText(item, {
                 text: text
             }).onClick(function() {
-                console.log('CLICKED' + recipe.get().ingredients[index].name);
+                console.log('CLICKED' + recipe.get().ingredients[index]._id);
+                doEditIngredientModal(ctx, recipe.get().ingredients[index], recipe.property('._id'), sox, refreshRecipe);
                 // doEditIngredientModal(ctx, recipe.get().ingredients[index], recipe.property('._id'), sox, refreshRecipe);
             })
         }
@@ -163,7 +236,8 @@
             alia.doText(item, {
                 text: text
             }).onClick(function() {
-                console.log('CLICKED' + recipe.get().steps[index].description);
+                console.log('CLICKED' + recipe.get().steps[index]._id);
+                doEditStepModal(ctx, recipe.get().steps[index], recipe.property('._id'), sox, refreshRecipe);
                 // doEditIngredientModal(ctx, recipe.get().ingredients[index], recipe.property('._id'), sox, refreshRecipe);
             })
         }
