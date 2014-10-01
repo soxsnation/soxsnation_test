@@ -324,6 +324,30 @@
 	"buffers":
 	[
 		{
+			"file": "server/models/Recipe.js",
+			"settings":
+			{
+				"buffer_size": 2539,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "server/lib/authorization.js",
+			"settings":
+			{
+				"buffer_size": 436,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "server/models/soxsSchema.js",
+			"settings":
+			{
+				"buffer_size": 401,
+				"line_ending": "Windows"
+			}
+		},
+		{
 			"file": "server/routes/routes.js",
 			"settings":
 			{
@@ -332,10 +356,26 @@
 			}
 		},
 		{
-			"file": "server/models/Recipe.js",
+			"file": "server/lib/Utils.js",
 			"settings":
 			{
-				"buffer_size": 2539,
+				"buffer_size": 2835,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "server/models/soxsModel.js",
+			"settings":
+			{
+				"buffer_size": 270,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "server.js",
+			"settings":
+			{
+				"buffer_size": 1993,
 				"line_ending": "Windows"
 			}
 		},
@@ -360,6 +400,14 @@
 			"settings":
 			{
 				"buffer_size": 2347,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "server/lib/config.js",
+			"settings":
+			{
+				"buffer_size": 165,
 				"line_ending": "Windows"
 			}
 		},
@@ -439,8 +487,17 @@
 		"side_bar_visible": false,
 		"status_bar_visible": false
 	},
+	"expanded_folders":
+	[
+		"/C/Users/Andrew/repository/soxsnation_website",
+		"/C/Users/Andrew/repository/soxsnation_website/server",
+		"/C/Users/Andrew/repository/soxsnation_website/server/lib",
+		"/C/Users/Andrew/repository/soxsnation_website/server/models",
+		"/C/Users/Andrew/repository/soxsnation_website/server/routes"
+	],
 	"file_history":
 	[
+		"/C/Users/Andrew/repository/soxsnation_website/server/routes/routes.js",
 		"/C/Users/Andrew/repository/soxsnation/server/lib/Utils.js",
 		"/C/Users/Andrew/repository/soxsnation/public/views/recipes/recipes.js",
 		"/C/Users/Andrew/repository/soxsnation/server/controllers/authController.js",
@@ -567,12 +624,11 @@
 		"/C/Users/abrown/Documents/Software/Alia/src/components/divs.js",
 		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/views/marketplace.js",
 		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/views/workspace_demo.js",
-		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/views/neato.js",
-		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/views/framework.js"
+		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/views/neato.js"
 	],
 	"find":
 	{
-		"height": 34.0
+		"height": 23.0
 	},
 	"find_in_files":
 	{
@@ -681,40 +737,11 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 4,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "server/routes/routes.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4781,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4497,
-								4497
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1350.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
 					"file": "server/models/Recipe.js",
 					"semi_transient": false,
 					"settings":
@@ -726,8 +753,8 @@
 						"selection":
 						[
 							[
-								2433,
-								2433
+								1452,
+								1452
 							]
 						],
 						"settings":
@@ -736,14 +763,188 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1657.0,
+						"translation.y": 1148.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "server/lib/authorization.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 436,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "server/models/soxsSchema.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 401,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "server/routes/routes.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4781,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								477,
+								477
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": -0.0,
+						"translation.y": 765.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "server/lib/Utils.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2835,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								108,
+								116
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 405.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 5,
+					"file": "server/models/soxsModel.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 270,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "server.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1993,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								161,
+								161
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": -0.0,
+						"translation.y": 540.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
 					"file": "server/controllers/recipes.js",
 					"semi_transient": false,
 					"settings":
@@ -768,11 +969,11 @@
 						"translation.y": 1890.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 11,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 8,
 					"file": "public/views/recipes/recipe.js",
 					"semi_transient": false,
 					"settings":
@@ -798,11 +999,11 @@
 						"translation.y": 1038.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 10,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 9,
 					"file": "public/services/soxsnationService.js",
 					"semi_transient": false,
 					"settings":
@@ -824,14 +1025,42 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 405.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 10,
+					"file": "server/lib/config.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 165,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
 					"file": "public/views/recipes/recipeList.js",
 					"semi_transient": false,
 					"settings":
@@ -857,11 +1086,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 13,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 12,
 					"file": "server/models/User.js",
 					"semi_transient": false,
 					"settings":
@@ -886,11 +1115,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 12,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 13,
 					"file": "server/controllers/soxsController.js",
 					"semi_transient": false,
 					"settings":
@@ -915,11 +1144,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 14,
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 14,
 					"file": "server/lib/soxsAuthentication.js",
 					"semi_transient": false,
 					"settings":
@@ -942,10 +1171,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 135.0,
+						"translation.y": 1035.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
@@ -1020,6 +1249,7 @@
 		],
 		"width": 0.0
 	},
+	"selected_group": 0,
 	"settings":
 	{
 	},

@@ -1,0 +1,364 @@
+/**********************************************************************
+  index
+**********************************************************************/
+
+
+
+.index_bg {
+  position: absolute;
+  left: 0px;
+  /*top: 197px;*/
+  top: 0px;
+  background-image: url('/img/background.png');
+  background-position: 50% -315px;
+  width: 100%;
+  height: 315px;
+  z-index: 5;
+}
+
+.sky_gradient {
+  position: absolute;
+  left: 0px;
+  top: 197px;
+  background: -webkit-linear-gradient(#2C77BB, #FFF); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#2C77BB, #67C8CE); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#2C77BB, #67C8CE); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#2C77BB, #FFF); /* Standard syntax */
+  width: 100%;
+  height: 750px;
+  z-index: 1;
+}
+
+
+body {
+ position: absolute;
+  background-color: #FFF;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.navbar { /*.navbar-default .navHeader {*/
+  min-height: 20px;
+  margin-bottom: 0px;
+  border-width: 0px;
+}
+
+.discomHeader {
+  background-color: #67C8CE;
+}
+
+/*.collapse .navbar-collapse {
+  margin-left: 150px;
+}*/
+
+.nav  {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.discomNav2 {
+  margin-left: auto;
+  margin-right: auto;
+  display:inline-block;
+  
+}
+
+.navbar .nav > li > a {
+  font-size: 16px;
+}
+
+.gradient {
+  background: -webkit-linear-gradient(#67C8CE, #2C77BB); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#67C8CE, #2C77BB); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#67C8CE, #2C77BB); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#67C8CE, #2C77BB); /* Standard syntax */
+}
+
+#main {
+  position:relative;
+  left: 0px;
+  top: 0px;
+  z-index: 10;
+}
+
+.discom_footer {
+	background-color: #2C77BB;
+	color: #FFF;
+}
+
+/**********************************************************************
+  Home Page
+**********************************************************************/
+
+#home_contacts {
+  height: 250px;
+}
+
+#home_about {
+  background-color: #37499F;
+  height: 320px;
+  color: #FFF;
+}
+
+.home_panels {
+  position:relative;
+  left: 0px;
+  top: 0px;
+  display: block;
+  z-index: 15;
+}
+
+.home_leftpanel {
+  display:inline-block;
+  float:left;
+  width:44%;
+  margin: 5px;
+  margin-left: 150px;
+}
+
+.home_rightpanel {
+  display:inline-block;
+  float:right;
+  width:34%;
+  margin: 5px;
+}
+
+.btn_morg {
+  display:inline-block;
+  padding:2px 10px;
+}
+
+.morgCalc {
+	display:block;
+}
+
+.morgCalc_Left {
+	display:inline-block;
+	float:left;
+	padding:2px 10px;
+	width: 40%;
+}
+
+.morgCalc_Right {
+	display:inline-block;
+	float:right;
+	padding:2px 10px;
+	width: 50%;
+}
+
+.morgCalc_Label {
+
+}
+
+.morgCalc_Input {
+	margin-bottom: 10px;
+  margin-top: 2px;
+  margin-left: 0px;
+  margin-right: 4px;
+}
+
+.morgCalc_Error {
+	color: #F00;
+	font-weight: bold;
+}
+
+.morgCalc_Result {
+	
+}
+
+
+/**********************************************************************
+  Contact Page
+**********************************************************************/
+
+/* line 4081 */
+.navbar-default {
+  background-color: inherit;
+  border-color: #FFF;
+}
+
+.discomNav {
+  background-color: #2C77BB;
+}
+
+/* line 4104 */
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #FFF;
+  background-color: inherit;
+}
+
+/* line 4534 */
+.jumbotronLeft {
+  padding: 30px;
+  margin-bottom: 30px;
+  color: #FFF;
+  background-color: #2C77BB;
+  
+}
+
+.container .jumbotronLeft {
+  border-radius: 6px;
+  width: 70%;
+  height: 635px;
+  display: inline-block;
+  float: left;
+}
+
+.mapView {
+  color: #000;
+	background-color: #FFF;
+	width: 450px;
+	height: 450px;
+}
+
+.jumbotronRight {
+  padding: 15px 20px;
+  margin-bottom: 30px;
+  color: #FFF;
+  background-color: #67C8CE;
+  
+}
+
+.container .jumbotronRight {
+  border-radius: 6px;
+  width: 28%;
+  height: 635px;
+  display: inline-block;
+  float: right;
+}
+
+.jumbotronRight input {
+	padding: 6px;
+	height: 36px;
+}
+
+.jumbotronRight textarea {
+	padding: 6px;
+}
+
+.jumbotronRight label {
+	font-weight: 500;
+	font-size: 15px;
+}
+
+.jumbotronRightTitle {
+	font-size: 18pt;
+	margin-bottom: 10px;
+}
+
+.jumbotronRightError {
+	color: #F00;
+	font-weight: 500;
+	font-size: 18px;
+}
+
+.jumbotronRight-control {
+	color: #FFF;
+	font-size: 14px;
+}
+
+.angular-google-map-container { 
+  height: 450px; 
+}
+
+/**********************************************************************
+  Agents Page
+**********************************************************************/
+
+.agent-view {
+  /*display:inline;*/
+  /*float:left;*/
+  margin-left: auto;
+  margin-right: auto;
+  width: 800px;
+  color: #FFF;
+}
+
+/* line 4572 */
+.agent-info {
+  display: inline-block;
+  padding: 4px;
+  margin: 10px 5px;
+  line-height: 1.42857143;
+  background-color: #3989BF;
+  border: 1px solid #dfd7ca;
+  border-radius: 4px;
+  width: 360px;
+  -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+.agent-img {
+  display:inline-block;
+  float:left;
+  margin: 5px;
+  width: 80px;
+}
+
+.agent-contact1 {
+  display:inline-block;
+  float:right;
+  margin: 5px;
+  width: 350px;
+  border-width: 0px;
+}
+
+.agent_header {
+	margin-left: auto;
+  	margin-right: auto;
+  	width: 800px;
+	color: #FFF;
+	font-size: 14px;
+}
+
+
+/**********************************************************************
+  Listing table Page
+**********************************************************************/
+
+.listing_table_frame {
+	width: 100%;
+	height: 720px;
+}
+
+/**********************************************************************
+  Listing search Page
+**********************************************************************/
+
+.listing_search {
+	background-color: #FFF;
+}
+
+.listing_search_frame {
+	width: 100%;
+	height: 720px;
+}
+
+
+/**********************************************************************
+  Community Page
+**********************************************************************/
+
+.town_links a:link  {
+  color:#37499F;
+}
+
+.town_links a:hover {
+  color:#37499F;
+}
+
+.town_links a:visited {
+  color:#37499F;
+}
+
+
+
+
+
+/**********************************************************************
+  Contact Page
+**********************************************************************/

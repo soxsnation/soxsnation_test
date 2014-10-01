@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" >
+  <head>
+    <!-- Title -->
+    <title>soxsnation</title>
+    
+    <link href="css/bootstrap.min.css" rel="stylesheet" >
+    <!-- <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/sandstone/bootstrap.min.css" rel="stylesheet" > -->
+    <!-- <link href="./css/bootstrap.sandstone.css" rel="stylesheet" > -->
+      <link href="./css/soxsnation.css" rel="stylesheet" >
+        <script type="text/jscript" src="lib/jquery.min.js"></script>
+        <script src="lib/angular.min.js"></script>
+
+        <script type="text/jscript" src="js/app.js"></script>
+        <script type="text/jscript" src="js/controller.js"></script>
+        <script type="text/jscript" src="lib/bootstrap-dropdown.js"></script>
+        
+      </head>
+      <body id="body" data-ng-app="SoxsnationApp">
+        <div class="discomNav">
+          <center>
+          <nav class="navbar navbar-default" role="navigation">
+              <div class="discomNav2">
+                <ul class="nav navbar-nav">
+                  <li class="active"><a href="/#/Agents">Agents</a></li>
+                  <li class="active"><a href="/#/Community">Community</a></li>
+                  <li class="active"><a href="/#/Contact">Contact</a></li>
+                  <!-- <li class="active"><a href="/#/About">About</a></li> -->
+                  <li class="active"><a href="/#/Listings">Listings</a></li>
+                  <li class="active"><a href="/#/ListingSearch">Search</a></li>
+                  
+                </ul>
+              </div>
+            </nav>
+            </center>
+          </div>
+          <!-- <div class="index_bg" id="sky_gradient"></div> -->
+          <div class="sky_gradient"></div>
+          <div class="index_bg_solid"></div>
+          <div class="container" id="main" data-ng-view> </div>
+          <div class="navbar navbar-fixed-bottom discom_footer">
+            <div class="container">
+              <p> Andrew Brown </p>
+            </div>
+          </div>
+        </body>
+      </html>

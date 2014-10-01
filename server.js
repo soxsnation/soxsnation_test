@@ -66,14 +66,14 @@ app.use(passport.session());
 // Bootstrap routes
 require('./server/routes/routes')(app, passport);
 
-app.use('/alia', express.static('./public/lib'));
-app.use('/', express.static('./public'));
+app.use('/alia', express.static('./public2/lib'));
+app.use('/', express.static('./public2'));
 app.use('/', function(req, res, next) {
 	if (true) {
-		res.sendfile(fpath.join(__dirname, 'public', 'index.html'));
+		res.sendfile(fpath.join(__dirname, 'public2', 'index.html'));
 	} else {
 		if (req.isAuthenticated()) {
-			res.sendfile(fpath.join(__dirname, 'public', 'index.html'));
+			res.sendfile(fpath.join(__dirname, 'public2', 'index.html'));
 		} else {
 			console.log('NEED TO LOG IN');
 		}
