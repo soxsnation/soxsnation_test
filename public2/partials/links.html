@@ -1,0 +1,15 @@
+<h1>Links</h1>
+{{page}}
+<form role="form" data-ng-submit="saveLink()">
+	<input type="text" data-ng-model="link_text" placeholder="text"><br />
+	<input type="text" data-ng-model="link_link" placeholder="link"><br />
+	<input type="text" data-ng-model="link_tag" placeholder="tag"><br />
+	<input class="btn-primary" type="submit" value="Save Link">
+</form>
+<br /><br /><br />
+<input type="search" data-ng-model="tag_filter" placeholder="Search tags" />
+<ul>
+	<li data-ng-repeat='link in links | filter:tag_filter'>
+		{{link.text}} -- <a href="{{link.link}}" target="_blank">{{link.link}}</a>
+	</li>
+</ul>

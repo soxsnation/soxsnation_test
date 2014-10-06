@@ -1,0 +1,12 @@
+[
+{
+	"text":"google",
+	"link":"http://google.com",
+	"tags":["search", "email", "chrome"]
+},
+{
+	"text":"amazon",
+	"link":"http://amazon.com",
+	"tags":["ec2", "shopping", "e-books"]
+}
+]
