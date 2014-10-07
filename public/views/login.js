@@ -160,6 +160,13 @@
 					disabled: credentials.isUndefined().startWith(true) //false
 				}).onClick(function() {
 					// console.log("onclick");
+					alia.doAlert(ctx, {
+						type: 'danger',
+						text: 'Incorrect username or password. Please try again'
+						
+					});
+					return;
+
 					submitting.set(true);
 
 					// credentials.onResolve(function(creds) {
@@ -169,11 +176,12 @@
 						submitting.set(false);
 						var dest = session.destination();
 						console.log(dest);
-						if (dest && dest !== '' && dest !== '/login') {
-							$location.path(dest);
-						} else {
-							$location.path('/');
-						}
+						// if (dest && dest !== '' && dest !== '/login') {
+						// 	$location.path(dest);
+						// } else {
+						// 	$location.path('/');
+						// }
+
 					}).onError(function(err) {
 						submitting.set(false);
 						return;

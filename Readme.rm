@@ -1,0 +1,30 @@
+
+
+// TO add a new schema post to 
+http://localhost:3085/api/soxs/create/soxsSchema
+
+with data link this
+
+{
+   "name": "link",
+   "description": "searchable links",
+   "fields": "{\"name\":\"String\", \"text\":\"String\", \"url\":\"String\", \"tags\":\"String\"}"  
+}
+
+
+// To insert records into new schema post to
+http://localhost:3085/api/soxs/insert/link
+
+with data link this
+
+{
+   "name": "yahoo",
+   "text": "yahoo",
+   "url": "http://yahoo.com",
+   "tags": "search,news,fantasy football"
+}
+
+
+
+
+

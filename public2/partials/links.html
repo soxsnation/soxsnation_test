@@ -1,15 +1,30 @@
 <h1>Links</h1>
 {{page}}
-<form role="form" data-ng-submit="saveLink()">
-	<input type="text" data-ng-model="link_text" placeholder="text"><br />
-	<input type="text" data-ng-model="link_link" placeholder="link"><br />
-	<input type="text" data-ng-model="link_tag" placeholder="tag"><br />
-	<input class="btn-primary" type="submit" value="Save Link">
-</form>
-<br /><br /><br />
+<div class="soxs_alert" style="display:{{showAlert}}" data-ng-click="closeAlert()">
+	<div class="{{alertCss}} soxs_alert_contex ">
+		<span class="alert" >{{alertText}}</span>
+	</div>
+</div>
+<!-- <form role="form" data-ng-submit="saveLink()">
+		<input type="text" data-ng-model="link_text" placeholder="text"><br />
+		<input type="text" data-ng-model="link_link" placeholder="link"><br />
+		<input type="text" data-ng-model="link_tag" placeholder="tag"><br />
+		<input class="btn-primary" type="submit" value="Save Link">
+</form> -->
 <input type="search" data-ng-model="tag_filter" placeholder="Search tags" />
+<br /><br /><br />
+<div style="display:block;height:200px;width:100%;">
+	<div style="display:inline-block;height:25px;width:150px;" data-ng-repeat='tag in tags | filter:tag_filter' data-ng-click="filter(tag)">
+	{{tag}}
+	</div>
+	<br />
+</div>
+<!-- <ul>
+	<li data-ng-repeat='tag in tags' data-ng-click="filter(tag)">{{tag}}</li>
+</ul> -->
+
 <ul>
 	<li data-ng-repeat='link in links | filter:tag_filter'>
-		{{link.text}} -- <a href="{{link.link}}" target="_blank">{{link.link}}</a>
+		{{link.text}} -- <a href="{{link.url}}" target="_blank">{{link.url}}</a>
 	</li>
 </ul>

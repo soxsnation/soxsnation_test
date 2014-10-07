@@ -25,7 +25,7 @@ function getSchema(schemaType, cb) {
 			if (err) {
 				cb(err, null);
 			}
-			if (!ss) {
+			if (!ss || ss == null) {
 				cb('Failed to load soxsSchema ' + schemaType, null);
 			}
 
@@ -45,6 +45,7 @@ function getSchema(schemaType, cb) {
 
 exports.create = function(req, res, next) {
 	console.log('soxsController.create');
+	console.log(req.body);
 	var schemaType = req.params.type;
 	getSchema(schemaType, function(err, customModel) {
 		if (err) {
@@ -61,7 +62,27 @@ exports.create = function(req, res, next) {
 			})
 		}
 	})
+}
 
+exports.insert = function(req, res, next) {
+	console.log('soxsController.insert');
+	console.log(req.body);
+	getSchema(req.params.type, function(err, customModel) {
+		if (err) {
+			res.send(404);
+		} else {
+			console.log('got customModel');
+			var record = new customModel(req.body);
+			console.log('populated customModel');
+			record.save(function(err, rec) {
+				if (err) {
+					return res.send(403);
+				} else {
+					return res.json(rec);
+				}
+			})
+		}
+	})
 }
 
 

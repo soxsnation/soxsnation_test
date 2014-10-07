@@ -1,0 +1,6 @@
+{
+   "name": "link",
+   "description": "searchable links",
+   "fields": "{\"name\":\"String\", \"text\":\"String\", \"url\":\"String\", \"tags\":\"String\"}"  
+}
+

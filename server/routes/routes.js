@@ -94,6 +94,7 @@ module.exports = function(app, passport) {
 	 app.post('/api/soxs/create/:type', soxsController.create);
 	 app.get('/api/soxs/get/:type/:id', soxsController.get);
 	 app.get('/api/soxs/getall/:type', soxsController.getall);
+	 app.post('/api/soxs/insert/:type', soxsController.insert);
 
 	/*****************************************************************************************
 	 * User Routes
