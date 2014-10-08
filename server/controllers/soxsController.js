@@ -13,8 +13,9 @@ var soxsSchema = mongoose.model('soxsSchema');
 
 
 function getSchema(schemaType, cb) {
+	console.log('getSchema: ' + schemaType);
 	var currentSchemas = mongoose.modelNames();
-	console.log(currentSchemas);
+	// console.log(currentSchemas);
 	if (currentSchemas.indexOf(schemaType) != -1) {
 		cb(null, mongoose.model(schemaType));
 	} else {
@@ -46,6 +47,7 @@ function getSchema(schemaType, cb) {
 exports.create = function(req, res, next) {
 	console.log('soxsController.create');
 	console.log(req.body);
+	console.log(req.params.type);
 	var schemaType = req.params.type;
 	getSchema(schemaType, function(err, customModel) {
 		if (err) {

@@ -11,6 +11,7 @@ angular.module('soxsnation', []).config(function ($routeProvider) {
     $routeProvider.
 		when('/Home', { controller: HomeController, templateUrl: '../partials/home.html' }).
         when('/Links', { controller: LinkController, templateUrl: '../partials/links.html' }).
+        when('/Recipes', { controller: RecipeController, templateUrl: '../partials/recipes.html' }).
 		when('/SoxsData', { controller: SoxsDataController, templateUrl: '../partials/soxsdata/soxsdata.html' }).
 		// when('/About', { controller: AboutController, templateUrl: '../partials/about.html' }).
 		// when('/Community', { controller: CommunityController, templateUrl: '../partials/community.html' }).

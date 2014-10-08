@@ -1,11 +1,25 @@
 <h1>Soxs Data</h1>
-{{page}}
+<!-- {{page}} -->
 
 
 <!-- Button trigger modal -->
-<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-  Launch demo modal
+<button class="btn btn-primary" data-toggle="modal" data-ng-click="insert_data_model()">
+  Add Data Model
 </button>
+
+
+<ul>
+	<li data-ng-repeat="model in data_models">
+	{{model.name}} <sapn class="edit_model_model" data-ng-click="edit_data_model(model)">[Edit]</sapn>
+	</li>
+</ul>
+
+
+
+
+
+
+
 
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="{{modalHidden}}" data-backdrop="">
@@ -52,6 +66,13 @@
 							<button type="button" data-ng-click="addFieldToObj()" class="btn btn-primary" style="display:inline">Add</button>
 						</div>
 					</div>
+					<div class="form-group">
+						<label for="newFieldText" class="col-sm-2 control-label">Add Field By Text</label>
+						<div class="col-sm-10">
+							<textarea class="form-control" data-ng-model="newFieldText" id="newFieldText" cols="3"></textarea> 
+							<button type="button" data-ng-click="addFieldTextToObj()" class="btn btn-primary" style="display:inline">Add</button>
+						</div>
+					</div>
 
 					<!-- <input class="btn btn-default" type="submit" value="Update Link"> -->
 					
@@ -60,7 +81,7 @@
 			<div class="modal-footer">
 				<h4 class="modal-footer-error">{{modal_error}}</h4>
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-primary" data-ng-click="saveLink()">{{modalSubmitText}}</button>
+		        <button type="button" class="btn btn-primary" data-ng-click="saveDataType()">{{modalSubmitText}}</button>
 
 		     </div>
 		</div>

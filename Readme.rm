@@ -26,5 +26,6 @@ with data link this
 
 
 
-
+// To find all the different data types get to
+http://localhost:3085/api/soxs/types
 
