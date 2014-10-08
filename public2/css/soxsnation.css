@@ -48,6 +48,15 @@
     border-color: #ebccd1;
 }
 
+.modal-footer-error {
+  min-height:16.43px;
+  padding:15px;
+  margin-right: 20px;
+  color: #F00;
+  display:inline;
+  text-align: left;
+}
+
 
 /**********************************************************************
   index
