@@ -1,0 +1,68 @@
+<h1>Soxs Data</h1>
+{{page}}
+
+
+<!-- Button trigger modal -->
+<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  Launch demo modal
+</button>
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="{{modalHidden}}" data-backdrop="">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;
+					</span>
+					<span class="sr-only">Close</span>
+				</button>
+        		<h4 class="modal-title" id="myModalLabel">{{modalTitle}}</h4>        		
+			</div>
+			<div class="modal-body">
+			<!-- <h1>BODY</h1> -->
+				<form role="form" class="form-horizontal">
+					<div class="form-group">
+						<label for="newObj_name" class="col-sm-2 control-label">Data Type Name</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" data-ng-model="newObj_name" id="newObj_name" placeholder="name">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="newObj_description" class="col-sm-2 control-label">Description</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" data-ng-model="newObj_description" id="newObj_description" placeholder="description">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="newObjFields" class="col-sm-2 control-label">Fields</label>
+						<div class="col-sm-10">
+						<span data-ng-repeat="field in newObjFields" style="display:block">
+							<input type="checkbox" data-ng-model="todo.done" >
+							{{field.name}} :: {{field.type}}
+							<!-- {{field}} -->
+						</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="newFieldName" class="col-sm-2 control-label">Add Field</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" data-ng-model="newFieldName" id="newFieldName" placeholder="" style="display:inline;width:40%">
+							<select data-ng-model="newFieldType" data-ng-options="ft.name for ft in fieldTypes" class="form-control" style="display:inline;width:25%"></select>
+							<button type="button" data-ng-click="addFieldToObj()" class="btn btn-primary" style="display:inline">Add</button>
+						</div>
+					</div>
+
+					<!-- <input class="btn btn-default" type="submit" value="Update Link"> -->
+					
+				</form>
+			</div>
+			<div class="modal-footer">
+				<h4 class="modal-footer-error">{{modal_error}}</h4>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-primary" data-ng-click="saveLink()">{{modalSubmitText}}</button>
+
+		     </div>
+		</div>
+	</div>
+</div>

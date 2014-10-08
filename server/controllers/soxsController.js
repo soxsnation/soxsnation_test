@@ -64,6 +64,20 @@ exports.create = function(req, res, next) {
 	})
 }
 
+exports.get_types = function(req, res, next) {
+	console.log('soxsController.get_types');
+	soxsSchema.find({}).exec(function(err, models) {
+		if (err) {
+			return next(err);
+		}
+		if (!models) {
+			return next(new Error('Failed to load models: ' + req.params.type));
+		}
+
+		return res.json(models);
+	});
+}
+
 exports.insert = function(req, res, next) {
 	console.log('soxsController.insert');
 	console.log(req.body);
@@ -80,6 +94,33 @@ exports.insert = function(req, res, next) {
 				} else {
 					return res.json(rec);
 				}
+			})
+		}
+	})
+}
+
+exports.update = function(req, res, next) {
+	console.log('soxsController.update');
+	getSchema(req.params.type, function(err, customModel) {
+		if (err) {
+			res.send(404);
+		} else {
+			customModel.findOne({
+				_id: req.params.id
+			}).exec(function(err, modelData) {
+				if (err) {
+					return next(err);
+				}
+				if (!modelData) {
+					return next(new Error('Failed to load ' + req.params.type));
+				}
+				modelData.update(req.body, function(err, data) {
+					if (err) {
+						res.send(404);
+					} else {
+						res.send(200);
+					}
+				})
 			})
 		}
 	})

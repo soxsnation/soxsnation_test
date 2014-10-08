@@ -5,12 +5,11 @@
 		<span class="alert" >{{alertText}}</span>
 	</div>
 </div>
-<!-- <form role="form" data-ng-submit="saveLink()">
-		<input type="text" data-ng-model="link_text" placeholder="text"><br />
-		<input type="text" data-ng-model="link_link" placeholder="link"><br />
-		<input type="text" data-ng-model="link_tag" placeholder="tag"><br />
-		<input class="btn-primary" type="submit" value="Save Link">
-</form> -->
+<!-- Button trigger modal -->
+<!-- <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  Launch demo modal
+</button> -->
+
 <input type="search" data-ng-model="tag_filter" placeholder="Search tags" />
 <br /><br /><br />
 <div style="display:block;height:200px;width:100%;">
@@ -22,9 +21,83 @@
 <!-- <ul>
 	<li data-ng-repeat='tag in tags' data-ng-click="filter(tag)">{{tag}}</li>
 </ul> -->
+<button class="btn btn-primary btn-lg" data-toggle="modal" data-ng-click="insert_link_mode()">
+  Insert Link
+</button>
 
 <ul>
 	<li data-ng-repeat='link in links | filter:tag_filter'>
-		{{link.text}} -- <a href="{{link.url}}" target="_blank">{{link.url}}</a>
+		{{link.text}} -- <a href="{{link.url}}" target="_blank">{{link.url}}</a> <div data-ng-click="editLink(link)" style="width:75px;"> Edit </div>
 	</li>
 </ul>
+
+
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="{{modalHidden}}" data-backdrop="">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;
+					</span>
+					<span class="sr-only">Close</span>
+				</button>
+        		<h4 class="modal-title" id="myModalLabel">{{modalTitle}}</h4>        		
+			</div>
+			<div class="modal-body">
+			<!-- <h1>BODY</h1> -->
+				<form role="form" class="form-horizontal">
+					<div class="form-group">
+						<label for="link_text" class="col-sm-2 control-label">Link text</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" data-ng-model="link_text" id="link_text" placeholder="text">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="link_url" class="col-sm-2 control-label">Url</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" data-ng-model="link_url" id="link_url" placeholder="link">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="link_tag" class="col-sm-2 control-label">Tags</label>
+						<div class="col-sm-10">
+						<span data-ng-repeat="tag in link_tags" style="display:block">
+							<input type="checkbox" ng-model="todo.done" >
+							{{tag}}
+						</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="newTag" class="col-sm-2 control-label">Add Tag</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" data-ng-model="newTag" id="newTag" placeholder="link" style="display:inline;width:80%">
+							<button type="button" data-ng-click="addTagToLink()" class="btn btn-primary" style="display:inline">Add</button>
+						</div>
+					</div>
+
+					<!-- <input class="btn btn-default" type="submit" value="Update Link"> -->
+					
+				</form>
+			</div>
+			<div class="modal-footer">
+				<h4 class="modal-footer-error">{{modal_error}}</h4>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-primary" data-ng-click="saveLink()">{{modalSubmitText}}</button>
+
+		     </div>
+		</div>
+	</div>
+</div>
+
+<!-- <form role="form" data-ng-submit="saveLink()">
+		<input type="text" data-ng-model="link_text" placeholder="text"><br />
+		<input type="text" data-ng-model="link_link" placeholder="link"><br />
+		<input type="text" data-ng-model="link_tag" placeholder="tag"><br />
+		<input class="btn-primary" type="submit" value="Update Link">
+</form>  -->
+
+
+
+

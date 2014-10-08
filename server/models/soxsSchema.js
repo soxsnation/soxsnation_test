@@ -29,4 +29,18 @@ var soxsSchema = new Schema({
 });
 
 
+soxsSchema.methods = {
+
+	update: function(data, cb) {
+
+		for (var key in data) {
+			this[key] = data[key];
+		}
+
+		this.save(cb)
+	}
+
+}
+
+
 mongoose.model('soxsSchema', soxsSchema)
