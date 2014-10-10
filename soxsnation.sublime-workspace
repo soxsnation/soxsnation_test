@@ -4,12 +4,28 @@
 		"selected_items":
 		[
 			[
-				"get",
-				"getSchema"
+				"newO",
+				"newObjFields"
 			],
 			[
-				"f",
-				"fields"
+				"margin",
+				"margin-right"
+			],
+			[
+				"al",
+				"text-align"
+			],
+			[
+				"t",
+				"type	Attr"
+			],
+			[
+				"modal",
+				"modalHidden"
+			],
+			[
+				"sox",
+				"soxsController"
 			],
 			[
 				"ing",
@@ -332,10 +348,26 @@
 	"buffers":
 	[
 		{
-			"file": "server/models/data/link.json",
+			"file": "server/routes/routes.js",
 			"settings":
 			{
-				"buffer_size": 163,
+				"buffer_size": 4964,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "server/controllers/soxsController.js",
+			"settings":
+			{
+				"buffer_size": 3703,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "public2/js/Controllers/link_ctrl.js",
+			"settings":
+			{
+				"buffer_size": 4456,
 				"line_ending": "Windows"
 			}
 		},
@@ -343,15 +375,47 @@
 			"file": "public2/partials/links.html",
 			"settings":
 			{
-				"buffer_size": 1121,
+				"buffer_size": 3773,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "public2/js/Controllers/link.js",
+			"file": "public2/css/soxsnation.css",
 			"settings":
 			{
-				"buffer_size": 1791,
+				"buffer_size": 7149,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Readme.rm",
+			"settings":
+			{
+				"buffer_size": 583,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "public2/partials/soxsdata/soxsdata.html",
+			"settings":
+			{
+				"buffer_size": 3355,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "public2/index.html",
+			"settings":
+			{
+				"buffer_size": 2275,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "public2/js/Controllers/soxs_data_ctrl.js",
+			"settings":
+			{
+				"buffer_size": 4577,
 				"line_ending": "Windows"
 			}
 		}
@@ -401,45 +465,49 @@
 	},
 	"expanded_folders":
 	[
-		"/C/Users/Andrew/repository/soxsnation_website",
-		"/C/Users/Andrew/repository/soxsnation_website/public/views",
-		"/C/Users/Andrew/repository/soxsnation_website/public/views/recipes",
-		"/C/Users/Andrew/repository/soxsnation_website/public2",
-		"/C/Users/Andrew/repository/soxsnation_website/public2/css",
-		"/C/Users/Andrew/repository/soxsnation_website/public2/js",
-		"/C/Users/Andrew/repository/soxsnation_website/public2/js/Controllers",
-		"/C/Users/Andrew/repository/soxsnation_website/public2/partials",
-		"/C/Users/Andrew/repository/soxsnation_website/server/controllers",
-		"/C/Users/Andrew/repository/soxsnation_website/server/models",
-		"/C/Users/Andrew/repository/soxsnation_website/server/models/data",
-		"/C/Users/Andrew/repository/soxsnation_website/server/routes"
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/css",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js/Controllers",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/partials"
 	],
 	"file_history":
 	[
-		"/C/Users/Andrew/repository/soxsnation_website/public2/css/soxsnation.css",
-		"/C/Users/Andrew/repository/soxsnation_website/server/routes/routes.js",
-		"/C/Users/Andrew/repository/soxsnation_website/server/controllers/soxsController.js",
-		"/C/Users/Andrew/repository/soxsnation_website/Readme.rm",
-		"/C/Users/Andrew/repository/soxsnation_website/server/models/data/task.json",
-		"/C/Users/Andrew/repository/soxsnation_website/server/models/data/link.json",
-		"/C/Users/Andrew/repository/soxsnation_website/public/views/login.js",
-		"/C/Users/Andrew/repository/soxsnation_website/server.js",
+		"/C/Users/abrown/scratch/Software/Astroid/scripts/pbs_example.json",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js/app.js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/css/bootstrap.css",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/partials/home.html",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server/models/soxsSchema.js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/index.html",
+		"/C/Users/abrown/Downloads/bootstrap-3.2.0-dist/bootstrap-3.2.0-dist/css/bootstrap.min.css",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/css/bootstrap.min.css",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/lib/bootstrap.min.js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server/models/Recipe.js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server.js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server/controllers/recipes.js",
+		"/C/Users/abrown/scratch/Software/Andrew/angular-phonecat-master/angular-phonecat-master/app/js/controllers.js",
+		"/C/Users/abrown/scratch/Software/Andrew/angular-phonecat-master/angular-phonecat-master/app/js/services.js",
+		"/C/Users/abrown/scratch/Software/Astroid/planningBuild/gtv.json",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/css/soxsnation.css",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js/service.js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js/controller.js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server/controllers/sessionController.js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/data/links.json",
 		"/C/Users/Andrew/repository/soxsnation_website/server/models/Recipe.js",
-		"/C/Users/Andrew/repository/soxsnation_website/server/controllers/recipes.js",
-		"/C/Users/Andrew/repository/soxsnation_website/public2/index.html",
-		"/C/Users/Andrew/repository/soxsnation_website/server/models/soxsSchema.js",
-		"/C/Users/Andrew/repository/soxsnation_website/server/models/soxsModel.js",
-		"/C/Users/Andrew/repository/soxsnation_website/public2/js/app.js",
-		"/C/Users/Andrew/repository/soxsnation_website/public2/js/controller.js",
-		"/C/Users/Andrew/repository/soxsnation_website/public2/js/service.js",
-		"/C/Users/Andrew/repository/soxsnation_website/public2/data/links.json",
 		"/C/Users/Andrew/repository/soxsnation_website/server/lib/authorization.js",
+		"/C/Users/Andrew/repository/soxsnation_website/server/models/soxsSchema.js",
+		"/C/Users/Andrew/repository/soxsnation_website/server/routes/routes.js",
 		"/C/Users/Andrew/repository/soxsnation_website/server/lib/Utils.js",
+		"/C/Users/Andrew/repository/soxsnation_website/server/models/soxsModel.js",
+		"/C/Users/Andrew/repository/soxsnation_website/server.js",
+		"/C/Users/Andrew/repository/soxsnation_website/server/controllers/recipes.js",
 		"/C/Users/Andrew/repository/soxsnation_website/public/views/recipes/recipe.js",
 		"/C/Users/Andrew/repository/soxsnation_website/public/services/soxsnationService.js",
 		"/C/Users/Andrew/repository/soxsnation_website/server/lib/config.js",
 		"/C/Users/Andrew/repository/soxsnation_website/public/views/recipes/recipeList.js",
 		"/C/Users/Andrew/repository/soxsnation_website/server/models/User.js",
+		"/C/Users/Andrew/repository/soxsnation_website/server/controllers/soxsController.js",
 		"/C/Users/Andrew/repository/soxsnation_website/server/lib/soxsAuthentication.js",
 		"/C/Users/Andrew/repository/soxsnation/server/lib/Utils.js",
 		"/C/Users/Andrew/repository/soxsnation/public/views/recipes/recipes.js",
@@ -533,21 +601,11 @@
 		"/C/Users/abrown/Documents/Software/Alia/src/providers/location.js",
 		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/views/workorders/workordersCurrent.js",
 		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/views/workorders/workordersActive.js",
-		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/views/iam/users.js",
-		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/views/demo.js",
-		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/index.html",
-		"/C/Users/abrown/Documents/Software/Alia/src/components/inputs.js",
-		"/C/Users/abrown/Documents/Software/Alia/src/components/modals.js",
-		"/C/Users/abrown/Documents/Software/Alia/examples/tracking/public/views/workorders.js",
-		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/views/iam/groups.js",
-		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/views/iam/organization.js",
-		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/views/iam/organizations.js",
-		"/C/Users/abrown/Documents/Software/Alia/src/components/alerts.js",
-		"/C/Users/abrown/AppData/Roaming/Sublime Text 3/Packages/JsFormat/Default (Windows).sublime-keymap"
+		"/C/Users/abrown/Documents/Software/Alia/examples/demo/public/views/iam/users.js"
 	],
 	"find":
 	{
-		"height": 23.0
+		"height": 34.0
 	},
 	"find_in_files":
 	{
@@ -566,6 +624,11 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"updateLink",
+			"modal-footer",
+			"link_tag",
+			"link_tags",
+			"link_tag",
 			"doUpdateIngredientModal",
 			"doAddIngredientModal",
 			"createIngredientItem",
@@ -656,16 +719,45 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 3,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "server/models/data/link.json",
-					"semi_transient": true,
+					"file": "server/routes/routes.js",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 163,
+						"buffer_size": 4964,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2336,
+								2336
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 810.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "server/controllers/soxsController.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3703,
 						"regions":
 						{
 						},
@@ -678,7 +770,66 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JSON.tmLanguage"
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1260.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "public2/js/Controllers/link_ctrl.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4456,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1181,
+								1689
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 45.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "public2/partials/links.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3773,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1098,
+								1098
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -688,24 +839,83 @@
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "public2/partials/links.html",
+					"buffer": 4,
+					"file": "public2/css/soxsnation.css",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1121,
+						"buffer_size": 7149,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								813,
-								813
+								915,
+								915
 							]
 						],
 						"settings":
 						{
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "Readme.rm",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 583,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "public2/partials/soxsdata/soxsdata.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3355,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								258,
+								282
+							]
+						],
+						"settings":
+						{
+							"open_with_edit": true,
 							"syntax": "Packages/HTML/HTML.tmLanguage"
 						},
 						"translation.x": 0.0,
@@ -716,29 +926,59 @@
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "public2/js/Controllers/link.js",
+					"buffer": 7,
+					"file": "public2/index.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1791,
+						"buffer_size": 2275,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1000,
-								1000
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "public2/js/Controllers/soxs_data_ctrl.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4577,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"open_with_edit": true,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": -0.0,
+						"translation.y": 180.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
