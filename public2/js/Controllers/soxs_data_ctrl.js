@@ -11,6 +11,7 @@
 function SoxsDataController($scope, $http) {
 	$scope.page = 'Soxs Data';
 	$scope.mode = 'none';
+	var server = 'http://localhost:3085/';
 
 	$scope.modalTitle = 'Add Data Type';
 	$scope.modalSubmitText = 'Add Data Type';
@@ -23,7 +24,19 @@ function SoxsDataController($scope, $http) {
 			{ name:'complete', type: 'Boolean'},
 			{ name: 'description', type: 'String'}
 		];
-	$scope.fieldTypes = [{name:'String'}, {name:'Boolean'}, {name:'Number'}, {name:'Date'}, {name:'Array'}];
+
+
+	$scope.fieldTypes = [{name:'String', value:'String'}];
+	$scope.fieldTypes.push({name:'Boolean', value:'Boolean'});
+	$scope.fieldTypes.push({name:'Number', value:'Number'});
+	$scope.fieldTypes.push({name:'Date', value:'Date'});
+	$scope.fieldTypes.push({name:'Array', value:'Array'});
+	$scope.fieldTypes.push({name: 'list item', value:[{"name":"String"}]});
+	$scope.fieldTypes.push({name: 'tags', value:["String"]});
+	$scope.fieldTypes.push({name: 'steps', value: [{"description":"String", "number":"String"}]});
+	$scope.fieldTypes.push({name: 'ingredients', value:[{"name":"String", "quantity":"String"}]});
+
+
 
 	$scope.newFieldName = '';
 	$scope.newFieldType = '';
@@ -31,7 +44,7 @@ function SoxsDataController($scope, $http) {
 
 	function addDataType() {
 
-		var url = 'http://localhost:3085/api/soxs/create/soxsSchema';
+		var url = server + 'api/soxs/create/soxsSchema';
 		var newObjFields = {};
 
 		for(var i = 0; i < $scope.newObjFields.length; ++i) {
@@ -58,7 +71,7 @@ function SoxsDataController($scope, $http) {
 	};
 
 	function updateDataType() {
-		var url = 'http://localhost:3085/api/soxs/update/soxsSchema/' + $scope.model_id;
+		var url = server + 'api/soxs/update/soxsSchema/' + $scope.model_id;
 
 		var newObj = {
 			name: $scope.newObj_name,
@@ -122,7 +135,7 @@ function SoxsDataController($scope, $http) {
 		console.log($scope.newFieldType);
 		var nf = {
 			name: $scope.newFieldName,
-			type: $scope.newFieldType.name
+			type: $scope.newFieldType.value
 		}
 
 		$scope.newObjFields.push(nf);
@@ -155,7 +168,7 @@ function SoxsDataController($scope, $http) {
 	}
 
 
-	$http.get('http://localhost:3085/api/soxs/types').success(function(data) {
+	$http.get(server + 'api/soxs/types').success(function(data) {
 		console.log(data);
 		$scope.data_models = [];
 

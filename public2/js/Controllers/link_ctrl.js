@@ -18,6 +18,7 @@ function LinkController($scope, $http) {
 	$scope.alertText = 'Alert';
 	$scope.alertCss = 'alert-danger';
 	$scope.modal_error = '';
+	var server = 'http://localhost:3085/';
 
 	function showModal(mode, link) {
 		$scope.mode = mode;
@@ -38,7 +39,7 @@ function LinkController($scope, $http) {
 	};
 
 	function saveLinkData() {
-		var url = 'http://localhost:3085/api/soxs/';
+		var url = server + 'api/soxs/';
 		if ($scope.mode === 'edit') {
 			url += 'update/link/' + $scope.link_id;
 		} else if ($scope.mode === 'insert') {
@@ -75,7 +76,7 @@ function LinkController($scope, $http) {
 	// 	$scope.links = data;
 	// });
 
-	$http.get('http://localhost:3085/api/soxs/getall/link').success(function(data) {
+	$http.get(server + 'api/soxs/getall/link').success(function(data) {
 		$scope.links = [];
 		$scope.tags = [];
 		for (var i = 0; i < data.length; ++i) {

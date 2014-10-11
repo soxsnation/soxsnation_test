@@ -14,12 +14,13 @@ function LinkController($scope, $http) {
 	$scope.showAlert = 'none';
 	$scope.alertText = 'Alert';
 	$scope.alertCss = 'alert-danger';
+	var server = 'http://localhost:3085/';
 
 	// $http.get('data/links.json').success(function(data) {
 	// 	$scope.links = data;
 	// });
 
-	$http.get('http://localhost:3085/api/soxs/getall/link').success(function(data) {
+	$http.get(server + 'api/soxs/getall/link').success(function(data) {
 		$scope.links = [];
 		$scope.tags = [];
 		for (var i = 0; i < data.length; ++i) {
@@ -61,7 +62,7 @@ console.log('filter');
 		}
 		console.log(link);
 
-		$http.post('http://localhost:3085/api/soxs/insert/link', link).success(function(data) {
+		$http.post(server + 'api/soxs/insert/link', link).success(function(data) {
 			links.push(link);
 
 			$scope.showAlert = 'block';

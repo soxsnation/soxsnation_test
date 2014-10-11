@@ -22,6 +22,7 @@ function RecipeController($scope, $http) {
 	$scope.recipe_tags = [];
 	$scope.recipe_ingredients = [];
 	$scope.recipe_steps = [];
+	var server = 'http://localhost:3085/';
 
 
 	function showModal(mode, recipe) {
@@ -33,8 +34,8 @@ function RecipeController($scope, $http) {
 			$scope.recipe_name = recipe.name;
 			$scope.recipe_desc = recipe.description;
 			$scope.recipe_tags = recipe.tags;
-			// $scope.recipe_ingredients = recipe.ingredients;
-			// $scope.recipe_steps = recipe.steps;
+			$scope.recipe_ingredients = recipe.ingredients;
+			$scope.recipe_steps = recipe.steps;
 			$scope.recipe_id = recipe._id;
 		} else if ($scope.mode === 'insert') {
 			$scope.modalTitle = 'Insert recipe';
@@ -45,7 +46,7 @@ function RecipeController($scope, $http) {
 	};
 
 	function saveRecipeData() {
-		var url = 'http://localhost:3085/api/soxs/';
+		var url = server + 'api/soxs/';
 		if ($scope.mode === 'edit') {
 			url += 'update/recipe/' + $scope.recipe_id;
 		} else if ($scope.mode === 'insert') {
@@ -89,10 +90,13 @@ function RecipeController($scope, $http) {
 		showModal('insert');
 	};
 
-	$scope.edit_recipe_mode = function(recipe) {
-		console.log(recipe);
-		showModal('edit', recipe);
+	$scope.edit_recipe_mode = function() {
+		showModal('edit', $scope.current_recipe);
 	};
+
+	$scope.select_recipe = function(recipe) {
+		$scope.current_recipe = recipe;
+	}
 
 	$scope.saveRecipe = function() {
 		console.log('saveRecipe');
@@ -128,23 +132,25 @@ function RecipeController($scope, $http) {
 		console.log($scope.recipe_steps);
 	}
 
-	$http.get('http://localhost:3085/api/soxs/getall/recipe').success(function(data) {
+	$http.get(server + 'api/soxs/getall/recipe').success(function(data) {
 		$scope.recipes = [];
 		$scope.tags = [];
 		for (var i = 0; i < data.length; ++i) {
 			var l = {
 				name: data[i].name,
 				description: data[i].description,
-				tags: data[i].tags.split(','),
+				// tags: data[i].tags.split(','),
+				steps: data[i].steps,
+				ingredients: data[i].ingredients,
 				_id: data[i]._id
 			};
-			for (var j = 0; j < l.tags.length; ++j) {
-				var found = false;
-				for (var k = 0; k < $scope.tags.length; ++k) {
-					if (l.tags[j] == $scope.tags[k]) { found = true; break;}
-				}
-				if (!found) { $scope.tags.push(l.tags[j]); }
-			}
+			// for (var j = 0; j < l.tags.length; ++j) {
+			// 	var found = false;
+			// 	for (var k = 0; k < $scope.tags.length; ++k) {
+			// 		if (l.tags[j] == $scope.tags[k]) { found = true; break;}
+			// 	}
+			// 	if (!found) { $scope.tags.push(l.tags[j]); }
+			// }
 			$scope.recipes.push(l);
 		}
 	});

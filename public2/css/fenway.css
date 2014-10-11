@@ -10,7 +10,32 @@
 
 
 
+.recpie_list {
+	display: block;
+	float:left;
+	width: 25%;
+	border-color: #000;
+	border-width: 2px;
+	border-style: solid;
+	height: 100%;
+}
 
+.recipe_detail {
+	display: block;
+	float:right;
+	width: 70%;
+	height: 100%;
+}
+
+.recipe_main {
+	display: inline-block;
+	height: 400px;
+	width: 100%;
+}
+
+.recipe_title {
+	display: block;
+}
 
 
 

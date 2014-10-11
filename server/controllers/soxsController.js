@@ -11,7 +11,6 @@ var Schema = mongoose.Schema;
 var soxsSchema = mongoose.model('soxsSchema');
 
 
-
 function getSchema(schemaType, cb) {
 	console.log('getSchema: ' + schemaType);
 	var currentSchemas = mongoose.modelNames();
