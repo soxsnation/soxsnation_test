@@ -7,8 +7,10 @@
 
 /* Controllers */
 
+var SoxsDataControllers = angular.module('SoxsDataControllers', []);
 
-function SoxsDataController($scope, $http) {
+SoxsDataControllers.controller('SoxsDataController', ['$scope', '$http', 'soxsAuth',
+function($scope, $http, soxsAuth) {
 	$scope.page = 'Soxs Data';
 	$scope.mode = 'none';
 	var server = 'http://localhost:3085/';
@@ -19,22 +21,62 @@ function SoxsDataController($scope, $http) {
 	$scope.newObj_name = 'name';
 	$scope.newObj_description = 'description';
 
-	$scope.newObjFields = [
-			{ name: 'name', type:'String'},
-			{ name:'complete', type: 'Boolean'},
-			{ name: 'description', type: 'String'}
-		];
+	$scope.newObjFields = [{
+		name: 'name',
+		type: 'String'
+	}, {
+		name: 'complete',
+		type: 'Boolean'
+	}, {
+		name: 'description',
+		type: 'String'
+	}];
 
 
-	$scope.fieldTypes = [{name:'String', value:'String'}];
-	$scope.fieldTypes.push({name:'Boolean', value:'Boolean'});
-	$scope.fieldTypes.push({name:'Number', value:'Number'});
-	$scope.fieldTypes.push({name:'Date', value:'Date'});
-	$scope.fieldTypes.push({name:'Array', value:'Array'});
-	$scope.fieldTypes.push({name: 'list item', value:[{"name":"String"}]});
-	$scope.fieldTypes.push({name: 'tags', value:["String"]});
-	$scope.fieldTypes.push({name: 'steps', value: [{"description":"String", "number":"String"}]});
-	$scope.fieldTypes.push({name: 'ingredients', value:[{"name":"String", "quantity":"String"}]});
+	$scope.fieldTypes = [{
+		name: 'String',
+		value: 'String'
+	}];
+	$scope.fieldTypes.push({
+		name: 'Boolean',
+		value: 'Boolean'
+	});
+	$scope.fieldTypes.push({
+		name: 'Number',
+		value: 'Number'
+	});
+	$scope.fieldTypes.push({
+		name: 'Date',
+		value: 'Date'
+	});
+	$scope.fieldTypes.push({
+		name: 'Array',
+		value: 'Array'
+	});
+	$scope.fieldTypes.push({
+		name: 'list item',
+		value: [{
+			"name": "String"
+		}]
+	});
+	$scope.fieldTypes.push({
+		name: 'tags',
+		value: ["String"]
+	});
+	$scope.fieldTypes.push({
+		name: 'steps',
+		value: [{
+			"description": "String",
+			"number": "String"
+		}]
+	});
+	$scope.fieldTypes.push({
+		name: 'ingredients',
+		value: [{
+			"name": "String",
+			"quantity": "String"
+		}]
+	});
 
 
 
@@ -42,12 +84,17 @@ function SoxsDataController($scope, $http) {
 	$scope.newFieldType = '';
 	$scope.model_id = '';
 
+
+
+
+
+
 	function addDataType() {
 
 		var url = server + 'api/soxs/create/soxsSchema';
 		var newObjFields = {};
 
-		for(var i = 0; i < $scope.newObjFields.length; ++i) {
+		for (var i = 0; i < $scope.newObjFields.length; ++i) {
 			var nextField = $scope.newObjFields[i];
 			console.log(nextField);
 			newObjFields[nextField.name] = nextField.type;
@@ -63,7 +110,7 @@ function SoxsDataController($scope, $http) {
 
 		$http.post(url, newObj).success(function(data) {
 			$('#myModal').modal('hide');
-		}).error(function(data, status){
+		}).error(function(data, status) {
 			console.log(data);
 			console.log(status);
 		})
@@ -81,7 +128,7 @@ function SoxsDataController($scope, $http) {
 
 		$http.post(url, newObj).success(function(data) {
 			$('#myModal').modal('hide');
-		}).error(function(data, status){
+		}).error(function(data, status) {
 			console.log(data);
 			console.log(status);
 		})
@@ -93,7 +140,7 @@ function SoxsDataController($scope, $http) {
 				name: prop,
 				type: field[prop]
 			}
-			return field;			
+			return field;
 		}
 	}
 
@@ -120,8 +167,8 @@ function SoxsDataController($scope, $http) {
 
 	$scope.saveDataType = function() {
 		// This is only here until i figure out how updating model data
-		$scope.mode ='insert';
-		
+		$scope.mode = 'insert';
+
 		if ($scope.mode === 'insert') {
 			addDataType();
 		} else if ($scope.mode === 'edit') {
@@ -145,13 +192,13 @@ function SoxsDataController($scope, $http) {
 	$scope.addFieldTextToObj = function() {
 		console.log($scope.newFieldText);
 		var fields = JSON.parse($scope.newFieldText);
-			for (var prop in fields) {
-				var field = {
-					name: prop,
-					type: fields[prop]
-				}
-				$scope.newObjFields.push(field);
+		for (var prop in fields) {
+			var field = {
+				name: prop,
+				type: fields[prop]
 			}
+			$scope.newObjFields.push(field);
+		}
 	}
 
 
@@ -168,53 +215,73 @@ function SoxsDataController($scope, $http) {
 	}
 
 
-	$http.get(server + 'api/soxs/types').success(function(data) {
-		console.log(data);
-		$scope.data_models = [];
+	function initData() {
+		console.log('initData');
+		soxsAuth.http_get('api/soxs/types')
+			.then(function(data) {
+			console.log(data);
+			$scope.data_models = [];
 
-		for (var i = 0; i < data.length; ++i) {
-			var model = {
-				name: data[i].name,
-				description: data[i].description,
-				fields: []
-			}
-
-			var fields = JSON.parse(data[i].fields);
-			for (var prop in fields) {
-				var field = {
-					name: prop,
-					type: fields[prop]
+			for (var i = 0; i < data.length; ++i) {
+				var model = {
+					name: data[i].name,
+					description: data[i].description,
+					fields: []
 				}
-				model.fields.push(field);
+
+				var fields = JSON.parse(data[i].fields);
+				for (var prop in fields) {
+					var field = {
+						name: prop,
+						type: fields[prop]
+					}
+					model.fields.push(field);
+				}
+
+				$scope.data_models.push(model);
 			}
-			
-			$scope.data_models.push(model);
-		}
+		})
+		// $http.get(server + 'api/soxs/types').success(function(data) {
+		// 	console.log(data);
+		// 	$scope.data_models = [];
 
-
-		
-		// $scope.tags = [];
-		// for (var i = 0; i < data.length; ++i) {
-		// 	var l = {
-		// 		name: data[i].name,
-		// 		text: data[i].text,
-		// 		url: data[i].url,
-		// 		tags: data[i].tags.split(','),
-		// 		_id: data[i]._id
-		// 	};
-		// 	for (var j = 0; j < l.tags.length; ++j) {
-		// 		var found = false;
-		// 		for (var k = 0; k < $scope.tags.length; ++k) {
-		// 			if (l.tags[j] == $scope.tags[k]) { found = true; break;}
+		// 	for (var i = 0; i < data.length; ++i) {
+		// 		var model = {
+		// 			name: data[i].name,
+		// 			description: data[i].description,
+		// 			fields: []
 		// 		}
-		// 		if (!found) { $scope.tags.push(l.tags[j]); }
+
+		// 		var fields = JSON.parse(data[i].fields);
+		// 		for (var prop in fields) {
+		// 			var field = {
+		// 				name: prop,
+		// 				type: fields[prop]
+		// 			}
+		// 			model.fields.push(field);
+		// 		}
+
+		// 		$scope.data_models.push(model);
 		// 	}
-		// 	$scope.links.push(l);
-		// }
-	});
+		// });
+	}
 
+	function user_login() {
+		soxsAuth.login('andrew', '123')
+			.then(function(result) {
+				$scope.userInfo = result;
+				initData();
+				// $location.path("/");
+			}, function(error) {
+				$window.alert("Invalid credentials");
+				console.log(error);
+			});
+	};
 
+	user_login();
+	
 
 
 
 }
+]);

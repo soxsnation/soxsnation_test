@@ -19,6 +19,8 @@ var fpath = require('path');
 var User = require('../models/User');
 var Auth = require('../lib/authorization');
 
+var _ = require('underscore');
+var jwt = require('jwt-simple');
 /**
  * Expose routes
  */
@@ -26,13 +28,13 @@ var Auth = require('../lib/authorization');
 module.exports = function(app, passport) {
 
 	// TODO: I had to add this in to support CORS requests. I'm not sure this is the way to do this.
-	app.use(function(req, res, next) {
-		res.header("Access-Control-Allow-Origin", "*");
-		res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-		res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Authorization");
-		res.header("Access-Control-Allow-Credentials", "true");
-		next();
-	});
+	// app.use(function(req, res, next) {
+	// 	res.header("Access-Control-Allow-Origin", "*");
+	// 	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+	// 	res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Authorization");
+	// 	res.header("Access-Control-Allow-Credentials", "true");
+	// 	next();
+	// });
 
 	/***********************************************************************************************************************
 	 * Public Routes
@@ -50,6 +52,62 @@ module.exports = function(app, passport) {
 	/***********************************************************************************************************************
 	 * Session Routes
 	 ***********************************************************************************************************************/
+
+	app.set('jwtTokenSecret', '123456ABCDEF');
+	var tokens = [];
+
+	function requiresAuthentication(request, response, next) {
+		console.log('requiresAuthentication');
+		// console.log(request.headers);
+		if (request.headers.access_token) {
+			var token = request.headers.access_token;
+			if (_.where(tokens, token).length > 0) {
+				var decodedToken = jwt.decode(token, app.get('jwtTokenSecret'));
+				if (new Date(decodedToken.expires) > new Date()) {
+					next();
+					return;
+				} else {
+					removeFromTokens();
+					response.end(401, "Your session is expired");
+				}
+			}
+		}
+		response.end(401, "No access token found in the request");
+	}
+
+	function removeFromTokens(token) {
+		for (var counter = 0; counter < tokens.length; counter++) {
+			if (tokens[counter] === token) {
+				tokens.splice(counter, 1);
+				break;
+			}
+		}
+	}
+
+	app.post('/api/login', function(request, response) {
+		console.log('api/login');
+
+		var userName = request.body.userName;
+		var password = request.body.password;
+
+		if (userName === "andrew" && password === "123") {
+			var expires = new Date();
+			expires.setDate((new Date()).getDate() + 5);
+			var token = jwt.encode({
+				userName: userName,
+				expires: expires
+			}, app.get('jwtTokenSecret'));
+
+			tokens.push(token);
+
+			response.send(200, {
+				access_token: token,
+				userName: userName
+			});
+		} else {
+			response.send(401, "Invalid credentials");
+		}
+	});
 
 	// app.post('/api/login', passport.authenticate('local'),
 	// 	function(req, res) {
@@ -83,7 +141,7 @@ module.exports = function(app, passport) {
 	app.get('/api/session/login', authControl.login);
 	app.get('/api/session/logout', authControl.logout);
 	app.get('/api/session/user', authControl.getUser);
-	
+
 	// app.get('/api/session/user/:id', session.getUser);
 	// app.get('/api/session/get/:id', session.getSession);
 
@@ -91,13 +149,13 @@ module.exports = function(app, passport) {
 	 * soxsObjects Routes
 	 *****************************************************************************************/
 
-	 app.post('/api/soxs/create/:type', soxsController.create);
-	 app.get('/api/soxs/get/:type/:id', soxsController.get);
-	 app.get('/api/soxs/getall/:type', soxsController.getall);
-	 app.post('/api/soxs/insert/:type', soxsController.insert);
+	app.post('/api/soxs/create/:type', soxsController.create);
+	app.get('/api/soxs/get/:type/:id', soxsController.get);
+	app.get('/api/soxs/getall/:type', soxsController.getall);
+	app.post('/api/soxs/insert/:type', soxsController.insert);
 
-	 app.get('/api/soxs/types', soxsController.get_types);
-	 app.post('/api/soxs/update/:type/:id', soxsController.update);
+	app.get('/api/soxs/types', requiresAuthentication, soxsController.get_types);
+	app.post('/api/soxs/update/:type/:id', soxsController.update);
 
 	/*****************************************************************************************
 	 * User Routes
