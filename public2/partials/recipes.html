@@ -6,8 +6,9 @@
 </div>
 <br /><br /><br />
 
+
 <div class="recipe_main">
-<div class="recpie_list">
+<!-- <div class="recpie_list">
 <ul>
 	<li data-ng-repeat='recipe in recipes | filter:tag_filter'>
 		<div data-ng-click="select_recipe(recipe)">
@@ -16,7 +17,10 @@
 		</div>
 	</li>
 </ul>
-</div>
+</div> -->
+<soxsdata type='recipe'></soxsdata>
+
+
 <div class="recipe_detail">
 	<b>{{current_recipe.name}}</b><div data-ng-click="edit_recipe_mode()" class="edit_model_model"> [Edit] </div><br />
 	{{current_recipe.description}}<br /><br />

@@ -7,8 +7,9 @@
 
 /* Controllers */
 
-
-function LinkController($scope, $http) {
+angular.module('soxsnationApp')
+	.controller('LinkController', ['$scope', '$http', '$location', 'soxsAuth',
+function LinkController($scope, $http, $location) {
 	$scope.mode = 'none';
 	$scope.modalHidden = 'true';
 
@@ -188,4 +189,5 @@ function LinkController($scope, $http) {
 		
 	};
 
-};
+}
+]);

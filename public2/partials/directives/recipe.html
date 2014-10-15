@@ -1,0 +1,14 @@
+
+<!-- <div class="recipe_main"> -->
+Title: {{title}}
+<div class="recpie_list">
+
+<ul>
+	<li data-ng-repeat='recipe in recipes | filter:tag_filter'>
+		<div data-ng-click="select_recipe(recipe)">
+			<b>{{recipe.name}}</b><br />
+			{{recipe.description}}
+		</div>
+	</li>
+</ul>
+</div>

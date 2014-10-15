@@ -7,9 +7,10 @@
 
 /* Controllers */
 
-var SoxsDataControllers = angular.module('SoxsDataControllers', []);
 
-SoxsDataControllers.controller('LoginController', ['$scope', '$location', 'soxsAuth',
+
+angular.module('soxsnationApp')
+	.controller('LoginController', ['$scope', '$location', 'soxsAuth',
 function($scope, $location, soxsAuth) {
 	if (soxsAuth.getUserInfo() == null) {
 		$location.path('/Login');
@@ -34,15 +35,22 @@ function($scope, $location, soxsAuth) {
 	}
 ]);
 
-SoxsDataControllers.controller('HomeController', ['$scope', '$location', 'soxsAuth',
+angular.module('soxsnationApp')
+.controller('HomeController', ['$scope', '$location', 'soxsAuth',
 function($scope, $location, soxsAuth) {
 if (soxsAuth.getUserInfo() == null) {
 		$location.path('/Login');
 	}
+
+	$scope.name = 'Andrew Brown';
+	$scope.page = 'Home Page';
+
+
 	}
 ]);
 
-SoxsDataControllers.controller('SoxsDataController', ['$scope', '$http', '$location', 'soxsAuth',
+angular.module('soxsnationApp')
+.controller('SoxsDataController', ['$scope', '$http', '$location', 'soxsAuth',
 function($scope, $http, $location, soxsAuth) {
 if (soxsAuth.getUserInfo() == null) {
 		$location.path('/Login');

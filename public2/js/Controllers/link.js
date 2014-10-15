@@ -8,7 +8,9 @@
 /* Controllers */
 
 
-function LinkController($scope, $http) {
+angular.module('soxsnationApp')
+.controller('LoginController', ['$scope','$http',  '$location', 'soxsAuth',
+function LinkController($scope, $http, $location) {
 	$scope.page = 'Link Page';
 	$scope.links = [];
 	$scope.showAlert = 'none';
@@ -82,3 +84,4 @@ console.log('filter');
 	};
 
 };
+]);
