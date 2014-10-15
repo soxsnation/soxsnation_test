@@ -15,7 +15,8 @@ var soxsnationApp = angular.module('soxsnationApp', [
 soxsnationApp.config(['$routeProvider',
 	function($routeProvider) {
 		$routeProvider.
-		// when('/Home', { controller: HomeController, templateUrl: '../partials/home.html' }).
+		when('/Home', { controller: 'HomeController', templateUrl: '../partials/home.html' }).
+		when('/Login', { controller: 'LoginController', templateUrl: '../partials/login.html' }).
 		//       when('/Links', { controller: LinkController, templateUrl: '../partials/links.html' }).
 		//       when('/Recipes', { controller: RecipeController, templateUrl: '../partials/recipes.html' }).
 		when('/SoxsData', {
@@ -23,7 +24,7 @@ soxsnationApp.config(['$routeProvider',
 			templateUrl: '../partials/soxsdata/soxsdata.html'
 		}).
 		otherwise({
-			redirectTo: '/SoxsData'
+			redirectTo: '/Login'
 		});
 	}
 ]);

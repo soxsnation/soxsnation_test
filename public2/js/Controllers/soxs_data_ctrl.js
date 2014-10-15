@@ -9,8 +9,45 @@
 
 var SoxsDataControllers = angular.module('SoxsDataControllers', []);
 
-SoxsDataControllers.controller('SoxsDataController', ['$scope', '$http', 'soxsAuth',
-function($scope, $http, soxsAuth) {
+SoxsDataControllers.controller('LoginController', ['$scope', '$location', 'soxsAuth',
+function($scope, $location, soxsAuth) {
+	if (soxsAuth.getUserInfo() == null) {
+		$location.path('/Login');
+	}
+
+
+	function user_login() {
+		soxsAuth.login($scope.username, $scope.password)
+			.then(function(result) {
+				$scope.userInfo = result;
+				$location.path('/Home');
+			}, function(error) {
+				alert("Invalid credentials");
+				console.log(error);
+			});
+	};
+
+	$scope.login = function() {
+		user_login();
+	}
+
+	}
+]);
+
+SoxsDataControllers.controller('HomeController', ['$scope', '$location', 'soxsAuth',
+function($scope, $location, soxsAuth) {
+if (soxsAuth.getUserInfo() == null) {
+		$location.path('/Login');
+	}
+	}
+]);
+
+SoxsDataControllers.controller('SoxsDataController', ['$scope', '$http', '$location', 'soxsAuth',
+function($scope, $http, $location, soxsAuth) {
+if (soxsAuth.getUserInfo() == null) {
+		$location.path('/Login');
+	}
+
 	$scope.page = 'Soxs Data';
 	$scope.mode = 'none';
 	var server = 'http://localhost:3085/';
@@ -265,12 +302,13 @@ function($scope, $http, soxsAuth) {
 		// 	}
 		// });
 	}
+	initData();
 
 	function user_login() {
 		soxsAuth.login('andrew', '123')
 			.then(function(result) {
 				$scope.userInfo = result;
-				initData();
+				
 				// $location.path("/");
 			}, function(error) {
 				$window.alert("Invalid credentials");
@@ -278,7 +316,7 @@ function($scope, $http, soxsAuth) {
 			});
 	};
 
-	user_login();
+	// user_login();
 	
 
 
