@@ -20,6 +20,7 @@ function LinkController($scope, $http, $location) {
 	$scope.alertCss = 'alert-danger';
 	$scope.modal_error = '';
 	var server = 'http://localhost:3085/';
+	server = '';
 
 	function showModal(mode, link) {
 		$scope.mode = mode;

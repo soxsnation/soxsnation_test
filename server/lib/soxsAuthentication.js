@@ -87,8 +87,8 @@ exports.logout = function(reqHeader, cb) {
 	} else {
 		var token = jwt.decode(reqHeader, secret);
 		findUserByUsername(token.username, function(err, user) {
-			user.logout(token, function() {
-
+			user.logout(token, function(err) {
+				cb(err,null);
 			})
 		})
 	}

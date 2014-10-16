@@ -24,6 +24,7 @@ angular.module('soxsnationApp')
 			$scope.recipe_ingredients = [];
 			$scope.recipe_steps = [];
 			var server = 'http://localhost:3085/';
+			server = '';
 
 
 			function showModal(mode, recipe) {

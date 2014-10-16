@@ -12,14 +12,22 @@
 angular.module('soxsnationApp')
 	.controller('LoginController', ['$scope', '$location', 'soxsAuth',
 function($scope, $location, soxsAuth) {
-	if (soxsAuth.getUserInfo() == null) {
-		$location.path('/Login');
-	}
+	// if (soxsAuth.getUserInfo() == null) {
+	// 	$location.path('/Login');
+	// }
 
+	soxsAuth.validateUser().then(function(user) {
+		console.log('User is logged in');
+	}, function(error) {
+		$location.path('/Login');
+	});
+
+	$scope.username = 'soxsnation@gmail.com';
 
 	function user_login() {
 		soxsAuth.login($scope.username, $scope.password)
 			.then(function(result) {
+				console.log('login successful');
 				$scope.userInfo = result;
 				$location.path('/Home');
 			}, function(error) {
@@ -38,12 +46,30 @@ function($scope, $location, soxsAuth) {
 angular.module('soxsnationApp')
 .controller('HomeController', ['$scope', '$location', 'soxsAuth',
 function($scope, $location, soxsAuth) {
-if (soxsAuth.getUserInfo() == null) {
-		$location.path('/Login');
-	}
 
-	$scope.name = 'Andrew Brown';
-	$scope.page = 'Home Page';
+	soxsAuth.validateUser().then(function(user) {
+		console.log('User is logged in');
+		$scope.name = 'Andrew Brown';
+		$scope.page = 'Home Page';
+		$scope.user = user;
+
+		$scope.logout = function() {
+			soxsAuth.logout()
+			.then(function(result) {
+				console.log('logout successful');
+				$location.path('/Login');
+			}, function(error) {
+				alert(error);
+				console.log(error);
+			});
+		}
+
+
+	}, function(error) {
+		$location.path('/Login');
+	});
+
+	
 
 
 	}
@@ -52,13 +78,17 @@ if (soxsAuth.getUserInfo() == null) {
 angular.module('soxsnationApp')
 .controller('SoxsDataController', ['$scope', '$http', '$location', 'soxsAuth',
 function($scope, $http, $location, soxsAuth) {
-if (soxsAuth.getUserInfo() == null) {
+
+	soxsAuth.validateUser().then(function(user) {
+		console.log('User is logged in');
+	}, function(error) {
 		$location.path('/Login');
-	}
+	});
 
 	$scope.page = 'Soxs Data';
 	$scope.mode = 'none';
 	var server = 'http://localhost:3085/';
+	server = '';
 
 	$scope.modalTitle = 'Add Data Type';
 	$scope.modalSubmitText = 'Add Data Type';

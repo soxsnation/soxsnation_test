@@ -23,7 +23,7 @@ soxsnationApp.config(['$routeProvider',
 			templateUrl: '../partials/soxsdata/soxsdata.html'
 		}).
 		otherwise({
-			redirectTo: '/Login'
+			redirectTo: '/Home'
 		});
 	}
 ]);
