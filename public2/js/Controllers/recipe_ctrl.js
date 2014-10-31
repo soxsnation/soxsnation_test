@@ -9,7 +9,7 @@
 
 angular.module('soxsnationApp')
 	.controller('RecipeController', ['$scope', '$http', '$location', 'soxsAuth',
-		function RecipeController($scope, $http, $location) {
+		function RecipeController($scope, $http, $location, soxsAuth) {
 			$scope.mode = 'none';
 			$scope.modalHidden = 'true';
 
@@ -54,14 +54,22 @@ angular.module('soxsnationApp')
 				} else if ($scope.mode === 'insert') {
 					url += 'insert/recipe'
 				}
-
+				var currentdate = new Date();
 				var recipe = {
 					name: $scope.recipe_name,
 					description: $scope.recipe_desc,
 					tags: $scope.recipe_tags,
 					steps: $scope.recipe_steps,
-					ingredients: $scope.recipe_ingredients
+					ingredients: $scope.recipe_ingredients,
+					userUpdated: soxsAuth.getUserInfo().firstName + ' ' + soxsAuth.getUserInfo().lastName,
+					dateUpdated: currentdate.toDateString()
+				};
+				// If its in insert mode, set the user and time it was added
+				if ($scope.mode === 'insert') {
+					recipe['userAdded'] = soxsAuth.getUserInfo().username;
+					recipe['dateAdded'] = currentdate.toDateString();
 				}
+
 				console.log(url);
 				console.log(recipe);
 
@@ -144,7 +152,9 @@ angular.module('soxsnationApp')
 						// tags: data[i].tags.split(','),
 						steps: data[i].steps,
 						ingredients: data[i].ingredients,
-						_id: data[i]._id
+						_id: data[i]._id,
+						dateUpdated: data[i].dateUpdated,
+						userUpdated: data[i].userUpdated
 					};
 					// for (var j = 0; j < l.tags.length; ++j) {
 					// 	var found = false;

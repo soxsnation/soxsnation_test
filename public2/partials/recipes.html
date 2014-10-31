@@ -23,6 +23,7 @@
 
 <div class="recipe_detail">
 	<b>{{current_recipe.name}}</b><div data-ng-click="edit_recipe_mode()" class="edit_model_model"> [Edit] </div><br />
+	<b>Updated on:</b> {{current_recipe.dateUpdated}} <b>By:</b> {{current_recipe.userUpdated}}<br />
 	{{current_recipe.description}}<br /><br />
 	<b>Ingredients</b><br />
 	<span data-ng-repeat="ingredient in current_recipe.ingredients" style="display:block">

@@ -64,7 +64,7 @@ exports.login = function(reqHeader, cb) {
 
 	findUserByUsername(username, function(err, user) {
 		if (err || !user) {
-			cb(err, user);
+			cb(err, null);
 		} else {
 			if (user.password === password) {
 				console.log('valid user');

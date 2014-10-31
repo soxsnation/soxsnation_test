@@ -1,0 +1,28 @@
+
+    <div class="discomNav">
+      <center>
+      <nav class="navbar navbar-default" role="navigation">
+        <div class="discomNav2">
+          <ul class="nav navbar-nav">
+          <li data-ng-repeat='dataModel in data_models' class="active">
+          <a href="/#/{{dataModel.name}}">{{dataModel.name}}</a>
+          <!-- {{dataModel.name}} -- {{dataModel.description}} -->
+          </li>
+
+<!--             <li class="active"><a href="/#/Home">Home</a></li>
+            <li class="active"><a href="/#/Recipes">Recipes</a></li>
+            <li class="active"><a href="/#/Community">Todos</a></li>
+            <li class="active"><a href="/#/Links">Links</a></li>
+            <li class="active"><a href="/#/Listings">Listings</a></li>
+            <li class="active"><a href="/#/SoxsData">Data Setup</a></li> -->
+            
+          </ul>
+        </div>
+      </nav>
+      </center>
+    </div>
+
+<br /><br />
+        <button class="btn btn-primary btn-lg" data-toggle="modal" data-ng-click="load_data()">
+    Load Data
+  </button>

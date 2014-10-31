@@ -13,7 +13,16 @@ exports.getUser = function(req, res, next) {
 		if (err || !user) {
 			res.send(401);
 		} else {
-			res.json(user);
+			var userData = {
+				username: user.username,
+				firstName: user.firstName,
+				lastName: user.lastName,
+				permissions: user.permissions,
+				sessionId: user.sessionId,
+				_id: user._id
+			};
+
+			res.json(userData);
 		}
 	});
 }
