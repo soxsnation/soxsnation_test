@@ -4,7 +4,7 @@
 	  Insert New Recipe
 	</button>
 </div>
-<br /><br /><br />
+<!-- <br /><br /><br /> -->
 
 
 <div class="recipe_main">
@@ -21,7 +21,7 @@
 <soxsdata type='recipe'></soxsdata>
 
 
-<div class="recipe_detail">
+<div class="recipe_detail" data-ng-show='recipeSelected'>
 	<b>{{current_recipe.name}}</b><div data-ng-click="edit_recipe_mode()" class="edit_model_model"> [Edit] </div><br />
 	<b>Updated on:</b> {{current_recipe.dateUpdated}} <b>By:</b> {{current_recipe.userUpdated}}<br />
 	{{current_recipe.description}}<br /><br />

@@ -11,6 +11,7 @@ var mongoose = require('mongoose'),
 	hash = require('../lib/hash');
 var guid = require('guid');
 
+
 /**
  * User Schema
  */
@@ -249,6 +250,10 @@ UserSchema.methods = {
 		// var index = this.tokens.indexOf(token);
 		// this.tokens.splice(index, 1);
 		this.tokens = '';
+		this.save(cb);
+	},
+	changePassword: function(password, cb) {
+		this.password = password;
 		this.save(cb);
 	},
 

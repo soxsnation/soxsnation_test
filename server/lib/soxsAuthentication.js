@@ -10,6 +10,7 @@ var mongoose = require('mongoose');
 var guid = require('guid');
 var jwt = require('jwt-simple');
 
+
 var utils = require('./Utils');
 var User = mongoose.model('User');
 
@@ -47,11 +48,39 @@ function generateToken(user) {
 }
 
 exports.getUser = function(reqHeader, cb) {
-	console.log('soxsAuthentication.getUser');
+	// console.log('soxsAuthentication.getUser');
 	// console.log(reqHeader);
 	var token = jwt.decode(reqHeader, secret);
 	console.log(token);
 	findUserByUsername(token.username, cb);
+}
+
+exports.changepassword = function(reqHeader, cb) {
+	console.log('soxsAuthentication.changepassword');
+	var au = reqHeader;
+	var creds = utils.Base64().decode(au.substring(au.indexOf(' ') + 1));
+	var username = creds.substring(0, creds.indexOf(':'));
+	var password = creds.substring(creds.indexOf(':') + 1, creds.length);
+	var hashedPassword;
+	utils.hashPassword(password, function(hashed) {
+		hashedPassword = hashed;
+	});
+	// console.log(username);
+	// console.log(password);
+	// console.log(hashedPassword);
+	utils.verifyPassword(password, hashedPassword, function(valid) {
+		console.log(valid);
+	})
+
+	findUserByUsername(username, function(err, user) {
+		if (err || !user) {
+			cb(err, null);
+		} else {
+			user.changePassword(hashedPassword, function(err) {
+				cb(err, true);
+			})
+		}
+	})
 }
 
 
@@ -62,40 +91,47 @@ exports.login = function(reqHeader, cb) {
 	var username = creds.substring(0, creds.indexOf(':'));
 	var password = creds.substring(creds.indexOf(':') + 1, creds.length);
 
+	// console.log(username + ' ' + password);
+
 	findUserByUsername(username, function(err, user) {
 		if (err || !user) {
 			cb(err, null);
 		} else {
-			if (user.password === password) {
-				console.log('valid user');
-				console.log(utils.getPermissionNames(user.permissions));
-				var token = generateToken(user);
-				user.login(token, function(err) {
-					cb(null, token);
-				})
-			} else {
-				cb(409, null);
-			}
+			utils.verifyPassword(password, user.password, function(valid) {
+				// console.log(valid);
+				if (valid) {
+					console.log('valid user');
+					// console.log(utils.getPermissionNames(user.permissions));
+					var token = generateToken(user);
+					user.login(token, function(err) {
+						cb(null, token);
+					})
+				} else {
+					console.log('User Password does not match')
+					cb(409, null);
+				}
+			})
+
 		}
 	})
 }
 
 exports.logout = function(reqHeader, cb) {
-	console.log('soxsAuthentication.logout');
+	// console.log('soxsAuthentication.logout');
 	if (reqHeader.indexOf('.') == -1) {
 		cb(401, null);
 	} else {
 		var token = jwt.decode(reqHeader, secret);
 		findUserByUsername(token.username, function(err, user) {
 			user.logout(token, function(err) {
-				cb(err,null);
+				cb(err, null);
 			})
 		})
 	}
 }
 
 exports.validateToken = function(reqHeader, cb) {
-	console.log('soxsAuthentication.validateToken');
+	// console.log('soxsAuthentication.validateToken');
 	if (reqHeader === undefined) {
 		cb(401, null);
 	} else if (reqHeader.indexOf('.') == -1) {
@@ -108,7 +144,6 @@ exports.validateToken = function(reqHeader, cb) {
 				console.log('token not found');
 				cb(401, null);
 			} else {
-				console.log(token);
 				cb(null, reqHeader);
 				//Check if token needs to be renewed
 			}

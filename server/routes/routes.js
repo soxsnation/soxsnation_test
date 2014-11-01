@@ -141,6 +141,8 @@ module.exports = function(app, passport) {
 	app.get('/api/session/login', authControl.login);
 	app.get('/api/session/logout', authControl.logout);
 	app.get('/api/session/user', authControl.getUser);
+	app.get('/api/session/changepassword', authControl.changepassword);
+	// app.get('/api/session/login', authControl.changepassword);
 
 	// app.get('/api/session/user/:id', session.getUser);
 	// app.get('/api/session/get/:id', session.getSession);

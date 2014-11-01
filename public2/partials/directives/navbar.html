@@ -1,28 +1,35 @@
-
-    <div class="discomNav">
-      <center>
-      <nav class="navbar navbar-default" role="navigation">
-        <div class="discomNav2">
-          <ul class="nav navbar-nav">
-          <li data-ng-repeat='dataModel in data_models' class="active">
-          <a href="/#/{{dataModel.name}}">{{dataModel.name}}</a>
-          <!-- {{dataModel.name}} -- {{dataModel.description}} -->
+<!-- <div data-ng-init="load_data()"> -->
+  <div class="discomNav" data-ng-init="load_data()">
+    <center>
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="discomNav2 container">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/#/Home">Home</a></li>
+          <li data-ng-repeat='dataModel in data_models' data-ng-show='isLoggedIn' class="active">
+            <a href="/#/{{dataModel.name}}">{{dataModel.name}}</a>
+            <!-- {{dataModel.name}} -- {{dataModel.description}} -->
           </li>
-
-<!--             <li class="active"><a href="/#/Home">Home</a></li>
-            <li class="active"><a href="/#/Recipes">Recipes</a></li>
-            <li class="active"><a href="/#/Community">Todos</a></li>
-            <li class="active"><a href="/#/Links">Links</a></li>
-            <li class="active"><a href="/#/Listings">Listings</a></li>
-            <li class="active"><a href="/#/SoxsData">Data Setup</a></li> -->
-            
-          </ul>
-        </div>
-      </nav>
-      </center>
-    </div>
-
-<br /><br />
-        <button class="btn btn-primary btn-lg" data-toggle="modal" data-ng-click="load_data()">
-    Load Data
-  </button>
+          <!-- <li class="active"><a href="/#/SoxsData">Soxs Data</a></li> -->
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown" data-ng-show='isLoggedIn'>
+          <a href="" class="dropdown-toggle" data-toggle="dropdown"><img src='../../../img/gear.png' height="24" width="24" />  <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li data-ng-repeat='item in configItems'><a href="{{item.link}}">{{item.text}}</a></li>
+              
+              <li class="divider"></li>
+              <li><a href="/#/Settings">Settings</a></li>
+              <!-- <li><a href="" data-ng-click='changePassword()'>change password</a></li> -->
+            </ul>
+          </li>
+          <li class="active" data-ng-click='logout()'><a href="">Logout</a></li>
+        </ul>
+      </div>
+    </nav>
+    </center>
+  </div>
+  <br /><br />
+<!--   <button class="btn btn-primary btn-lg" data-toggle="modal" data-ng-click="load_data()">
+  Load Data
+  </button> -->
+<!-- </div> -->

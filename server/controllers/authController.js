@@ -7,6 +7,18 @@
 
 var soxsAuth = require('../lib/soxsAuthentication');
 
+exports.changepassword = function(req, res, next) {
+	soxsAuth.changepassword(req.headers.authorization, function(err, token) {
+		if (err) {
+			res.send(err);
+		} else if (!token) {
+			res.send(401);
+		} else {
+			res.json(token);
+		}
+	});
+}
+
 exports.getUser = function(req, res, next) {
 	console.log('authController.getUser');
 	soxsAuth.getUser(req.headers.authorization, function(err, user) {

@@ -9,10 +9,11 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var soxsSchema = mongoose.model('soxsSchema');
+var mailer = require('../lib/mailer');
 
 
 function getSchema(schemaType, cb) {
-	console.log('getSchema: ' + schemaType);
+	// console.log('getSchema: ' + schemaType);
 	var currentSchemas = mongoose.modelNames();
 	// console.log(currentSchemas);
 	if (currentSchemas.indexOf(schemaType) != -1) {
@@ -44,7 +45,7 @@ function getSchema(schemaType, cb) {
 
 
 exports.create = function(req, res, next) {
-	console.log('soxsController.create');
+	// console.log('soxsController.create');
 	console.log(req.body);
 	console.log(req.params.type);
 	var schemaType = req.params.type;
@@ -66,7 +67,7 @@ exports.create = function(req, res, next) {
 }
 
 exports.get_types = function(req, res, next) {
-	console.log('soxsController.get_types');
+	// console.log('soxsController.get_types');
 	soxsSchema.find({}).exec(function(err, models) {
 		if (err) {
 			return next(err);
@@ -80,7 +81,7 @@ exports.get_types = function(req, res, next) {
 }
 
 exports.insert = function(req, res, next) {
-	console.log('soxsController.insert');
+	// console.log('soxsController.insert');
 	console.log(req.body);
 	getSchema(req.params.type, function(err, customModel) {
 		if (err) {
@@ -101,35 +102,38 @@ exports.insert = function(req, res, next) {
 }
 
 exports.update = function(req, res, next) {
-	console.log('soxsController.update');
-	getSchema(req.params.type, function(err, customModel) {
-		if (err) {
-			res.send(404);
-		} else {
-			customModel.findOne({
-				_id: req.params.id
-			}).exec(function(err, modelData) {
-				if (err) {
-					return next(err);
-				}
-				if (!modelData) {
-					return next(new Error('Failed to load ' + req.params.type));
-				}
-				modelData.update(req.body, function(err, data) {
+	// console.log('soxsController.update');
+	mailer.sendMail('updating soxs object', 'updating soxs object message', function(messageSent) {
+		getSchema(req.params.type, function(err, customModel) {
+			if (err) {
+				res.send(404);
+			} else {
+				customModel.findOne({
+					_id: req.params.id
+				}).exec(function(err, modelData) {
 					if (err) {
-						res.send(404);
-					} else {
-						res.send(200);
+						return next(err);
 					}
+					if (!modelData) {
+						return next(new Error('Failed to load ' + req.params.type));
+					}
+					modelData.update(req.body, function(err, data) {
+						if (err) {
+							res.send(404);
+						} else {
+							res.send(200);
+						}
+					})
 				})
-			})
-		}
+			}
+		})
 	})
+
 }
 
 
 exports.get = function(req, res, next) {
-	console.log('soxsController.get');
+	// console.log('soxsController.get');
 	getSchema(req.params.type, function(err, customModel) {
 		if (err) {
 			res.send(404);
@@ -150,7 +154,7 @@ exports.get = function(req, res, next) {
 }
 
 exports.getall = function(req, res, next) {
-	console.log('soxsController.get');
+	// console.log('soxsController.get');
 	getSchema(req.params.type, function(err, customModel) {
 		if (err) {
 			res.send(404);

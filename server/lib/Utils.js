@@ -5,7 +5,7 @@
  *
  */
 
-
+var passwordHash = require('password-hash');
 
 exports.parse = function(req, callback) {
 	// Create new empty buffer
@@ -30,6 +30,17 @@ exports.parse = function(req, callback) {
 		}
 		callback(null, JSON.parse(buf));
 	});
+}
+
+exports.hashPassword = function(password, cb) {
+	var hashedPassword = passwordHash.generate(password);
+	cb(hashedPassword);
+}
+
+exports.verifyPassword = function(password, storedPassword, cb) {
+	
+	var valid = passwordHash.verify(password, storedPassword);
+	cb(valid);
 }
 
 function getPermissions() {

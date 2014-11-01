@@ -10,6 +10,12 @@
 angular.module('soxsnationApp')
 	.controller('RecipeController', ['$scope', '$http', '$location', 'soxsAuth',
 		function RecipeController($scope, $http, $location, soxsAuth) {
+			soxsAuth.validateUser().then(function(user) {
+				console.log('User is logged in');
+			}, function(error) {
+				$location.path('/Login');
+			});
+			
 			$scope.mode = 'none';
 			$scope.modalHidden = 'true';
 
@@ -19,6 +25,8 @@ angular.module('soxsnationApp')
 			$scope.alertText = 'Alert';
 			$scope.alertCss = 'alert-danger';
 			$scope.modal_error = '';
+			$scope.current_recipe = {};
+			$scope.recipeSelected = false;
 
 			$scope.recipe_tags = [];
 			$scope.recipe_ingredients = [];
@@ -101,10 +109,12 @@ angular.module('soxsnationApp')
 			};
 
 			$scope.edit_recipe_mode = function() {
+
 				showModal('edit', $scope.current_recipe);
 			};
 
 			$scope.select_recipe = function(recipe) {
+				$scope.recipeSelected = true;
 				$scope.current_recipe = recipe;
 			}
 

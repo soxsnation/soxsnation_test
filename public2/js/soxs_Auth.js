@@ -7,11 +7,12 @@
 
 var soxsServices = angular.module('soxsServices', []);
 
-soxsServices.factory("soxsAuth", ["$http", "$q", "$window",
-    function($http, $q, $window) {
+soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
+    function($rootScope, $http, $q, $window) {
         var userInfo;
-        var currentToken = null;
-        var currentUser = null;
+        $rootScope.currentToken = null;
+        $rootScope.currentUser = null;
+        $rootScope.lastError = '';
 
         function init() {
             console.log("SESSION INIT");
@@ -21,24 +22,24 @@ soxsServices.factory("soxsAuth", ["$http", "$q", "$window",
                 url: '/api/session/validate',
                 method: 'GET',
                 headers: {
-                    Authorization: currentToken.get()
+                    Authorization: $rootScope.currentToken.get()
                 },
                 xhrFields: {
                     withCredentials: true
                 }
             }).then(function(res) {
-                currentToken = res.body;
+                $rootScope.currentToken = res.body;
                 $http({
                     url: '/api/session/user',
                     method: 'GET',
                     headers: {
-                        Authorization: currentToken
+                        Authorization: $rootScope.currentToken
                     },
                     xhrFields: {
                         withCredentials: true
                     }
                 }).then(function(res) {
-                    currentUser = res.body;
+                    $rootScope.currentUser = res.body;
                 });
             })
 
@@ -74,23 +75,24 @@ soxsServices.factory("soxsAuth", ["$http", "$q", "$window",
                 }
             }).then(function(res) {
                 console.log("login");
-                currentToken = res.data.replace('"', '');
-                currentToken = currentToken.replace('"', '');
-                console.log(currentToken);
+                $rootScope.currentToken = res.data.replace('"', '');
+                $rootScope.currentToken = $rootScope.currentToken.replace('"', '');
+                console.log($rootScope.currentToken);
 
                 $http({
                     url: '/api/session/user',
                     method: 'GET',
                     headers: {
-                        Authorization: currentToken
+                        Authorization: $rootScope.currentToken
                     },
                     xhrFields: {
                         withCredentials: true
                     }
                 }).then(function(res) {
-                    currentUser = res.data;
-                    console.log(currentUser);
-                    deferred.resolve(currentUser);
+                    $rootScope.currentUser = res.data;
+                    console.log($rootScope.currentUser);
+                    deferred.resolve($rootScope.currentUser);
+                    $rootScope.$emit('login_changed', true);
                 }, function(error) {
                     deferred.reject(error);
                 });
@@ -110,7 +112,7 @@ soxsServices.factory("soxsAuth", ["$http", "$q", "$window",
                 method: "GET",
                 url: url,
                 headers: {
-                    Authorization: currentToken
+                    Authorization: $rootScope.currentToken
                 },
                 xhrFields: {
                     withCredentials: true
@@ -131,7 +133,7 @@ soxsServices.factory("soxsAuth", ["$http", "$q", "$window",
                 method: "GET",
                 url: "/api/session/logout",
                 headers: {
-                    Authorization: currentToken
+                    Authorization: $rootScope.currentToken
                 },
                 xhrFields: {
                     withCredentials: true
@@ -139,8 +141,12 @@ soxsServices.factory("soxsAuth", ["$http", "$q", "$window",
             }).then(function(result) {
                 // userInfo = null;
                 // $window.sessionStorage["userInfo"] = null;
+                $rootScope.currentToken = null;
+                $rootScope.currentUser = null;
+                $rootScope.$emit('login_changed', false);
                 deferred.resolve(result);
             }, function(error) {
+                $rootScope.lastError = error;
                 deferred.reject(error);
             });
 
@@ -148,7 +154,34 @@ soxsServices.factory("soxsAuth", ["$http", "$q", "$window",
         }
 
         function getUserInfo() {
-            return currentUser;
+            return $rootScope.currentUser;
+        }
+
+        function userLoggedIn() {
+            return ($rootScope.currentUser != null);
+        }
+
+        function changePassword(password) {
+            console.log('soxs_Auth::changePassword');
+            var deferred = $q.defer();
+            $http({
+                method: 'GET',
+                url: '/api/session/changepassword',
+                headers: {
+                    Authorization: 'Basic ' + Base64.encode($rootScope.currentUser.username + ':' + password)
+                },
+                xhrFields: {
+                    withCredentials: true
+                }
+            }).then(function(res) {
+                console.log("password changed successfully");
+
+
+            }, function(error) {
+                deferred.reject(error);
+            });
+
+            return deferred.promise;
         }
 
         function validateUser() {
@@ -157,26 +190,26 @@ soxsServices.factory("soxsAuth", ["$http", "$q", "$window",
                 url: '/api/session/validate',
                 method: 'GET',
                 headers: {
-                    Authorization: currentToken
+                    Authorization: $rootScope.currentToken
                 },
                 xhrFields: {
                     withCredentials: true
                 }
             }).then(function(res) {
-                currentToken = res.data.replace('"', '');
-                currentToken = currentToken.replace('"', '');
+                $rootScope.currentToken = res.data.replace('"', '');
+                $rootScope.currentToken = $rootScope.currentToken.replace('"', '');
                 $http({
                     url: '/api/session/user',
                     method: 'GET',
                     headers: {
-                        Authorization: currentToken
+                        Authorization: $rootScope.currentToken
                     },
                     xhrFields: {
                         withCredentials: true
                     }
                 }).then(function(res) {
-                    currentUser = res.data;
-                    deferred.resolve(currentUser);
+                    $rootScope.currentUser = res.data;
+                    deferred.resolve($rootScope.currentUser);
                 }, function(error) {
                     deferred.reject(error);
                 });
@@ -186,19 +219,29 @@ soxsServices.factory("soxsAuth", ["$http", "$q", "$window",
             return deferred.promise;
         }
 
-        // function init() {
-        //     if ($window.sessionStorage["userInfo"]) {
-        //         userInfo = JSON.parse($window.sessionStorage["userInfo"]);
-        //     }
-        // }
-        // init();
+        function isAdminUser() {
+            return hasPermission(2);
+        }
+
+        function hasPermission(permissionIndex) {
+            if (!$rootScope.currentUser) {
+                return false;
+            } else {
+                var anded = $rootScope.currentUser.permissions & permissionIndex;
+                return (anded == permissionIndex);
+            }
+        }
 
         return {
             login: login,
             logout: logout,
             getUserInfo: getUserInfo,
             http_get: http_get,
-            validateUser: validateUser
+            validateUser: validateUser,
+            userLoggedIn: userLoggedIn,
+            changePassword: changePassword,
+            isAdminUser: isAdminUser,
+            hasPermission: hasPermission
         };
     }
 ]);
