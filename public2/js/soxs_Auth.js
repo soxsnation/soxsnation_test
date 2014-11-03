@@ -14,6 +14,11 @@ soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
         $rootScope.currentUser = null;
         $rootScope.lastError = '';
 
+        if ($window.sessionStorage.token) {
+            $rootScope.currentToken = $window.sessionStorage.token;
+            $rootScope.$emit('login_changed', true);
+        }
+
         function init() {
             console.log("SESSION INIT");
             console.log(currentSession.get());
@@ -77,6 +82,7 @@ soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
                 console.log("login");
                 $rootScope.currentToken = res.data.replace('"', '');
                 $rootScope.currentToken = $rootScope.currentToken.replace('"', '');
+                $window.sessionStorage.token = $rootScope.currentToken;
                 console.log($rootScope.currentToken);
 
                 $http({
@@ -144,6 +150,7 @@ soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
                 $rootScope.currentToken = null;
                 $rootScope.currentUser = null;
                 $rootScope.$emit('login_changed', false);
+                delete $window.sessionStorage.token;
                 deferred.resolve(result);
             }, function(error) {
                 $rootScope.lastError = error;

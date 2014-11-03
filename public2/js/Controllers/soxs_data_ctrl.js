@@ -113,7 +113,7 @@ angular.module('soxsnationApp')
 
 			soxsAuth.validateUser().then(function(user) {
 				console.log('User is logged in');
-				$scope.name = 'Andrew Brown';
+				$scope.name = soxsAuth.getUserInfo().firstName + ' ' + soxsAuth.getUserInfo().lastName;
 				$scope.page = 'Home Page';
 				if (soxsAuth.isAdminUser()) {
 					$scope.user = user;
