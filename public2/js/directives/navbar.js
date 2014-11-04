@@ -29,7 +29,7 @@ angular.module('soxsnationApp')
 
 						$scope.isLoggedIn = soxsAuth.userLoggedIn();
 						$scope.configItems = [];
-
+						$scope.isAdminUser = soxsAuth.isAdminUser();
 
 
 						// function isAdminUser() {
@@ -151,7 +151,7 @@ angular.module('soxsnationApp')
 							console.log('login_changed');
 							console.log(data);
 							$scope.isLoggedIn = soxsAuth.userLoggedIn();
-							$scope.load_data();
+							// $scope.load_data();
 							configMenuItems();
 						});
 					}, function(error) {
