@@ -15,7 +15,7 @@ soxsnationApp.config(['$routeProvider',
 	function($routeProvider) {
 		$routeProvider.
 		when('/Home', {
-			controller: 'HomeController',
+			controller: 'SoxsController',
 			templateUrl: '../partials/home.html'
 		}).
 		when('/Login', {
@@ -43,7 +43,7 @@ soxsnationApp.config(['$routeProvider',
 			templateUrl: '../partials/settings.html'
 		}).
 		when('/404', {
-			controller: 'ErrorController',
+			controller: 'SoxsController',
 			templateUrl: '../partials/Error/404.html'
 		}).
 		otherwise({
@@ -58,4 +58,18 @@ $rootScope.$on('event:auth-loginRequired', function() {
       return false;
     });
 
+})
+.constant('AUTH_EVENTS', {
+  loginSuccess: 'auth-login-success',
+  loginFailed: 'auth-login-failed',
+  logoutSuccess: 'auth-logout-success',
+  sessionTimeout: 'auth-session-timeout',
+  notAuthenticated: 'auth-not-authenticated',
+  notAuthorized: 'auth-not-authorized'
+})
+.constant('USER_ROLES', {
+  all: '*',
+  admin: 'admin',
+  editor: 'editor',
+  guest: 'guest'
 })

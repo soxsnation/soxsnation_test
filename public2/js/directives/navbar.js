@@ -14,28 +14,27 @@ angular.module('soxsnationApp')
 				transclude: true,
 				templateUrl: '../partials/directives/navbar.html',
 				controller: function($scope) {
-
-
+console.log('NAVBAR')
 					soxsAuth.validateUser().then(function(user) {
 						console.log('NAVBAR Userlogged in');
 
-						$scope.data_models = [{
-							name: 'Home',
-							description: 'description'
-						}, {
-							name: 'Recipes',
-							description: 'Recipes'
-						}];
-
-						$scope.isLoggedIn = soxsAuth.userLoggedIn();
 						$scope.configItems = [];
 						$scope.configAdminItems = [];
 						$scope.configAdminLinks = [];
-						$scope.isAdminUser = soxsAuth.isAdminUser(); 
+						$scope.isLoggedIn = false; //soxsAuth.userLoggedIn();
+						$scope.isAdminUser = false; //soxsAuth.isAdminUser(); 
 
-						$scope.isAdmin = function() {
-							return soxsAuth.isAdminUser();
-						}
+						// $scope.isAdmin = function() {
+						// 	return soxsAuth.isAdminUser();
+						// }
+
+						function init_navbar() {
+							console.log('init_navbar');
+							$scope.isLoggedIn = soxsAuth.userLoggedIn();
+							$scope.isAdminUser = soxsAuth.isAdminUser();
+							load_nav_menu();
+						};
+						init_navbar();
 
 						function configMenuItems() {
 							var adminUser = soxsAuth.isAdminUser();
@@ -61,7 +60,7 @@ angular.module('soxsnationApp')
 						function configAdminMenuItems() {
 							$scope.configAdminItems = [];
 							$scope.configAdminLinks = [];
-							if (soxsAuth.isAdminUser() !== false) {								
+							if (soxsAuth.isAdminUser() !== false) {
 								$scope.configAdminLinks.push({
 									text: 'Data Setup',
 									value: 'soxsData'
@@ -69,11 +68,11 @@ angular.module('soxsnationApp')
 								$scope.configAdminItems.push({
 									text: 'Load Data',
 									value: 'load_data'
-								});	
+								});
 								$scope.configAdminItems.push({
 									text: 'Debug Data',
 									value: 'debug_data'
-								});								
+								});
 							}
 						}
 
@@ -83,11 +82,10 @@ angular.module('soxsnationApp')
 
 						$scope.admin_menu_item = function(clicked_item) {
 							console.log('$scope.admin_menu_item:' + clicked_item);
-							
+
 							if (clicked_item === 'load_data') {
 								load_nav_menu();
-							}
-							else if (clicked_item === 'debug_data') {
+							} else if (clicked_item === 'debug_data') {
 								debug_data_function();
 							}
 						}
@@ -101,17 +99,21 @@ angular.module('soxsnationApp')
 
 						$scope.logout = function() {
 							soxsAuth.logout().then(function(result) {
+								console.log('logout result' + result)
 								if (result.status === 200) {
 									$location.path('/Login');
 								} else {
 									$location.path('/404');
 								}
+							}, function(error) {
+								$location.path('/404');
 							});
 						}
 
 						$scope.data_setup = function() {
 							$location.path('/SoxsData');
 						}
+
 
 						// $scope.load_data = function() {
 						function load_nav_menu() {
@@ -161,17 +163,15 @@ angular.module('soxsnationApp')
 									console.log('ERROR: ' + err);
 								})
 						};
-						load_nav_menu();
-
+						
 
 						$scope.$on('login_changed', function(event, data) {
 							console.log('login_changed');
 							console.log(data);
-							$scope.isLoggedIn = soxsAuth.userLoggedIn();
-							$scope.isAdminUser = soxsAuth.isAdminUser();
-							load_nav_menu();
-							// configMenuItems();
-							// configAdminMenuItems();
+							init_navbar();
+							// $scope.isLoggedIn = soxsAuth.userLoggedIn();
+							// $scope.isAdminUser = soxsAuth.isAdminUser();
+							// load_nav_menu();
 						});
 					}, function(error) {
 						$location.path('/Login');

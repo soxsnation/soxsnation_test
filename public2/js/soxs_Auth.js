@@ -52,6 +52,7 @@ soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
 
         function login(userName, password) {
             var deferred = $q.defer();
+            console.log('soxs_Auth.login ' + userName + password)
 
             $http({
                 method: 'GET',
@@ -83,8 +84,9 @@ soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
                     console.log(res.data);
                     $rootScope.currentUser = res.data;
                     console.log($rootScope.currentUser);
+                    $rootScope.$broadcast('login_changed', 'broadcast');
+                    $rootScope.$emit('login_changed', 'emit');
                     deferred.resolve($rootScope.currentUser);
-                    $rootScope.$emit('login_changed', true);
                 }, function(error) {
                     deferred.reject(error);
                 });
@@ -97,7 +99,7 @@ soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
         }
 
         function http_get(url) {
-            console.log('http_get');
+            // console.log('http_get');
             // console.log(userInfo.accessToken);
             var deferred = $q.defer();
             $http({
@@ -139,6 +141,7 @@ soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
                 delete $window.sessionStorage.token;
                 deferred.resolve(result);
             }, function(error) {
+                console.log(error);
                 $rootScope.lastError = error;
                 deferred.reject(error);
             });
