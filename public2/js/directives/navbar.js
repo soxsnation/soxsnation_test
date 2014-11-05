@@ -29,20 +29,9 @@ angular.module('soxsnationApp')
 
 						$scope.isLoggedIn = soxsAuth.userLoggedIn();
 						$scope.configItems = [];
-						$scope.isAdminUser = soxsAuth.isAdminUser();
-
-
-						// function isAdminUser() {
-						// 	var user = soxsAuth.getUserInfo();
-						// 	if (user == null) { 
-						// 		return false;
-						// 	}
-						// 	else {
-						// 		var anded = user.permissions & 2;
-						// 		console.log("is admin: " + anded + ' ' + anded == 2);
-						// 		return (anded == 2);
-						// 	}						
-						// }
+						$scope.configAdminItems = [];
+						$scope.configAdminLinks = [];
+						$scope.isAdminUser = soxsAuth.isAdminUser(); 
 
 						$scope.isAdmin = function() {
 							return soxsAuth.isAdminUser();
@@ -53,10 +42,6 @@ angular.module('soxsnationApp')
 							// console.log('configMenuItems' + adminUser);
 							$scope.configItems = [];
 							if (adminUser) {
-								$scope.configItems.push({
-									text: 'Load Data',
-									link: 'load_data'
-								});
 								$scope.configItems.push({
 									text: 'Data Setup',
 									link: '/#/SoxsData'
@@ -70,6 +55,47 @@ angular.module('soxsnationApp')
 									text: 'Change Password',
 									link: '/#/ChangePassword'
 								});
+							}
+						}
+
+						function configAdminMenuItems() {
+							$scope.configAdminItems = [];
+							$scope.configAdminLinks = [];
+							if (soxsAuth.isAdminUser() !== false) {								
+								$scope.configAdminLinks.push({
+									text: 'Data Setup',
+									value: 'soxsData'
+								});
+								$scope.configAdminItems.push({
+									text: 'Load Data',
+									value: 'load_data'
+								});	
+								$scope.configAdminItems.push({
+									text: 'Debug Data',
+									value: 'debug_data'
+								});								
+							}
+						}
+
+						function debug_data_function() {
+							console.log('debug_data_function');
+						}
+
+						$scope.admin_menu_item = function(clicked_item) {
+							console.log('$scope.admin_menu_item:' + clicked_item);
+							
+							if (clicked_item === 'load_data') {
+								load_nav_menu();
+							}
+							else if (clicked_item === 'debug_data') {
+								debug_data_function();
+							}
+						}
+
+						$scope.admin_menu_link = function(clicked_link) {
+							console.log('$scope.admin_menu_link:' + clicked_link);
+							if (clicked_link === 'soxsData') {
+								$location.path('/SoxsData');
 							}
 						}
 
@@ -87,25 +113,14 @@ angular.module('soxsnationApp')
 							$location.path('/SoxsData');
 						}
 
-						// $scope.changePassword = function() {
-						// 	console.log('$scope.changePassword');
-						// 	soxsAuth.changePassword('2')
-						// 		.then(function(result) {
-						// 			console.log('password change successful');
-
-
-						// 			// $scope.$emit('login_changed', true);
-						// 		}, function(error) {
-						// 			alert("password change failed");
-						// 			console.log(error);
-						// 		});
-						// }
-
 						// $scope.load_data = function() {
-							$scope.data_models = [];
-							// var user = soxsAuth.getUserInfo();
-							console.log('User');
+						function load_nav_menu() {
+							console.log('load_nav_menu');
 							console.log(user);
+							$scope.data_models = [];
+							var userData = soxsAuth.getUserInfo();
+							console.log('User');
+							console.log(userData);
 
 							soxsAuth.http_get('api/soxs/types')
 								.then(function(data) {
@@ -129,7 +144,7 @@ angular.module('soxsnationApp')
 											}
 											model.fields.push(field);
 										}
-										var anded = user.permissions & model.permissionIndex;
+										var anded = userData.permissions & model.permissionIndex;
 										var hasPermission = (anded == model.permissionIndex);
 										// console.log(model.name + ' ' + hasPermission + ' ' + anded);
 										// console.log(user.permissions + ' ' + model.permissionIndex);
@@ -141,18 +156,22 @@ angular.module('soxsnationApp')
 									}
 
 									configMenuItems();
+									configAdminMenuItems();
 								}, function(err) {
 									console.log('ERROR: ' + err);
 								})
-						// }
+						};
+						load_nav_menu();
 
 
 						$scope.$on('login_changed', function(event, data) {
 							console.log('login_changed');
 							console.log(data);
 							$scope.isLoggedIn = soxsAuth.userLoggedIn();
-							// $scope.load_data();
-							configMenuItems();
+							$scope.isAdminUser = soxsAuth.isAdminUser();
+							load_nav_menu();
+							// configMenuItems();
+							// configAdminMenuItems();
 						});
 					}, function(error) {
 						$location.path('/Login');

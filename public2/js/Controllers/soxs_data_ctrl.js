@@ -52,6 +52,11 @@ angular.module('soxsnationApp')
 				user_login();
 			}
 
+			$scope.getData = function () {
+				console.log('$scope.getData');
+				console.log(soxsAuth.getUserInfo());
+			}
+
 		}
 	]);
 

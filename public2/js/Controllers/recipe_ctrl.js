@@ -15,7 +15,7 @@ angular.module('soxsnationApp')
 			}, function(error) {
 				$location.path('/Login');
 			});
-			
+
 			$scope.mode = 'none';
 			$scope.modalHidden = 'true';
 
@@ -34,6 +34,27 @@ angular.module('soxsnationApp')
 			var server = 'http://localhost:3085/';
 			server = '';
 
+			function recipeUpdated(recipeData) {
+				console.log('recipeUpdated');
+				console.log(recipeData);
+				var recp = {
+					name: recipeData.name,
+					description: recipeData.description,
+					// tags: data[i].tags.split(','),
+					steps: recipeData.steps,
+					ingredients: recipeData.ingredients,
+					_id: recipeData._id,
+					dateUpdated: recipeData.dateUpdated,
+					userUpdated: recipeData.userUpdated
+				};
+				$scope.current_recipe = recp;
+				for (var i = 0; i < $scope.recipes.length; ++i) {
+					if ($scope.recipes[i]._id === recp._id) {
+						$scope.recipes[i] = recp;
+					}
+				}
+
+			}
 
 			function showModal(mode, recipe) {
 				$scope.mode = mode;
@@ -50,6 +71,12 @@ angular.module('soxsnationApp')
 				} else if ($scope.mode === 'insert') {
 					$scope.modalTitle = 'Insert recipe';
 					$scope.modalSubmitText = 'Create New recipe';
+					$scope.recipe_name = '';
+					$scope.recipe_desc = '';
+					$scope.recipe_tags = '';
+					$scope.recipe_ingredients = '';
+					$scope.recipe_steps = '';
+					$scope.recipe_id = '';
 				}
 
 				$('#myModal').modal('show');
@@ -83,7 +110,10 @@ angular.module('soxsnationApp')
 
 				$http.post(url, recipe).success(function(data) {
 					// links.push(link);
-
+					console.log('saveRecipeData-->Data');
+					recipe._id = $scope.current_recipe._id;
+					console.log(recipe);
+					recipeUpdated(recipe);
 					$scope.showAlert = 'block';
 					$scope.alertText = 'recipe saved!!';
 					$scope.alertCss = 'alert-success';
@@ -152,29 +182,32 @@ angular.module('soxsnationApp')
 				console.log($scope.recipe_steps);
 			}
 
-			$http.get(server + 'api/soxs/getall/recipe').success(function(data) {
-				$scope.recipes = [];
-				$scope.tags = [];
-				for (var i = 0; i < data.length; ++i) {
-					var l = {
-						name: data[i].name,
-						description: data[i].description,
-						// tags: data[i].tags.split(','),
-						steps: data[i].steps,
-						ingredients: data[i].ingredients,
-						_id: data[i]._id,
-						dateUpdated: data[i].dateUpdated,
-						userUpdated: data[i].userUpdated
-					};
-					// for (var j = 0; j < l.tags.length; ++j) {
-					// 	var found = false;
-					// 	for (var k = 0; k < $scope.tags.length; ++k) {
-					// 		if (l.tags[j] == $scope.tags[k]) { found = true; break;}
-					// 	}
-					// 	if (!found) { $scope.tags.push(l.tags[j]); }
-					// }
-					$scope.recipes.push(l);
-				}
-			});
+			function populate_recipes() {
+				$http.get(server + 'api/soxs/getall/recipe').success(function(data) {
+					$scope.recipes = [];
+					$scope.tags = [];
+					for (var i = 0; i < data.length; ++i) {
+						var l = {
+							name: data[i].name,
+							description: data[i].description,
+							// tags: data[i].tags.split(','),
+							steps: data[i].steps,
+							ingredients: data[i].ingredients,
+							_id: data[i]._id,
+							dateUpdated: data[i].dateUpdated,
+							userUpdated: data[i].userUpdated
+						};
+						// for (var j = 0; j < l.tags.length; ++j) {
+						// 	var found = false;
+						// 	for (var k = 0; k < $scope.tags.length; ++k) {
+						// 		if (l.tags[j] == $scope.tags[k]) { found = true; break;}
+						// 	}
+						// 	if (!found) { $scope.tags.push(l.tags[j]); }
+						// }
+						$scope.recipes.push(l);
+					}
+				});
+			};
+			populate_recipes();
 		}
 	]);

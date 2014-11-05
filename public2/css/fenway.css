@@ -46,6 +46,43 @@
 
 
 
+/**********************************************************************
+  Recipes
+**********************************************************************/
+
+.recipe_detail {
+	display: block;
+	float:right;
+	width: 70%;
+	height: 100%;
+}
+
+.recipe_detail_title {
+	display: block;
+	width: 60%;
+	height: 50px;
+	margin-bottom: 20px;
+}
+
+.recipe_title_left {
+	float: left;
+	width: 60%;
+}
+
+.recipe_title_right {
+	float: right;
+	width: 35%;
+}
+
+.recipe_ingredients {
+	display: block;
+	width: 60%;
+}
+
+.recipe_steps {
+	display: block;
+	width: 60%;
+}
 
 .recpie_list {
 	display: block;
@@ -57,12 +94,7 @@
 	height: 100%;
 }
 
-.recipe_detail {
-	display: block;
-	float:right;
-	width: 70%;
-	height: 100%;
-}
+
 
 .recipe_main {
 	display: inline-block;
@@ -73,6 +105,11 @@
 .recipe_title {
 	display: block;
 }
+
+
+
+
+
 
 
 

@@ -50,21 +50,21 @@ mongoose.connection.on('disconnected', function() {
 })
 
 // Bootstrap models
-var models_path = __dirname + '/server/models';
+var models_path = __dirname + '/app/models';
 fs.readdirSync(models_path).forEach(function(file) {
 	if (~file.indexOf('.js')) require(models_path + '/' + file)
 });
 
 
 var passport = require('passport');
-require('./server/lib/passport')(passport)
+require('./app/lib/passport')(passport)
 app.use(express.cookieParser());
 app.use(express.bodyParser());
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Bootstrap routes
-require('./server/routes/routes')(app, passport);
+require('./app/routes/routes')(app, passport);
 
 // ********************************************************************
 // alia site

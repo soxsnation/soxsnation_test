@@ -53,22 +53,6 @@ soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
         function login(userName, password) {
             var deferred = $q.defer();
 
-            // $http.post("/api/login", {
-            //     userName: userName,
-            //     password: password
-            // })
-            //     .then(function(result) {
-            //         userInfo = {
-            //             accessToken: result.data.access_token,
-            //             userName: result.data.userName
-            //         };
-            //         $window.sessionStorage["userInfo"] = JSON.stringify(userInfo);
-            //         deferred.resolve(userInfo);
-            //     }, function(error) {
-            //         deferred.reject(error);
-            //     });
-
-
             $http({
                 method: 'GET',
                 url: '/api/session/login',
@@ -95,6 +79,8 @@ soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
                         withCredentials: true
                     }
                 }).then(function(res) {
+                    console.log('User Data:');
+                    console.log(res.data);
                     $rootScope.currentUser = res.data;
                     console.log($rootScope.currentUser);
                     deferred.resolve($rootScope.currentUser);
