@@ -44,9 +44,13 @@ angular.module('soxsnationApp')
 						userUpdated: recipeData.userUpdated
 					};
 					$scope.current_recipe = recp;
-					for (var i = 0; i < $scope.recipes.length; ++i) {
-						if ($scope.recipes[i]._id === recp._id) {
-							$scope.recipes[i] = recp;
+					if ($scope.mode === 'insert') {
+						$scope.recipes.push(recp);
+					} else {
+						for (var i = 0; i < $scope.recipes.length; ++i) {
+							if ($scope.recipes[i]._id === recp._id) {
+								$scope.recipes[i] = recp;
+							}
 						}
 					}
 
@@ -70,8 +74,8 @@ angular.module('soxsnationApp')
 						$scope.recipe_name = '';
 						$scope.recipe_desc = '';
 						$scope.recipe_tags = '';
-						$scope.recipe_ingredients = '';
-						$scope.recipe_steps = '';
+						$scope.recipe_ingredients = [];
+						$scope.recipe_steps = [];
 						$scope.recipe_id = '';
 					}
 

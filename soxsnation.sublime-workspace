@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"re",
+				"recipeData"
+			],
+			[
+				"rec",
+				"recp"
+			],
+			[
+				"isA",
+				"isAdminUser"
+			],
+			[
 				"ge",
 				"getUserInfo"
 			],
@@ -65,10 +77,6 @@
 			],
 			[
 				"req",
-				"reqHeader"
-			],
-			[
-				"re",
 				"reqHeader"
 			],
 			[
@@ -134,10 +142,6 @@
 			[
 				"Re",
 				"Recipes"
-			],
-			[
-				"rec",
-				"recipes"
 			],
 			[
 				"par",
@@ -387,7 +391,7 @@
 			"file": "public2/partials/recipes.html",
 			"settings":
 			{
-				"buffer_size": 5330,
+				"buffer_size": 5649,
 				"line_ending": "Windows"
 			}
 		},
@@ -411,15 +415,15 @@
 			"file": "public2/js/soxs_Auth.js",
 			"settings":
 			{
-				"buffer_size": 8245,
+				"buffer_size": 7719,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "examples/angular-passport-master/app/scripts/services/Blogs.js",
+			"file": "public2/partials/directives/navbar.html",
 			"settings":
 			{
-				"buffer_size": 229,
+				"buffer_size": 2497,
 				"line_ending": "Windows"
 			}
 		},
@@ -427,7 +431,7 @@
 			"file": "public2/js/Controllers/soxs_data_ctrl.js",
 			"settings":
 			{
-				"buffer_size": 9545,
+				"buffer_size": 9661,
 				"line_ending": "Windows"
 			}
 		},
@@ -443,7 +447,15 @@
 			"file": "public2/js/Controllers/recipe_ctrl.js",
 			"settings":
 			{
-				"buffer_size": 5077,
+				"buffer_size": 6090,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "public2/partials/directives/recipe.html",
+			"settings":
+			{
+				"buffer_size": 287,
 				"line_ending": "Windows"
 			}
 		},
@@ -459,15 +471,23 @@
 			"file": "public2/js/directives/navbar.js",
 			"settings":
 			{
-				"buffer_size": 4214,
+				"buffer_size": 4856,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "public2/partials/directives/navbar.html",
+			"file": "public2/css/fenway.css",
 			"settings":
 			{
-				"buffer_size": 1605,
+				"buffer_size": 1737,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "public2/css/soxsnation.css",
+			"settings":
+			{
+				"buffer_size": 7757,
 				"line_ending": "Windows"
 			}
 		}
@@ -518,19 +538,20 @@
 	"expanded_folders":
 	[
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master/app",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master/app/scripts",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master/app/scripts/services",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master/app/styles",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/css",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js/Controllers",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/partials",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/partials/directives"
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/partials/directives",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/partials/session"
 	],
 	"file_history":
 	[
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server.js",
+		"/C/Users/abrown/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/partials/session/login.html",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master/app/scripts/services/Blogs.js",
 		"//W2K8SQL1/c$/dotdecimal/Axon/Data/InventoryCounts/20141103/Count_jmoon.json",
 		"//W2K8SQL1/c$/dotdecimal/Axon/Data/InventoryCounts/20141103/Count_hsilva.json",
 		"//W2K8SQL1/c$/dotdecimal/Axon/Data/InventoryCounts/20141103/Count_jbankey.json",
@@ -587,7 +608,6 @@
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/css/bootstrap.min.css",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/lib/bootstrap.min.js",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server/models/Recipe.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server.js",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server/controllers/recipes.js",
 		"/C/Users/abrown/scratch/Software/Astroid/planningBuild/gtv.json",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/css/soxsnation.css",
@@ -655,10 +675,7 @@
 		"/C/Users/abrown/Documents/Software/Andrew/soxsnation/soxsnation/server.js",
 		"/C/Users/abrown/Documents/Software/Andrew/soxsnation/soxsnation/public/navigation/nav.js",
 		"/C/Users/abrown/Documents/Software/Andrew/soxsnation/soxsnation/package.json",
-		"/C/Users/abrown/Documents/Software/Andrew/soxsnation/soxsnation/server/lib/hash.js",
-		"/C/Users/abrown/Documents/Software/Andrew/soxsnation/soxsnation/server/lib/authorization.js",
-		"/C/Users/abrown/Documents/Software/Andrew/soxsnation/soxsnation/server/lib/Util.js",
-		"/C/Users/abrown/Documents/Software/Andrew/soxsnation/soxsnation/server/controllers/session.js"
+		"/C/Users/abrown/Documents/Software/Andrew/soxsnation/soxsnation/server/lib/hash.js"
 	],
 	"find":
 	{
@@ -683,6 +700,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"isAdminUser",
+			"showModal",
+			"select_recipe",
+			"recipe_detail",
 			"Base64",
 			"\"name\": \"pixels",
 			"pixel",
@@ -783,7 +804,7 @@
 	"groups":
 	[
 		{
-			"selected": 5,
+			"selected": 6,
 			"sheets":
 			[
 				{
@@ -811,7 +832,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 11,
 					"type": "text"
 				},
 				{
@@ -841,7 +862,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 11,
+					"stack_index": 13,
 					"type": "text"
 				},
 				{
@@ -850,15 +871,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5330,
+						"buffer_size": 5649,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								46,
-								174
+								363,
+								376
 							]
 						],
 						"settings":
@@ -870,7 +891,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 9,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
@@ -900,7 +921,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 10,
+					"stack_index": 12,
 					"type": "text"
 				},
 				{
@@ -929,7 +950,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 12,
+					"stack_index": 14,
 					"type": "text"
 				},
 				{
@@ -938,15 +959,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8245,
+						"buffer_size": 7719,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								557,
-								557
+								2741,
+								2741
 							]
 						],
 						"settings":
@@ -956,38 +977,41 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": -0.0,
-						"translation.y": 0.0,
+						"translation.y": 360.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
 					"buffer": 6,
-					"file": "examples/angular-passport-master/app/scripts/services/Blogs.js",
+					"file": "public2/partials/directives/navbar.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 229,
+						"buffer_size": 2497,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								229,
-								229
+								1849,
+								1849
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+							"open_with_edit": true,
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -996,15 +1020,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 9545,
+						"buffer_size": 9661,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2091,
-								2091
+								1328,
+								1328
 							]
 						],
 						"settings":
@@ -1013,16 +1037,16 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 855.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 9,
 					"type": "text"
 				}
 			]
 		},
 		{
-			"selected": 3,
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -1051,7 +1075,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
@@ -1060,15 +1084,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5077,
+						"buffer_size": 6090,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								86,
-								0
+								2254,
+								2254
 							]
 						],
 						"settings":
@@ -1077,14 +1101,42 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 113.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 10,
+					"file": "public2/partials/directives/recipe.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 287,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
 					"file": "public2/partials/home.html",
 					"semi_transient": false,
 					"settings":
@@ -1108,24 +1160,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 10,
 					"type": "text"
 				},
 				{
-					"buffer": 11,
+					"buffer": 12,
 					"file": "public2/js/directives/navbar.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4214,
+						"buffer_size": 4856,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3887,
-								3887
+								814,
+								814
 							]
 						],
 						"settings":
@@ -1135,33 +1187,61 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1035.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 12,
-					"file": "public2/partials/directives/navbar.html",
+					"buffer": 13,
+					"file": "public2/css/fenway.css",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1605,
+						"buffer_size": 1737,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								912,
-								912
+								940,
+								940
 							]
 						],
 						"settings":
 						{
-							"open_with_edit": true,
-							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 180.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 14,
+					"file": "public2/css/soxsnation.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7757,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								444,
+								444
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
@@ -1203,7 +1283,7 @@
 		"cols":
 		[
 			0.0,
-			0.5,
+			0.463513513514,
 			1.0
 		],
 		"rows":
