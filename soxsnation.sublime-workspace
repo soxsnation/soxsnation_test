@@ -399,7 +399,7 @@
 			"file": "public2/index.html",
 			"settings":
 			{
-				"buffer_size": 2139,
+				"buffer_size": 2390,
 				"line_ending": "Windows"
 			}
 		},
@@ -407,7 +407,7 @@
 			"file": "public2/js/app.js",
 			"settings":
 			{
-				"buffer_size": 1359,
+				"buffer_size": 1725,
 				"line_ending": "Windows"
 			}
 		},
@@ -415,7 +415,7 @@
 			"file": "public2/js/soxs_Auth.js",
 			"settings":
 			{
-				"buffer_size": 7719,
+				"buffer_size": 7899,
 				"line_ending": "Windows"
 			}
 		},
@@ -423,7 +423,7 @@
 			"file": "public2/partials/directives/navbar.html",
 			"settings":
 			{
-				"buffer_size": 2497,
+				"buffer_size": 2495,
 				"line_ending": "Windows"
 			}
 		},
@@ -431,7 +431,7 @@
 			"file": "public2/js/Controllers/soxs_data_ctrl.js",
 			"settings":
 			{
-				"buffer_size": 9661,
+				"buffer_size": 6340,
 				"line_ending": "Windows"
 			}
 		},
@@ -439,7 +439,7 @@
 			"file": "public2/js/services/soxs_service.js",
 			"settings":
 			{
-				"buffer_size": 211,
+				"buffer_size": 2203,
 				"line_ending": "Windows"
 			}
 		},
@@ -447,7 +447,7 @@
 			"file": "public2/js/Controllers/recipe_ctrl.js",
 			"settings":
 			{
-				"buffer_size": 6090,
+				"buffer_size": 6322,
 				"line_ending": "Windows"
 			}
 		},
@@ -463,7 +463,7 @@
 			"file": "public2/partials/home.html",
 			"settings":
 			{
-				"buffer_size": 168,
+				"buffer_size": 182,
 				"line_ending": "Windows"
 			}
 		},
@@ -471,7 +471,7 @@
 			"file": "public2/js/directives/navbar.js",
 			"settings":
 			{
-				"buffer_size": 4856,
+				"buffer_size": 4994,
 				"line_ending": "Windows"
 			}
 		},
@@ -535,17 +535,6 @@
 		"side_bar_visible": false,
 		"status_bar_visible": false
 	},
-	"expanded_folders":
-	[
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/css",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js/Controllers",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/partials",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/partials/directives",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/partials/session"
-	],
 	"file_history":
 	[
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server.js",
@@ -900,21 +889,21 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2139,
+						"buffer_size": 2390,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								712,
-								712
+								0,
+								0
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 2,
+							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
@@ -930,7 +919,7 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1359,
+						"buffer_size": 1725,
 						"regions":
 						{
 						},
@@ -959,15 +948,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7719,
+						"buffer_size": 7899,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2741,
-								2741
+								0,
+								0
 							]
 						],
 						"settings":
@@ -989,15 +978,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2497,
+						"buffer_size": 2495,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1849,
-								1849
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1020,15 +1009,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 9661,
+						"buffer_size": 6340,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1328,
-								1328
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1055,15 +1044,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 211,
+						"buffer_size": 2203,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								211,
-								211
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1084,15 +1073,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6090,
+						"buffer_size": 6322,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2254,
-								2254
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1141,7 +1130,7 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 168,
+						"buffer_size": 182,
 						"regions":
 						{
 						},
@@ -1169,15 +1158,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4856,
+						"buffer_size": 4994,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								814,
-								814
+								0,
+								0
 							]
 						],
 						"settings":

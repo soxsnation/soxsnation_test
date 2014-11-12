@@ -1,5 +1,10 @@
 <h1>Links</h1>
-{{page}}
+PAGE:{{page}}<br />
+NAMES:{{names}}<br />
+LINK:{{link}}<br />
+<soxsmodal></soxsmodal>
+<br /><br /><br />
+
 <div class="soxs_alert" style="display:{{showAlert}}" data-ng-click="closeAlert()">
 	<div class="{{alertCss}} soxs_alert_contex ">
 		<span class="alert" >{{alertText}}</span>
@@ -12,7 +17,7 @@
 
 <input type="search" data-ng-model="tag_filter" placeholder="Search tags" />
 <br /><br /><br />
-<div style="display:block;height:200px;width:100%;">
+<div style="display:block;height:20px;width:100%;">
 	<div style="display:inline-block;height:25px;width:150px;" data-ng-repeat='tag in tags | filter:tag_filter' data-ng-click="filter(tag)">
 	{{tag}}
 	</div>
@@ -21,20 +26,20 @@
 <!-- <ul>
 	<li data-ng-repeat='tag in tags' data-ng-click="filter(tag)">{{tag}}</li>
 </ul> -->
-<button class="btn btn-primary btn-lg" data-toggle="modal" data-ng-click="insert_link_mode()">
+<button class="btn btn-primary btn-lg" data-toggle="modal" data-ng-click="insertItem_clicked()">
   Insert Link
 </button>
 
 <ul>
-	<li data-ng-repeat='link in links | filter:tag_filter'>
-		{{link.text}} -- <a href="{{link.url}}" target="_blank">{{link.url}}</a> <div data-ng-click="editLink(link)" class="edit_model_model"> Edit </div>
+	<li data-ng-repeat='link in soxsItems | filter:tag_filter'>
+		{{link.text}} -- <a href="{{link.url}}" target="_blank">{{link.url}}</a> <div data-ng-click="editItem_clicked(link)" class="edit_model_model"> Edit </div>
 	</li>
 </ul>
 
 
 
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="{{modalHidden}}" data-backdrop="">
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="{{modalHidden}}" data-backdrop="">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -43,7 +48,7 @@
 					</span>
 					<span class="sr-only">Close</span>
 				</button>
-        		<h4 class="modal-title" id="myModalLabel">{{modalTitle}}</h4>        		
+        		<h4 class="modal-title" id="myModalLabel">TT{{modalTitle}}TT</h4>        		
 			</div>
 			<div class="modal-body">
 			<!-- <h1>BODY</h1> -->
@@ -51,19 +56,19 @@
 					<div class="form-group">
 						<label for="link_text" class="col-sm-2 control-label">Link text</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" data-ng-model="link_text" id="link_text" placeholder="text">
+							<input type="text" class="form-control" data-ng-model="currentItem.text" id="link_text" placeholder="text">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="link_url" class="col-sm-2 control-label">Url</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" data-ng-model="link_url" id="link_url" placeholder="link">
+							<input type="text" class="form-control" data-ng-model="currentItem.url" id="link_url" placeholder="link">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="link_tag" class="col-sm-2 control-label">Tags</label>
 						<div class="col-sm-10">
-						<span data-ng-repeat="tag in link_tags" style="display:block">
+						<span data-ng-repeat="tag in currentItem.tags" style="display:block">
 							<input type="checkbox" ng-model="todo.done" >
 							{{tag}}
 						</span>
@@ -72,8 +77,8 @@
 					<div class="form-group">
 						<label for="newTag" class="col-sm-2 control-label">Add Tag</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" data-ng-model="newTag" id="newTag" placeholder="link" style="display:inline;width:80%">
-							<button type="button" data-ng-click="addTagToLink()" class="btn btn-primary" style="display:inline">Add</button>
+							<input type="text" class="form-control" data-ng-model="listItem" id="newTag" placeholder="link" style="display:inline;width:80%">
+							<button type="button" data-ng-click="addListItem(listItem)" class="btn btn-primary" style="display:inline">Add</button>
 						</div>
 					</div>
 
@@ -84,7 +89,7 @@
 			<div class="modal-footer">
 				<h4 class="modal-footer-error">{{modal_error}}</h4>
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-primary" data-ng-click="saveLink()">{{modalSubmitText}}</button>
+		        <button type="button" class="btn btn-primary" data-ng-click="saveItem()">{{modalSubmitText}}</button>
 
 		     </div>
 		</div>

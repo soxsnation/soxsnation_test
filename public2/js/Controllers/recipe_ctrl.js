@@ -186,6 +186,8 @@ angular.module('soxsnationApp')
 					$http.get(server + 'api/soxs/getall/recipe').success(function(data) {
 						$scope.recipes = [];
 						$scope.tags = [];
+						console.log('recipes')
+						console.log(data);
 						for (var i = 0; i < data.length; ++i) {
 							var l = {
 								name: data[i].name,

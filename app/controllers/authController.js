@@ -20,7 +20,7 @@ exports.changepassword = function(req, res, next) {
 }
 
 exports.getUser = function(req, res, next) {
-	console.log('authController.getUser');
+	// console.log('authController.getUser');
 	soxsAuth.getUser(req.headers.authorization, function(err, user) {
 		if (err || !user) {
 			res.send(401);
@@ -40,7 +40,7 @@ exports.getUser = function(req, res, next) {
 }
 
 exports.login = function(req, res, next) {
-	console.log('authController.login');
+	// console.log('authController.login');
 
 	soxsAuth.login(req.headers.authorization, function(err, token) {
 		if (err) {
@@ -54,7 +54,7 @@ exports.login = function(req, res, next) {
 }
 
 exports.validate = function(req, res, next) {
-	console.log('authController.validate');
+	// console.log('authController.validate');
 	if (req.headers.authorization === undefined) {
 		res.send(403);
 	}
@@ -70,7 +70,7 @@ exports.validate = function(req, res, next) {
 }
 
 exports.authorized = function(req, res, next) {
-	console.log('authController.validate');
+	// console.log('authController.validate');
 	if (req.headers.authorization === undefined) {
 		res.send(403);
 	}
@@ -86,7 +86,7 @@ exports.authorized = function(req, res, next) {
 }
 
 exports.logout = function(req, res, next) {
-	console.log('authController.logout');
+	// console.log('authController.logout');
 	soxsAuth.logout(req.headers.authorization, function(err, token) {
 		if (err) {
 			res.send(err);

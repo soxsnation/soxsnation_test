@@ -8,8 +8,8 @@
 /* Controllers */
 
 angular.module('soxsnationApp')
-	.controller('SoxsController', ['$scope', 'soxsAuth', '$location', 'soxsDataService',
-		function($scope, soxsAuth, $location, soxsDataService) {
+	.controller('SoxsController', ['$scope', 'soxsAuth', '$location', 'soxsFactory',
+		function($scope, soxsAuth, $location, soxsFactory) {
 			soxsAuth.validateUser().then(function(user) {
 				console.log('User is logged in');
 
@@ -28,7 +28,7 @@ angular.module('soxsnationApp')
 					console.log(data);
 				});
 
-				$scope.names = soxsDataService.users;
+				$scope.names = soxsFactory.users;
 
 			}, function(error) {
 				$location.path('/Login');

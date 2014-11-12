@@ -25,8 +25,8 @@ angular.module('soxsnationApp')
 						console.log('login successful');
 						$scope.userInfo = result;
 						$location.path('/Home');
-						$rootScope.$broadcast('login_changed', 'broadcast');
-                    	$rootScope.$emit('login_changed', 'emit');
+						// $rootScope.$broadcast('login_changed', 'broadcast');
+                    	// $rootScope.$emit('login_changed', 'emit');
 
 						// $scope.$emit('login_changed', true);
 					}, function(error) {

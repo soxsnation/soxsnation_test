@@ -15,8 +15,13 @@ soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
         $rootScope.lastError = '';
 
         if ($window.sessionStorage.token) {
+            console.log('found token in session storage')
             $rootScope.currentToken = $window.sessionStorage.token;
-            $rootScope.$emit('login_changed', true);
+        }
+
+        if ($window.sessionStorage.user) {
+            console.log('found token in session storage')
+            $rootScope.currentUser = JSON.parse($window.sessionStorage.user);
         }
 
         function init() {
@@ -27,7 +32,7 @@ soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
                 url: '/api/session/validate',
                 method: 'GET',
                 headers: {
-                    Authorization: $rootScope.currentToken.get()
+                    Authorization: $rootScope.currentToken
                 },
                 xhrFields: {
                     withCredentials: true
@@ -83,8 +88,8 @@ soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
                     console.log('User Data:');
                     console.log(res.data);
                     $rootScope.currentUser = res.data;
+                    $window.sessionStorage.user = JSON.stringify($rootScope.currentUser);
                     console.log($rootScope.currentUser);
-                    $rootScope.$broadcast('login_changed', 'broadcast');
                     $rootScope.$emit('login_changed', 'emit');
                     deferred.resolve($rootScope.currentUser);
                 }, function(error) {
@@ -120,6 +125,28 @@ soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
             return deferred.promise;
         }
 
+        function http_post(url, data) {
+            var deferred = $q.defer();
+
+            $http({
+                method: "POST",
+                url: url,
+                headers: {
+                    Authorization: $rootScope.currentToken
+                },
+                data: data,
+                xhrFields: {
+                    withCredentials: true
+                }
+            }).success(function(data) {
+                deferred.resolve(data);
+            }, function(error) {
+                deferred.reject(error);
+            });
+
+            return deferred.promise;
+        }
+
         function logout() {
             var deferred = $q.defer();
 
@@ -139,6 +166,7 @@ soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
                 $rootScope.currentUser = null;
                 $rootScope.$emit('login_changed', false);
                 delete $window.sessionStorage.token;
+                delete $window.sessionStorage.user;
                 deferred.resolve(result);
             }, function(error) {
                 console.log(error);
@@ -150,7 +178,12 @@ soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
         }
 
         function getUserInfo() {
-            return $rootScope.currentUser;
+            if ($rootScope.currentUser == null && $rootScope.currentToken != null) {
+                console.log("getUserInfo: have a token but no user info")
+                return $rootScope.currentUser;
+            } else {
+                return $rootScope.currentUser;
+            }
         }
 
         function userLoggedIn() {
@@ -233,6 +266,7 @@ soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
             logout: logout,
             getUserInfo: getUserInfo,
             http_get: http_get,
+            http_post: http_post,
             validateUser: validateUser,
             userLoggedIn: userLoggedIn,
             changePassword: changePassword,
