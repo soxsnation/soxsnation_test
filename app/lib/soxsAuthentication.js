@@ -51,12 +51,12 @@ exports.getUser = function(reqHeader, cb) {
 	// console.log('soxsAuthentication.getUser');
 	// console.log(reqHeader);
 	var token = jwt.decode(reqHeader, secret);
-	console.log(token);
+	// console.log(token);
 	findUserByUsername(token.username, cb);
 }
 
 exports.changepassword = function(reqHeader, cb) {
-	console.log('soxsAuthentication.changepassword');
+	// console.log('soxsAuthentication.changepassword');
 	var au = reqHeader;
 	var creds = utils.Base64().decode(au.substring(au.indexOf(' ') + 1));
 	var username = creds.substring(0, creds.indexOf(':'));
@@ -69,7 +69,7 @@ exports.changepassword = function(reqHeader, cb) {
 	// console.log(password);
 	// console.log(hashedPassword);
 	utils.verifyPassword(password, hashedPassword, function(valid) {
-		console.log(valid);
+		// console.log(valid);
 	})
 
 	findUserByUsername(username, function(err, user) {
@@ -85,7 +85,7 @@ exports.changepassword = function(reqHeader, cb) {
 
 
 exports.login = function(reqHeader, cb) {
-	console.log('soxsAuthentication.login');
+	// console.log('soxsAuthentication.login');
 	var au = reqHeader;
 	var creds = utils.Base64().decode(au.substring(au.indexOf(' ') + 1));
 	var username = creds.substring(0, creds.indexOf(':'));
@@ -141,7 +141,7 @@ exports.validateToken = function(reqHeader, cb) {
 
 		findUserByUsername(token.username, function(err, user) {
 			if (user.tokens === token) {
-				console.log('token not found');
+				// console.log('token not found');
 				cb(401, null);
 			} else {
 				cb(null, reqHeader);

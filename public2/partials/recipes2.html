@@ -1,0 +1,134 @@
+<div class="recipe_title">
+	<h3>Recipes</h3>
+	<button class="btn btn-primary btn-lg" data-toggle="modal" data-ng-click="insert_recipe_mode()">
+	Insert New Recipe
+	</button>
+</div>
+<!-- <br /><br /><br /> -->
+<div class="recipe_main">
+	<!-- <div class="recpie_list">
+		<ul>
+				<li data-ng-repeat='recipe in recipes | filter:tag_filter'>
+						<div data-ng-click="select_recipe(recipe)">
+								<b>{{recipe.name}}</b><br />
+								{{recipe.description}}
+						</div>
+				</li>
+		</ul>
+	</div> -->
+	<soxsdata type='recipe'></soxsdata>
+	<div class="recipe_detail" data-ng-show='recipeSelected'>
+		<div class="recipe_detail_title">
+			<div class="recipe_title_left">
+				<b>{{current_recipe.name}}</b>
+				<div data-ng-click="edit_recipe_mode()" class="edit_model_model"> [Edit] </div>
+				<br />
+				{{current_recipe.description}}
+			</div>
+			<div class="recipe_title_right">
+				<b>Updated:</b> {{current_recipe.dateUpdated}}
+				<br />
+				<b>By:</b> {{current_recipe.userUpdated}}
+			</div>
+		</div>
+		
+		<div class="recipe_ingredients">
+			<b>Ingredients</b>
+			<br />
+			<span data-ng-repeat="ingredient in current_recipe.ingredients" style="display:block">
+				{{ingredient.name}} -- {{ingredient.quantity}}
+			</span>
+			<br />
+		</div>
+		<div class="recipe_steps">
+			<b>Steps:</b>
+			<br />
+			<span data-ng-repeat="step in current_recipe.steps" style="display:block">
+				{{step.number}} -- {{step.description}}
+			</span>
+			<br />
+		</div>
+		
+	</div>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="{{modalHidden}}" data-backdrop="">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+				<span aria-hidden="true">&times;
+				</span>
+				<span class="sr-only">Close</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">{{modalTitle}}</h4>
+			</div>
+			<div class="modal-body">
+				<!-- <h1>BODY</h1> -->
+				<form role="form" class="form-horizontal">
+					<div class="form-group">
+						<label for="recipe_name" class="col-sm-2 control-label">Name</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" data-ng-model="recipe_name" id="recipe_name" placeholder="recipe name">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="recipe_desc" class="col-sm-2 control-label">Description</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" data-ng-model="recipe_desc" id="recipe_desc" placeholder="description">
+						</div>
+					</div>
+					<!-- <div class="form-group">
+							<label for="recipe_tags" class="col-sm-2 control-label">Tags</label>
+							<div class="col-sm-10">
+								<span data-ng-repeat="tag in recipe_tags" style="display:block">
+									<input type="checkbox" ng-model="todo.done" >
+									{{tag}}
+								</span>
+							</div>
+					</div> -->
+					<!-- <div class="form-group">
+							<label for="newTag" class="col-sm-2 control-label">Add Tag</label>
+							<div class="col-sm-10">
+									<input type="text" class="form-control" data-ng-model="newTag" id="newTag" placeholder="" style="display:inline;width:80%">
+									<button type="button" data-ng-click="addTagToRecipe()" class="btn btn-primary" style="display:inline">Add</button>
+							</div>
+					</div> -->
+					<div class="form-group">
+						<label for="recipe_ingredients" class="col-sm-2 control-label">Ingredients</label>
+						<div class="col-sm-10">
+							<span data-ng-repeat="ingredient in recipe_ingredients" style="display:block">
+							<input type="checkbox" ng-model="todo.done" >
+							{{ingredient.name}} -- {{ingredient.quantity}}
+							</span>
+							<br />
+							<input type="text" class="form-control" data-ng-model="next_ingredient" id="next_ingredient" placeholder="ingredient" style="display:inline;width:40%">
+							<input type="text" class="form-control" data-ng-model="next_ingredient_quantity" id="next_ingredient_quantity" placeholder="quantity" style="display:inline;width:40%">
+							<!-- <select data-ng-model="newFieldType" data-ng-options="ft.name for ft in fieldTypes" class="form-control" style="display:inline;width:25%"></select> -->
+							<button type="button" data-ng-click="addIngredientToRecipe()" class="btn btn-primary" style="display:inline">Add</button>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="recipe_steps" class="col-sm-2 control-label">Steps</label>
+						<div class="col-sm-10">
+							<span data-ng-repeat="step in recipe_steps" style="display:block">
+							<input type="checkbox" ng-model="todo.done" >
+							{{step.number}} -- {{step.description}}
+							</span>
+							<br />
+							<input type="text" class="form-control" data-ng-model="next_step_number" id="next_step_number" placeholder="step number" style="display:inline;width:40%">
+							<input type="text" class="form-control" data-ng-model="next_step_description" id="next_step_description" placeholder="step description" style="display:inline;width:40%">
+							<button type="button" data-ng-click="addStepToRecipe()" class="btn btn-primary" style="display:inline">Add</button>
+						</div>
+					</div>
+					<!-- <input class="btn btn-default" type="submit" value="Update Link"> -->
+					
+				</form>
+			</div>
+			<div class="modal-footer">
+				<h4 class="modal-footer-error">{{modal_error}}</h4>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary" data-ng-click="saveRecipe()">{{modalSubmitText}}</button>
+			</div>
+		</div>
+	</div>
+</div>

@@ -27,13 +27,21 @@ soxsnationApp.config(['$routeProvider',
 			templateUrl: '../partials/session/changePassword.html'
 		}).
 		when('/links', {
-			controller: 'LinkController',
-			templateUrl: '../partials/links.html'
+			controller: 'DataController',
+			templateUrl: '../partials/soxsItem.html'
+		}).
+		when('/tasks', {
+			controller: 'DataController',
+			templateUrl: '../partials/soxsItem.html'
 		}).
 		when('/recipes', {
-			controller: 'RecipeController',
-			templateUrl: '../partials/recipes.html'
+			controller: 'DataController',
+			templateUrl: '../partials/soxsItem.html'
 		}).
+		// when('/recipes', {
+		// 	controller: 'RecipeController',
+		// 	templateUrl: '../partials/recipes.html'
+		// }).
 		when('/SoxsData', {
 			controller: 'SoxsDataController',
 			templateUrl: '../partials/soxsdata/soxsdata.html'

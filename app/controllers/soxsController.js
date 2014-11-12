@@ -102,7 +102,7 @@ exports.insert = function(req, res, next) {
 }
 
 exports.update = function(req, res, next) {
-	// console.log('soxsController.update');
+	console.log('soxsController.update');
 	mailer.sendMail('updating soxs object', 'updating soxs object message', function(messageSent) {
 		getSchema(req.params.type, function(err, customModel) {
 			if (err) {
