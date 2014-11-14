@@ -32,9 +32,9 @@ function getSchema(schemaType, cb) {
 
 			console.log('Got soxsSchema for: ' + schemaType);
 			console.log(ss.fields)
-			// var customSchema = new Schema(eval(ss.fields));
-			// var schemaObj = JSON.parse('{"name":"String", "description":"String", "complete":"Boolean"}');
-			// console.log(schemaObj);
+				// var customSchema = new Schema(eval(ss.fields));
+				// var schemaObj = JSON.parse('{"name":"String", "description":"String", "complete":"Boolean"}');
+				// console.log(schemaObj);
 			var customSchema = new Schema(JSON.parse(ss.fields));
 
 			cb(null, mongoose.model(schemaType, customSchema));
@@ -44,25 +44,55 @@ function getSchema(schemaType, cb) {
 
 
 
-exports.create = function(req, res, next) {
-	// console.log('soxsController.create');
+exports.createSoxsSchema = function(req, res, next) {
+	console.log('soxsController.createSoxsSchema');
 	console.log(req.body);
-	console.log(req.params.type);
-	var schemaType = req.params.type;
-	getSchema(schemaType, function(err, customModel) {
+
+	var sch = new soxsSchema(req.body);
+	sch.save(function(err) {
 		if (err) {
-			res.send(404);
+			console.log(err);
+			return res.send(403);
 		} else {
-			var sch = new customModel(req.body);
-			sch.save(function(err) {
-				if (err) {
-					console.log(err);
-					return res.send(403);
-				} else {
-					return res.json(sch);
-				}
-			})
+			return res.json(sch);
 		}
+	})
+
+	// var schemaType = req.params.type;
+	// getSchema(schemaType, function(err, customModel) {
+	// 	if (err) {
+	// 		res.send(404);
+	// 	} else {
+	// 		var sch = new customModel(req.body);
+	// 		sch.save(function(err) {
+	// 			if (err) {
+	// 				console.log(err);
+	// 				return res.send(403);
+	// 			} else {
+	// 				return res.json(sch);
+	// 			}
+	// 		})
+	// 	}
+	// })
+}
+
+exports.updateSoxsSchema = function(req, res, next) {
+	soxsSchema.findOne({
+		_id: req.params.id
+	}).exec(function(err, soxsData) {
+		if (err) {
+			return next(err);
+		}
+		if (!soxsData) {
+			return next(new Error('Failed to load soxsSchema'));
+		}
+		soxsData.update(req.body, function(err, data) {
+			if (err) {
+				res.send(404);
+			} else {
+				res.send(200);
+			}
+		})
 	})
 }
 

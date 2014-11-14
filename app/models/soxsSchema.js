@@ -25,6 +25,11 @@ var soxsSchema = new Schema({
 		type: String,
 		default: '',
 		trim: true
+	},
+	permissionIndex: {
+		type: String,
+		default: '0',
+		trim: true
 	}
 });
 

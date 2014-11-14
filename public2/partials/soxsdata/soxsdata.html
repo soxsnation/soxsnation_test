@@ -14,14 +14,6 @@
 	</li>
 </ul>
 
-
-
-
-
-
-
-
-
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="{{modalHidden}}" data-backdrop="">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
@@ -39,19 +31,25 @@
 					<div class="form-group">
 						<label for="newObj_name" class="col-sm-2 control-label">Data Type Name</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" data-ng-model="newObj_name" id="newObj_name" placeholder="name">
+							<input type="text" class="form-control" data-ng-model="currentDataModel.name" id="newObj_name" placeholder="name">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="newObj_description" class="col-sm-2 control-label">Description</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" data-ng-model="newObj_description" id="newObj_description" placeholder="description">
+							<input type="text" class="form-control" data-ng-model="currentDataModel.description" id="newObj_description" placeholder="description">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="newObj_permissionIndex" class="col-sm-2 control-label">PermissionIndex</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" data-ng-model="currentDataModel.permissionIndex" id="newObj_permissionIndex" placeholder="0">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="newObjFields" class="col-sm-2 control-label">Fields</label>
 						<div class="col-sm-10">
-						<span data-ng-repeat="field in newObjFields" style="display:block">
+						<span data-ng-repeat="field in currentDataModel.fieldItems track by $index" style="display:block">
 							<input type="checkbox" data-ng-model="todo.done" >
 							{{field.name}} :: {{field.type}}
 							<!-- {{field}} -->

@@ -7,8 +7,8 @@
 
 
 angular.module('soxsnationApp')
-	.controller('SoxsDataController', ['$scope', '$http', '$location', 'soxsAuth',
-		function($scope, $http, $location, soxsAuth) {
+	.controller('SoxsDataController', ['$scope', '$location', 'soxsAuth',
+		function($scope, $location, soxsAuth) {
 
 			soxsAuth.validateUser().then(function(user) {
 			}, function(error) {
@@ -88,52 +88,81 @@ angular.module('soxsnationApp')
 			$scope.newFieldName = '';
 			$scope.newFieldType = '';
 			$scope.model_id = '';
+			$scope.currentDataModel = {};
 
+			function stringifyFields(fields) {
+				console.log('stringifyFields');
+				console.log(fields);
+				var fieldList = {};
+				for (var i = 0; i < fields.length; ++i) {
+					fieldList[fields[i].name] = fields[i].type;
+				}
+				return JSON.stringify(fieldList);
+			}
 
+			function parseDataType(data) {
+				var dataType = {
+					name: data.name,
+					description: data.description,
+					_id: data._id,
+					permissionIndex: data.permissionIndex,
+					fields: data.fields,
+					fieldItems: []
+				};
+
+				var fieldList = JSON.parse(data.fields);
+				for (var prop in fieldList) {
+					var field = {
+						name: prop,
+						type: fieldList[prop]
+					}
+					dataType.fieldItems.push(field);
+				}
+
+				return dataType;
+			}
 
 			function addDataType() {
 
-				var url = server + 'api/soxs/create/soxsSchema';
-				var newObjFields = {};
+				var url = server + 'api/soxsSchema/create';
 
-				for (var i = 0; i < $scope.newObjFields.length; ++i) {
-					var nextField = $scope.newObjFields[i];
-					console.log(nextField);
-					newObjFields[nextField.name] = nextField.type;
-				}
+				console.log($scope.currentDataModel);
+				$scope.currentDataModel.fields = stringifyFields($scope.currentDataModel.fieldItems);
 
-				var newObj = {
-					name: $scope.newObj_name,
-					description: $scope.newObj_description,
-					fields: JSON.stringify(newObjFields)
-				};
-
-				console.log(newObj);
-
-				$http.post(url, newObj).success(function(data) {
+				soxsAuth.http_post(url, $scope.currentDataModel)
+					.then(function (data) {
 					$('#myModal').modal('hide');
-				}).error(function(data, status) {
-					console.log(data);
-					console.log(status);
-				})
-
+					$scope.data_models.push(parseDataType(data));
+					}, function(err) {
+						console.log('ERROR: ' + err);
+					})
 			};
 
 			function updateDataType() {
-				var url = server + 'api/soxs/update/soxsSchema/' + $scope.model_id;
+				var url = server + 'api/soxsSchema/update/' + $scope.currentDataModel._id;
 
-				var newObj = {
-					name: $scope.newObj_name,
-					description: $scope.newObj_description,
-					fields: JSON.stringify($scope.newObjFields)
-				};
+				console.log('updateDataType');
+				console.log($scope.currentDataModel);
+				$scope.currentDataModel.fields = stringifyFields($scope.currentDataModel.fieldItems);
+				console.log($scope.currentDataModel);
+				
+				for (var i = 0; i < $scope.data_models.length; ++i) {
+					if ($scope.data_models[i]._id == $scope.currentDataModel._id) {
+						$scope.data_models[i] = parseDataType($scope.currentDataModel);
+						break;
+					}
+				}
+				// $scope.currentDataModel = parseDataType(saveModel);
+				// console.log($scope.currentDataModel);
 
-				$http.post(url, newObj).success(function(data) {
+				soxsAuth.http_post(url, $scope.currentDataModel)
+					.then(function (data) {
 					$('#myModal').modal('hide');
-				}).error(function(data, status) {
-					console.log(data);
-					console.log(status);
-				})
+					// $scope.currentDataModel = {};
+					}, function(err) {
+						console.log('ERROR: ' + err);
+					})
+
 			}
 
 			function formatField(field) {
@@ -154,23 +183,16 @@ angular.module('soxsnationApp')
 				if ($scope.mode === 'edit') {
 					$scope.modalTitle = 'Edit Data Model';
 					$scope.modalSubmitText = 'Update Data Model';
-
-					$scope.newObj_name = model.name;
-					$scope.newObj_description = model.description;
-					$scope.newObjFields = model.fields;
-					$scope.link_id = model._id;
 				} else if ($scope.mode === 'insert') {
 					$scope.modalTitle = 'Insert Data Model';
 					$scope.modalSubmitText = 'Create New Data Model';
+					$scope.currentDataModel.fieldItems = [];
 				}
 
 				$('#myModal').modal('show');
 			};
 
 			$scope.saveDataType = function() {
-				// This is only here until i figure out how updating model data
-				$scope.mode = 'insert';
-
 				if ($scope.mode === 'insert') {
 					addDataType();
 				} else if ($scope.mode === 'edit') {
@@ -187,32 +209,33 @@ angular.module('soxsnationApp')
 					type: $scope.newFieldType.value
 				}
 
-				$scope.newObjFields.push(nf);
-				console.log($scope.newObjFields);
+				$scope.currentDataModel.fieldItems.push(nf);
+				console.log($scope.currentDataModel);
 			}
 
-			$scope.addFieldTextToObj = function() {
-				console.log($scope.newFieldText);
-				var fields = JSON.parse($scope.newFieldText);
-				for (var prop in fields) {
-					var field = {
-						name: prop,
-						type: fields[prop]
-					}
-					$scope.newObjFields.push(field);
-				}
-			}
+			// $scope.addFieldTextToObj = function() {
+			// 	console.log($scope.newFieldText);
+			// 	var fields = JSON.parse($scope.newFieldText);
+			// 	for (var prop in fields) {
+			// 		var field = {
+			// 			name: prop,
+			// 			type: fields[prop]
+			// 		}
+			// 		$scope.newObjFields.push(field);
+			// 	}
+			// }
 
 
 			$scope.edit_data_model = function(model) {
+				$scope.currentDataModel = model;
 				showModal('edit', model);
 			}
 
 			$scope.insert_data_model = function() {
 				console.log('insert_data_model');
-				$scope.newObjFields = [];
-				$scope.newObj_name = '';
-				$scope.newObj_description = '';
+				// $scope.newObjFields = [];
+				// $scope.newObj_name = '';
+				// $scope.newObj_description = '';
 				showModal('insert');
 			}
 
@@ -230,22 +253,25 @@ angular.module('soxsnationApp')
 						$scope.data_models = [];
 
 						for (var i = 0; i < data.length; ++i) {
-							var model = {
-								name: data[i].name,
-								description: data[i].description,
-								fields: []
-							}
+							// var model = {
+							// 	name: data[i].name,
+							// 	description: data[i].description,
+							// 	fields: [],
+							// 	_id: data[i]._id,
+							// 	permissionIndex: data[i].permissionIndex
+							// }
 
-							var fields = JSON.parse(data[i].fields);
-							for (var prop in fields) {
-								var field = {
-									name: prop,
-									type: fields[prop]
-								}
-								model.fields.push(field);
-							}
+							// var fields = JSON.parse(data[i].fields);
+							// for (var prop in fields) {
+							// 	var field = {
+							// 		name: prop,
+							// 		type: fields[prop]
+							// 	}
+							// 	model.fields.push(field);
+							// }
 
-							$scope.data_models.push(model);
+							// $scope.data_models.push(model);
+							$scope.data_models.push(parseDataType(data[i]));
 						}
 					})
 				// $http.get(server + 'api/soxs/types').success(function(data) {
@@ -274,17 +300,17 @@ angular.module('soxsnationApp')
 			}
 			initData();
 
-			function user_login() {
-				soxsAuth.login('andrew', '123')
-					.then(function(result) {
-						$scope.userInfo = result;
+			// function user_login() {
+			// 	soxsAuth.login('andrew', '123')
+			// 		.then(function(result) {
+			// 			$scope.userInfo = result;
 
-						// $location.path("/");
-					}, function(error) {
-						$window.alert("Invalid credentials");
-						console.log(error);
-					});
-			};
+			// 			// $location.path("/");
+			// 		}, function(error) {
+			// 			$window.alert("Invalid credentials");
+			// 			console.log(error);
+			// 		});
+			// };
 
 			// user_login();
 

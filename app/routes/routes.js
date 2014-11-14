@@ -151,14 +151,19 @@ module.exports = function(app, passport) {
 	 * soxsObjects Routes
 	 *****************************************************************************************/
 
-	app.post('/api/soxs/create/:type', soxsController.create);
+	app.post('/api/soxsSchema/create', soxsController.createSoxsSchema);
+	app.post('/api/soxsSchema/update/:id', soxsController.updateSoxsSchema);
+
+
 	app.get('/api/soxs/get/:type/:id', soxsController.get);
 	app.get('/api/soxs/getall/:type', soxsController.getall);
+
 	app.post('/api/soxs/insert/:type', soxsController.insert);
+	app.post('/api/soxs/update/:type/:id', soxsController.update);
 
 	app.get('/api/soxs/type/:type', soxsController.get_type_by_name);
 	app.get('/api/soxs/types', authControl.authorized, soxsController.get_types);
-	app.post('/api/soxs/update/:type/:id', soxsController.update);
+	
 
 	/*****************************************************************************************
 	 * User Routes

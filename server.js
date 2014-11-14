@@ -35,7 +35,7 @@ var connect = function() {
 		}
 	}
 
-	mongoose.connect('mongodb://server.soxsnation.com/soxsnation3', options);
+	mongoose.connect('mongodb://server.soxsnation.com/soxsnation2', options);
 }
 connect()
 
