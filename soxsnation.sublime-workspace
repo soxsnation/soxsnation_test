@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"curr",
+				"currentDataModel"
+			],
+			[
+				"isE",
+				"isEditable"
+			],
+			[
+				"in",
+				"index"
+			],
+			[
 				"re",
 				"recipeData"
 			],
@@ -68,20 +80,12 @@
 				"ingredients"
 			],
 			[
-				"in",
-				"ingredients"
-			],
-			[
 				"user",
 				"username"
 			],
 			[
 				"req",
 				"reqHeader"
-			],
-			[
-				"curr",
-				"currentToken"
 			],
 			[
 				"toke",
@@ -383,23 +387,15 @@
 			"file": "public2/js/Controllers/data_ctrl.js",
 			"settings":
 			{
-				"buffer_size": 4172,
+				"buffer_size": 5188,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "public2/js/soxs_Auth.js",
+			"file": "public2/partials/directives/navbar.html",
 			"settings":
 			{
-				"buffer_size": 9034,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "public2/js/Controllers/soxs_data_ctrl.js",
-			"settings":
-			{
-				"buffer_size": 6340,
+				"buffer_size": 2495,
 				"line_ending": "Windows"
 			}
 		},
@@ -420,13 +416,34 @@
 			}
 		},
 		{
-			"contents": "<div class=\"modal fade\" id=\"myModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"{{modalHidden}}\" data-backdrop=\"\">\n	<div class=\"modal-dialog modal-lg\">\n		<div class=\"modal-content\">\n			<div class=\"modal-header\">\n				<button type=\"button\" class=\"close\" data-dismiss=\"modal\">\n				<span aria-hidden=\"true\">&times;\n				</span>\n				<span class=\"sr-only\">Close</span>\n				</button>\n				<h4 class=\"modal-title\" id=\"myModalLabel\">{{modalTitle}}</h4>\n			</div>\n			<div class=\"modal-body\">\n				<form role=\"form\" class=\"form-horizontal\">\n					<div data-ng-repeat=\"prop in currentDataModel\">\n						<div class=\"form-group\" data-ng-show='prop.isString'>\n							<label for=\"link_text\" class=\"col-sm-2 control-label\">{{prop.name}}</label>\n							<div class=\"col-sm-10\">\n								<input type=\"text\" class=\"form-control\" data-ng-model=\"currentItem[prop.name]\" id=\"link_text\" placeholder=\"text\">\n							</div>\n						</div>\n						<div class=\"form-group\"  data-ng-show='prop.isArray'>\n							<label for=\"link_tag\" class=\"col-sm-2 control-label\">{{prop.name}}</label>\n							<div class=\"col-sm-10\">\n								<span data-ng-repeat=\"item in currentItem[prop.name] track by $index\" style=\"display:block\">\n								{{item}}\n								</span>\n								<div class=\"col-sm-10\">\n									<input type=\"text\" class=\"form-control\" data-ng-model=\"listItem\" id=\"newTag\" placeholder=\"link\" style=\"display:inline;width:80%\">\n									<button type=\"button\" data-ng-click=\"addListItem(listItem, prop.name)\" class=\"btn btn-primary\" style=\"display:inline\">Add</button>\n							</div>\n							</div>\n						</div>\n						<div class=\"form-group\" data-ng-show='prop.isBoolean'>\n							<label for=\"link_text\" class=\"col-sm-2 control-label\">{{prop.name}}</label>\n							<div class=\"col-sm-10\">\n								<input type=\"checkbox\" data-ng-model=\"currentItem[prop.name]\" id=\"link_text\">\n							</div>\n						</div>\n					</div>\n					<!-- <div class=\"form-group\">\n							<label for=\"link_text\" class=\"col-sm-2 control-label\">Link text</label>\n							<div class=\"col-sm-10\">\n									<input type=\"text\" class=\"form-control\" data-ng-model=\"currentItem.text\" id=\"link_text\" placeholder=\"text\">\n							</div>\n					</div>\n					<div class=\"form-group\">\n							<label for=\"link_url\" class=\"col-sm-2 control-label\">Url</label>\n							<div class=\"col-sm-10\">\n									<input type=\"text\" class=\"form-control\" data-ng-model=\"currentItem.url\" id=\"link_url\" placeholder=\"link\">\n							</div>\n					</div>\n					<div class=\"form-group\">\n							<label for=\"link_tag\" class=\"col-sm-2 control-label\">Tags</label>\n							<div class=\"col-sm-10\">\n								<span data-ng-repeat=\"tag in currentItem.tags\" style=\"display:block\">\n									<input type=\"checkbox\" ng-model=\"todo.done\" >\n									{{tag}}\n								</span>\n							</div>\n					</div>\n					<div class=\"form-group\">\n							<label for=\"newTag\" class=\"col-sm-2 control-label\">Add Tag</label>\n							<div class=\"col-sm-10\">\n									<input type=\"text\" class=\"form-control\" data-ng-model=\"listItem\" id=\"newTag\" placeholder=\"link\" style=\"display:inline;width:80%\">\n									<button type=\"button\" data-ng-click=\"addListItem(listItem)\" class=\"btn btn-primary\" style=\"display:inline\">Add</button>\n							</div>\n					</div> -->\n					<!-- <input class=\"btn btn-default\" type=\"submit\" value=\"Update Link\"> -->\n					\n				</form>\n			</div>\n			<div class=\"modal-footer\">\n				<h4 class=\"modal-footer-error\">{{modal_error}}</h4>\n				<button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\n				<button type=\"button\" class=\"btn btn-primary\" data-ng-click=\"saveItem()\">{{modalSubmitText}}</button>\n			</div>\n		</div>\n	</div>\n</div>",
-			"file": "public2/partials/directives/soxsModal.html",
-			"file_size": -1,
-			"file_write_time": -1,
+			"file": "public2/partials/directives/soxsData/soxsModal.html",
 			"settings":
 			{
-				"buffer_size": 3631,
+				"buffer_size": 4397,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "public2/js/services/soxs_factory.js",
+			"settings":
+			{
+				"buffer_size": 2554,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "public2/js/directives/soxsModal.js",
+			"settings":
+			{
+				"buffer_size": 418,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "public2/partials/soxsItem.html",
+			"settings":
+			{
+				"buffer_size": 674,
 				"line_ending": "Windows"
 			}
 		}
@@ -480,12 +497,22 @@
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js/Controllers",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js/directives",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js/services",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/partials",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/partials/directives"
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/partials/directives",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/partials/directives/soxsData"
 	],
 	"file_history":
 	[
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/index.html",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js/soxs_Auth.js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js/Controllers/soxs_data_ctrl.js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js/services/soxs_factory.js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js/services/soxs_service.js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server.js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/partials/soxsdata/soxsdata.html",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/partials/directives/soxsModal.html",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js/Controllers/soxs_ctrl.js",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js/directives/soxs_directive.js",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master/app/scripts/directives/uniqueUsername.js",
@@ -495,8 +522,6 @@
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/css/fenway.css",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/partials/home.html",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/partials/directives/recipe.html",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js/services/soxs_service.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server.js",
 		"/C/Users/abrown/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/partials/session/login.html",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master/app/scripts/services/Blogs.js",
@@ -506,7 +531,6 @@
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master/app/views/partials/navbar.html",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master/.bowerrc",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master/app/scripts/services/Session.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js/Controllers/soxs_data_ctrl.js",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master/app/scripts/directives/mongooseError.js",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server/lib/soxsAuthentication.js",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server/models/User.js",
@@ -532,7 +556,6 @@
 		"/C/Users/abrown/scratch/Software/Andrew/angular-phonecat-master/angular-phonecat-master/app/js/services.js",
 		"/C/Users/abrown/scratch/Software/Andrew/angular-phonecat-master/angular-phonecat-master/app/js/controllers.js",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/AngularJS-Authentication/public/javascripts/SecurityApp.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js/soxs_Auth.js",
 		"/C/Users/abrown/scratch/Software/Andrew/angular-phonecat-master/angular-phonecat-master/app/index.html",
 		"/C/Users/abrown/scratch/Software/Andrew/PassportJS-Authentication-master/PassportJS-Authentication-master/app/controllers/user.js",
 		"/C/Users/abrown/scratch/Software/Andrew/DiscomRealty/public/partials/listingtable.html",
@@ -609,10 +632,7 @@
 		"/C/Users/abrown/Documents/Software/Andrew/soxsnation/soxsnation/server/models/Recipe.js",
 		"/C/Users/abrown/Documents/Software/Andrew/soxsnation/soxsnation/server/controllers/sessionController.js",
 		"/C/Users/abrown/Documents/Software/Andrew/soxsnation/soxsnation/server/lib/passport.js",
-		"/C/Users/abrown/Documents/Software/Andrew/soxsnation/soxsnation/server/lib/Utils.js",
-		"/C/Users/abrown/Documents/Software/Andrew/soxsnation/soxsnation/public/views/recipes/recipe.js",
-		"/C/Users/abrown/Documents/Software/Andrew/soxsnation/soxsnation/public/services/session.js",
-		"/C/Users/abrown/Documents/Software/Andrew/soxsnation/soxsnation/public/views/recipes/recipeList.js"
+		"/C/Users/abrown/Documents/Software/Andrew/soxsnation/soxsnation/server/lib/Utils.js"
 	],
 	"find":
 	{
@@ -772,7 +792,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
@@ -781,15 +801,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4172,
+						"buffer_size": 5188,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								670,
-								670
+								3299,
+								3299
 							]
 						],
 						"settings":
@@ -801,66 +821,37 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "public2/js/soxs_Auth.js",
+					"file": "public2/partials/directives/navbar.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 9034,
+						"buffer_size": 2495,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								1571,
+								1617
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 2,
 							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 360.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "public2/js/Controllers/soxs_data_ctrl.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6340,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 2,
 					"type": "text"
 				}
 			]
@@ -870,7 +861,7 @@
 			"sheets":
 			[
 				{
-					"buffer": 4,
+					"buffer": 3,
 					"file": "public2/js/Controllers/recipe_ctrl.js",
 					"semi_transient": false,
 					"settings":
@@ -895,11 +886,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 8,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 4,
 					"file": "public2/js/directives/navbar.js",
 					"semi_transient": false,
 					"settings":
@@ -911,8 +902,8 @@
 						"selection":
 						[
 							[
-								0,
-								0
+								622,
+								622
 							]
 						],
 						"settings":
@@ -925,24 +916,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
-					"file": "public2/partials/directives/soxsModal.html",
+					"buffer": 5,
+					"file": "public2/partials/directives/soxsData/soxsModal.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3631,
+						"buffer_size": 4397,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								470,
-								470
+								1073,
+								1073
 							]
 						],
 						"settings":
@@ -954,7 +945,93 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "public2/js/services/soxs_factory.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2554,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								423,
+								423
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": -0.0,
+						"translation.y": 225.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "public2/js/directives/soxsModal.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 418,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								302,
+								302
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "public2/partials/soxsItem.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 674,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
 					"type": "text"
 				}
 			]
@@ -988,7 +1065,7 @@
 		"cols":
 		[
 			0.0,
-			0.463513513514,
+			0.338288288288,
 			1.0
 		],
 		"rows":
@@ -1036,7 +1113,7 @@
 		],
 		"width": 0.0
 	},
-	"selected_group": 0,
+	"selected_group": 1,
 	"settings":
 	{
 	},
