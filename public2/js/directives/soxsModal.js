@@ -12,7 +12,7 @@ angular.module('soxsnationApp')
 			return {
 				restrict: 'E',
 				transclude: true,
-				templateUrl: '../partials/directives/soxsModal.html',
+				templateUrl: '../partials/directives/soxsData/soxsModal.html',
 				controller: function($scope) {
 
 					// $scope.currentItem = 'currentItem'

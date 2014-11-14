@@ -24,6 +24,7 @@ angular.module('soxsnationApp')
 				$scope.modalHidden = 'true';
 				$scope.currentItem = {};
 				$scope.currentDataModel = [];
+				$scope.listItem = '';
 
 				var dataType = $location.url();
 				dataType = dataType.substring(1, dataType.length - 1);
@@ -43,14 +44,16 @@ angular.module('soxsnationApp')
 							// console.log(Object.prototype.toString.call($scope.soxsItems[0][prop]))
 							if (ignoreProps.indexOf(prop) == -1) {
 								var field = {
-									name: prop,
-									type: Object.prototype.toString.call($scope.soxsItems[0][prop]),
-									isArray: (Object.prototype.toString.call($scope.soxsItems[0][prop]) == '[object Array]'),
-									isString: (Object.prototype.toString.call($scope.soxsItems[0][prop]) == '[object String]'),
-									isBoolean: (Object.prototype.toString.call($scope.soxsItems[0][prop]) == '[object Boolean]'),
-									isObject: (Object.prototype.toString.call($scope.soxsItems[0][prop]) == '[object Object]')
-								}
-								console.log(field)
+										name: prop,
+										isEditable: false,
+										buttonText: 'Edit',
+										type: Object.prototype.toString.call($scope.soxsItems[0][prop]),
+										isArray: (Object.prototype.toString.call($scope.soxsItems[0][prop]) == '[object Array]'),
+										isString: (Object.prototype.toString.call($scope.soxsItems[0][prop]) == '[object String]'),
+										isBoolean: (Object.prototype.toString.call($scope.soxsItems[0][prop]) == '[object Boolean]'),
+										isObject: (Object.prototype.toString.call($scope.soxsItems[0][prop]) == '[object Object]')
+									}
+									// console.log(field)
 								$scope.currentDataModel.push(field);
 							}
 						}
@@ -63,14 +66,14 @@ angular.module('soxsnationApp')
 				function insertData() {
 					console.log('insertData');
 					soxsFactory.saveData(dataType, $scope.currentItem, true)
-					.then(function (data) {
-						console.log(data);
-						$scope.soxsItems.push(data);
-						$('#myModal').modal('hide');
-						showAlert('Successful Insert', false);
-					}, function(err) {
-						showAlert(err, true);
-					})
+						.then(function(data) {
+							console.log(data);
+							$scope.soxsItems.push(data);
+							$('#myModal').modal('hide');
+							showAlert('Successful Insert', false);
+						}, function(err) {
+							showAlert(err, true);
+						})
 
 				}
 
@@ -108,16 +111,44 @@ angular.module('soxsnationApp')
 					console.log(listItem);
 					console.log(property);
 					$scope.currentItem[property].push(listItem);
+					listItem = '';
 				}
 
 				$scope.message = $scope.lastError;
 
 				$scope.insertItem_clicked = function() {
-					showModal('insert')
+					console.log('insertItem_clicked');
+					showModal('insert');
 				}
 
 				$scope.editItem_clicked = function(item) {
+					console.log('editItem_clicked');
 					showModal('update', item)
+				}
+
+				$scope.item_clicked = function(item) {
+					console.log('item_clicked' + item);
+					for (var i = 0; i < $scope.currentDataModel.length; ++i) {
+						console.log($scope.currentDataModel[i].name);
+						if ($scope.currentDataModel[i].name == item) {
+							if ($scope.currentDataModel[i].isEditable) {
+								$scope.currentDataModel[i].isEditable = false;
+								$scope.currentDataModel[i].buttonText = 'Edit';
+							} else {
+								$scope.currentDataModel[i].isEditable = true;
+								$scope.currentDataModel[i].buttonText = 'Done';
+							}
+
+						}
+					}
+				}
+
+				$scope.array_item_changed = function(property, index, text) {
+					$scope.currentItem[property][index] = text;
+				}
+
+				$scope.array_item_remove = function(property, index) {
+					$scope.currentItem[property].splice(index, 1);
 				}
 
 				$scope.saveItem = function() {

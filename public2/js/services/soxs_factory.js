@@ -20,7 +20,7 @@ angular.module('soxsnationApp')
 				soxsAuth.http_get(url)
 					.then(function(data) {
 						console.log('soxsAuth.http_get');
-						console.log(data);
+						// console.log(data);
 						var items = [];
 						for (var i = 0; i < data.length; ++i) {
 							var nextItem = {};
@@ -52,8 +52,8 @@ angular.module('soxsnationApp')
 					url = 'api/soxs/update/' + dataType + '/' + item._id;
 				}
 				 
-				console.log(url);
-				console.log(item);
+				// console.log(url);
+				// console.log(item);
 
 				soxsAuth.http_post(url, item)
 					.then(function(data) {
@@ -84,8 +84,8 @@ angular.module('soxsnationApp')
 			function updateData(dataType, item) {
 				var deferred = $q.defer();
 				var url = 'api/soxs/update/' + dataType + '/' + item._id;
-				console.log(url);
-				console.log(item);
+				// console.log(url);
+				// console.log(item);
 
 				soxsAuth.http_post(url, item)
 					.then(function(data) {
