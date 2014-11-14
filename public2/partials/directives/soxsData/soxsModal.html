@@ -19,65 +19,64 @@
 							</div>
 						</div>
 						<div class="form-group"  data-ng-show='prop.isArray'>
-							<label for="link_tag" class="col-sm-2 control-label">{{prop.name}}</label>							
+							<label for="link_tag" class="col-sm-2 control-label">{{prop.name}}</label>
 							<div class="col-sm-10">
 								<div data-ng-repeat="item in currentItem[prop.name] track by $index">
 									<div style="display:block">
-										<input type="text" style="display:inline-block;width:80%" class="form-control" data-ng-show="prop.isEditable" data-ng-model="item" 
-												data-ng-change="array_item_changed(prop.name, $index, item)" id="link_text22" >
-										<div class="glyphicon glyphicon-remove" data-ng-show="prop.isEditable" 
-											data-ng-click="array_item_remove(prop.name, $index)"></div>
+										<input type="text" style="display:inline-block;width:80%" class="form-control" data-ng-show="prop.isEditable" data-ng-model="item"
+										data-ng-change="array_item_changed(prop.name, $index, item)" id="link_text22" >
+										<div class="glyphicon glyphicon-remove" data-ng-show="prop.isEditable"
+										data-ng-click="array_item_remove(prop.name, $index)"></div>
 									</div>
-									<div class="control-label; margin-bottom:15px;display:block;"  data-ng-show="!prop.isEditable">{{item}}</div>									
-								</div>	
+									<div class="control-label" style="padding-bottom:2px;display:block;text-align:left;"  data-ng-show="!prop.isEditable">{{item}}</div>
+								</div>
 								<div style="display:block" data-ng-show="prop.isEditable">
-									<input type="text" class="form-control" data-ng-model="listItem" id="newTag" placeholder="" style="display:inline;width:80%">
-									<button type="button" data-ng-click="addListItem(listItem, prop.name)" class="btn btn-primary" style="display:inline">Add</button>
-								</div>	
+									<input type="text" class="form-control" data-ng-model="list_Item[prop.name]" style="display:inline;width:80%">
+									<button type="button" data-ng-click="addListItem(prop.name)" class="btn btn-primary" style="display:inline">Add</button>
+								</div>
 								<div style="display:block">
-									<button type="button" data-ng-click="item_clicked(prop.name)" class="btn btn-primary">{{prop.buttonText}}</button>						
+									<button type="button" data-ng-click="item_clicked(prop.name)" class="btn btn-primary">{{prop.buttonText}}</button>
 								</div>
 								
 							</div>
 							
 						</div>
+						<div class="form-group"  data-ng-show='prop.isArrayObject'>
+							<label for="link_tag" class="col-sm-2 control-label">{{prop.name}}</label>
+							<div class="col-sm-10">
+								<div data-ng-repeat="item in currentItem[prop.name] track by $index">
+									<div style="display:block;width:100%">
+										<div data-ng-repeat="arrayItem in prop.arrayItems track by $index" data-ng-show="!prop.isEditable" style="display:inline-block;">
+											<div class="control-label" style="padding-right:15px;padding-bottom:5px;display:block;" >{{item[arrayItem]}}</div>
+										</div>
+										<div data-ng-repeat="arrayItem in prop.arrayItems track by $index" style="display:inline-block;">
+											<input type="text" style="display:inline-block;width:95%" class="form-control" data-ng-show="prop.isEditable" data-ng-model="item[arrayItem]"
+											data-ng-change="array_item_changed(prop.name, $index, item)" id="link_text22" >
+										</div>
+										<div class="glyphicon glyphicon-remove" data-ng-show="prop.isEditable"
+										data-ng-click="array_item_remove(prop.name, $index)"></div>
+									</div>
+								</div>
+								<div style="display:block" data-ng-show="prop.isEditable">
+									<div data-ng-repeat="arrayItem in prop.arrayItems track by $index" style="display:inline-block;">
+										<input type="text" class="form-control" data-ng-model="list_Item[prop.name][arrayItem]" placeholder='{{arrayItem}}' style="display:inline;width:95%;">
+									</div>
+									<button type="button" data-ng-click="addListObject(prop.name)" class="btn btn-primary" style="display:inline">Add</button>
+								</div>
+								<div style="display:block;width:100%">
+									<button type="button" data-ng-click="item_clicked(prop.name)" class="btn btn-primary">{{prop.buttonText}}</button>
+								</div>								
+							</div>							
+						</div>
 						<div class="form-group" data-ng-show='prop.isBoolean'>
 							<label for="link_text" class="col-sm-2 control-label">{{prop.name}}</label>
 							<div class="col-sm-10">
-								<input type="checkbox" data-ng-model="currentItem[prop.name]" id="link_text">
+								<div class="checkbox">
+									<input type="checkbox" data-ng-model="currentItem[prop.name]" style="margin-left:0px;" >
+								</div>
 							</div>
 						</div>
 					</div>
-					<!-- <div class="form-group">
-							<label for="link_text" class="col-sm-2 control-label">Link text</label>
-							<div class="col-sm-10">
-									<input type="text" class="form-control" data-ng-model="currentItem.text" id="link_text" placeholder="text">
-							</div>
-					</div>
-					<div class="form-group">
-							<label for="link_url" class="col-sm-2 control-label">Url</label>
-							<div class="col-sm-10">
-									<input type="text" class="form-control" data-ng-model="currentItem.url" id="link_url" placeholder="link">
-							</div>
-					</div>
-					<div class="form-group">
-							<label for="link_tag" class="col-sm-2 control-label">Tags</label>
-							<div class="col-sm-10">
-								<span data-ng-repeat="tag in currentItem.tags" style="display:block">
-									<input type="checkbox" ng-model="todo.done" >
-									{{tag}}
-								</span>
-							</div>
-					</div>
-					<div class="form-group">
-							<label for="newTag" class="col-sm-2 control-label">Add Tag</label>
-							<div class="col-sm-10">
-									<input type="text" class="form-control" data-ng-model="listItem" id="newTag" placeholder="link" style="display:inline;width:80%">
-									<button type="button" data-ng-click="addListItem(listItem)" class="btn btn-primary" style="display:inline">Add</button>
-							</div>
-					</div> -->
-					<!-- <input class="btn btn-default" type="submit" value="Update Link"> -->
-					
 				</form>
 			</div>
 			<div class="modal-footer">

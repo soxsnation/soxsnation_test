@@ -117,6 +117,7 @@ soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
                     withCredentials: true
                 }
             }).success(function(data) {
+                // console.log(data)
                 deferred.resolve(data);
             }, function(error) {
                 deferred.reject(error);

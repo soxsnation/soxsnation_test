@@ -129,8 +129,8 @@ angular.module('soxsnationApp')
 
 								soxsAuth.http_get('api/soxs/types')
 									.then(function(data) {
-										console.log('Got Data for NavBar');
-										console.log(data);
+										// console.log('Got Data for NavBar');
+										// console.log(data);
 										$scope.data_models = [];
 
 										for (var i = 0; i < data.length; ++i) {

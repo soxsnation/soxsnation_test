@@ -24,39 +24,85 @@ angular.module('soxsnationApp')
 				$scope.modalHidden = 'true';
 				$scope.currentItem = {};
 				$scope.currentDataModel = [];
-				$scope.listItem = '';
+				$scope.list_Item = {};
+
 
 				var dataType = $location.url();
 				dataType = dataType.substring(1, dataType.length - 1);
 				$scope.dataType = dataType;
 				$scope.page = dataType + ' Page';
 
-				var ignoreProps = ['__v', '_id'];
+				var ignoreProps = ['__v', '_id', 'userAdded', 'userUpdated', 'dateAdded', 'dateUpdated'];
 
+				soxsAuth.http_get('api/soxs/type/' + $scope.dataType)
+					.then(function(data) {
+						console.log('Got Data Type ' + $scope.dataType);
+						console.log(data);
+						$scope.dataModel = JSON.parse(data.fields);
+						$scope.list_Item = {};
+						console.log($scope.dataModel);
+
+						for (var prop in $scope.dataModel) {
+							if (ignoreProps.indexOf(prop) == -1) {
+								var field = {
+									name: prop,
+									isEditable: false,
+									buttonText: 'Edit',
+									isString: ($scope.dataModel[prop] === 'String'),
+									isBoolean: ($scope.dataModel[prop] === 'Boolean'),
+									isArray: (Object.prototype.toString.call($scope.dataModel[prop]) == '[object Array]')
+								};
+								console.log(prop);
+								console.log($scope.dataModel[prop]);
+
+								if (field.isArray) {
+									if (Object.prototype.toString.call($scope.dataModel[prop][0]) == '[object String]') {
+										field.isArrayObject = false;
+									} else if (Object.prototype.toString.call($scope.dataModel[prop][0]) == '[object Object]') {
+										field.isArray = false;
+										field.isArrayObject = true;
+										$scope.list_Item[prop] = {};
+										field.arrayItems = [];
+										for (var arrayProp in $scope.dataModel[prop][0]) {
+											field.arrayItems.push(arrayProp);
+										}
+									}
+								}
+
+								$scope.currentDataModel.push(field);
+							}
+						}
+						console.log($scope.currentDataModel);
+
+
+					}, function(err) {
+						console.log('ERROR: ' + err);
+					});
+			
 
 				function getData() {
 					soxsFactory.getData(dataType).then(function(data) {
 						$scope.soxsItems = data;
 
 						// console.log('Current Props')
-						for (var prop in $scope.soxsItems[0]) {
-							// console.log(prop);
-							// console.log(Object.prototype.toString.call($scope.soxsItems[0][prop]))
-							if (ignoreProps.indexOf(prop) == -1) {
-								var field = {
-										name: prop,
-										isEditable: false,
-										buttonText: 'Edit',
-										type: Object.prototype.toString.call($scope.soxsItems[0][prop]),
-										isArray: (Object.prototype.toString.call($scope.soxsItems[0][prop]) == '[object Array]'),
-										isString: (Object.prototype.toString.call($scope.soxsItems[0][prop]) == '[object String]'),
-										isBoolean: (Object.prototype.toString.call($scope.soxsItems[0][prop]) == '[object Boolean]'),
-										isObject: (Object.prototype.toString.call($scope.soxsItems[0][prop]) == '[object Object]')
-									}
-									// console.log(field)
-								$scope.currentDataModel.push(field);
-							}
-						}
+						// for (var prop in $scope.soxsItems[0]) {
+						// 	// console.log(prop);
+						// 	// console.log(Object.prototype.toString.call($scope.soxsItems[0][prop]))
+						// 	if (ignoreProps.indexOf(prop) == -1) {
+						// 		var field = {
+						// 				name: prop,
+						// 				isEditable: false,
+						// 				buttonText: 'Edit',
+						// 				type: Object.prototype.toString.call($scope.soxsItems[0][prop]),
+						// 				isArray: (Object.prototype.toString.call($scope.soxsItems[0][prop]) == '[object Array]'),
+						// 				isString: (Object.prototype.toString.call($scope.soxsItems[0][prop]) == '[object String]'),
+						// 				isBoolean: (Object.prototype.toString.call($scope.soxsItems[0][prop]) == '[object Boolean]'),
+						// 				isObject: (Object.prototype.toString.call($scope.soxsItems[0][prop]) == '[object Object]')
+						// 			}
+						// 			// console.log(field)
+						// 		// $scope.currentDataModel.push(field);
+						// 	}
+						// }
 					});
 
 
@@ -101,18 +147,10 @@ angular.module('soxsnationApp')
 						$scope.currentItem = {};
 						$scope.modalTitle = 'Insert ' + dataType;
 						$scope.modalSubmitText = 'Insert New ' + dataType;
-
 					}
 
 					$('#myModal').modal('show');
 				};
-
-				$scope.addListItem = function(listItem, property) {
-					console.log(listItem);
-					console.log(property);
-					$scope.currentItem[property].push(listItem);
-					listItem = '';
-				}
 
 				$scope.message = $scope.lastError;
 
@@ -126,30 +164,7 @@ angular.module('soxsnationApp')
 					showModal('update', item)
 				}
 
-				$scope.item_clicked = function(item) {
-					console.log('item_clicked' + item);
-					for (var i = 0; i < $scope.currentDataModel.length; ++i) {
-						console.log($scope.currentDataModel[i].name);
-						if ($scope.currentDataModel[i].name == item) {
-							if ($scope.currentDataModel[i].isEditable) {
-								$scope.currentDataModel[i].isEditable = false;
-								$scope.currentDataModel[i].buttonText = 'Edit';
-							} else {
-								$scope.currentDataModel[i].isEditable = true;
-								$scope.currentDataModel[i].buttonText = 'Done';
-							}
 
-						}
-					}
-				}
-
-				$scope.array_item_changed = function(property, index, text) {
-					$scope.currentItem[property][index] = text;
-				}
-
-				$scope.array_item_remove = function(property, index) {
-					$scope.currentItem[property].splice(index, 1);
-				}
 
 				$scope.saveItem = function() {
 					if ($scope.mode === 'insert') {

@@ -80,6 +80,21 @@ exports.get_types = function(req, res, next) {
 	});
 }
 
+exports.get_type_by_name = function(req, res, next) {
+	soxsSchema.findOne({
+		name: req.params.type
+	}).exec(function(err, model) {
+		if (err) {
+			return next(err);
+		}
+		if (!model) {
+			return next(new Error('Failed to load models: ' + req.params.type));
+		}
+
+		return res.json(model);
+	});
+}
+
 exports.insert = function(req, res, next) {
 	// console.log('soxsController.insert');
 	console.log(req.body);
