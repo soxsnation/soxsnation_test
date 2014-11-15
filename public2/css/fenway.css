@@ -44,6 +44,111 @@
 	color: #00F;
 }
 
+/**********************************************************************
+  Soxsdata
+**********************************************************************/
+
+
+
+.soxsMainPanel {
+   
+}
+.soxsDataList {
+   /*background-color: #F00;*/
+   height: 500px;
+   overflow: scroll;
+   overflow-x: hidden;
+   overflow-y: auto;
+}
+
+.soxsDataDetails {
+   /*background-color: #0F0;*/
+   height: 500px;
+   font-size: 12px;
+   overflow: scroll;
+   overflow-x: hidden;
+   overflow-y: auto;
+}
+.soxsForm-control {
+	display: block;
+	width: 100%;
+	height: 34px;
+	padding: 6px 12px;
+	font-size: 12px;
+	line-height: 1.42857143;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	      box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+	   -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+	      transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+/**********************************************************************
+  soxsItems
+**********************************************************************/
+
+.soxsItemList {
+   /*background-color: #F00;*/
+   height: 700px;
+   overflow: scroll;
+   overflow-x: hidden;
+   overflow-y: auto;
+}
+
+.soxsItemDetails {
+   /*background-color: #0F0;*/
+   height: 700px;
+   font-size: 12px;
+   overflow: scroll;
+   overflow-x: hidden;
+   overflow-y: auto;
+}
+
+.soxItemDetailsBody {
+	height: 95%;
+}
+
+.soxSearch {
+	padding: 16px 0px;
+}
+
+.soxSearch-control {
+display: block;
+	width: 100%;
+	height: 34px;
+	padding: 6px 12px;
+	font-size: 12px;
+	line-height: 1.42857143;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	      box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+	   -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+	      transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+/**********************************************************************
+  soxsitemdetails (directive)
+**********************************************************************/
+
+.soxsDetailLabel {
+    padding-top: 7px;
+    margin-bottom: 0;
+    text-align: left;
+  }
+
+/**********************************************************************
+  soxsitemedit (directive)
+**********************************************************************/
 
 
 /**********************************************************************

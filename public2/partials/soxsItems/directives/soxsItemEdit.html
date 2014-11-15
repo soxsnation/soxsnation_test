@@ -1,0 +1,67 @@
+<div class="modal-body soxItemDetailsBody">
+	<form role="form" class="form-horizontal">
+		<div data-ng-repeat="prop in currentDataModel">
+			<div class="form-group" data-ng-show='prop.isString'>
+				<label for="link_text" class="col-sm-2 control-label">{{prop.name}}</label>
+				<div class="col-sm-10">
+					<input type="text" class="soxsForm-control" data-ng-model="currentItem[prop.name]" placeholder="{{prop.name}}">
+				</div>
+			</div>
+			<div class="form-group"  data-ng-show='prop.isArray'>
+				<label for="link_tag" class="col-sm-2 control-label">{{prop.name}}</label>
+				<div class="col-sm-10">
+					<div data-ng-repeat="item in currentItem[prop.name] track by $index">
+						<div class="row">
+							<div class="col-md-8">
+								<input type="text" class="soxsForm-control" data-ng-model="item" data-ng-change="array_item_changed(prop.name, $index, item)">
+							</div>
+							<div class="glyphicon glyphicon-remove col-md-1" data-ng-click="array_item_remove(prop.name, $index)"></div>
+						</div>
+					</div>
+					<div class="row" >
+						<div class="col-md-8">
+							<input type="text" class="soxsForm-control" data-ng-model="list_Item[prop.name]" >
+						</div>
+						<div class="col-md-2">
+							<button type="button" data-ng-click="addListItem(prop.name)" class="btn btn-primary" style="display:inline">Add</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group"  data-ng-show='prop.isArrayObject'>
+				<label class="col-sm-2 control-label">{{prop.name}}</label>
+				<div class="col-sm-10">
+					<div data-ng-repeat="item in currentItem[prop.name] track by $index">
+						<div class="row">
+							<div class="col-md-4" data-ng-repeat="arrayItem in prop.arrayItems track by $index" >
+								<input type="text" class="soxsForm-control" data-ng-model="item[arrayItem]" data-ng-change="array_item_changed(prop.name, $index, item)">
+							</div>
+							<div class="glyphicon glyphicon-remove col-md-1" data-ng-show="prop.isEditable" data-ng-click="array_item_remove(prop.name, $index)"></div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4" data-ng-repeat="arrayItem in prop.arrayItems track by $index" >
+							<input type="text" class="soxsForm-control" data-ng-model="list_Item[prop.name][arrayItem]" placeholder='{{arrayItem}}'>
+						</div>
+						<div class="col-md-2">
+							<button type="button" data-ng-click="addListObject(prop.name)" class="btn btn-primary">Add</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group" data-ng-show='prop.isBoolean'>
+				<label for="link_text" class="col-sm-2 control-label">{{prop.name}}</label>
+				<div class="col-sm-10">
+					<div class="checkbox">
+						<input type="checkbox" data-ng-model="currentItem[prop.name]" style="margin-left:0px;" >
+					</div>
+				</div>
+			</div>
+			<hr>
+		</div>
+		<div class="row">
+			<h4 class="modal-footer-error">{{modal_error}}</h4>
+			<button type="button" class="btn btn-primary" data-ng-click="saveItem()">{{submitText}}</button>
+		</div>
+	</form>
+</div>

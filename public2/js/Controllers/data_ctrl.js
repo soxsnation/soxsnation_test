@@ -159,17 +159,49 @@ angular.module('soxsnationApp')
 					showModal('insert');
 				}
 
+				$scope.addItem_clicked = function() {
+					$scope.mode ='insert';
+					$scope.modalSubmitText = 'Add ' + $scope.dataType;
+					$scope.currentItem = {};
+					$('#addItemModal').modal('show');
+				}
+
+				$scope.addItem_submit = function() {
+					$scope.currentItem = {};
+					$scope.currentItem.name = $scope.addItemName;
+					$scope.mode = 'edit';
+					$scope.submitText = 'Update ' + $scope.dataType;
+					insertData();
+
+					$('#addItemModal').modal('hide');
+				}
+
 				$scope.editItem_clicked = function(item) {
 					console.log('editItem_clicked');
 					showModal('update', item)
 				}
 
+				$scope.item_clicked = function(item) {
+					if ($scope.currentItem == item) {
+						if ($scope.mode == 'view') {
+							$scope.mode = 'edit';
+						} else {
+							$scope.mode ='view';
+						}
+					}
+					else {
+						$scope.currentItem = item;
+						$scope.mode = 'view';
+						$scope.submitText = 'Update ' + $scope.dataType;
+					}
+					console.log($scope.mode)
+				}
 
 
 				$scope.saveItem = function() {
 					if ($scope.mode === 'insert') {
 						insertData();
-					} else if ($scope.mode === 'update') {
+					} else if ($scope.mode === 'edit') {
 						updateData();
 					}
 				}

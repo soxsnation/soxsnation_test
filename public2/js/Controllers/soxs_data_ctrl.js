@@ -231,12 +231,18 @@ angular.module('soxsnationApp')
 				showModal('edit', model);
 			}
 
+			$scope.data_model_changed = function(model) {
+				$scope.currentDataModel = model;
+				$scope.modalSubmitText = 'Update Data Model';
+				$scope.mode ='edit';
+			}
+
 			$scope.insert_data_model = function() {
 				console.log('insert_data_model');
-				// $scope.newObjFields = [];
-				// $scope.newObj_name = '';
-				// $scope.newObj_description = '';
-				showModal('insert');
+				$scope.currentDataModel = {};
+				$scope.modalSubmitText = 'Create New Data Model';
+				$scope.currentDataModel.fieldItems = [];
+				// showModal('insert');
 			}
 
 			$scope.load_data = function() {
