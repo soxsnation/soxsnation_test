@@ -78,7 +78,7 @@ angular.module('soxsnationApp')
 					}, function(err) {
 						console.log('ERROR: ' + err);
 					});
-			
+
 
 				function getData() {
 					$scope.soxsItems = [];
@@ -119,6 +119,7 @@ angular.module('soxsnationApp')
 							$scope.soxsItems.push(data);
 							$('#myModal').modal('hide');
 							showAlert('Successful Insert', false);
+							$scope.mode = 'view';
 						}, function(err) {
 							showAlert(err, true);
 						})
@@ -132,7 +133,7 @@ angular.module('soxsnationApp')
 						console.log(data);
 						$('#myModal').modal('hide');
 						showAlert('Successful Update', false);
-
+						$scope.mode = 'view';
 					}, function(err) {
 						showAlert(err, true);
 					})
@@ -162,16 +163,17 @@ angular.module('soxsnationApp')
 				}
 
 				$scope.addItem_clicked = function() {
-					$scope.mode ='insert';
+					console.log('Mode: ' + $scope.mode);
+					$scope.mode = 'insert';
 					$scope.modalSubmitText = 'Add ' + $scope.dataType;
 					$scope.currentItem = {};
 					$('#addItemModal').modal('show');
 				}
 
 				$scope.deleteItem_clicked = function() {
-					$scope.mode ='delete';
+					$scope.mode = 'delete';
 
-					soxsFactory.deleteData(dataType, $scope.currentItem).then(function(data) {		
+					soxsFactory.deleteData(dataType, $scope.currentItem).then(function(data) {
 						console.log('Successfully Deleted');
 						showAlert('Successfully Deleted', false);
 						$scope.currentItem = {};
@@ -185,12 +187,12 @@ angular.module('soxsnationApp')
 				}
 
 				$scope.archiveItem_clicked = function() {
-					$scope.mode ='delete';
+					$scope.mode = 'delete';
 					console.log($scope.mode);
 					var item = $scope.currentItem;
 					item.archive = true;
 
-					soxsFactory.archiveData(dataType, $scope.currentItem).then(function(data) {			
+					soxsFactory.archiveData(dataType, $scope.currentItem).then(function(data) {
 						showAlert('Successfully Archived', false);
 						$scope.currentItem = {};
 						getData();
@@ -215,9 +217,13 @@ angular.module('soxsnationApp')
 					showModal('update', item)
 				}
 
+				$scope.cancelEdit_clicked = function() {
+					$scope.mode = 'view';
+				}
+
 				$scope.item_clicked = function(item) {
 					$scope.currentItem = item;
-					$scope.mode ='view';
+					$scope.mode = 'view';
 					// if ($scope.currentItem == item) {
 					// 	if ($scope.mode == 'view') {
 					// 		$scope.mode = 'edit';
@@ -244,6 +250,8 @@ angular.module('soxsnationApp')
 					} else if ($scope.mode === 'edit') {
 						updateData();
 					}
+
+
 				}
 
 

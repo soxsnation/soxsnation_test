@@ -36,10 +36,10 @@
 							<div class="col-md-4" data-ng-repeat="arrayItem in prop.arrayItems track by $index" >
 								<input type="text" class="soxsForm-control" data-ng-model="item[arrayItem]" data-ng-change="array_item_changed(prop.name, $index, item)">
 							</div>
-							<div class="glyphicon glyphicon-remove col-md-1" data-ng-show="prop.isEditable" data-ng-click="array_item_remove(prop.name, $index)"></div>
+							<div class="glyphicon glyphicon-remove col-md-1"  data-ng-click="array_item_remove(prop.name, $index)"></div>							
 						</div>
 					</div>
-					<div class="row">
+					<div class="row" style="padding-top:15px;">
 						<div class="col-md-4" data-ng-repeat="arrayItem in prop.arrayItems track by $index" >
 							<input type="text" class="soxsForm-control" data-ng-model="list_Item[prop.name][arrayItem]" placeholder='{{arrayItem}}'>
 						</div>
@@ -62,6 +62,7 @@
 		<div class="row">
 			<h4 class="modal-footer-error">{{modal_error}}</h4>
 			<button type="button" class="btn btn-primary" data-ng-click="saveItem()">{{submitText}}</button>
+			<button type="button" class="btn btn-primary" data-ng-click="cancelEdit_clicked()">Cancel</button>
 		</div>
 	</form>
 </div>
