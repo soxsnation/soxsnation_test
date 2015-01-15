@@ -171,8 +171,7 @@ angular.module('soxsnationApp')
 				$scope.deleteItem_clicked = function() {
 					$scope.mode ='delete';
 
-					soxsFactory.deleteData(dataType, $scope.currentItem).then(function(data) {						
-						// $('#myModal').modal('hide');
+					soxsFactory.deleteData(dataType, $scope.currentItem).then(function(data) {		
 						console.log('Successfully Deleted');
 						showAlert('Successfully Deleted', false);
 						$scope.currentItem = {};
