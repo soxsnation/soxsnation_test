@@ -81,7 +81,9 @@ angular.module('soxsnationApp')
 			
 
 				function getData() {
+					$scope.soxsItems = [];
 					soxsFactory.getData(dataType).then(function(data) {
+						console.log(data);
 						$scope.soxsItems = data;
 
 						// console.log('Current Props')
@@ -164,6 +166,40 @@ angular.module('soxsnationApp')
 					$scope.modalSubmitText = 'Add ' + $scope.dataType;
 					$scope.currentItem = {};
 					$('#addItemModal').modal('show');
+				}
+
+				$scope.deleteItem_clicked = function() {
+					$scope.mode ='delete';
+
+					soxsFactory.deleteData(dataType, $scope.currentItem).then(function(data) {						
+						// $('#myModal').modal('hide');
+						console.log('Successfully Deleted');
+						showAlert('Successfully Deleted', false);
+						$scope.currentItem = {};
+						getData();
+
+					}, function(err) {
+						showAlert(err, true);
+					})
+
+					// getData();
+				}
+
+				$scope.archiveItem_clicked = function() {
+					$scope.mode ='delete';
+					console.log($scope.mode);
+					var item = $scope.currentItem;
+					item.archive = true;
+
+					soxsFactory.archiveData(dataType, $scope.currentItem).then(function(data) {						
+						// $('#myModal').modal('hide');
+						showAlert('Successfully Archived', false);
+						$scope.currentItem = {};
+						getData();
+
+					}, function(err) {
+						showAlert(err, true);
+					})
 				}
 
 				$scope.addItem_submit = function() {

@@ -161,6 +161,9 @@ module.exports = function(app, passport) {
 	app.post('/api/soxs/insert/:type', soxsController.insert);
 	app.post('/api/soxs/update/:type/:id', soxsController.update);
 
+	app.get('/api/soxs/archive/:type/:id', soxsController.archive);
+	app.get('/api/soxs/delete/:type/:id', soxsController.delete);
+
 	app.get('/api/soxs/type/:type', soxsController.get_type_by_name);
 	app.get('/api/soxs/types', authControl.authorized, soxsController.get_types);
 	

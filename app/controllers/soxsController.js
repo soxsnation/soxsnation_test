@@ -43,7 +43,30 @@ function getSchema(schemaType, cb) {
 }
 
 
+function add_default_fields(schema, cb) {
+	// var default_fields = [{
+	// 	name: 'active',
+	// 	type: 'Boolean'
+	// }, {
+	// 	name: 'archived',
+	// 	type: 'Boolean'
+	// }, {
+	// 	name: 'creationDate',
+	// 	type: 'Date'
+	// }, {
+	// 	name: 'modifiedDate',
+	// 	type: 'Date'
+	// }, {
+	// 	name: 'userModified',
+	// 	type: 'String'
+	// }];
 
+	schema.fieldItems.push({
+		'name': 'active',
+		'type': 'Boolean'
+	});
+	cb(schema);
+}
 exports.createSoxsSchema = function(req, res, next) {
 	console.log('soxsController.createSoxsSchema');
 	console.log(req.body);
@@ -57,6 +80,8 @@ exports.createSoxsSchema = function(req, res, next) {
 			return res.json(sch);
 		}
 	})
+
+
 
 	// var schemaType = req.params.type;
 	// getSchema(schemaType, function(err, customModel) {
@@ -74,6 +99,50 @@ exports.createSoxsSchema = function(req, res, next) {
 	// 		})
 	// 	}
 	// })
+}
+
+exports.archive = function(req, res, next) {
+	soxsSchema.findOne({
+		_id: req.params.id
+	}).exec(function(err, soxsData) {
+		if (err) {
+			return next(err);
+		}
+		if (!soxsData) {
+			return next(new Error('Failed to load soxsSchema'));
+		}
+		soxsData.update(req.body, function(err, data) {
+			if (err) {
+				res.send(404);
+			} else {
+				res.send(200);
+			}
+		})
+	})
+}
+
+exports.delete = function(req, res, next) {
+	console.log("exports.delete: " + req.params.type)
+	getSchema(req.params.type, function(err, customModel) {
+		if (err) {
+			res.send(404);
+		} else {
+			customModel.remove({
+				_id: req.params.id
+			},function() {
+				res.send(200);
+			})
+			// customModel.remove({
+			// 	_id: req.params.id
+			// }).exec(function(err, modelData) {
+			// 	if (!err) {
+			// 		res.send(407);
+			// 	} else {
+			// 		res.send(200);
+			// 	}
+			// })
+		}
+	})
 }
 
 exports.updateSoxsSchema = function(req, res, next) {
@@ -124,6 +193,8 @@ exports.get_type_by_name = function(req, res, next) {
 		return res.json(model);
 	});
 }
+
+
 
 exports.insert = function(req, res, next) {
 	// console.log('soxsController.insert');

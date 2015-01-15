@@ -47,11 +47,10 @@ angular.module('soxsnationApp')
 				var url = '';
 				if (isNew) {
 					url = 'api/soxs/insert/' + dataType;
-				}
-				else {
+				} else {
 					url = 'api/soxs/update/' + dataType + '/' + item._id;
 				}
-				 
+
 				// console.log(url);
 				// console.log(item);
 
@@ -97,6 +96,39 @@ angular.module('soxsnationApp')
 				return deferred.promise;
 			}
 
+			function deleteData(dataType, item) {
+				var deferred = $q.defer();
+				var url = 'api/soxs/delete/' + dataType + '/' + item._id;
+				console.log(url);
+				// console.log(item);
+
+				soxsAuth.http_get(url)
+					.then(function(data) {
+						console.log('deleteData: ' + data);
+						deferred.resolve(data);
+					}, function(err) {
+						console.log('ERROR: ' + err);
+						deferred.reject(err);
+					})
+				return deferred.promise;
+			}
+
+			function archiveData(dataType, item) {
+				var deferred = $q.defer();
+				var url = 'api/soxs/archive/' + dataType + '/' + item._id;
+				// console.log(url);
+				// console.log(item);
+
+				soxsAuth.http_call(url, item, "DELETE")
+					.then(function(data) {
+						deferred.resolve(data);
+					}, function(err) {
+						console.log('ERROR: ' + err);
+						deferred.reject(err);
+					})
+				return deferred.promise;
+			}
+
 
 
 			return {
@@ -110,7 +142,8 @@ angular.module('soxsnationApp')
 				getData: getData,
 				updateData: updateData,
 				insertData: insertData,
-				saveData: saveData
+				saveData: saveData,
+				deleteData: deleteData
 			}
 
 			// var fac = {};

@@ -7,7 +7,7 @@
 
 var soxsServices = angular.module('soxsServices', []);
 
-soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
+soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window", 
     function($rootScope, $http, $q, $window) {
         var userInfo;
         $rootScope.currentToken = null;
@@ -104,22 +104,24 @@ soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
         }
 
         function http_get(url) {
-            // console.log('http_get');
-            // console.log(userInfo.accessToken);
+            console.log('http_get');
+            console.log($rootScope.currentToken);
+
             var deferred = $q.defer();
             $http({
                 method: "GET",
                 url: url,
                 headers: {
                     Authorization: $rootScope.currentToken
-                },
-                xhrFields: {
-                    withCredentials: true
                 }
+                // ,xhrFields: {
+                //     withCredentials: true
+                // }
             }).success(function(data) {
-                // console.log(data)
+                console.log('http_get2: ' + data);
                 deferred.resolve(data);
             }, function(error) {
+                console.log(error);
                 deferred.reject(error);
             });
 
@@ -131,6 +133,28 @@ soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
 
             $http({
                 method: "POST",
+                url: url,
+                headers: {
+                    Authorization: $rootScope.currentToken
+                },
+                data: data,
+                xhrFields: {
+                    withCredentials: true
+                }
+            }).success(function(data) {
+                deferred.resolve(data);
+            }, function(error) {
+                deferred.reject(error);
+            });
+
+            return deferred.promise;
+        }
+
+        function http_call(url, data, method) {
+            var deferred = $q.defer();
+
+            $http({
+                method: method,
                 url: url,
                 headers: {
                     Authorization: $rootScope.currentToken
@@ -272,7 +296,12 @@ soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
             userLoggedIn: userLoggedIn,
             changePassword: changePassword,
             isAdminUser: isAdminUser,
-            hasPermission: hasPermission
+            hasPermission: hasPermission,
+            http_call: http_call
         };
     }
 ]);
+
+
+
+
