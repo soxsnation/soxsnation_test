@@ -191,8 +191,7 @@ angular.module('soxsnationApp')
 					var item = $scope.currentItem;
 					item.archive = true;
 
-					soxsFactory.archiveData(dataType, $scope.currentItem).then(function(data) {						
-						// $('#myModal').modal('hide');
+					soxsFactory.archiveData(dataType, $scope.currentItem).then(function(data) {			
 						showAlert('Successfully Archived', false);
 						$scope.currentItem = {};
 						getData();
