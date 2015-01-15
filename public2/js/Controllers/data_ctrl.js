@@ -216,21 +216,27 @@ angular.module('soxsnationApp')
 				}
 
 				$scope.item_clicked = function(item) {
-					if ($scope.currentItem == item) {
-						if ($scope.mode == 'view') {
-							$scope.mode = 'edit';
-						} else {
-							$scope.mode ='view';
-						}
-					}
-					else {
-						$scope.currentItem = item;
-						$scope.mode = 'view';
-						$scope.submitText = 'Update ' + $scope.dataType;
-					}
-					console.log($scope.mode)
+					$scope.currentItem = item;
+					$scope.mode ='view';
+					// if ($scope.currentItem == item) {
+					// 	if ($scope.mode == 'view') {
+					// 		$scope.mode = 'edit';
+					// 	} else {
+					// 		$scope.mode ='view';
+					// 	}
+					// }
+					// else {
+					// 	$scope.currentItem = item;
+					// 	$scope.mode = 'view';
+					// 	$scope.submitText = 'Update ' + $scope.dataType;
+					// }
+					// console.log($scope.mode)
 				}
 
+				$scope.editItem_clicked = function() {
+					$scope.mode = 'edit';
+					$scope.submitText = 'Update ' + $scope.dataType;
+				}
 
 				$scope.saveItem = function() {
 					if ($scope.mode === 'insert') {
