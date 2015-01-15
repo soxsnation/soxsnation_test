@@ -160,6 +160,7 @@ angular.module('soxsnationApp')
 					console.log('insertItem_clicked');
 					showModal('insert');
 				}
+				
 
 				$scope.addItem_clicked = function() {
 					$scope.mode ='insert';
