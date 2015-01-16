@@ -13,7 +13,7 @@ var mailer = require('../lib/mailer');
 
 
 function getSchema(schemaType, cb) {
-	// console.log('getSchema: ' + schemaType);
+	console.log('getSchema: ' + schemaType);
 	var currentSchemas = mongoose.modelNames();
 	// console.log(currentSchemas);
 	if (currentSchemas.indexOf(schemaType) != -1) {
@@ -31,10 +31,10 @@ function getSchema(schemaType, cb) {
 			}
 
 			console.log('Got soxsSchema for: ' + schemaType);
-			console.log(ss.fields)
-				// var customSchema = new Schema(eval(ss.fields));
-				// var schemaObj = JSON.parse('{"name":"String", "description":"String", "complete":"Boolean"}');
-				// console.log(schemaObj);
+			console.log(ss);
+			// var customSchema = new Schema(eval(ss.fields));
+			// var schemaObj = JSON.parse('{"name":"String", "description":"String", "complete":"Boolean"}');
+			// console.log(schemaObj);
 			var customSchema = new Schema(JSON.parse(ss.fields));
 
 			cb(null, mongoose.model(schemaType, customSchema));
@@ -77,9 +77,30 @@ exports.createSoxsSchema = function(req, res, next) {
 			console.log(err);
 			return res.send(403);
 		} else {
-			return res.json(sch);
+			getSchema(req.body.name, function(err, customModel) {
+				if (err) {
+					res.send(404);
+				} else {
+					console.log('got customModel');
+					var obj = {
+						active: true,
+						archived: false,
+						userModified: 'soxsnation'
+					}
+					var record = new customModel(obj);
+					console.log('populated customModel');
+					record.save(function(err, rec) {
+						if (err) {
+							return res.send(403);
+						} else {
+							return res.json(sch);
+						}
+					})
+				}
+			})
+			// return res.json(sch);
 		}
-	})
+	});
 
 
 
@@ -128,19 +149,19 @@ exports.delete = function(req, res, next) {
 			res.send(404);
 		} else {
 			customModel.remove({
-				_id: req.params.id
-			},function() {
-				res.send(200);
-			})
-			// customModel.remove({
-			// 	_id: req.params.id
-			// }).exec(function(err, modelData) {
-			// 	if (!err) {
-			// 		res.send(407);
-			// 	} else {
-			// 		res.send(200);
-			// 	}
-			// })
+					_id: req.params.id
+				}, function() {
+					res.send(200);
+				})
+				// customModel.remove({
+				// 	_id: req.params.id
+				// }).exec(function(err, modelData) {
+				// 	if (!err) {
+				// 		res.send(407);
+				// 	} else {
+				// 		res.send(200);
+				// 	}
+				// })
 		}
 	})
 }

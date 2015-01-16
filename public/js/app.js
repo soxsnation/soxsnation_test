@@ -38,6 +38,10 @@ soxsnationApp.config(['$routeProvider',
 			controller: 'DataController',
 			templateUrl: '../partials/soxsItems/soxsItems.html'
 		}).
+		when('/workouts', {
+			controller: 'DataController',
+			templateUrl: '../partials/soxsItems/soxsItems.html'
+		}).
 		// when('/recipes', {
 		// 	controller: 'DataController',
 		// 	templateUrl: '../partials/soxsItem.html'

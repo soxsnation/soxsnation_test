@@ -148,6 +148,10 @@ angular.module('soxsnationApp')
 					name: 'userModified',
 					type: 'String'
 				});
+				objFields.push({
+					name: 'access',
+					type: 'String'
+				});
 
 				console.log($scope.currentDataModel);
 				$scope.currentDataModel.fields = stringifyFields(objFields);

@@ -70,7 +70,7 @@ angular.module('soxsnationApp')
 
 			function update_user() {
 				console.log('$scope.update_user: ' + $scope.selectedUser);
-				
+
 				$scope.selectedUser.permissions = get_permissions();
 				soxsAuth.http_post('/api/update/user/' + $scope.selectedUser.username, $scope.selectedUser)
 					.then(function(data) {
@@ -92,14 +92,18 @@ angular.module('soxsnationApp')
 				$scope.app_list = [];
 				soxsAuth.http_get('api/soxs/types')
 					.then(function(apps) {
+						$scope.app_list.push({
+							name: 'Admin',
+							permissionIndex: 2,
+							checked: false
+						});
 						for (var i = 0; i < apps.length; ++i) {
 							$scope.app_list.push({
 								name: apps[i].name,
 								permissionIndex: apps[i].permissionIndex,
 								checked: false
 							});
-						}
-
+						}	
 					}, function(err) {
 						console.log('ERROR: ' + err);
 					})
