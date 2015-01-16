@@ -1,0 +1,74 @@
+<h1>Users</h1>
+<button class="btn btn-primary" data-toggle="modal" data-ng-click="add_user_clicked()">
+Add User
+</button>
+<br /><br />
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-3 soxsDataList">
+			<ul class="nav nav-pills nav-stacked">
+				<li data-ng-repeat="user in users" role="presentation" data-ng-click="user_clicked(user)" data-ng-class="{'active': user.username == selectedUser.username}">
+					<a href="">{{user.username}}</a>
+				</li>
+			</ul>
+		</div>
+		<div class="col-md-9 soxsDataDetails" data-ng-show="mode == 'edit' || mode == 'insert'">
+			<form role="form" class="form-horizontal">
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Username</label>
+					<div class="col-sm-10">
+						<input type="text" class="soxsForm-control" data-ng-model="selectedUser.username" >
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="newObj_description" class="col-sm-2 control-label">Firstname</label>
+					<div class="col-sm-10">
+						<input type="text" class="soxsForm-control" data-ng-model="selectedUser.firstName" id="newObj_description" >
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="newObj_permissionIndex" class="col-sm-2 control-label">Lastname</label>
+					<div class="col-sm-10">
+						<input type="text" class="soxsForm-control" data-ng-model="selectedUser.lastName" id="newObj_permissionIndex" >
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="newObj_permissionIndex" class="col-sm-2 control-label">E-mail</label>
+					<div class="col-sm-10">
+						<input type="text" class="soxsForm-control" data-ng-model="selectedUser.email" id="newObj_permissionIndex">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="newObj_permissionIndex" class="col-sm-2 control-label">Password</label>
+					<div class="col-sm-10">
+						<input type="password" class="soxsForm-control" data-ng-model="selectedUser.password" id="newObj_permissionIndex">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="newObjFields" class="col-sm-2 control-label">Permissions</label>
+					<div class="col-sm-10">
+						<span data-ng-repeat="app in app_list track by $index" style="display:block">
+						<input type="checkbox" data-ng-model="app.checked" >
+						{{app.name}} :: {{app.permissionIndex}}
+						<!-- {{field}} -->
+						</span>
+					</div>
+				</div>
+				<!-- <div class="form-group">
+							<label for="newFieldName" class="col-sm-2 control-label">Add Field</label>
+							<div class="col-sm-10">
+										<input type="text" class="soxsForm-control" data-ng-model="newFieldName" id="newFieldName" placeholder="" style="display:inline;width:40%">
+							<select data-ng-model="newFieldType" data-ng-options="ft.name for ft in fieldTypes" class="soxsForm-control" style="display:inline;width:25%"></select>
+							<button type="button" data-ng-click="addFieldToObj()" class="btn btn-primary" style="display:inline">Add</button>
+				</div> -->
+				<div class="form-group" data-ng-show="mode == 'edit' || mode == 'insert'">
+					<h4 class="modal-footer-error">{{users_error}}</h4>
+					<button type="button" class="btn btn-primary" data-ng-click="user_submit_clicked()">{{button_submitText}}</button>
+				</div>
+			</div>
+			<!-- <div class="modal-footer"> -->
+		</form>
+	</div>
+	
+</div>
+</div>
