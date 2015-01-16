@@ -1,6 +1,6 @@
 /* users.js
  *
- * Author(s):  Andrew Brown 
+ * Author(s):  Andrew Brown
  * Date:      6/10/2014
  *
  */
@@ -37,6 +37,23 @@ function parse(req, callback) {
 	});
 }
 
+function config_user_data(userData) {
+	var ud = {
+		_id: userData._id,
+		permissions: userData.permissions,
+		username: userData.username,
+		email: userData.email,
+		firstName: userData.firstName,
+		lastName: userData.lastName
+	}
+
+
+	// delete userData.salt;
+	// delete userData.password;
+	// delete userData.tokens;
+	return ud;
+}
+
 
 /**
  * Create user
@@ -44,11 +61,12 @@ function parse(req, callback) {
 
 exports.create = function(req, res, next) {
 	console.log('users.create');
+	console.log(req.body);
 	var data = req.body;
 	// parse(req, function(err, data) {
-		console.log(data);
-		var user = new User(data);
-		user.save(function(err) {
+	console.log(data);
+	var user = new User(data);
+	user.save(function(err) {
 			if (err) {
 				console.log(err);
 				return res.send(403);
@@ -61,7 +79,25 @@ exports.create = function(req, res, next) {
 			//   return res.redirect('/')
 			// })
 		})
-	// })
+		// })
+}
+
+exports.update = function(req, res, next) {
+	User.findOne({
+		username: req.params.id
+	}).exec(function(err, userData) {
+		if (err) {
+			return res.send(407);
+		}
+		userData.update(req.body, function(err, data) {
+			if (err) {
+				res.send(404);
+			} else {
+				res.send(200);
+			}
+		})
+
+	})
 }
 
 /**
@@ -82,4 +118,24 @@ exports.user = function(req, res, next) { //, next, id) {
 		}
 		res.json(user);
 	})
+}
+
+exports.users = function(req, res, next) {
+	console.log('users.users');
+	User.find({}).exec(function(err, users) {
+		if (err) {
+			return next(err);
+		}
+		if (!users) {
+			return next(new Error('Failed to load users'));
+		}
+
+		var userList = [];
+		for (var i = 0; i < users.length; ++i) {
+			userList.push(config_user_data(users[i]));
+		}
+
+		return res.json(userList);
+	});
+
 }

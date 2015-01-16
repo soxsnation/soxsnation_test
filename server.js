@@ -85,14 +85,14 @@ require('./app/routes/routes')(app, passport);
 
 // ********************************************************************
 // angularjs site
-app.use('/alia', express.static('./public2/lib'));
-app.use('/', express.static('./public2'));
+app.use('/alia', express.static('./public/lib'));
+app.use('/', express.static('./public'));
 app.use('/', function(req, res, next) {
 	if (true) {
-		res.sendfile(fpath.join(__dirname, 'public2', 'index.html'));
+		res.sendfile(fpath.join(__dirname, 'public', 'index.html'));
 	} else {
 		if (req.isAuthenticated()) {
-			res.sendfile(fpath.join(__dirname, 'public2', 'index.html'));
+			res.sendfile(fpath.join(__dirname, 'public', 'index.html'));
 		} else {
 			console.log('NEED TO LOG IN');
 		}
