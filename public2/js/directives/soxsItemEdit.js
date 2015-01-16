@@ -14,6 +14,17 @@ angular.module('soxsnationApp')
 				transclude: true,
 				templateUrl: '../partials/soxsItems/directives/soxsItemEdit.html',
 				controller: function($scope) {
+
+					$scope.addListItem = function(property) {
+						console.log('$scope:' + $scope.list_Item[property]);
+						console.log(property);
+						if (!$scope.currentItem.hasOwnProperty(property)) {
+							$scope.currentItem[property] = [];
+						}
+						$scope.currentItem[property].push($scope.list_Item[property]);
+						$scope.list_Item[property] = '';
+					}
+
 					$scope.addListObject = function(property) {
 						console.log(property);
 						if (!$scope.currentItem.hasOwnProperty(property)) {

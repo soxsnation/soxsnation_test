@@ -50,6 +50,10 @@ soxsnationApp.config(['$routeProvider',
 			controller: 'SoxsDataController',
 			templateUrl: '../partials/soxsdata/soxsdata.html'
 		}).
+		when('/Users', {
+			controller: 'UserController',
+			templateUrl: '../partials/users/users.html'
+		}).
 		when('/Settings', {
 			controller: 'SoxsController',
 			templateUrl: '../partials/settings.html'

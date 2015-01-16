@@ -64,7 +64,11 @@ angular.module('soxsnationApp')
 								if (soxsAuth.isAdminUser() !== false) {
 									$scope.configAdminLinks.push({
 										text: 'Data Setup',
-										value: 'soxsData'
+										value: 'SoxsData'
+									});
+									$scope.configAdminLinks.push({
+										text: 'User Administration',
+										value: 'Users'
 									});
 									$scope.configAdminItems.push({
 										text: 'Load Data',
@@ -93,9 +97,10 @@ angular.module('soxsnationApp')
 
 							$scope.admin_menu_link = function(clicked_link) {
 								console.log('$scope.admin_menu_link:' + clicked_link);
-								if (clicked_link === 'soxsData') {
-									$location.path('/SoxsData');
-								}
+								$location.path('/' + clicked_link);
+								// if (clicked_link === 'soxsData') {
+								// 	$location.path('/SoxsData');
+								// }
 							}
 
 							$scope.logout = function() {
