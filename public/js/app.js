@@ -8,12 +8,17 @@
 
 var soxsnationApp = angular.module('soxsnationApp', [
 	'ngRoute',
-	'soxsServices'
+	'soxsServices',
+	'angularCharts'
 ]);
 
 soxsnationApp.config(['$routeProvider',
 	function($routeProvider) {
 		$routeProvider.
+		when('/graph', {
+			controller: 'GraphController',
+			templateUrl: '../partials/graph.html'
+		}).
 		when('/Home', {
 			controller: 'SoxsController',
 			templateUrl: '../partials/home.html'
@@ -53,6 +58,10 @@ soxsnationApp.config(['$routeProvider',
 		when('/SoxsData', {
 			controller: 'SoxsDataController',
 			templateUrl: '../partials/soxsdata/soxsdata.html'
+		}).
+		when('/SoxsTypes', {
+			controller: 'SoxsTypeController',
+			templateUrl: '../partials/soxsdata/soxstype.html'
 		}).
 		when('/Users', {
 			controller: 'UserController',

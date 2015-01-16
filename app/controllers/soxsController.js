@@ -9,6 +9,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var soxsSchema = mongoose.model('soxsSchema');
+var soxsType = mongoose.model('soxsType');
 var mailer = require('../lib/mailer');
 
 
@@ -78,27 +79,27 @@ exports.createSoxsSchema = function(req, res, next) {
 			return res.send(403);
 		} else {
 			getSchema(req.body.name, function(err, customModel) {
-				if (err) {
-					res.send(404);
-				} else {
-					console.log('got customModel');
-					var obj = {
-						active: true,
-						archived: false,
-						userModified: 'soxsnation'
-					}
-					var record = new customModel(obj);
-					console.log('populated customModel');
-					record.save(function(err, rec) {
-						if (err) {
-							return res.send(403);
-						} else {
-							return res.json(sch);
+					if (err) {
+						res.send(404);
+					} else {
+						console.log('got customModel');
+						var obj = {
+							active: true,
+							archived: false,
+							userModified: 'soxsnation'
 						}
-					})
-				}
-			})
-			// return res.json(sch);
+						var record = new customModel(obj);
+						console.log('populated customModel');
+						record.save(function(err, rec) {
+							if (err) {
+								return res.send(403);
+							} else {
+								return res.json(sch);
+							}
+						})
+					}
+				})
+				// return res.json(sch);
 		}
 	});
 
@@ -122,49 +123,7 @@ exports.createSoxsSchema = function(req, res, next) {
 	// })
 }
 
-exports.archive = function(req, res, next) {
-	soxsSchema.findOne({
-		_id: req.params.id
-	}).exec(function(err, soxsData) {
-		if (err) {
-			return next(err);
-		}
-		if (!soxsData) {
-			return next(new Error('Failed to load soxsSchema'));
-		}
-		soxsData.update(req.body, function(err, data) {
-			if (err) {
-				res.send(404);
-			} else {
-				res.send(200);
-			}
-		})
-	})
-}
 
-exports.delete = function(req, res, next) {
-	console.log("exports.delete: " + req.params.type)
-	getSchema(req.params.type, function(err, customModel) {
-		if (err) {
-			res.send(404);
-		} else {
-			customModel.remove({
-					_id: req.params.id
-				}, function() {
-					res.send(200);
-				})
-				// customModel.remove({
-				// 	_id: req.params.id
-				// }).exec(function(err, modelData) {
-				// 	if (!err) {
-				// 		res.send(407);
-				// 	} else {
-				// 		res.send(200);
-				// 	}
-				// })
-		}
-	})
-}
 
 exports.updateSoxsSchema = function(req, res, next) {
 	soxsSchema.findOne({
@@ -186,8 +145,13 @@ exports.updateSoxsSchema = function(req, res, next) {
 	})
 }
 
-exports.get_types = function(req, res, next) {
-	// console.log('soxsController.get_types');
+exports.getSchema = function(req, res, next) {
+	console.log('exports.getSchema');
+	res.send(200);
+}
+
+exports.getSchemas = function(req, res, next) {
+	console.log('exports.getSchemas');
 	soxsSchema.find({}).exec(function(err, models) {
 		if (err) {
 			return next(err);
@@ -200,112 +164,238 @@ exports.get_types = function(req, res, next) {
 	});
 }
 
-exports.get_type_by_name = function(req, res, next) {
-	soxsSchema.findOne({
-		name: req.params.type
-	}).exec(function(err, model) {
+/*****************************************************************************************
+ * soxsTypes
+ *****************************************************************************************/
+
+exports.createType = function(req, res, next) {
+	console.log('exports.createType');
+	var sch = new soxsType(req.body);
+	sch.save(function(err) {
+		if (err) {
+			console.log(err);
+			return res.send(403);
+		} else {
+			res.send(200);
+		}
+	})
+}
+
+exports.updateType = function(req, res, next) {
+	console.log('exports.updateType');
+	soxsType.findOne({
+		_id: req.params.id
+	}).exec(function(err, soxsDataType) {
 		if (err) {
 			return next(err);
 		}
-		if (!model) {
-			return next(new Error('Failed to load models: ' + req.params.type));
+		if (!soxsDataType) {
+			return next(new Error('Failed to load soxsSchema'));
 		}
-
-		return res.json(model);
-	});
-}
-
-
-
-exports.insert = function(req, res, next) {
-	// console.log('soxsController.insert');
-	console.log(req.body);
-	getSchema(req.params.type, function(err, customModel) {
-		if (err) {
-			res.send(404);
-		} else {
-			console.log('got customModel');
-			var record = new customModel(req.body);
-			console.log('populated customModel');
-			record.save(function(err, rec) {
-				if (err) {
-					return res.send(403);
-				} else {
-					return res.json(rec);
-				}
-			})
-		}
-	})
-}
-
-exports.update = function(req, res, next) {
-	console.log('soxsController.update');
-	mailer.sendMail('updating soxs object', 'updating soxs object message', function(messageSent) {
-		getSchema(req.params.type, function(err, customModel) {
+		soxsDataType.update(req.body, function(err, data) {
 			if (err) {
 				res.send(404);
 			} else {
-				customModel.findOne({
-					_id: req.params.id
-				}).exec(function(err, modelData) {
-					if (err) {
-						return next(err);
-					}
-					if (!modelData) {
-						return next(new Error('Failed to load ' + req.params.type));
-					}
-					modelData.update(req.body, function(err, data) {
-						if (err) {
-							res.send(404);
-						} else {
-							res.send(200);
-						}
-					})
-				})
+				res.send(200);
 			}
 		})
 	})
-
 }
 
-
-exports.get = function(req, res, next) {
-	// console.log('soxsController.get');
-	getSchema(req.params.type, function(err, customModel) {
+exports.getType = function(req, res, next) {
+	console.log('exports.getType');
+	soxsType.findOne({
+		_id: req.params.id
+	}).exec(function(err, soxsDataType) {
 		if (err) {
-			res.send(404);
-		} else {
-			customModel.findOne({
-				_id: req.params.id
-			}).exec(function(err, modelData) {
-				if (err) {
-					return next(err);
-				}
-				if (!modelData) {
-					return next(new Error('Failed to load ' + req.params.type));
-				}
-				res.json(modelData);
-			})
+			return next(err);
 		}
+		if (!soxsDataType) {
+			return next(new Error('Failed to load soxsSchema'));
+		}
+		return res.json(soxsDataType);
+		
 	})
 }
 
-exports.getall = function(req, res, next) {
-	// console.log('soxsController.get');
-	getSchema(req.params.type, function(err, customModel) {
+exports.getTypes = function(req, res, next) {
+	console.log('exports.getTypes');
+	soxsType.find({}).exec(function(err, types) {
 		if (err) {
-			res.send(404);
-		} else {
-			customModel.find({}).exec(function(err, models) {
-				if (err) {
-					return next(err);
-				}
-				if (!models) {
-					return next(new Error('Failed to load models: ' + req.params.type));
-				}
-
-				res.json(models);
-			})
+			return next(err);
 		}
-	})
+		if (!types) {
+			return next(new Error('Failed to load types: ' + req.params.type));
+		}
+
+		return res.json(types);
+	});
 }
+
+// exports.archive = function(req, res, next) {
+// 	soxsSchema.findOne({
+// 		_id: req.params.id
+// 	}).exec(function(err, soxsData) {
+// 		if (err) {
+// 			return next(err);
+// 		}
+// 		if (!soxsData) {
+// 			return next(new Error('Failed to load soxsSchema'));
+// 		}
+// 		soxsData.update(req.body, function(err, data) {
+// 			if (err) {
+// 				res.send(404);
+// 			} else {
+// 				res.send(200);
+// 			}
+// 		})
+// 	})
+// }
+
+// exports.delete = function(req, res, next) {
+// 	console.log("exports.delete: " + req.params.type)
+// 	getSchema(req.params.type, function(err, customModel) {
+// 		if (err) {
+// 			res.send(404);
+// 		} else {
+// 			customModel.remove({
+// 					_id: req.params.id
+// 				}, function() {
+// 					res.send(200);
+// 				})
+// 				// customModel.remove({
+// 				// 	_id: req.params.id
+// 				// }).exec(function(err, modelData) {
+// 				// 	if (!err) {
+// 				// 		res.send(407);
+// 				// 	} else {
+// 				// 		res.send(200);
+// 				// 	}
+// 				// })
+// 		}
+// 	})
+// }
+
+// exports.get_types = function(req, res, next) {
+// 	// console.log('soxsController.get_types');
+// 	soxsSchema.find({}).exec(function(err, models) {
+// 		if (err) {
+// 			return next(err);
+// 		}
+// 		if (!models) {
+// 			return next(new Error('Failed to load models: ' + req.params.type));
+// 		}
+
+// 		return res.json(models);
+// 	});
+// }
+
+// exports.get_type_by_name = function(req, res, next) {
+// 	soxsSchema.findOne({
+// 		name: req.params.type
+// 	}).exec(function(err, model) {
+// 		if (err) {
+// 			return next(err);
+// 		}
+// 		if (!model) {
+// 			return next(new Error('Failed to load models: ' + req.params.type));
+// 		}
+
+// 		return res.json(model);
+// 	});
+// }
+
+
+
+// exports.insert = function(req, res, next) {
+// 	// console.log('soxsController.insert');
+// 	console.log(req.body);
+// 	getSchema(req.params.type, function(err, customModel) {
+// 		if (err) {
+// 			res.send(404);
+// 		} else {
+// 			console.log('got customModel');
+// 			var record = new customModel(req.body);
+// 			console.log('populated customModel');
+// 			record.save(function(err, rec) {
+// 				if (err) {
+// 					return res.send(403);
+// 				} else {
+// 					return res.json(rec);
+// 				}
+// 			})
+// 		}
+// 	})
+// }
+
+// exports.update = function(req, res, next) {
+// 	console.log('soxsController.update');
+// 	mailer.sendMail('updating soxs object', 'updating soxs object message', function(messageSent) {
+// 		getSchema(req.params.type, function(err, customModel) {
+// 			if (err) {
+// 				res.send(404);
+// 			} else {
+// 				customModel.findOne({
+// 					_id: req.params.id
+// 				}).exec(function(err, modelData) {
+// 					if (err) {
+// 						return next(err);
+// 					}
+// 					if (!modelData) {
+// 						return next(new Error('Failed to load ' + req.params.type));
+// 					}
+// 					modelData.update(req.body, function(err, data) {
+// 						if (err) {
+// 							res.send(404);
+// 						} else {
+// 							res.send(200);
+// 						}
+// 					})
+// 				})
+// 			}
+// 		})
+// 	})
+
+// }
+
+
+// exports.get = function(req, res, next) {
+// 	// console.log('soxsController.get');
+// 	getSchema(req.params.type, function(err, customModel) {
+// 		if (err) {
+// 			res.send(404);
+// 		} else {
+// 			customModel.findOne({
+// 				_id: req.params.id
+// 			}).exec(function(err, modelData) {
+// 				if (err) {
+// 					return next(err);
+// 				}
+// 				if (!modelData) {
+// 					return next(new Error('Failed to load ' + req.params.type));
+// 				}
+// 				res.json(modelData);
+// 			})
+// 		}
+// 	})
+// }
+
+// exports.getall = function(req, res, next) {
+// 	// console.log('soxsController.get');
+// 	getSchema(req.params.type, function(err, customModel) {
+// 		if (err) {
+// 			res.send(404);
+// 		} else {
+// 			customModel.find({}).exec(function(err, models) {
+// 				if (err) {
+// 					return next(err);
+// 				}
+// 				if (!models) {
+// 					return next(new Error('Failed to load models: ' + req.params.type));
+// 				}
+
+// 				res.json(models);
+// 			})
+// 		}
+// 	})
+// }

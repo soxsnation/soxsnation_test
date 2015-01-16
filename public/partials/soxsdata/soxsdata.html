@@ -10,7 +10,7 @@ Add Data Model
 		<div class="col-md-3 soxsDataList">
 			<ul class="nav nav-pills nav-stacked">
 				<!-- <li class="active" role="presentation" data-ng-click="data_model_changed(model)">
-						<a href="">Soxs Data</a>
+							<a href="">Soxs Data</a>
 				</li> -->
 				<li data-ng-repeat="model in data_models" role="presentation" data-ng-click="data_model_changed(model)" data-ng-class="{'active': model.name == currentDataModel.name}">
 					<a href="">{{model.name}}</a>
@@ -40,11 +40,16 @@ Add Data Model
 				<div class="form-group">
 					<label for="newObjFields" class="col-sm-2 control-label">Fields</label>
 					<div class="col-sm-10">
-						<span data-ng-repeat="field in currentDataModel.fieldItems track by $index" style="display:block">
-						<input type="checkbox" data-ng-model="todo.done" >
-						{{field.name}} :: {{field.type}}
-						<!-- {{field}} -->
-						</span>
+						<div data-ng-repeat="field in currentDataModel.fieldItems track by $index" style="display:block">
+							<!-- <input type="checkbox" data-ng-model="todo.done" > -->
+							<label for="newObjFields" class="col-sm-2 control-label">{{field.name}}</label>
+							<!-- <label for="newObjFields" class="col-sm-2 control-label">{{field.type}}</label> -->
+							<div class="col-sm-10">
+								<input type="text" class="soxsForm-control" data-ng-model="field.type" placeholder="name">
+							</div>
+							<!-- {{field}} -->
+						</div>
+						<br />
 					</div>
 				</div>
 				<div class="form-group">
@@ -55,92 +60,93 @@ Add Data Model
 					<button type="button" data-ng-click="addFieldToObj()" class="btn btn-primary" style="display:inline">Add</button>
 				</div>
 				</div>
-			</form>
-		</div>
-		<div class="modal-footer">
-			<h4 class="modal-footer-error">{{modal_error}}</h4>
-			<button type="button" class="btn btn-primary" data-ng-click="saveDataType()">{{modalSubmitText}}</button>
-		</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<h4 class="modal-footer-error">{{modal_error}}</h4>
+		<button type="button" class="btn btn-primary" data-ng-click="saveDataType()">{{modalSubmitText}}</button>
 	</div>
 </div>
 </div>
-</div>
+<!-- </div> -->
+<!-- </div> -->
 <!-- <div class="soxsMainPanel">
 <div class="soxsItemList">
-<ul class="nav nav-pills nav-stacked">
-			<li class="active" role="presentation" data-ng-click="data_model_changed(model)">
-										<a href="">Soxs Data</a>
-						</li>
-						<li data-ng-repeat="model in data_models" role="presentation" data-ng-click="data_model_changed(model)">
-										<a href="">{{model.name}}</a>
-						</li>
-</ul>
+	<ul class="nav nav-pills nav-stacked">
+					<li class="active" role="presentation" data-ng-click="data_model_changed(model)">
+													<a href="">Soxs Data</a>
+								</li>
+								<li data-ng-repeat="model in data_models" role="presentation" data-ng-click="data_model_changed(model)">
+													<a href="">{{model.name}}</a>
+								</li>
+	</ul>
 </div>
 <div class="soxsItemDetails">
-<h1>Put your content here...</h1>
+	<h1>Put your content here...</h1>
 </div>
 </div> -->
 <!-- <ul>
 			<li data-ng-repeat="model in data_models">
-					{{model.name}} <sapn class="edit_model_model" data-ng-click="edit_data_model(model)">[Edit]</sapn>
+						{{model.name}} <sapn class="edit_model_model" data-ng-click="edit_data_model(model)">[Edit]</sapn>
 			</li>
 </ul> -->
 <!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="{{modalHidden}}" data-backdrop="">
 	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-						<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal">
-										<span aria-hidden="true">&times;
-										</span>
-										<span class="sr-only">Close</span>
-										</button>
-										<h4 class="modal-title" id="myModalLabel">{{modalTitle}}</h4>
-						</div>
-						<div class="modal-body">
-										
-										<form role="form" class="form-horizontal">
-														<div class="form-group">
-																		<label for="newObj_name" class="col-sm-2 control-label">Data Type Name</label>
-																		<div class="col-sm-10">
-																						<input type="text" class="form-control" data-ng-model="currentDataModel.name" id="newObj_name" placeholder="name">
+			<div class="modal-content">
+								<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">
+													<span aria-hidden="true">&times;
+													</span>
+													<span class="sr-only">Close</span>
+													</button>
+													<h4 class="modal-title" id="myModalLabel">{{modalTitle}}</h4>
+								</div>
+								<div class="modal-body">
+													
+													<form role="form" class="form-horizontal">
+																		<div class="form-group">
+																							<label for="newObj_name" class="col-sm-2 control-label">Data Type Name</label>
+																							<div class="col-sm-10">
+																												<input type="text" class="form-control" data-ng-model="currentDataModel.name" id="newObj_name" placeholder="name">
+																							</div>
 																		</div>
-														</div>
-														<div class="form-group">
-																		<label for="newObj_description" class="col-sm-2 control-label">Description</label>
-																		<div class="col-sm-10">
-																						<input type="text" class="form-control" data-ng-model="currentDataModel.description" id="newObj_description" placeholder="description">
+																		<div class="form-group">
+																							<label for="newObj_description" class="col-sm-2 control-label">Description</label>
+																							<div class="col-sm-10">
+																												<input type="text" class="form-control" data-ng-model="currentDataModel.description" id="newObj_description" placeholder="description">
+																							</div>
 																		</div>
-														</div>
-														<div class="form-group">
-																		<label for="newObj_permissionIndex" class="col-sm-2 control-label">PermissionIndex</label>
-																		<div class="col-sm-10">
-																						<input type="text" class="form-control" data-ng-model="currentDataModel.permissionIndex" id="newObj_permissionIndex" placeholder="0">
+																		<div class="form-group">
+																							<label for="newObj_permissionIndex" class="col-sm-2 control-label">PermissionIndex</label>
+																							<div class="col-sm-10">
+																												<input type="text" class="form-control" data-ng-model="currentDataModel.permissionIndex" id="newObj_permissionIndex" placeholder="0">
+																							</div>
 																		</div>
-														</div>
-														<div class="form-group">
-																		<label for="newObjFields" class="col-sm-2 control-label">Fields</label>
-																		<div class="col-sm-10">
-																						<span data-ng-repeat="field in currentDataModel.fieldItems track by $index" style="display:block">
-																						<input type="checkbox" data-ng-model="todo.done" >
-																						{{field.name}} :: {{field.type}}
-																						</span>
+																		<div class="form-group">
+																							<label for="newObjFields" class="col-sm-2 control-label">Fields</label>
+																							<div class="col-sm-10">
+																												<span data-ng-repeat="field in currentDataModel.fieldItems track by $index" style="display:block">
+																												<input type="checkbox" data-ng-model="todo.done" >
+																												{{field.name}} :: {{field.type}}
+																												</span>
+																							</div>
 																		</div>
-														</div>
-														<div class="form-group">
-																		<label for="newFieldName" class="col-sm-2 control-label">Add Field</label>
-																		<div class="col-sm-10">
-																						<input type="text" class="form-control" data-ng-model="newFieldName" id="newFieldName" placeholder="" style="display:inline;width:40%">
-																		<select data-ng-model="newFieldType" data-ng-options="ft.name for ft in fieldTypes" class="form-control" style="display:inline;width:25%"></select>
-																		<button type="button" data-ng-click="addFieldToObj()" class="btn btn-primary" style="display:inline">Add</button>
-														</div>
-														</div>
-						</form>
-		</div>
-		<div class="modal-footer">
-						<h4 class="modal-footer-error">{{modal_error}}</h4>
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary" data-ng-click="saveDataType()">{{modalSubmitText}}</button>
-		</div>
+																		<div class="form-group">
+																							<label for="newFieldName" class="col-sm-2 control-label">Add Field</label>
+																							<div class="col-sm-10">
+																												<input type="text" class="form-control" data-ng-model="newFieldName" id="newFieldName" placeholder="" style="display:inline;width:40%">
+																							<select data-ng-model="newFieldType" data-ng-options="ft.name for ft in fieldTypes" class="form-control" style="display:inline;width:25%"></select>
+																							<button type="button" data-ng-click="addFieldToObj()" class="btn btn-primary" style="display:inline">Add</button>
+																		</div>
+																	</div>
+								</form>
+			</div>
+			<div class="modal-footer">
+								<h4 class="modal-footer-error">{{modal_error}}</h4>
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								<button type="button" class="btn btn-primary" data-ng-click="saveDataType()">{{modalSubmitText}}</button>
+			</div>
 	</div>
 </div>
 </div> -->

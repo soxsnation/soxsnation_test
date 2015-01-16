@@ -15,7 +15,7 @@ angular.module('soxsnationApp')
 				templateUrl: '../partials/directives/navbar.html',
 				controller: function($scope, $rootScope) {
 
-							console.log('NAVBAR Userlogged in');
+							// console.log('NAVBAR Userlogged in');
 
 							$scope.configItems = [];
 							$scope.configAdminItems = [];
@@ -28,11 +28,11 @@ angular.module('soxsnationApp')
 							// }
 
 							function init_navbar() {
-								console.log('init_navbar');
+								// console.log('init_navbar');
 								$scope.isLoggedIn = soxsAuth.userLoggedIn();
 								$scope.isAdminUser = soxsAuth.isAdminUser();
-								console.log($scope.isLoggedIn);
-								console.log($scope.isAdminUser);
+								// console.log($scope.isLoggedIn);
+								// console.log($scope.isAdminUser);
 								load_nav_menu();
 							};
 							init_navbar();
@@ -45,7 +45,7 @@ angular.module('soxsnationApp')
 									$scope.configItems.push({
 										text: 'Data Setup',
 										link: '/#/SoxsData'
-									});
+									});									
 									$scope.configItems.push({
 										text: 'Change Password',
 										link: '/#/ChangePassword'
@@ -67,6 +67,10 @@ angular.module('soxsnationApp')
 										value: 'SoxsData'
 									});
 									$scope.configAdminLinks.push({
+										text: 'Data Type Setup',
+										value: 'SoxsTypes'
+									});
+									$scope.configAdminLinks.push({
 										text: 'User Administration',
 										value: 'Users'
 									});
@@ -86,7 +90,7 @@ angular.module('soxsnationApp')
 							}
 
 							$scope.admin_menu_item = function(clicked_item) {
-								console.log('$scope.admin_menu_item:' + clicked_item);
+								// console.log('$scope.admin_menu_item:' + clicked_item);
 
 								if (clicked_item === 'load_data') {
 									load_nav_menu();
@@ -105,7 +109,7 @@ angular.module('soxsnationApp')
 
 							$scope.logout = function() {
 								soxsAuth.logout().then(function(result) {
-									console.log('logout result' + result)
+									// console.log('logout result' + result)
 									if (result.status === 200) {
 										$location.path('/Login');
 									} else {
@@ -123,14 +127,14 @@ angular.module('soxsnationApp')
 
 							// $scope.load_data = function() {
 							function load_nav_menu() {
-								console.log('load_nav_menu');
+								// console.log('load_nav_menu');
 								$scope.data_models = [];
 								var userData = soxsAuth.getUserInfo();
 								if (userData == null) {
 									$location.path('/Login');
 								}
-								console.log('User');
-								console.log(JSON.stringify(userData));
+								// console.log('User');
+								// console.log(JSON.stringify(userData));
 
 								soxsAuth.http_get('api/soxs/types')
 									.then(function(data) {
@@ -175,7 +179,7 @@ angular.module('soxsnationApp')
 
 							$rootScope.$on('login_changed', function(event, data) {
 								console.log('login_changed');
-								console.log(data);
+								// console.log(data);
 								init_navbar();
 								// $scope.isLoggedIn = soxsAuth.userLoggedIn();
 								// $scope.isAdminUser = soxsAuth.isAdminUser();

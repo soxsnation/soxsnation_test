@@ -11,6 +11,7 @@
 
 var session = require('../controllers/sessionController');
 var soxsController = require('../controllers/soxsController');
+var soxsDataController = require('../controllers/soxsDataController');
 var authControl = require('../controllers/authController');
 var users = require('../controllers/users');
 var recipes = require('../controllers/recipes');
@@ -151,22 +152,33 @@ module.exports = function(app, passport) {
 	 * soxsObjects Routes
 	 *****************************************************************************************/
 
+	app.get('/api/soxsSchema/_all', soxsController.getSchemas);
+	app.get('/api/soxsSchema/:id', soxsController.getSchema);
 	app.post('/api/soxsSchema/create', soxsController.createSoxsSchema);
 	app.post('/api/soxsSchema/update/:id', soxsController.updateSoxsSchema);
 
+	app.get('/api/soxsType/_all', soxsController.getTypes);
+	app.get('/api/soxsType/:id', soxsController.getType);
+	app.post('/api/soxsType/create', soxsController.createType);
+	app.post('/api/soxsType/update/:id', soxsController.updateType);
 
-	app.get('/api/soxs/get/:type/:id', soxsController.get);
-	app.get('/api/soxs/getall/:type', soxsController.getall);
 
-	app.post('/api/soxs/insert/:type', soxsController.insert);
-	app.post('/api/soxs/update/:type/:id', soxsController.update);
 
-	app.get('/api/soxs/archive/:type/:id', soxsController.archive);
-	app.get('/api/soxs/delete/:type/:id', soxsController.delete);
+	/*****************************************************************************************
+	 * soxsData Routes
+	 *****************************************************************************************/
+	app.get('/api/soxs/get/:type/:id', soxsDataController.get);
+	app.get('/api/soxs/getall/:type', soxsDataController.getall);
 
-	app.get('/api/soxs/type/:type', soxsController.get_type_by_name);
-	// app.get('/api/soxs/types', authControl.authorized, soxsController.get_types);
-	app.get('/api/soxs/types', soxsController.get_types);
+	app.post('/api/soxs/insert/:type', soxsDataController.insert);
+	app.post('/api/soxs/update/:type/:id', soxsDataController.update);
+
+	app.get('/api/soxs/archive/:type/:id', soxsDataController.archive);
+	app.get('/api/soxs/delete/:type/:id', soxsDataController.delete);
+
+	app.get('/api/soxs/type/:type', soxsDataController.get_type_by_name);
+	// app.get('/api/soxs/types', authControl.authorized, soxsDataController.get_types);
+	app.get('/api/soxs/types', soxsDataController.get_types);
 
 
 	/*****************************************************************************************
@@ -184,28 +196,28 @@ module.exports = function(app, passport) {
 	 * Recipe Routes
 	 *****************************************************************************************/
 
-	app.post('/api/recipes/add', recipes.create);
+	// app.post('/api/recipes/add', recipes.create);
 
-	app.get('/api/recipes/list', recipes.list);
-	app.get('/api/recipes/:id', recipes.recipe);
-	// app.post('/api/recipes/update', recipes.update);
-	// app.post('/api/recipes/update', recipes.update);
-
-
-	/****************************************************
-	 * Step Routes
-	 ****************************************************/
-
-	app.post('/api/recipe/step/add/:id', recipes.addStep);
-	app.post('/api/recipe/step/edit/:id', recipes.editStep);
+	// app.get('/api/recipes/list', recipes.list);
+	// app.get('/api/recipes/:id', recipes.recipe);
+	// // app.post('/api/recipes/update', recipes.update);
+	// // app.post('/api/recipes/update', recipes.update);
 
 
-	/****************************************************
-	 * Ingredient Routes
-	 ****************************************************/
+	// /****************************************************
+	//  * Step Routes
+	//  ****************************************************/
 
-	app.post('/api/recipe/ingredient/add/:id', recipes.addIngredient);
-	app.post('/api/recipe/ingredient/edit/:id', recipes.editIngredient);
+	// app.post('/api/recipe/step/add/:id', recipes.addStep);
+	// app.post('/api/recipe/step/edit/:id', recipes.editStep);
+
+
+	// /****************************************************
+	//  * Ingredient Routes
+	//  ****************************************************/
+
+	// app.post('/api/recipe/ingredient/add/:id', recipes.addIngredient);
+	// app.post('/api/recipe/ingredient/edit/:id', recipes.editIngredient);
 
 
 }

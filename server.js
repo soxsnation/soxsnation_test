@@ -97,7 +97,6 @@ app.use('/', function(req, res, next) {
 			console.log('NEED TO LOG IN');
 		}
 	}
-
 });
 
 

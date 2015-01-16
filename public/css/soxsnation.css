@@ -1,4 +1,9 @@
 
+.chart {
+  height: 400px;
+  width: 800px;
+}
+
 .test {
   /*background-color: #F00;*/
   /*display: block;*/

@@ -1,4 +1,4 @@
-/* soxs_data_ctrl.js
+/* soxs_type_ctrl.js
  *
  * Author(s):  Andrew Brown
  * Date:       9/30/2014
@@ -7,14 +7,14 @@
 
 
 angular.module('soxsnationApp')
-	.controller('SoxsDataController', ['$scope', '$location', 'soxsAuth',
+	.controller('SoxsTypeController', ['$scope', '$location', 'soxsAuth',
 		function($scope, $location, soxsAuth) {
 
-			soxsAuth.validateUser().then(function(user) {}, function(error) {
-				$location.path('/Login');
-			});
+			// soxsAuth.validateUser().then(function(user) {}, function(error) {
+			// 	$location.path('/Login');
+			// });
 
-			$scope.page = 'Soxs Data';
+			$scope.page = 'Soxs Type';
 			$scope.mode = 'none';
 			var server = 'http://localhost:3085/';
 			server = '';
@@ -87,7 +87,7 @@ angular.module('soxsnationApp')
 			$scope.newFieldName = '';
 			$scope.newFieldType = '';
 			$scope.model_id = '';
-			$scope.currentDataModel = {};
+			$scope.currentDataType = {};
 
 			function stringifyFields(fields) {
 				console.log('stringifyFields');
@@ -125,40 +125,40 @@ angular.module('soxsnationApp')
 
 			function addDataType() {
 
-				var url = server + 'api/soxsSchema/create';
+				var url = server + 'api/soxsType/create';
 
-				var objFields = $scope.currentDataModel.fieldItems;
-				objFields.push({
-					name: 'active',
-					type: 'Boolean'
-				});
-				objFields.push({
-					name: 'archived',
-					type: 'Boolean'
-				});
-				objFields.push({
-					name: 'creationDate',
-					type: 'Date'
-				});
-				objFields.push({
-					name: 'modifiedDate',
-					type: 'Date'
-				});
-				objFields.push({
-					name: 'userModified',
-					type: 'String'
-				});
-				objFields.push({
-					name: 'access',
-					type: 'String'
-				});
+				// var objFields = $scope.currentDataType.fieldItems;
+				// objFields.push({
+				// 	name: 'active',
+				// 	type: 'Boolean'
+				// });
+				// objFields.push({
+				// 	name: 'archived',
+				// 	type: 'Boolean'
+				// });
+				// objFields.push({
+				// 	name: 'creationDate',
+				// 	type: 'Date'
+				// });
+				// objFields.push({
+				// 	name: 'modifiedDate',
+				// 	type: 'Date'
+				// });
+				// objFields.push({
+				// 	name: 'userModified',
+				// 	type: 'String'
+				// });
+				// objFields.push({
+				// 	name: 'access',
+				// 	type: 'String'
+				// });
 
-				// console.log($scope.currentDataModel);
-				$scope.currentDataModel.fields = stringifyFields(objFields);
+				// console.log($scope.currentDataType);
+				// $scope.currentDataType.fields = stringifyFields(objFields);
 
-				// console.log($scope.currentDataModel.fields);
+				// console.log($scope.currentDataType.fields);
 
-				soxsAuth.http_post(url, $scope.currentDataModel)
+				soxsAuth.http_post(url, $scope.currentDataType)
 					.then(function(data) {
 						$('#myModal').modal('hide');
 						$scope.data_models.push(parseDataType(data));
@@ -168,26 +168,26 @@ angular.module('soxsnationApp')
 			};
 
 			function updateDataType() {
-				var url = server + 'api/soxsSchema/update/' + $scope.currentDataModel._id;
+				var url = server + 'api/soxsType/update/' + $scope.currentDataType._id;
 
 				console.log('updateDataType');
-				// console.log($scope.currentDataModel);
-				$scope.currentDataModel.fields = stringifyFields($scope.currentDataModel.fieldItems);
-				// console.log($scope.currentDataModel);
+				// console.log($scope.currentDataType);
+				// $scope.currentDataType.fields = stringifyFields($scope.currentDataType.fieldItems);
+				// console.log($scope.currentDataType);
 
 				for (var i = 0; i < $scope.data_models.length; ++i) {
-					if ($scope.data_models[i]._id == $scope.currentDataModel._id) {
-						$scope.data_models[i] = parseDataType($scope.currentDataModel);
+					if ($scope.data_models[i]._id == $scope.currentDataType._id) {
+						$scope.data_models[i] = parseDataType($scope.currentDataType);
 						break;
 					}
 				}
-				// $scope.currentDataModel = parseDataType(saveModel);
-				// console.log($scope.currentDataModel);
+				// $scope.currentDataType = parseDataType(saveModel);
+				// console.log($scope.currentDataType);
 
-				soxsAuth.http_post(url, $scope.currentDataModel)
+				soxsAuth.http_post(url, $scope.currentDataType)
 					.then(function(data) {
 						$('#myModal').modal('hide');
-						// $scope.currentDataModel = {};
+						// $scope.currentDataType = {};
 					}, function(err) {
 						console.log('ERROR: ' + err);
 					})
@@ -215,7 +215,7 @@ angular.module('soxsnationApp')
 				} else if ($scope.mode === 'insert') {
 					$scope.modalTitle = 'Insert Data Model';
 					$scope.modalSubmitText = 'Create New Data Model';
-					$scope.currentDataModel.fieldItems = [];
+					$scope.currentDataType.fieldItems = [];
 				}
 
 				$('#myModal').modal('show');
@@ -239,8 +239,8 @@ angular.module('soxsnationApp')
 					type: $scope.newFieldType.value
 				}
 
-				$scope.currentDataModel.fieldItems.push(nf);
-				// console.log($scope.currentDataModel);
+				$scope.currentDataType.fieldItems.push(nf);
+				// console.log($scope.currentDataType);
 			}
 
 			// $scope.addFieldTextToObj = function() {
@@ -257,23 +257,27 @@ angular.module('soxsnationApp')
 
 
 			$scope.edit_data_model = function(model) {
-				$scope.currentDataModel = model;
+				$scope.currentDataType = model;
 				showModal('edit', model);
 			}
 
-			$scope.data_model_changed = function(model) {
-				$scope.currentDataModel = model;
+			$scope.data_type_changed = function(dataType) {
+				$scope.currentDataType = dataType;
 				$scope.modalSubmitText = 'Update Data Model';
 				$scope.mode = 'edit';
 			}
 
-			$scope.insert_data_model = function() {
+			$scope.insert_data_type = function() {
 				console.log('insert_data_model');
-				$scope.currentDataModel = {};
-				$scope.modalSubmitText = 'Create New Data Model';
-				$scope.currentDataModel.fieldItems = [];
+				$scope.currentDataType = {};
+				$scope.modalSubmitText = 'Create New Data Type';
+				$scope.currentDataType.fieldItems = [];
 				$scope.mode = 'insert';
 				// showModal('insert');
+			}
+
+			$scope.insert_data_type = function() {
+				
 			}
 
 			$scope.load_data = function() {
@@ -283,34 +287,34 @@ angular.module('soxsnationApp')
 
 
 			function initData() {
-				console.log('initData');
-				soxsAuth.http_get('api/soxs/types')
-					.then(function(data) {
-						// console.log(data);
-						$scope.data_models = [];
+				// console.log('initData');
+				// soxsAuth.http_get('api/soxs/types')
+				// 	.then(function(data) {
+				// 		// console.log(data);
+				// 		$scope.data_models = [];
 
-						for (var i = 0; i < data.length; ++i) {
-							// var model = {
-							// 	name: data[i].name,
-							// 	description: data[i].description,
-							// 	fields: [],
-							// 	_id: data[i]._id,
-							// 	permissionIndex: data[i].permissionIndex
-							// }
+				// 		for (var i = 0; i < data.length; ++i) {
+				// 			// var model = {
+				// 			// 	name: data[i].name,
+				// 			// 	description: data[i].description,
+				// 			// 	fields: [],
+				// 			// 	_id: data[i]._id,
+				// 			// 	permissionIndex: data[i].permissionIndex
+				// 			// }
 
-							// var fields = JSON.parse(data[i].fields);
-							// for (var prop in fields) {
-							// 	var field = {
-							// 		name: prop,
-							// 		type: fields[prop]
-							// 	}
-							// 	model.fields.push(field);
-							// }
+				// 			// var fields = JSON.parse(data[i].fields);
+				// 			// for (var prop in fields) {
+				// 			// 	var field = {
+				// 			// 		name: prop,
+				// 			// 		type: fields[prop]
+				// 			// 	}
+				// 			// 	model.fields.push(field);
+				// 			// }
 
-							// $scope.data_models.push(model);
-							$scope.data_models.push(parseDataType(data[i]));
-						}
-					})
+				// 			// $scope.data_models.push(model);
+				// 			$scope.data_models.push(parseDataType(data[i]));
+				// 		}
+				// 	})
 
 
 			soxsAuth.http_get('api/soxsType/_all')
