@@ -7,8 +7,9 @@
 
 
 angular.module('soxsnationApp')
-	.controller('SoxsTypeController', ['$scope', '$location', 'soxsAuth',
-		function($scope, $location, soxsAuth) {
+	.controller('SoxsTypeController', ['$scope', '$location', 'soxsAuth', 'soxsItemFactory',
+
+		function($scope, $location, soxsAuth, soxsItemFactory) {
 
 			// soxsAuth.validateUser().then(function(user) {}, function(error) {
 			// 	$location.path('/Login');
@@ -277,7 +278,7 @@ angular.module('soxsnationApp')
 			}
 
 			$scope.insert_data_type = function() {
-				
+
 			}
 
 			$scope.load_data = function() {
@@ -315,17 +316,27 @@ angular.module('soxsnationApp')
 				// 			$scope.data_models.push(parseDataType(data[i]));
 				// 		}
 				// 	})
+console.log('soxsItemFactory.get_soxs_types()');
+				soxsItemFactory.get_soxs_types().then(function(soxs_types) {
+					$scope.data_types = soxs_types;
+				})
 
 
-			soxsAuth.http_get('api/soxsType/_all')
-			.then(function(data) {
-				$scope.data_types = [];
-				for (var i = 0; i < data.length; ++i) {
-					$scope.data_types.push(data[i]);
-				}
-				console.log($scope.data_types);
+				// soxsAuth.http_get('api/soxsType/_all')
+				// 	.then(function(data) {
+				// 		$scope.data_types = [];
+				// 		for (var i = 0; i < data.length; ++i) {
+				// 			$scope.data_types.push(data[i]);
+				// 		}
+				// 		console.log($scope.data_types);
 
-			})
+				// 	})
+
+
+
+
+
+
 					// $http.get(server + 'api/soxs/types').success(function(data) {
 					// 	console.log(data);
 					// 	$scope.data_models = [];

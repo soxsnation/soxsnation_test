@@ -379,19 +379,35 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "public/partials/soxsdata/soxstype.html",
+			"settings":
+			{
+				"buffer_size": 2992,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "public/partials/soxsdata/soxsdata.html",
+			"settings":
+			{
+				"buffer_size": 7409,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 115.0,
+		"height": 338.0,
 		"selected_items":
 		[
 			[
-				"Package Control: In",
-				"Package Control: Install Package"
+				"Package Control: ",
+				"Package Control: List Packages"
 			],
 			[
-				"Package Control: ",
+				"Package Control: In",
 				"Package Control: Install Package"
 			],
 			[
@@ -407,7 +423,7 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 424.0
+		"width": 384.0
 	},
 	"console":
 	{
@@ -429,29 +445,76 @@
 	},
 	"expanded_folders":
 	[
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/app",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/app/routes",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js/Controllers"
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/partials",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/partials/soxsdata"
 	],
 	"file_history":
 	[
-		"/C/Users/abrown/scratch/Software/Astroid/Docker/Dockerfile",
-		"/C/Users/abrown/scratch/Software/Astroid/src/cradle/src/cradle/geometry/project_via_render_to_texture.cpp",
-		"/C/Users/abrown/scratch/Software/Astroid/src/cradle/build.sh",
-		"/C/Users/abrown/scratch/Software/Astroid/src/dosimetry/build.sh",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server.js",
+		"/C/Users/abrown/scratch/Software/Astroid/scripts/Python/Dosimetry/objects/aperture_creation_params.json",
+		"/C/Users/abrown/scratch/Software/Astroid/src/cradle/CMakeLists.txt",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/dosimetry/unit_tests/unit_tests.cpp",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/dosimetry/unit_tests/test_dosimetry_sobp.hpp",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/dosimetry/src/dosimetry/common.hpp",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/dosimetry/calc_provider.cpp",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/dosimetry/unit_tests/test_dosimetry.hpp",
+		"/C/Users/abrown/scratch/Software/Astroid/src/dosimetry/CMakeLists.txt",
+		"/C/Users/abrown/Downloads/manifest (1).json",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/cradle/src/cradle/io/calc_provider.cpp",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/dosimetry/src/dosimetry/aperture.cpp",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/cradle/CMakeLists.txt",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/dosimetry/CMakeLists.txt",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/Dockerfile_cpp_math",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/cpp_math/CMakeLists.txt",
+		"/C/Users/abrown/Downloads/manifesti.json",
+		"/C/Users/abrown/scratch/Software/Astroid/build/cpp_math-x64-vs11/Release/api.json",
 		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/cradle/cmake/UseCradle.cmake",
+		"/C/Users/abrown/scratch/Software/Astroid/src/cpp_math/cpp_math.cpp",
+		"/C/Users/abrown/scratch/Software/Astroid/src/dosimetry/build-x64.bat",
+		"/C/Users/abrown/scratch/Software/Astroid/src/dosimetry/init-x64.bat",
+		"/C/Users/abrown/scratch/Software/Astroid/src/dosimetry/build.sh",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/cpp_math/cpp_math.cpp",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/cpp_math/src/cpp_math/test.cpp",
+		"/C/Users/abrown/scratch/Software/Astroid/src/cpp_math/CMakeLists.txt",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/cpp_math/src/cpp_math/test.hpp",
+		"/C/Users/abrown/scratch/Software/Astroid/src/cpp_math/build-x64.bat",
+		"/C/Users/abrown/scratch/Software/Astroid/src/cpp_math/init-x64.bat",
+		"/C/Users/abrown/scratch/Software/Astroid/src/cpp_math/src/cpp_math/test.hpp",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/cpp_math/calc_provider.cpp",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/cpp_math/generate_api.cpp",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/cpp_math/src/simplemath/test.hpp",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/cpp_math/src/simplemath/test.cpp",
+		"/C/Users/abrown/scratch/Software/Astroid/src/simplemath/simplemath.cpp",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/simplemath/CMakeLists.txt",
+		"/C/Users/abrown/scratch/Software/Astroid/scripts/get_data.py",
+		"/C/Users/abrown/scratch/Software/Astroid/scripts/astroid.py",
+		"/C/Users/abrown/scratch/Software/Astroid/scripts/astroid.cfg",
+		"/C/Users/abrown/scratch/Software/Astroid/scripts/request_calculation.py",
+		"/C/Users/abrown/scratch/Software/Astroid/scripts/get_calc_status.py",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/dosimetry/src/dosimetry/degraders.cpp",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/dosimetry/src/dosimetry/geometry.cpp",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/dosimetry/generate_api.cpp",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/dosimetry/src/dosimetry/proton/gmc_internals.cpp",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/dosimetry/src/dosimetry/proton/pbs/machine.hpp",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/dosimetry/src/dosimetry/proton/gmc_internals.hpp",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/dosimetry/src/dosimetry/aperture.hpp",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/dosimetry/src/dosimetry/proton/pbs/spots.hpp",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/cradle/src/cradle/gui/displays/projected_canvas.cpp",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/cradle/src/cradle/gui/displays/projected_canvas.hpp",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/Dockerfile",
+		"/C/Users/abrown/scratch/Software/Astroid/Docker/Dockerfile_dos",
 		"/C/Users/abrown/scratch/Software/Astroid/src/cradle/src/cradle/geometry/project_via_render_to_texture.hpp",
 		"/C/libs-vs11-x64/include/boost/version.hpp",
 		"/C/libs-vs11-x64/include/boost/config.hpp",
 		"/C/libs-vs11-x64/include/boost/integer.hpp",
 		"/C/libs-vs11-x64/include/boost/locale.hpp",
 		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/cradle/build.sh",
+		"/C/Users/abrown/scratch/Software/Astroid/src/cradle/build.sh",
 		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/cradle/init-x64.bat",
 		"/C/Users/abrown/scratch/Software/Astroid/build/simplemath-x64-vs11/Release/api.json",
 		"/C/Users/abrown/Desktop/Dockerizing/index.js",
-		"/C/Users/abrown/Downloads/manifest (1).json",
 		"/C/Users/abrown/Desktop/Dockerizing/Dockerfile",
 		"/C/Users/abrown/Desktop/Dockerizing/src/package.json",
 		"/C/Users/Docker/Dockerfile",
@@ -480,7 +543,6 @@
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js/directives/soxsModal.js",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/partials/soxsItem.html",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/app/models/soxsModel.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server.js",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/partials/directives/soxsData/soxsListItemString.html",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/index.html",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js/soxs_Auth.js",
@@ -517,64 +579,18 @@
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master/lib/controllers/blogs.js",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master/lib/controllers/users.js",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master/lib/config/auth.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master/lib/config/routes.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master/server.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master/lib/config/pass.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master/lib/config/config.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/AngularJS-Authentication/app.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/package.json",
-		"/C/Users/abrown/scratch/Software/Andrew/angular-phonecat-master/angular-phonecat-master/app/js/app.js",
-		"/C/Users/abrown/scratch/Software/Andrew/angular-phonecat-master/angular-phonecat-master/app/js/services.js",
-		"/C/Users/abrown/scratch/Software/Andrew/angular-phonecat-master/angular-phonecat-master/app/js/controllers.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/AngularJS-Authentication/public/javascripts/SecurityApp.js",
-		"/C/Users/abrown/scratch/Software/Andrew/angular-phonecat-master/angular-phonecat-master/app/index.html",
-		"/C/Users/abrown/scratch/Software/Andrew/PassportJS-Authentication-master/PassportJS-Authentication-master/app/controllers/user.js",
-		"/C/Users/abrown/scratch/Software/Andrew/DiscomRealty/public/partials/listingtable.html",
-		"/C/Users/abrown/scratch/Software/Andrew/DiscomRealty/public/partials/listingsearch.html",
-		"/C/Users/abrown/scratch/Software/Andrew/DiscomRealty/public/js/controller.js",
-		"/C/Users/abrown/scratch/Software/Andrew/DiscomRealty/public/index.html",
-		"/C/Users/abrown/scratch/Software/Astroid/scripts/astroid.py",
-		"/C/Users/abrown/scratch/Software/Astroid/scripts/CT2.json",
-		"/C/Users/abrown/scratch/Software/Astroid/scripts/post_data.py",
-		"/C/Users/abrown/scratch/Software/Astroid/scripts/ct_data.json",
-		"/C/Users/abrown/scratch/Software/Astroid/scripts/data.json",
-		"/C/Users/abrown/scratch/Software/Astroid/scripts/commands.txt.",
-		"/C/Users/abrown/scratch/Software/Astroid/scripts/pbs_example.json",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/css/bootstrap.css",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server/models/soxsSchema.js",
-		"/C/Users/abrown/Downloads/bootstrap-3.2.0-dist/bootstrap-3.2.0-dist/css/bootstrap.min.css",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/css/bootstrap.min.css",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/lib/bootstrap.min.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server/models/Recipe.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server/controllers/recipes.js",
-		"/C/Users/abrown/scratch/Software/Astroid/planningBuild/gtv.json",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js/service.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js/controller.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server/controllers/sessionController.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/data/links.json",
-		"/C/Users/Andrew/repository/soxsnation_website/server/models/Recipe.js",
-		"/C/Users/Andrew/repository/soxsnation_website/server/lib/authorization.js",
-		"/C/Users/Andrew/repository/soxsnation_website/server/models/soxsSchema.js",
-		"/C/Users/Andrew/repository/soxsnation_website/server/routes/routes.js",
-		"/C/Users/Andrew/repository/soxsnation_website/server/lib/Utils.js",
-		"/C/Users/Andrew/repository/soxsnation_website/server/models/soxsModel.js",
-		"/C/Users/Andrew/repository/soxsnation_website/server.js",
-		"/C/Users/Andrew/repository/soxsnation_website/server/controllers/recipes.js",
-		"/C/Users/Andrew/repository/soxsnation_website/public/views/recipes/recipe.js",
-		"/C/Users/Andrew/repository/soxsnation_website/public/services/soxsnationService.js",
-		"/C/Users/Andrew/repository/soxsnation_website/server/lib/config.js",
-		"/C/Users/Andrew/repository/soxsnation_website/public/views/recipes/recipeList.js",
-		"/C/Users/Andrew/repository/soxsnation_website/server/models/User.js"
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master/lib/config/routes.js"
 	],
 	"find":
 	{
-		"height": 33.0
+		"height": 23.0
 	},
 	"find_in_files":
 	{
 		"height": 90.0,
 		"where_history":
 		[
+			"",
 			"C:\\Users\\abrown\\scratch\\Software\\Andrew\\soxsnation_website\\public",
 			"C:\\Users\\abrown\\scratch\\Software\\Andrew\\soxsnation_website",
 			"<project>",
@@ -589,6 +605,20 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"image<",
+			"unit_test",
+			"compute_aperture_projection",
+			"	",
+			"ture_projection",
+			"opengl",
+			"devil",
+			"calculation_request",
+			"calculation_req",
+			"cradle::calculation_request",
+			"struct cradle::calculation_request",
+			"draw_image_isoline",
+			"curl",
+			"unit",
 			"updateDataType",
 			"formatField",
 			"addFieldToObj",
@@ -685,12 +715,13 @@
 			"user",
 			"authenticate"
 		],
-		"highlight": true,
+		"highlight": false,
 		"in_selection": false,
 		"preserve_case": false,
 		"regex": false,
 		"replace_history":
 		[
+			"    "
 		],
 		"reverse": false,
 		"show_context": true,
@@ -701,13 +732,67 @@
 	"groups":
 	[
 		{
+			"selected": 1,
 			"sheets":
 			[
-			]
-		},
-		{
-			"sheets":
-			[
+				{
+					"buffer": 0,
+					"file": "public/partials/soxsdata/soxstype.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2992,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "public/partials/soxsdata/soxsdata.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7409,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -728,18 +813,11 @@
 				0,
 				1,
 				1
-			],
-			[
-				1,
-				0,
-				2,
-				1
 			]
 		],
 		"cols":
 		[
 			0.0,
-			0.668662569627,
 			1.0
 		],
 		"rows":
@@ -749,6 +827,10 @@
 		]
 	},
 	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 335.0
+	},
 	"output.find_results":
 	{
 		"height": 0.0
@@ -794,8 +876,8 @@
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
-	"side_bar_visible": false,
-	"side_bar_width": 261.0,
+	"side_bar_visible": true,
+	"side_bar_width": 385.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

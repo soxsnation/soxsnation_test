@@ -25,8 +25,8 @@ soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
         }
 
         function init() {
-            console.log("SESSION INIT");
-            console.log(currentSession.get());
+            // console.log("SESSION INIT");
+            // console.log(currentSession.get());
 
             $http({
                 url: '/api/session/validate',
@@ -57,7 +57,7 @@ soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
 
         function login(userName, password) {
             var deferred = $q.defer();
-            console.log('soxs_Auth.login ' + userName + password)
+            // console.log('soxs_Auth.login ' + userName + password)
 
             $http({
                 method: 'GET',
@@ -69,11 +69,11 @@ soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
                     withCredentials: true
                 }
             }).then(function(res) {
-                console.log("login");
+                // console.log("login");
                 $rootScope.currentToken = res.data.replace('"', '');
                 $rootScope.currentToken = $rootScope.currentToken.replace('"', '');
                 $window.sessionStorage.token = $rootScope.currentToken;
-                console.log($rootScope.currentToken);
+                // console.log($rootScope.currentToken);
 
                 $http({
                     url: '/api/session/user',
@@ -85,11 +85,11 @@ soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
                         withCredentials: true
                     }
                 }).then(function(res) {
-                    console.log('User Data:');
-                    console.log(res.data);
+                    // console.log('User Data:');
+                    // console.log(res.data);
                     $rootScope.currentUser = res.data;
                     $window.sessionStorage.user = JSON.stringify($rootScope.currentUser);
-                    console.log($rootScope.currentUser);
+                    // console.log($rootScope.currentUser);
                     $rootScope.$emit('login_changed', 'emit');
                     deferred.resolve($rootScope.currentUser);
                 }, function(error) {
@@ -104,8 +104,8 @@ soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
         }
 
         function http_get(url) {
-            console.log('http_get');
-            console.log($rootScope.currentToken);
+            // console.log('http_get');
+            // console.log($rootScope.currentToken);
 
             var deferred = $q.defer();
             $http({
@@ -118,7 +118,7 @@ soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
                 //     withCredentials: true
                 // }
             }).success(function(data) {
-                console.log('http_get2: ' + data);
+                // console.log('http_get2: ' + data);
                 deferred.resolve(data);
             }, function(error) {
                 console.log(error);
@@ -216,7 +216,7 @@ soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
         }
 
         function changePassword(password) {
-            console.log('soxs_Auth::changePassword');
+            // console.log('soxs_Auth::changePassword');
             var deferred = $q.defer();
             $http({
                 method: 'GET',
