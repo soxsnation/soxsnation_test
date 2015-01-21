@@ -40,7 +40,8 @@ app.controller('ContentCtrl', function (DataService) {
     ctrl.fetchContent();
 });
 
-app.directive('contentItem', function ($compile, TemplateService) {
+app.directive('contentItem', 
+     function ($compile, TemplateService) {
     var getTemplate = function (templates, contentType) {
         var template = '';
 

@@ -6,10 +6,12 @@
  */
 
 angular.module('soxsnationApp')
-    .directive('contentItem', 
+    .directive('soxsItem', 
         function($compile, soxsItemFactory) {
 
             var getTemplate = function(soxs_types, type_id) {
+                console.log('getTemplate');
+                console.log(soxs_types);
                 var template = '';
 
                 // switch (contentType) {
@@ -36,7 +38,8 @@ angular.module('soxsnationApp')
             };
 
             var linker = function(scope, element, attrs) {
-                scope.rootDirectory = 'images/';
+                // scope.rootDirectory = 'images/';
+                console.log('linker')
 
                 soxsItemFactory.get_soxs_types().then(function(data) {
                     var soxs_types = data;
@@ -49,10 +52,19 @@ angular.module('soxsnationApp')
 
             return {
                 restrict: 'E',
-                link: linker,
-                scope: {
-                    content: '='
+                transclude: true,
+                template: getTemplate(soxsItemFactory.get_soxs_types(), '54b9814af5769f302c317aeb'),
+                controller: function($scope) {
+
                 }
-            };
+            }
+
+            // return {
+            //     restrict: 'E',
+            //     link: linker,
+            //     scope: {
+            //         content: '='
+            //     }
+            // };
         }
     );
