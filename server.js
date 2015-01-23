@@ -13,6 +13,8 @@ var app = express();
 var mongoose = require('mongoose');
 var fs = require('fs');
 
+var config = require('./config/config');
+
 // // TODO: I had to add this in to support CORS requests. I'm not sure this is the way to do this.
 // app.use(function(req, res, next) {
 // 	res.header("Access-Control-Allow-Origin", "*");
@@ -23,6 +25,8 @@ var fs = require('fs');
 // });
 
 
+var env = 'development';
+// console.log('config:' + config.server + ' : ' + 'mongodb://' + config.server + '/' + config[env].db);
 
 // Bootstrap db connection
 // Connect to mongodb
@@ -35,19 +39,19 @@ var connect = function() {
 		}
 	}
 
-	mongoose.connect('mongodb://server.soxsnation.com/soxsnation2', options);
+	mongoose.connect('mongodb://' + config.server + '/' + config[env].db, options);
 }
-connect()
+connect();
 
 // Error handler
 mongoose.connection.on('error', function(err) {
 	console.log(err)
-})
+});
 
 // Reconnect when closed
 mongoose.connection.on('disconnected', function() {
 	connect()
-})
+});
 
 // Bootstrap models
 var models_path = __dirname + '/app/models';

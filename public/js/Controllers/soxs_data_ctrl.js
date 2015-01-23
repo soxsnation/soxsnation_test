@@ -7,8 +7,8 @@
 
 
 angular.module('soxsnationApp')
-	.controller('SoxsDataController', ['$scope', '$location', 'soxsAuth',
-		function($scope, $location, soxsAuth) {
+	.controller('SoxsDataController', ['$scope', '$location', 'soxsAuth', 'soxsItemFactory',
+		function($scope, $location, soxsAuth, soxsItemFactory) {
 
 			soxsAuth.validateUser().then(function(user) {}, function(error) {
 				$location.path('/Login');
@@ -236,6 +236,7 @@ angular.module('soxsnationApp')
 				// console.log($scope.newFieldType);
 				var nf = {
 					name: $scope.newFieldName,
+					// _id: $scope.newFieldType._id
 					type: $scope.newFieldType.value
 				}
 
@@ -262,6 +263,8 @@ angular.module('soxsnationApp')
 			}
 
 			$scope.data_model_changed = function(model) {
+				console.log('model changed');
+				console.log(model);
 				$scope.currentDataModel = model;
 				$scope.modalSubmitText = 'Update Data Model';
 				$scope.mode = 'edit';
@@ -312,39 +315,22 @@ angular.module('soxsnationApp')
 						}
 					})
 
+				soxsItemFactory.get_soxs_types().then(function(soxs_types) {
+					$scope.data_types = soxs_types;
+					console.log('$scope.data_types');
+					console.log($scope.data_types);
+				})
 
-			soxsAuth.http_get('api/soxsType/_all')
-			.then(function(data) {
-				$scope.data_types = [];
-				for (var i = 0; i < data.length; ++i) {
-					$scope.data_types.push(data[i]);
-				}
-				console.log($scope.data_types);
 
-			})
-					// $http.get(server + 'api/soxs/types').success(function(data) {
-					// 	console.log(data);
-					// 	$scope.data_models = [];
-
-				// 	for (var i = 0; i < data.length; ++i) {
-				// 		var model = {
-				// 			name: data[i].name,
-				// 			description: data[i].description,
-				// 			fields: []
+				// soxsAuth.http_get('api/soxsType/_all')
+				// 	.then(function(data) {
+				// 		$scope.data_types = [];
+				// 		for (var i = 0; i < data.length; ++i) {
+				// 			$scope.data_types.push(data[i]);
 				// 		}
+				// 		console.log($scope.data_types);
 
-				// 		var fields = JSON.parse(data[i].fields);
-				// 		for (var prop in fields) {
-				// 			var field = {
-				// 				name: prop,
-				// 				type: fields[prop]
-				// 			}
-				// 			model.fields.push(field);
-				// 		}
-
-				// 		$scope.data_models.push(model);
-				// 	}
-				// });
+				// 	})
 			}
 			initData();
 

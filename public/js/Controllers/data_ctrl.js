@@ -22,7 +22,7 @@ angular.module('soxsnationApp')
 				$scope.modal_error = '';
 				$scope.mode = 'none';
 				$scope.modalHidden = 'true';
-				$scope.currentItem = {};
+				$scope.currentItem = {};				
 				$scope.currentDataModel = [];
 				$scope.list_Item = {};
 
@@ -68,10 +68,10 @@ angular.module('soxsnationApp')
 										}
 									}
 								}
-
 								$scope.currentDataModel.push(field);
 							}
 						}
+						console.log('$scope.currentDataModel');
 						console.log($scope.currentDataModel);
 
 

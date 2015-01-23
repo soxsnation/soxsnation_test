@@ -56,7 +56,7 @@ Add Data Model
 					<label for="newFieldName" class="col-sm-2 control-label">Add Field</label>
 					<div class="col-sm-10">
 						<input type="text" class="soxsForm-control" data-ng-model="newFieldName" id="newFieldName" placeholder="" style="display:inline;width:40%">
-					<select data-ng-model="newFieldType" data-ng-options="ft.name for ft in fieldTypes" class="soxsForm-control" style="display:inline;width:25%"></select>
+					<select data-ng-model="newFieldType" data-ng-options="dt.name for dt in data_types" class="soxsForm-control" style="display:inline;width:25%"></select>
 					<button type="button" data-ng-click="addFieldToObj()" class="btn btn-primary" style="display:inline">Add</button>
 				</div>
 				</div>

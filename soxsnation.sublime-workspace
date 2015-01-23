@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"soxs",
+				"soxs_types"
+			],
+			[
 				"data",
 				"dataType"
 			],
@@ -46,10 +50,6 @@
 			[
 				"funciton",
 				"function"
-			],
-			[
-				"soxs",
-				"soxsAuth"
 			],
 			[
 				"cur",
@@ -380,18 +380,82 @@
 	"buffers":
 	[
 		{
-			"file": "public/partials/soxsdata/soxstype.html",
+			"file": "public/partials/soxsItems/soxsItems.html",
 			"settings":
 			{
-				"buffer_size": 2992,
+				"buffer_size": 2114,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "public/partials/soxsdata/soxsdata.html",
+			"file": "public/partials/soxsdata/soxstype.html",
 			"settings":
 			{
-				"buffer_size": 7409,
+				"buffer_size": 2927,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "angular-dynamic-templates-master/index.html",
+			"settings":
+			{
+				"buffer_size": 527,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "public/js/directives/soxsItem.js",
+			"settings":
+			{
+				"buffer_size": 1693,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "public/js/services/soxs_item_factory.js",
+			"settings":
+			{
+				"buffer_size": 907,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "angular-dynamic-templates-master/js/app.js",
+			"settings":
+			{
+				"buffer_size": 1873,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "public/js/Controllers/soxs_type_ctrl.js",
+			"settings":
+			{
+				"buffer_size": 8886,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "public/index.html",
+			"settings":
+			{
+				"buffer_size": 3723,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "public/js/services/soxs_factory.js",
+			"settings":
+			{
+				"buffer_size": 3435,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "public/js/soxs_Auth.js",
+			"settings":
+			{
+				"buffer_size": 9810,
 				"line_ending": "Windows"
 			}
 		}
@@ -446,12 +510,32 @@
 	"expanded_folders":
 	[
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/angular-dynamic-templates-master/css",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/angular-dynamic-templates-master/data",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/angular-dynamic-templates-master/js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/app",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/js/Controllers",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/js/directives",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/js/services",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/partials",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/partials/soxsdata"
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/partials/session",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/partials/soxsdata",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/partials/soxsItems",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/partials/soxsItems/directives"
 	],
 	"file_history":
 	[
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/js/app.js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/js/directives/soxsItemDetails.js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/partials/soxsdata/soxstype.html",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/partials/soxsdata/soxsdata.html",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/partials/soxsItems/directives/soxsItemDetails.html",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/partials/soxsItems/directives/soxsItem.html",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/js/Controllers/data_ctrl.js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/partials/soxsItems/soxsItems.html",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/js/soxs_Auth.js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/js/Controllers/session_ctrl.js",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server.js",
 		"/C/Users/abrown/scratch/Software/Astroid/scripts/Python/Dosimetry/objects/aperture_creation_params.json",
 		"/C/Users/abrown/scratch/Software/Astroid/src/cradle/CMakeLists.txt",
@@ -569,27 +653,20 @@
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server/models/User.js",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server/controllers/authController.js",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server/routes/routes.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/partials/directives/name.html",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server/controllers/soxsController.js",
-		"/C/Users/abrown/scratch/Software/Andrew/DiscomRealty/package.json",
-		"/C/Users/abrown/scratch/Software/Andrew/DiscomRealty/public/partials/contact.html",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js/Controllers/link.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/services/session.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master/lib/models/user.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master/lib/controllers/blogs.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master/lib/controllers/users.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master/lib/config/auth.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master/lib/config/routes.js"
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/partials/directives/name.html"
 	],
 	"find":
 	{
-		"height": 23.0
+		"height": 33.0
 	},
 	"find_in_files":
 	{
 		"height": 90.0,
 		"where_history":
 		[
+			"C:\\Users\\abrown\\scratch\\Software\\Andrew\\soxsnation_website\\public",
+			"C:\\Users\\abrown\\scratch\\Software\\Andrew\\soxsnation_website",
+			"C:\\Users\\abrown\\scratch\\Software\\Andrew\\soxsnation_website\\angular-dynamic-templates-master",
 			"",
 			"C:\\Users\\abrown\\scratch\\Software\\Andrew\\soxsnation_website\\public",
 			"C:\\Users\\abrown\\scratch\\Software\\Andrew\\soxsnation_website",
@@ -605,6 +682,14 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"contentItem",
+			"soxsFactory",
+			"soxsServices",
+			"soxsItemFactory",
+			"console.log(",
+			"soxsFactory",
+			"content-item",
+			"soxsDetailLabel",
 			"image<",
 			"unit_test",
 			"compute_aperture_projection",
@@ -732,30 +817,118 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 2,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "public/partials/soxsdata/soxstype.html",
+					"file": "public/partials/soxsItems/soxsItems.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2992,
+						"buffer_size": 2114,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								721,
+								502
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/HTML/HTML.tmLanguage",
 							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "public/partials/soxsdata/soxstype.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2927,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								564,
+								564
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "angular-dynamic-templates-master/index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 527,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								439,
+								427
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "public/js/directives/soxsItem.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1693,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1055,
+								1055
+							]
+						],
+						"settings":
+						{
+							"open_with_edit": true,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -765,32 +938,187 @@
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "public/partials/soxsdata/soxsdata.html",
+					"buffer": 4,
+					"file": "public/js/services/soxs_item_factory.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7409,
+						"buffer_size": 907,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								862,
+								876
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"open_with_edit": true,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 5,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 5,
+					"file": "angular-dynamic-templates-master/js/app.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1873,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								882,
+								893
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "public/js/Controllers/soxs_type_ctrl.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8886,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								189,
+								207
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "public/index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3723,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3446,
+								3446
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 90.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "public/js/services/soxs_factory.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3435,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								78,
+								78
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "public/js/soxs_Auth.js",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 9810,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								116,
+								128
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
 					"type": "text"
 				}
 			]
@@ -813,11 +1141,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.5,
 			1.0
 		],
 		"rows":
@@ -877,7 +1212,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 385.0,
+	"side_bar_width": 251.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
