@@ -6,6 +6,12 @@ node_modules/
 *.sublime-project
 *.sublime-workspace
 
+#############
+## Bittorrent Sync
+#############
+
+.sync
+
 #################
 ## Eclipse
 #################
