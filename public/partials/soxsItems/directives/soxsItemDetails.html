@@ -2,65 +2,27 @@
 
     <br />
     <form role="form" class="form-horizontal">
-        <div data-ng-repeat="prop in currentDataModel">
-            <div class="form-group" data-ng-show='prop.isString'>
-                <label class="col-md-2 control-label">{{prop.name}}</label>
-                <div class="col-md-10">
-                    <div class="soxsDetailLabel">{{currentItem[prop.name]}}</div>
+    
+            <div data-ng-repeat="prop in currentDataModel">
+                <div class="form-group">
+                    <label class="col-md-2 control-label">{{prop.name}}</label>
+                    <soxs-item typeid='{{dataType._id}}'></soxs-item>
                 </div>
             </div>
-            <div class="form-group" data-ng-show='prop.isArray'>
-                <label class="col-md-2 control-label">{{prop.name}}</label>
-                <div class="col-md-10">
-                    <div data-ng-repeat="item in currentItem[prop.name] track by $index">
-                        <!-- <div style="display:block"> -->
-                        <div class="soxsDetailLabel">{{item}}</div>
-                        <!-- </div> -->
-                    </div>
-                </div>
-            </div>
-            <div class="form-group" data-ng-show='prop.isArrayObject'>
-                <label for="link_tag" class="col-md-2 control-label">{{prop.name}}</label>
-                <div class="col-md-10">
-                    <div data-ng-repeat="item in currentItem[prop.name] track by $index">
-                        <div class="row">
-                            <div data-ng-repeat="arrayItem in prop.arrayItems track by $index" class="col-md-3">
-                                <div class="soxsDetailLabel">{{item[arrayItem]}}</div>
-                            </div>
-                        </div>
-                    </div>
 
-                </div>
+            <div class="form-group" style="padding-left:30px;">
+                <button class="btn btn-primary" data-ng-click="editItem_clicked()">
+                    Edit
+                </button>
             </div>
-            <div class="form-group" data-ng-show='prop.isBoolean'>
-                <label for="link_text" class="col-md-2 control-label">{{prop.name}}</label>
-                <div class="col-md-10">
-                    <div class="checkbox">
-                        <input type="checkbox" disabled data-ng-model="currentItem[prop.name]" style="margin-left:0px;">
-                    </div>
-                </div>
+            <br />
+            <div class="form-group" style="padding-left:30px;">
+                <button class="btn btn-primary" data-ng-click="deleteItem_clicked()">
+                    Delete {{dataType}}
+                </button>
+                <button class="btn btn-primary" data-ng-click="archiveItem_clicked()">
+                    Archive {{dataType}}
+                </button>
             </div>
-        </div>
-
-<!--         <div data-ng-repeat="prop in currentDataModel">
-            <div class="form-group">
-                <soxs-item typeid='{{dataType._id}}'></soxs-item>
-            </div>
-        </div> -->
-
-        <div class="form-group" style="padding-left:30px;">
-            <button class="btn btn-primary" data-ng-click="editItem_clicked()">
-                Edit
-            </button>
-        </div>
-        <br />
-        <div class="form-group" style="padding-left:30px;">
-            <button class="btn btn-primary" data-ng-click="deleteItem_clicked()">
-                Delete {{dataType}}
-            </button>
-            <button class="btn btn-primary" data-ng-click="archiveItem_clicked()">
-                Archive {{dataType}}
-            </button>
-        </div>
     </form>
 </div>

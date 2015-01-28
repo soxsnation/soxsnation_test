@@ -1,0 +1,8 @@
+{
+   "_id": "543870fa040b148010067971",
+   "fields": {"name":"String","description":"String","ingredients":[{"name":"String","quantity":"String"}],"steps":[{"number":"String","description":"String"}]},
+   "description": "how to make stuff",
+   "name": "recipe",
+   "__v": 0,
+   "permissionIndex": "4" 
+}

@@ -68,9 +68,24 @@ function add_default_fields(schema, cb) {
 	});
 	cb(schema);
 }
+
+function parseSchema(schema) {
+
+
+
+}
+ 
+
 exports.createSoxsSchema = function(req, res, next) {
 	console.log('soxsController.createSoxsSchema');
 	console.log(req.body);
+	console.log('');
+	// var buf = new Buffer(JSON.stringify(req.body)).toString('base64');
+	// console.log(buf);
+	// var buf2 = new Buffer(buf, 'base64');
+	// console.log(buf2.toString('utf8'));
+
+
 
 	var sch = new soxsSchema(req.body);
 	sch.save(function(err) {

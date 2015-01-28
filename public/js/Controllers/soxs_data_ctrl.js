@@ -155,10 +155,11 @@ angular.module('soxsnationApp')
 
 				// console.log($scope.currentDataModel);
 				$scope.currentDataModel.fields = stringifyFields(objFields);
-
+				var dm = $scope.currentDataModel;
+				dm.fieldItems = JSON.stringify(dm.fieldItems);
 				// console.log($scope.currentDataModel.fields);
 
-				soxsAuth.http_post(url, $scope.currentDataModel)
+				soxsAuth.http_post(url, dm)
 					.then(function(data) {
 						$('#myModal').modal('hide');
 						$scope.data_models.push(parseDataType(data));
@@ -184,7 +185,10 @@ angular.module('soxsnationApp')
 				// $scope.currentDataModel = parseDataType(saveModel);
 				// console.log($scope.currentDataModel);
 
-				soxsAuth.http_post(url, $scope.currentDataModel)
+				var dm = $scope.currentDataModel;
+				dm.fieldItems = JSON.stringify(dm.fieldItems);
+
+				soxsAuth.http_post(url, dm)
 					.then(function(data) {
 						$('#myModal').modal('hide');
 						// $scope.currentDataModel = {};
@@ -236,7 +240,7 @@ angular.module('soxsnationApp')
 				// console.log($scope.newFieldType);
 				var nf = {
 					name: $scope.newFieldName,
-					// _id: $scope.newFieldType._id
+					_id: $scope.newFieldType._id,
 					type: $scope.newFieldType.value
 				}
 

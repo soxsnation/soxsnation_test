@@ -10,8 +10,10 @@ angular.module('soxsnationApp')
 
         function get_template(typeid, cb) {
             soxsItemFactory.get_soxs_types().then(function(temps) {
-                // console.log('got templates');
-                // console.log(temps);
+                console.log('got templates');
+                console.log(typeid);
+                console.log(temps);
+
                 for (var i = 0; i < temps.length; ++i) {
                     // if (temps[i]._id == '54c0620cd2b8a45b3713af3e') {
                     if (temps[i]._id == typeid) {
@@ -25,6 +27,7 @@ angular.module('soxsnationApp')
         };
 
         var linker = function(scope, element, attr) {
+            console.log(attr);
             get_template(attr.typeid, function(template) {
                 element.html(template).show();
                 $compile(element.contents());

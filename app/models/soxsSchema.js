@@ -30,6 +30,11 @@ var soxsSchema = new Schema({
 		type: String,
 		default: '0',
 		trim: true
+	},
+	fieldItems: {
+		type: String,
+		default: '',
+		trim: true
 	}
 });
 
