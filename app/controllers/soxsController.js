@@ -33,6 +33,9 @@ function getSchema(schemaType, cb) {
 
 			console.log('Got soxsSchema for: ' + schemaType);
 			console.log(ss);
+			var o = JSON.parse(ss.fields);
+			console.log('JSON:');
+			console.log(o);
 			// var customSchema = new Schema(eval(ss.fields));
 			// var schemaObj = JSON.parse('{"name":"String", "description":"String", "complete":"Boolean"}');
 			// console.log(schemaObj);
@@ -43,36 +46,17 @@ function getSchema(schemaType, cb) {
 	}
 }
 
+function get_fields_for_schema(schema) {
 
-function add_default_fields(schema, cb) {
-	// var default_fields = [{
-	// 	name: 'active',
-	// 	type: 'Boolean'
-	// }, {
-	// 	name: 'archived',
-	// 	type: 'Boolean'
-	// }, {
-	// 	name: 'creationDate',
-	// 	type: 'Date'
-	// }, {
-	// 	name: 'modifiedDate',
-	// 	type: 'Date'
-	// }, {
-	// 	name: 'userModified',
-	// 	type: 'String'
-	// }];
+	var fields = {};
 
-	schema.fieldItems.push({
-		'name': 'active',
-		'type': 'Boolean'
-	});
-	cb(schema);
-}
-
-function parseSchema(schema) {
-
-
-
+	for (var i = 0; i < schema.fieldItems.length; ++i) {
+		
+		get_type(schema.fieldItems[i].type_id, function(err, type_data) {
+			fields[schema.fieldItems[i].name] = type_data.type;
+		});
+	}
+	return fields;
 }
  
 
@@ -117,25 +101,6 @@ exports.createSoxsSchema = function(req, res, next) {
 				// return res.json(sch);
 		}
 	});
-
-
-
-	// var schemaType = req.params.type;
-	// getSchema(schemaType, function(err, customModel) {
-	// 	if (err) {
-	// 		res.send(404);
-	// 	} else {
-	// 		var sch = new customModel(req.body);
-	// 		sch.save(function(err) {
-	// 			if (err) {
-	// 				console.log(err);
-	// 				return res.send(403);
-	// 			} else {
-	// 				return res.json(sch);
-	// 			}
-	// 		})
-	// 	}
-	// })
 }
 
 
@@ -214,6 +179,21 @@ exports.updateType = function(req, res, next) {
 				res.send(200);
 			}
 		})
+	})
+}
+
+function get_type(type_id, cb) {
+	soxsType.findOne({
+		_id: type_id
+	}).exec(function(err, soxsDataType) {
+		if (err) {
+			return cb(err, null);
+		}
+		if (!soxsDataType) {
+			return cb(Error('Failed to load soxsSchema'), null);
+		}
+		return cb(null, soxsDataType);
+		
 	})
 }
 

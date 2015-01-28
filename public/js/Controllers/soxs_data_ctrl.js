@@ -82,6 +82,14 @@ angular.module('soxsnationApp')
 				}]
 			});
 
+			function copyObj(obj) {
+				var copy = {};
+				for (var attr in obj) {
+					if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+				}
+				return copy;
+			}
+
 
 
 			$scope.newFieldName = '';
@@ -173,7 +181,10 @@ angular.module('soxsnationApp')
 
 				console.log('updateDataType');
 				// console.log($scope.currentDataModel);
-				$scope.currentDataModel.fields = stringifyFields($scope.currentDataModel.fieldItems);
+				var dm = copyObj($scope.currentDataModel);
+				dm.fields = stringifyFields(dm.fieldItems);
+				dm.fieldItems = JSON.stringify(dm.fieldItems);
+				// $scope.currentDataModel.fields = stringifyFields($scope.currentDataModel.fieldItems);
 				// console.log($scope.currentDataModel);
 
 				for (var i = 0; i < $scope.data_models.length; ++i) {
@@ -185,8 +196,7 @@ angular.module('soxsnationApp')
 				// $scope.currentDataModel = parseDataType(saveModel);
 				// console.log($scope.currentDataModel);
 
-				var dm = $scope.currentDataModel;
-				dm.fieldItems = JSON.stringify(dm.fieldItems);
+				
 
 				soxsAuth.http_post(url, dm)
 					.then(function(data) {
