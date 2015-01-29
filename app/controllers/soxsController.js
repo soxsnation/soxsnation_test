@@ -12,6 +12,21 @@ var soxsSchema = mongoose.model('soxsSchema');
 var soxsType = mongoose.model('soxsType');
 var mailer = require('../lib/mailer');
 
+function parse_schema_fieldItems(schema) {
+	var fields = [];
+
+	for (var i = 0; i < schema.fieldItems.length; ++i) {
+		get_type(schema.fieldItems[i].type_id, function(err, data) {
+			if (err) {
+				console.log('ERROR Getting fieldType: ' + err);
+			} else {
+				fields[schema.fieldItems[i].name] = data.type;
+			}
+		})
+	}
+
+	return fields;
+}
 
 function getSchema(schemaType, cb) {
 	console.log('getSchema: ' + schemaType);

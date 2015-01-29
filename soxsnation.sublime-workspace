@@ -4,16 +4,32 @@
 		"selected_items":
 		[
 			[
+				"fi",
+				"fieldItems"
+			],
+			[
+				"cop",
+				"copyObj"
+			],
+			[
+				"current",
+				"currentDataModel"
+			],
+			[
+				"com",
+				"commands"
+			],
+			[
+				"req",
+				"require"
+			],
+			[
 				"soxs",
 				"soxs_types"
 			],
 			[
 				"data",
 				"dataType"
-			],
-			[
-				"fi",
-				"fieldList"
 			],
 			[
 				"st",
@@ -96,10 +112,6 @@
 				"username"
 			],
 			[
-				"req",
-				"reqHeader"
-			],
-			[
 				"toke",
 				"tokenLength"
 			],
@@ -174,10 +186,6 @@
 			[
 				"cre",
 				"credentials"
-			],
-			[
-				"current",
-				"currentUser"
 			],
 			[
 				"doTex",
@@ -380,83 +388,19 @@
 	"buffers":
 	[
 		{
-			"file": "public/partials/soxsItems/soxsItems.html",
+			"file": "app/routes/routes.js",
 			"settings":
 			{
-				"buffer_size": 2114,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "public/partials/soxsdata/soxstype.html",
-			"settings":
-			{
-				"buffer_size": 2927,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "angular-dynamic-templates-master/index.html",
-			"settings":
-			{
-				"buffer_size": 527,
+				"buffer_size": 6190,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "public/js/directives/soxsItem.js",
+			"file": "app/controllers/soxsController.js",
 			"settings":
 			{
-				"buffer_size": 1693,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "public/js/services/soxs_item_factory.js",
-			"settings":
-			{
-				"buffer_size": 907,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "angular-dynamic-templates-master/js/app.js",
-			"settings":
-			{
-				"buffer_size": 1873,
+				"buffer_size": 9301,
 				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "public/js/Controllers/soxs_type_ctrl.js",
-			"settings":
-			{
-				"buffer_size": 8886,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "public/index.html",
-			"settings":
-			{
-				"buffer_size": 3723,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "public/js/services/soxs_factory.js",
-			"settings":
-			{
-				"buffer_size": 3435,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "public/js/soxs_Auth.js",
-			"settings":
-			{
-				"buffer_size": 9810,
-				"line_ending": "Windows"
 			}
 		}
 	],
@@ -468,7 +412,15 @@
 		[
 			[
 				"Package Control: ",
-				"Package Control: List Packages"
+				"Package Control: Remove Package"
+			],
+			[
+				"pa",
+				"Package Control: Install Package"
+			],
+			[
+				"pac",
+				"Package Control: Install Package"
 			],
 			[
 				"Package Control: In",
@@ -487,7 +439,7 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 384.0
+		"width": 480.0
 	},
 	"console":
 	{
@@ -509,34 +461,43 @@
 	},
 	"expanded_folders":
 	[
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/angular-dynamic-templates-master/css",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/angular-dynamic-templates-master/data",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/angular-dynamic-templates-master/js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/app",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/js/Controllers",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/js/directives",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/js/services",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/partials",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/partials/session",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/partials/soxsdata",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/partials/soxsItems",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/partials/soxsItems/directives"
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation/app",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation/app/controllers",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation/app/routes",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation/public"
 	],
 	"file_history":
 	[
+		"/C/Users/abrown/scratch/Software/Astroid/build/dosimetry_testing-x64-vs11/s1_3_calc_request.json",
+		"/C/Users/abrown/scratch/Software/Astroid/build/dosimetry_testing-x64-vs11/s1_1_calc_request.json",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/partials/soxsItems/directives/soxsItemDetails.html",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/js/Controllers/data_ctrl.js",
+		"/C/Users/abrown/scratch/Software/Astroid/build/dosimetry-x64-vs11/matrix.json",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/js/Controllers/soxs_data_ctrl.js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/partials/soxsItems/directives/soxsItem.html",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server.js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/init/init_mongo.js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/init.js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/config/config.js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/init/init_controller.js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/app/config/config.js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/partials/soxsItems/soxsItems.html",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/partials/soxsdata/soxstype.html",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/angular-dynamic-templates-master/index.html",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/js/directives/soxsItem.js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/js/services/soxs_item_factory.js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/angular-dynamic-templates-master/js/app.js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/js/Controllers/soxs_type_ctrl.js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/index.html",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/js/services/soxs_factory.js",
+		"/C/Users/abrown/Downloads/mongo-soxsnation2-20150123-174448.js",
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/package.json",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/js/app.js",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/js/directives/soxsItemDetails.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/partials/soxsdata/soxstype.html",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/partials/soxsdata/soxsdata.html",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/partials/soxsItems/directives/soxsItemDetails.html",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/partials/soxsItems/directives/soxsItem.html",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/js/Controllers/data_ctrl.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/partials/soxsItems/soxsItems.html",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/js/soxs_Auth.js",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public/js/Controllers/session_ctrl.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server.js",
 		"/C/Users/abrown/scratch/Software/Astroid/scripts/Python/Dosimetry/objects/aperture_creation_params.json",
 		"/C/Users/abrown/scratch/Software/Astroid/src/cradle/CMakeLists.txt",
 		"/C/Users/abrown/scratch/Software/Astroid/Docker/src/dosimetry/unit_tests/unit_tests.cpp",
@@ -635,29 +596,11 @@
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js/Controllers/soxs_ctrl.js",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/js/directives/soxs_directive.js",
 		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master/app/scripts/directives/uniqueUsername.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/partials/recipes.html",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/css/soxsnation.css",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/css/fenway.css",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/partials/home.html",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/partials/directives/recipe.html",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/partials/session/login.html",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master/app/scripts/services/Blogs.js",
-		"//W2K8SQL1/c$/dotdecimal/Axon/Data/InventoryCounts/20141103/Count_jmoon.json",
-		"//W2K8SQL1/c$/dotdecimal/Axon/Data/InventoryCounts/20141103/Count_hsilva.json",
-		"//W2K8SQL1/c$/dotdecimal/Axon/Data/InventoryCounts/20141103/Count_jbankey.json",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master/app/views/partials/navbar.html",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master/.bowerrc",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master/app/scripts/services/Session.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/examples/angular-passport-master/app/scripts/directives/mongooseError.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server/lib/soxsAuthentication.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server/models/User.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server/controllers/authController.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/server/routes/routes.js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/partials/directives/name.html"
+		"/C/Users/abrown/scratch/Software/Andrew/soxsnation_website/public2/partials/recipes.html"
 	],
 	"find":
 	{
-		"height": 33.0
+		"height": 23.0
 	},
 	"find_in_files":
 	{
@@ -682,6 +625,19 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"updateDataType",
+			"parseDataType",
+			"addDataType",
+			"updateDataType",
+			"Update Data ",
+			"saveDataType",
+			"newFieldType",
+			"addFieldToObj",
+			"currentit",
+			"item_clicked",
+			"currentItem",
+			"curr",
+			"~",
 			"contentItem",
 			"soxsFactory",
 			"soxsServices",
@@ -796,9 +752,7 @@
 			"model",
 			"organizationViewport",
 			"organizations",
-			"usersViewport",
-			"user",
-			"authenticate"
+			"usersViewport"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -806,6 +760,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"",
 			"    "
 		],
 		"reverse": false,
@@ -817,207 +772,53 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "public/partials/soxsItems/soxsItems.html",
+					"file": "app/routes/routes.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2114,
+						"buffer_size": 6190,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								721,
-								502
+								5169,
+								5169
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "public/partials/soxsdata/soxstype.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2927,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								564,
-								564
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "angular-dynamic-templates-master/index.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 527,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								439,
-								427
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "public/js/directives/soxsItem.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1693,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1055,
-								1055
-							]
-						],
-						"settings":
-						{
-							"open_with_edit": true,
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1627.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "public/js/services/soxs_item_factory.js",
+					"buffer": 1,
+					"file": "app/controllers/soxsController.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 907,
+						"buffer_size": 9301,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								862,
-								876
-							]
-						],
-						"settings":
-						{
-							"open_with_edit": true,
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 0,
-			"sheets":
-			[
-				{
-					"buffer": 5,
-					"file": "angular-dynamic-templates-master/js/app.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1873,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								882,
-								893
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "public/js/Controllers/soxs_type_ctrl.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 8886,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								189,
-								207
+								601,
+								601
 							]
 						],
 						"settings":
@@ -1029,96 +830,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "public/index.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3723,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3446,
-								3446
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 90.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "public/js/services/soxs_factory.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3435,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								78,
-								78
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "public/js/soxs_Auth.js",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 9810,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								116,
-								128
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -1141,18 +853,11 @@
 				0,
 				1,
 				1
-			],
-			[
-				1,
-				0,
-				2,
-				1
 			]
 		],
 		"cols":
 		[
 			0.0,
-			0.5,
 			1.0
 		],
 		"rows":
