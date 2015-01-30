@@ -6,7 +6,7 @@
             <div data-ng-repeat="prop in currentDataModel">
                 <div class="form-group">
                     <label class="col-md-2 control-label">{{prop.name}}</label>
-                    <soxs-item typeid='{{dataType._id}}'></soxs-item>
+                    <soxs-item typeid='{{prop.type_id}}' prop='{{prop.name}}' ></soxs-item>
                 </div>
             </div>
 

@@ -250,7 +250,7 @@ angular.module('soxsnationApp')
 				// console.log($scope.newFieldType);
 				var nf = {
 					name: $scope.newFieldName,
-					_id: $scope.newFieldType._id,
+					type_id: $scope.newFieldType._id,
 					type: $scope.newFieldType.value
 				}
 

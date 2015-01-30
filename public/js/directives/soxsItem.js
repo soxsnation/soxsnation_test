@@ -9,41 +9,67 @@ angular.module('soxsnationApp')
     .directive('soxsItem', ['$compile', 'soxsItemFactory', function($compile, soxsItemFactory) {
 
         function get_template(typeid, cb) {
-            soxsItemFactory.get_soxs_types().then(function(temps) {
-                console.log('got templates');
-                console.log(typeid);
-                console.log(temps);
+            if (typeid == '') {
+                return cb('<p>soxsItem: No type specified for</p>');
+            } else {
+                soxsItemFactory.get_soxs_types().then(function(temps) {
+                    console.log('got templates');
+                    console.log('typeid: ' + typeid);
+                    // console.log(temps);
 
-                for (var i = 0; i < temps.length; ++i) {
-                    // if (temps[i]._id == '54c0620cd2b8a45b3713af3e') {
-                    if (temps[i]._id == typeid) {
-                        cb(temps[i].display_view);
+                    for (var i = 0; i < temps.length; ++i) {
+                        // if (temps[i]._id == '54c0620cd2b8a45b3713af3e') {
+                        if (temps[i]._id == typeid) {
+                            cb(temps[i].display_view);
+                        }
                     }
-                }
-            }, function(err) {
-                console.log('returning not found');
-                cb('<p>soxsItem: template not found:</p>');
-            })
+                }, function(err) {
+                    console.log('returning not found');
+                    cb('<p>soxsItem: template not found:</p>');
+                })
+            }
         };
 
+        function update_item(element, item_template, prop, item) {
+            // console.log('update_item');
+            var temp = '<p>soxsItem: Item Property not found</p>';
+            if (item.hasOwnProperty(prop)) {
+            temp = item_template.replace('{{currentItem}}', item[prop]);
+        }
+
+            element.html(temp).show();
+            $compile(element.contents());
+        }
+
         var linker = function(scope, element, attr) {
-            console.log(attr);
-            get_template(attr.typeid, function(template) {
+            var typeid = attr.typeid;
+            var prop = attr.prop;
+            console.log('Link: ' + prop + ' ' + typeid);
+
+            var item_template = '<p>soxsItem: No template specified</p>';
+            get_template(typeid, function(template) {
+                item_template = template;
+                console.log("Compile: " + template);
+                console.log(JSON.stringify(scope.currentItem));
                 element.html(template).show();
                 $compile(element.contents());
             });
+
+            scope.$watch('currentItem', function(value) {
+                update_item(element, item_template, prop, value);
+            })
 
         }
 
         return {
             restrict: 'E',
             link: linker,
-            controller: function ($scope) {
+            controller: function($scope) {
 
-            }
-            // scope: {
+                }
+                // scope: {
                 // content: '='
-            // }
+                // }
         };
 
         // return {

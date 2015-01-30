@@ -22,7 +22,7 @@ angular.module('soxsnationApp')
 				$scope.modal_error = '';
 				$scope.mode = 'none';
 				$scope.modalHidden = 'true';
-				$scope.currentItem = {};				
+				$scope.currentItem = {};
 				$scope.currentDataModel = [];
 				$scope.list_Item = {};
 
@@ -38,39 +38,57 @@ angular.module('soxsnationApp')
 					.then(function(data) {
 						console.log('Got Data Type ' + $scope.dataType);
 						console.log(data);
-						$scope.dataModel = JSON.parse(data.fields);
+						$scope.dataModel = JSON.parse(data.fieldItems);
+						var dm = $scope.dataModel;
 						$scope.list_Item = {};
 						console.log($scope.dataModel);
 
-						for (var prop in $scope.dataModel) {
-							if (ignoreProps.indexOf(prop) == -1) {
+						for (var i = 0; i < dm.length; ++i) {
+							if (ignoreProps.indexOf(dm[i].name) == -1) {
+
+								console.log('Prop name: ' + dm[i].name);
+								console.log(dm[i]);
 								var field = {
-									name: prop,
+									name: dm[i].name,
 									isEditable: false,
 									buttonText: 'Edit',
-									isString: ($scope.dataModel[prop] === 'String'),
-									isBoolean: ($scope.dataModel[prop] === 'Boolean'),
-									isArray: (Object.prototype.toString.call($scope.dataModel[prop]) == '[object Array]')
+									type_id: dm[i].type_id
 								};
-								console.log(prop);
-								console.log($scope.dataModel[prop]);
-
-								if (field.isArray) {
-									if (Object.prototype.toString.call($scope.dataModel[prop][0]) == '[object String]') {
-										field.isArrayObject = false;
-									} else if (Object.prototype.toString.call($scope.dataModel[prop][0]) == '[object Object]') {
-										field.isArray = false;
-										field.isArrayObject = true;
-										$scope.list_Item[prop] = {};
-										field.arrayItems = [];
-										for (var arrayProp in $scope.dataModel[prop][0]) {
-											field.arrayItems.push(arrayProp);
-										}
-									}
-								}
+								console.log('Adding Field: ' + JSON.stringify(field));
 								$scope.currentDataModel.push(field);
 							}
 						}
+
+						// for (var prop in $scope.dataModel) {
+						// 	if (ignoreProps.indexOf(prop) == -1) {
+						// 		var field = {
+						// 			name: prop,
+						// 			isEditable: false,
+						// 			buttonText: 'Edit',
+						// 			isString: ($scope.dataModel[prop] === 'String'),
+						// 			isBoolean: ($scope.dataModel[prop] === 'Boolean'),
+						// 			isArray: (Object.prototype.toString.call($scope.dataModel[prop]) == '[object Array]')
+						// 		};
+						// 		// console.log(prop);
+						// 		// console.log($scope.dataModel[prop]);
+
+						// 		if (field.isArray) {
+						// 			if (Object.prototype.toString.call($scope.dataModel[prop][0]) == '[object String]') {
+						// 				field.isArrayObject = false;
+						// 			} else if (Object.prototype.toString.call($scope.dataModel[prop][0]) == '[object Object]') {
+						// 				field.isArray = false;
+						// 				field.isArrayObject = true;
+						// 				$scope.list_Item[prop] = {};
+						// 				field.arrayItems = [];
+						// 				for (var arrayProp in $scope.dataModel[prop][0]) {
+						// 					field.arrayItems.push(arrayProp);
+						// 				}
+						// 			}
+						// 		}
+						// 		console.log('Adding Field: ' + JSON.stringify(field));
+						// 		$scope.currentDataModel.push(field);
+						// 	}
+						// }
 						console.log('$scope.currentDataModel');
 						console.log($scope.currentDataModel);
 

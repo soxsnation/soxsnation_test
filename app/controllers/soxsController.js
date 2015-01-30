@@ -12,7 +12,8 @@ var soxsSchema = mongoose.model('soxsSchema');
 var soxsType = mongoose.model('soxsType');
 var mailer = require('../lib/mailer');
 
-function parse_schema_fieldItems(schema) {
+function parse_schema_fieldItems(schema, cb) {
+	
 	var fields = [];
 
 	for (var i = 0; i < schema.fieldItems.length; ++i) {
@@ -24,8 +25,10 @@ function parse_schema_fieldItems(schema) {
 			}
 		})
 	}
+	console.log("parsed fieldItems:");
+	console.log(fields);
 
-	return fields;
+	cb( fields);
 }
 
 function getSchema(schemaType, cb) {
@@ -45,6 +48,10 @@ function getSchema(schemaType, cb) {
 			if (!ss || ss == null) {
 				cb('Failed to load soxsSchema ' + schemaType, null);
 			}
+
+			parse_schema_fieldItems(ss, function(data) {
+
+			});
 
 			console.log('Got soxsSchema for: ' + schemaType);
 			console.log(ss);
@@ -229,7 +236,7 @@ exports.getType = function(req, res, next) {
 }
 
 exports.getTypes = function(req, res, next) {
-	console.log('exports.getTypes');
+	// console.log('exports.getTypes');
 	soxsType.find({}).exec(function(err, types) {
 		if (err) {
 			return next(err);

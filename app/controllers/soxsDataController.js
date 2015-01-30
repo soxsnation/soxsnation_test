@@ -11,9 +11,70 @@ var Schema = mongoose.Schema;
 var soxsSchema = mongoose.model('soxsSchema');
 var soxsType = mongoose.model('soxsType');
 var mailer = require('../lib/mailer');
+var soxsLog = require('../lib/soxsLog');
+
+function parse_schema_fieldItems(schema, cb) {
+
+	soxsLog.event('parse_schema_fieldItems: ' + schema.name);
+	var fieldItems = JSON.parse(schema.fieldItems);
+	get_types(function(err, types) {
+		var fields = new Object();
+		if (err) {
+			soxsLog.error("ERROR getting types: " + err);
+			cb(null);
+		} else {
+			for (var i = 0; i < fieldItems.length; ++i) {
+				var item_type = "54b9814af5769f302c317aeb";
+				if (fieldItems[i].hasOwnProperty('type_id')) {
+					item_type = fieldItems[i].type_id;
+				}
+				// console.log('Looking for item: ' + JSON.stringify(fieldItems[i]));
+				for (var j = 0; j < types.length; ++j) {
+					// console.log('----Checking type: ' + JSON.stringify(types[j]));
+					if (item_type == types[j]._id) {
+						// console.log('Found: ' + fieldItems[i].name + ' ' + types[j].type);
+						fields[fieldItems[i].name] = types[j].type;
+						break;
+					}
+				}
+			}
+			// console.log("parsed fieldItems:");
+			soxsLog.data(JSON.stringify(fields));
+			cb(fields);
+		}
+	})
+}
+
+function get_type(type_id, cb) {
+	// console.log('get_type: ' + type_id);
+	soxsType.findOne({
+		_id: type_id
+	}).exec(function(err, soxsDataType) {
+		if (err) {
+			return cb(err, null);
+		}
+		if (!soxsDataType) {
+			return cb(Error('Failed to load soxsType: ' + type_id), null);
+		}
+		return cb(null, soxsDataType);
+
+	})
+}
+
+function get_types(cb) {
+	soxsType.find({}).exec(function(err, types) {
+		if (err) {
+			return cb(err, null);
+		}
+		if (!types) {
+			return cb(new Error('Failed to load types: ' + req.params.type), null);
+		}
+		return cb(null, types);
+	});
+}
 
 function getSchema(schemaType, cb) {
-	console.log('getSchema: ' + schemaType);
+	soxsLog.event('getSchema: ' + schemaType);
 	var currentSchemas = mongoose.modelNames();
 	// console.log(currentSchemas);
 	if (currentSchemas.indexOf(schemaType) != -1) {
@@ -30,19 +91,24 @@ function getSchema(schemaType, cb) {
 				cb('Failed to load soxsSchema ' + schemaType, null);
 			}
 
-			console.log('Got soxsSchema for: ' + schemaType);
-			console.log(ss);
+			parse_schema_fieldItems(ss, function(data) {
+				var customSchema = new Schema(data);
+				// var customSchema = new Schema(JSON.parse(ss.fields));
+				cb(null, mongoose.model(schemaType, customSchema));
+			});
+
+			// console.log('Got soxsSchema for2: ' + schemaType);
+			// console.log(ss);
 			// var customSchema = new Schema(eval(ss.fields));
 			// var schemaObj = JSON.parse('{"name":"String", "description":"String", "complete":"Boolean"}');
 			// console.log(schemaObj);
-			var customSchema = new Schema(JSON.parse(ss.fields));
 
-			cb(null, mongoose.model(schemaType, customSchema));
 		})
 	}
 }
 
 exports.archive = function(req, res, next) {
+	soxsLog.event('soxsDataController.archive: ' + req.params.id);
 	soxsSchema.findOne({
 		_id: req.params.id
 	}).exec(function(err, soxsData) {
@@ -63,7 +129,7 @@ exports.archive = function(req, res, next) {
 }
 
 exports.delete = function(req, res, next) {
-	console.log("exports.delete: " + req.params.type)
+	soxsLog.event("exports.delete: " + req.params.type)
 	getSchema(req.params.type, function(err, customModel) {
 		if (err) {
 			res.send(404);
@@ -87,7 +153,7 @@ exports.delete = function(req, res, next) {
 }
 
 exports.get_types = function(req, res, next) {
-	// console.log('soxsController.get_types');
+	soxsLog.event('soxsController.get_types');
 	soxsSchema.find({}).exec(function(err, models) {
 		if (err) {
 			return next(err);
@@ -101,6 +167,7 @@ exports.get_types = function(req, res, next) {
 }
 
 exports.get_type_by_name = function(req, res, next) {
+	soxsLog.event('get_type_by_name: ' + req.params.type);
 	soxsSchema.findOne({
 		name: req.params.type
 	}).exec(function(err, model) {
@@ -119,7 +186,7 @@ exports.get_type_by_name = function(req, res, next) {
 
 exports.insert = function(req, res, next) {
 	// console.log('soxsController.insert');
-	console.log(req.body);
+	soxsLog.data(req.body);
 	getSchema(req.params.type, function(err, customModel) {
 		if (err) {
 			res.send(404);
@@ -139,7 +206,7 @@ exports.insert = function(req, res, next) {
 }
 
 exports.update = function(req, res, next) {
-	console.log('soxsController.update');
+	soxsLog.event('soxsController.update');
 	mailer.sendMail('updating soxs object', 'updating soxs object message', function(messageSent) {
 		getSchema(req.params.type, function(err, customModel) {
 			if (err) {
@@ -170,7 +237,8 @@ exports.update = function(req, res, next) {
 
 
 exports.get = function(req, res, next) {
-	// console.log('soxsController.get');
+	soxsLog.event('soxsController.get: ' + req.params.id);
+	// console.log('soxsController.get: ' + req.params.id);
 	getSchema(req.params.type, function(err, customModel) {
 		if (err) {
 			res.send(404);
@@ -191,7 +259,8 @@ exports.get = function(req, res, next) {
 }
 
 exports.getall = function(req, res, next) {
-	// console.log('soxsController.get');
+	soxsLog.event('soxsController.getall');
+	soxsLog.error('soxsController.getall');
 	getSchema(req.params.type, function(err, customModel) {
 		if (err) {
 			res.send(404);

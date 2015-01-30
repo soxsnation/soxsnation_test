@@ -101,6 +101,7 @@ angular.module('soxsnationApp')
 			}
 
 			function parseDataType(data) {
+				console.log(data);
 				var dataType = {
 					name: data.name,
 					description: data.description,
@@ -277,9 +278,9 @@ angular.module('soxsnationApp')
 				// showModal('insert');
 			}
 
-			$scope.insert_data_type = function() {
+			// $scope.insert_data_type = function() {
 
-			}
+			// }
 
 			$scope.load_data = function() {
 				console.log('load_data');
