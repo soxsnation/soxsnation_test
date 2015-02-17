@@ -34,8 +34,12 @@ angular.module('soxsnationApp')
             // console.log('update_item');
             var temp = '<p>soxsItem: Item Property not found</p>';
             if (item.hasOwnProperty(prop)) {
-            temp = item_template.replace('{{currentItem}}', item[prop]);
-        }
+                if (typeof(item[prop]) == 'object') {
+                    temp = item_template.replace('{{currentItem}}', JSON.stringify(item[prop]));
+                } else {
+                    temp = item_template.replace('{{currentItem}}', item[prop]);
+                }
+            }
 
             element.html(temp).show();
             $compile(element.contents());
