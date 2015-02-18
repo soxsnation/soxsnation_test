@@ -1,6 +1,43 @@
-<h1>DRAG</h1>
+    <style>
+      .thumbnail { height: 280px !important; background-color:#00F; }
+      .btn-droppable { width: 180px; height: 30px; padding-left: 4px; }
+      .btn-draggable { width: 160px; }
+    </style>
 
+<input type='button' data-ng-click='btn_clicked()' value='Check'>
+<br />
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-3 column">
+		<div class='btn btn-info btn-draggable'
+		data-drag='true' 
+		data-jqyoui-options="{{drag_options}}" 
+		data-ng-model='item1' 
+		jqyoui-draggable="{{drag}}" >
+    <p>{{item1.title}}</p>
+</div>
+<div class='btn btn-info btn-draggable'
+		data-drag='true' 
+		data-jqyoui-options="{{drag_options}}" 
+		data-ng-model='item2' 
+		jqyoui-draggable="{{drag}}" >
+    <p>Item 2</p>
+</div>
+		</div>
+		<div class="col-md-9 column">
+		</div>
+	</div>
+</div>
 
-<div ng-draggable='dragOptions' style='position: absolute;width:50px;height:50px;background-color:red;'>
-<p>TEXT</p>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<div class='thumbnail' data-drop="true" jqyoui-droppable="{multiple:true}"  data-jqyoui-options="optionsList1" data-ng-model='list1'>
+    <div class="caption">
+        <div class='btn btn-info btn-draggable' data-ng-repeat="item in list1" data-ng-show="item.title" data-drag="{{item.drag}}" data-jqyoui-options="{revert: 'invalid'}" data-ng-model="list1" jqyoui-draggable="{index: {{$index}},animate:true}">{{item.title}}</div>
+    </div>
 </div>

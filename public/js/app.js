@@ -9,7 +9,8 @@
 var soxsnationApp = angular.module('soxsnationApp', [
 	'ngRoute',
 	'soxsServices',
-	'angularCharts'
+	'angularCharts',
+	'ngDragDrop'
 ]);
 
 soxsnationApp.config(['$routeProvider',
@@ -111,14 +112,14 @@ $rootScope.$on('event:auth-loginRequired', function() {
   guest: 'guest'
 })
 
-.directive('ngDraggable', function($document) {
-  return {
-    restrict: 'A',
-    scope: {
-      dragOptions: '=ngDraggable'
-    },
-    link: function(scope, elem, attr) {
-        $(elem).draggable(scope.dragOptions);
-    }
-  }
-})
+// .directive('ngDraggable', function($document) {
+//   return {
+//     restrict: 'A',
+//     scope: {
+//       dragOptions: '=ngDraggable'
+//     },
+//     link: function(scope, elem, attr) {
+//         $(elem).draggable(scope.dragOptions);
+//     }
+//   }
+// })
