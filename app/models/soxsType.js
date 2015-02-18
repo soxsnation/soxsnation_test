@@ -26,6 +26,11 @@ var soxsType = new Schema({
 		default: '',
 		trim: true
 	},
+	model: {
+		type: String,
+		default: '',
+		trim: true
+	},
 	display_view: {
 		type: String,
 		default: '0',
