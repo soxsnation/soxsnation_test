@@ -19,6 +19,10 @@ soxsnationApp.config(['$routeProvider',
 			controller: 'GraphController',
 			templateUrl: '../partials/graph.html'
 		}).
+		when('/drag', {
+			controller: 'DragController',
+			templateUrl: '../partials/drag.html'
+		}).
 		when('/Home', {
 			controller: 'SoxsController',
 			templateUrl: '../partials/home.html'
@@ -105,4 +109,16 @@ $rootScope.$on('event:auth-loginRequired', function() {
   admin: 'admin',
   editor: 'editor',
   guest: 'guest'
+})
+
+.directive('ngDraggable', function($document) {
+  return {
+    restrict: 'A',
+    scope: {
+      dragOptions: '=ngDraggable'
+    },
+    link: function(scope, elem, attr) {
+        $(elem).draggable(scope.dragOptions);
+    }
+  }
 })

@@ -169,6 +169,14 @@ angular.module('soxsnationApp')
 											}
 										}
 
+										var dragModel = {
+											name: 'drag',
+											description: 'drag',
+												permissionIndex: 2,
+												fields: []
+										}
+										$scope.data_models.push(dragModel);
+
 										configMenuItems();
 										configAdminMenuItems();
 									}, function(err) {
