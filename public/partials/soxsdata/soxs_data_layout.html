@@ -1,0 +1,19 @@
+<h1>{{page}}</h1>
+
+<input type='button' data-ng-click='btn_clicked()' value='Item 1'>
+<br />
+<input type='button' data-ng-click='btn_clicked2()' value='Item 2'><br />
+<br /><br />
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-3 column">
+		<div class="shape" ng-draggable='dragOptions'>Item 1</div><br />
+		<div class="shape" ng-draggable='dragOptions'>Item 2</div><br />
+		<div class="shape" ng-draggable='dragOptions'>Item 3</div>
+		</div>
+		<div class="col-md-9 column">
+		<div class="shape2" ng-droppable='dropObject'>Holder 1</div><br />
+		<div class="shape2" ng-droppable='dropObject2'>Holder 2</div>
+		</div>
+	</div>
+</div>
