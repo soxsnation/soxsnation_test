@@ -19,6 +19,42 @@
    background-color: black;
 }
 
+.layout_item_list {
+    /*position: absolute;*/
+    display: block;
+    background-color: white;
+    z-index: 0;
+}
+
+.layout_item {
+    /*position: absolute;*/
+    display: inline-block;
+    width : 120px;
+    height: 25px;
+    background-color: white;
+    z-index: 1;
+}
+
+.creation_area {
+    display: block;
+    min-width : 240px;
+    min-height: 240px;
+    background-color: red;
+    z-index: 0;
+}
+
+.layout_paragraph {
+
+}
+
+.layout_button {
+width: 160px;
+}
+
+.layout_grid {
+    
+}
+
 .shape {
     position: absolute;
     display: inline-block;

@@ -431,8 +431,8 @@
 			"file": "public/js/Controllers/soxs_data_ctrl.js",
 			"settings":
 			{
-				"buffer_size": 8582,
-				"line_ending": "Unix"
+				"buffer_size": 9392,
+				"line_ending": "Windows"
 			}
 		}
 	],
@@ -491,19 +491,6 @@
 		"side_bar_visible": false,
 		"status_bar_visible": false
 	},
-	"expanded_folders":
-	[
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation/app/models",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation/public",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation/public/js",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation/public/js/Controllers",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation/public/partials",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation/public/partials/directives/soxsData",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation/public/partials/soxsdata",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation/public/partials/soxsItems",
-		"/C/Users/abrown/scratch/Software/Andrew/soxsnation/public/partials/soxsItems/directives"
-	],
 	"file_history":
 	[
 		"/C/Users/abrown/scratch/Software/Astroid/build/dosimetry_testing-x64-vs11/s1_3_calc_request.json",
@@ -964,15 +951,15 @@
 					"semi_transient": true,
 					"settings":
 					{
-						"buffer_size": 8582,
+						"buffer_size": 9392,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1047,
-								1047
+								0,
+								0
 							]
 						],
 						"settings":
@@ -980,7 +967,7 @@
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
-						"translation.x": -0.0,
+						"translation.x": 0.0,
 						"translation.y": 630.0,
 						"zoom_level": 1.0
 					},

@@ -6,36 +6,49 @@
  */
 
 angular.module('soxsnationApp')
-	.controller('SoxsDataLayoutController', ['$scope', '$location', 'soxsAuth', 'soxsItemFactory',
-		function($scope, $location, soxsAuth, soxsItemFactory) {
+	.controller('SoxsDataLayoutController', ['$scope', '$location', 'soxsAuth', 'soxsItemFactory', 'Drag_Factory',
+		function($scope, $location, soxsAuth, soxsItemFactory, Drag_Factory) {
 
 			$scope.page = 'Soxs Data Layout';
 
+			$scope.layout_objs = Drag_Factory.layout_elements;
+
 			$scope.dragOptions = {
-                containment: $("#container")
+				name: 'obj1'
+					// containment: $("#container")
+					// ,drag: function( event, ui ) {
+					// 	console.log('Drag: ' JSON.stringify(sscope.dragOptions));
+					// }
 
-            };
+			};
 
-            $scope.dropObject = {
-                title: 'do1'
-                
-            };
+			$scope.layout_text = 'this is the layout';
 
-            $scope.dropObject2 = {
-                title: 'do2'
-                
-            };
+			var update_layout = function(layout) {
+				$scope.created_layout = layout;
+				console.log('Drag_Factory.layout: ' + JSON.stringify(layout));
+				$scope.layout_text = JSON.stringify($scope.created_layout);
+			};
 
-            $scope.btn_clicked = function() {
-                console.log(JSON.stringify($scope.dropObject));
-            }
+			Drag_Factory.registerObserverCallback(update_layout);
+			// service now in control of updating foo
 
-            $scope.btn_clicked2 = function() {
-                console.log(JSON.stringify($scope.dropObject2));
-            }
+
+			$scope.dropObject = {
+				title: 'do1'
+
+			};
+
+			$scope.btn_clicked = function() {
+				console.log(JSON.stringify($scope.dropObject));
+			}
+
+			$scope.btn_clicked2 = function() {
+				// console.log(JSON.stringify($scope.created_layout));
+			}
 
 		}
-		])
+	])
 
 
 angular.module('soxsnationApp')
@@ -228,7 +241,7 @@ angular.module('soxsnationApp')
 				// $scope.currentDataModel = parseDataType(saveModel);
 				// console.log($scope.currentDataModel);
 
-				
+
 
 				soxsAuth.http_post(url, dm)
 					.then(function(data) {
