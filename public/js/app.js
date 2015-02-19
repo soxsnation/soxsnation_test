@@ -68,6 +68,10 @@ soxsnationApp.config(['$routeProvider',
 			controller: 'SoxsDataController',
 			templateUrl: '../partials/soxsdata/soxsdata.html'
 		}).
+		when('/SoxsDataLayout', {
+			controller: 'SoxsDataLayoutController',
+			templateUrl: '../partials/soxsdata/soxs_data_layout.html'
+		}).
 		when('/SoxsTypes', {
 			controller: 'SoxsTypeController',
 			templateUrl: '../partials/soxsdata/soxstype.html'
@@ -111,15 +115,3 @@ $rootScope.$on('event:auth-loginRequired', function() {
   editor: 'editor',
   guest: 'guest'
 })
-
-// .directive('ngDraggable', function($document) {
-//   return {
-//     restrict: 'A',
-//     scope: {
-//       dragOptions: '=ngDraggable'
-//     },
-//     link: function(scope, elem, attr) {
-//         $(elem).draggable(scope.dragOptions);
-//     }
-//   }
-// })

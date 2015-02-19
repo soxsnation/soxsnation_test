@@ -1,43 +1,71 @@
-    <style>
-      .thumbnail { height: 280px !important; background-color:#00F; }
-      .btn-droppable { width: 180px; height: 30px; padding-left: 4px; }
-      .btn-draggable { width: 160px; }
-    </style>
 
-<input type='button' data-ng-click='btn_clicked()' value='Check'>
+
+<div id="container">
+        <div class="shape" ng-draggable='dragOptions'></div>
+        <br /><br /><br />
+        <div class="shape2" ng-droppable='test'></div>
+
+    </div>
+
+<!-- <input type='button' data-ng-click='btn_clicked()' value='Check'>
+
 <br />
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-3 column">
+            <div class='btn btn-info btn-draggable' data-drag='true' data-jqyoui-options="{{drag_options}}" data-ng-model='item1' jqyoui-draggable="{{drag}}">
+                <p>{{item1.title}}</p>
+            </div>
+            <div class='btn btn-info btn-draggable' data-drag='true' data-jqyoui-options="{{drag_options}}" data-ng-model='item2' jqyoui-draggable="{{drag}}">
+                <p>{{item2.title}}</p>
+            </div>
+        </div>
+        <div class="col-md-9 column">
+            <div class='thumbnail' data-drop="true" jqyoui-droppable="{multiple:true}" data-jqyoui-options="optionsList1" data-ng-model='list1'>
+                <div class="caption">
+                    <div class='btn btn-info btn-draggable' data-ng-repeat="item in list1" data-ng-show="item.title" data-drag="{{item.drag}}" data-jqyoui-options="{revert: 'invalid'}" data-ng-model="list1" jqyoui-draggable="{index: {{$index}},animate:true}">{{item.title}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<br />
+<br />
+<br />
+<br />
+
+<div class='demo ui-sortable'>
 <div class="container">
 	<div class="row clearfix">
 		<div class="col-md-3 column">
-		<div class='btn btn-info btn-draggable'
-		data-drag='true' 
-		data-jqyoui-options="{{drag_options}}" 
-		data-ng-model='item1' 
-		jqyoui-draggable="{{drag}}" >
-    <p>{{item1.title}}</p>
-</div>
-<div class='btn btn-info btn-draggable'
-		data-drag='true' 
-		data-jqyoui-options="{{drag_options}}" 
-		data-ng-model='item2' 
-		jqyoui-draggable="{{drag}}" >
-    <p>Item 2</p>
-</div>
+		asdf
 		</div>
 		<div class="col-md-9 column">
+		asdf
 		</div>
 	</div>
 </div>
+</div> 
+<script>
+  $(function() {
+    $( "#draggable" ).draggable();
+    $( "#droppable" ).droppable({
+      drop: function( event, ui ) {
+        $( this )
+          .addClass( "ui-state-highlight" )
+          .find( "p" )
+            .html( "Dropped!" );
+      }
+    });
+  });
+  </script>
 
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-
-<div class='thumbnail' data-drop="true" jqyoui-droppable="{multiple:true}"  data-jqyoui-options="optionsList1" data-ng-model='list1'>
-    <div class="caption">
-        <div class='btn btn-info btn-draggable' data-ng-repeat="item in list1" data-ng-show="item.title" data-drag="{{item.drag}}" data-jqyoui-options="{revert: 'invalid'}" data-ng-model="list1" jqyoui-draggable="{index: {{$index}},animate:true}">{{item.title}}</div>
-    </div>
+<div id="draggable" class="ui-widget-content">
+  <p>Drag me to my target</p>
 </div>
+ 
+<div id="droppable" class="ui-widget-header">
+  <p>Drop here</p>
+</div> -->

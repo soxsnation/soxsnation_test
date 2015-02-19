@@ -6,72 +6,69 @@
  */
 
 angular.module('soxsnationApp')
-	.controller('DragController', ['$scope', '$location', 'soxsFactory',
-		function($scope, $location, soxsFactory) {
+    .controller('DragController', ['$scope', '$location', 'soxsFactory',
+        function($scope, $location, soxsFactory) {
 
-			$scope.list1 = [];
-			$scope.list5 = [{
-				'title': 'Item 1',
-				'drag': true
-			}, {
-				'title': 'Item 2',
-				'drag': true
-			}, {
-				'title': 'Item 3',
-				'drag': true
-			}, {
-				'title': 'Item 4',
-				'drag': true
-			}, {
-				'title': 'Item 5',
-				'drag': true
-			}, {
-				'title': 'Item 6',
-				'drag': true
-			}, {
-				'title': 'Item 7',
-				'drag': true
-			}, {
-				'title': 'Item 8',
-				'drag': true
-			}];
+            $scope.dragOptions = {
+                containment: $("#container")
 
-			$scope.item1 = {
-				'title': 'Item 1',
-				'drag': true
-			}
+            };
 
-			$scope.item2 = {
-				'title': 'Item 2',
-				'drag': true
-			}
+            $scope.dropObject = {
+                title: 'do1'
+                
+            };
 
-			$scope.drag_options = {
-				revert: 'invalid'
-			}
+            $scope.dropObject2 = {
+                title: 'do2'
+                
+            };
 
-			$scope.drag = {
-				placeholder: true,
-				animate: true,
-				deepCopy: true
-			}
+            $scope.list1 = [];
+            $scope.list5 = [{
+                'title': 'Item 1',
+                'drag': true
+            }];
+
+            $scope.item1 = {
+                'title': 'Item 1',
+                'drag': true
+            }
+
+            $scope.item2 = {
+                'title': 'Item 2',
+                'drag': true
+            }
+
+            $scope.drag_options = {
+                revert: 'invalid',
+                helper: 'clone'
+            }
+
+            $scope.drag = {
+                placeholder: true,
+                animate: true,
+                deepCopy: true,
+                placeholder: 'keep'
+            }
 
 
-			$scope.optionsList1 = {
-				accept: function(dragEl) {
-					console.log('$scope.optionsList1 ');
-					if ($scope.list1.length >= 2) {
-						return false;
-					} else {
-						return true;
-					}
-				}
-			}
+            $scope.optionsList1 = {
+                accept: function(dragEl) {
+                    console.log('$scope.optionsList1 ');
+                    if ($scope.list1.length >= 20) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                helper: 'clone'
+            }
 
-			$scope.btn_clicked = function() {
-				console.log(JSON.stringify($scope.item1));
-				console.log($scope.list1);
-			}
+            $scope.btn_clicked = function() {
+                console.log(JSON.stringify($scope.item1));
+                console.log($scope.list1);
+            }
 
-		}
-	]);
+        }
+    ]);

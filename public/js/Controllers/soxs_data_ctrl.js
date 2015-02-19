@@ -5,6 +5,38 @@
  *
  */
 
+angular.module('soxsnationApp')
+	.controller('SoxsDataLayoutController', ['$scope', '$location', 'soxsAuth', 'soxsItemFactory',
+		function($scope, $location, soxsAuth, soxsItemFactory) {
+
+			$scope.page = 'Soxs Data Layout';
+
+			$scope.dragOptions = {
+                containment: $("#container")
+
+            };
+
+            $scope.dropObject = {
+                title: 'do1'
+                
+            };
+
+            $scope.dropObject2 = {
+                title: 'do2'
+                
+            };
+
+            $scope.btn_clicked = function() {
+                console.log(JSON.stringify($scope.dropObject));
+            }
+
+            $scope.btn_clicked2 = function() {
+                console.log(JSON.stringify($scope.dropObject2));
+            }
+
+		}
+		])
+
 
 angular.module('soxsnationApp')
 	.controller('SoxsDataController', ['$scope', '$location', 'soxsAuth', 'soxsItemFactory',
@@ -286,6 +318,9 @@ angular.module('soxsnationApp')
 
 			$scope.insert_data_model = function() {
 				console.log('insert_data_model');
+
+				$location.path('/SoxsDataLayout');
+
 				$scope.currentDataModel = {};
 				$scope.modalSubmitText = 'Create New Data Model';
 				$scope.currentDataModel.fieldItems = [];
