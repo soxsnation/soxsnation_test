@@ -10,7 +10,8 @@ var soxsnationApp = angular.module('soxsnationApp', [
 	'ngRoute',
 	'soxsServices',
 	'angularCharts',
-	'ngDragDrop'
+	'ngDragDrop',
+	'layoutCreater'
 ]);
 
 soxsnationApp.config(['$routeProvider',

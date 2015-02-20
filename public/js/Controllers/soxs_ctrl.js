@@ -30,6 +30,10 @@ angular.module('soxsnationApp')
 
 				$scope.names = soxsFactory.users;
 
+
+				$scope.elements = 'elements';
+
+
 			}, function(error) {
 				$location.path('/Login');
 			});

@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-2 column">
+            <div class="layout_item_list" 
+            		data-ng-mouseup="layout_dropped(layout_obj)" 
+            		data-ng-repeat="layout_element in layout_elements">
+            		{{layout_element.schema}}
+            </div>
+        </div>
+        <div class="col-md-10 column grid_area ui-widget-header ui-droppable" ng-droppable="dropObject2">
+
+        </div>
+    </div>
+</div>
