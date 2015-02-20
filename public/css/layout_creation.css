@@ -43,6 +43,18 @@
     z-index: 0;
 }
 
+.grid_area {
+	height:200px;
+	display:block;
+	background-color:blue;
+}
+
+.grid_area2 {
+	height:200px;
+	display:block;
+	background-color:green;
+}
+
 .layout_paragraph {
 
 }
