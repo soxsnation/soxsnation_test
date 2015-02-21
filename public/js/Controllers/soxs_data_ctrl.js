@@ -367,7 +367,7 @@ angular.module('soxsnationApp')
             }
 
 
-            function initData() {
+            function initData(){
                 console.log('initData');
                 soxsAuth.http_get('api/soxs/types')
                     .then(function(data) {
