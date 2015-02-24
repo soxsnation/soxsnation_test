@@ -1,0 +1,46 @@
+[{
+        "name": "Grid",
+        "id": "draggable",
+        "class": "layout_grid",
+        "text": "This is a grid",
+        "schema": "<div class='container'><div class='row clearfix'><div class='col-md-4 column'>Left Side</div><div class='col-md-8 column'>Right Side</div></div></div>",
+        "options": {
+
+        }
+    }, {
+        "name": "Paragraph",
+        "id": "draggable",
+        "class": "layout_paragraph",
+        "text": "This is a paragraph",
+        "schema": "<p>This is a paragraph</p>",
+        "options": {
+
+        }
+    }, {
+        "name": "Button",
+        "id": "draggable2",
+        "class": "btn btn-info layout_button",
+        "text": "This is a button",
+        "schema": "<input type='button' value='CLICK' class='container_item'>",
+        "options": {
+            "title": "Button"
+        }
+    }, {
+        "name": "Single Column",
+        "id": "grid",
+        "class": "layout_grid",
+        "text": "This is a button",
+        "schema": "<div class='col-md-8 column grid_area2 ui-widget-header ui-droppable' ng-droppable='dropObject2'>[OPTIONS]</div>",
+        "options": {
+            "title": "Single Column",
+            "children": true
+        }
+    }, {
+        "name": "Line Break",
+        "id": "linebreak",
+        "class": "draggable2",
+        "schema": "<div><br /></div>",
+        "options": {
+            "title": "Line Break"
+        }
+    }]

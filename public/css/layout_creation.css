@@ -43,6 +43,10 @@
     z-index: 0;
 }
 
+.container_item {
+	display: block;
+}
+
 .grid_area {
 	height:500px;
 	display:block;
@@ -52,13 +56,21 @@
     z-index: 0;
 }
 
+.grid_area:hover {
+	/*background-color: #33CCFF;*/
+}
+
 .grid_area2 {
     height:100px;
     display:block;
     background-color:green;
     color: white;
     padding: 10px;
-    z-index: 5;
+    z-index: 0;
+}
+
+.grid_area2:hover {
+	/*background-color: #66FF66;*/
 }
 
 /*.grid_area2 {

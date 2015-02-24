@@ -17,73 +17,26 @@ angular.module('layoutCreater', []);
  * Main directive
  */
 
+// angular.module('layoutCreater').directive('snLayoutElements', function($http) {
+//     return {
+//         restrict: 'EA',
+//         templateUrl: '/directives/layoutCreater/templates/main.html'
+//     };
+// })
 
-angular.module('layoutCreater').directive('snLayout', function($templateCache, $compile, $rootElement, $window, $timeout, $sce) {
+angular.module('layoutCreater').directive('snLayout', function($http, $compile, $rootElement, $window, $timeout, $sce) {
 
-    var layout_elements = [{
-        name: 'Grid',
-        id: 'draggable',
-        class: 'layout_grid',
-        text: 'This is a grid',
-        schema: '<div class="container"><div class="row clearfix"><div class="col-md-4 column">Left Side</div><div class="col-md-8 column">Right Side</div></div></div>',
-        options: {
-
-        }
-    }, {
-        name: 'Paragraph',
-        id: 'draggable',
-        class: 'layout_paragraph',
-        text: 'This is a paragraph',
-        schema: '<p>This is a paragraph</p>',
-        options: {
-
-        }
-    }, {
-        name: 'Button',
-        id: 'draggable2',
-        class: 'btn btn-info layout_button',
-        text: 'This is a button',
-        schema: '<input type="button" value="CLICK">',
-        options: {
-            'title': 'Button'
-        }
-    }, {
-        name: 'Single Column',
-        id: 'grid',
-        class: 'layout_grid',
-        text: 'This is a button',
-        schema: '<div class="col-md-8 column grid_area2 ui-widget-header ui-droppable" ng-droppable="dropObject2"><div id="drop_div"></div></div>',
-        options: {
-            'title': 'Single Column'
-        }
-    }, {
-        name: 'Single Column2',
-        id: 'grid',
-        class: 'layout_grid',
-        text: 'This is a button',
-        schema: '<div class="col-md-8 column grid_area2"></div>',
-        options: {
-            'title': 'Single Column2'
-        }
-    }, {
-        name: 'Line Break',
-        id: 'linebreak',
-        class: 'draggable2',
-        schema: '<div><br /></div>',
-        options: {
-            'title': 'Line Break'
-        }
-    }]
+    var layout_elements = [];
 
     var panel_all = '<div class="container"><div class="rowclearfix"><div class="col-md-2 column"><div class="layout_item_list" data-ng-mouseup="layout_dropped(layout_obj)" data-ng-repeat="layout_element in layout_elements">{{layout_element.name}}</div><p>Left Panel</p></div><divclass="col-md-10 column grid_area ui-widget-header ui-droppable" ng-droppable="dropObject2">Right Panel</div></div></div>';
-    var panel = '<div class="container"><div class="row clearfix">[LEFT][RIGHT]</div></div>'
+    var panel = '<div style="display:block;"><input type="button" data-ng-click="debug()" value="debug" ></div><div class="container"><div class="row clearfix">[LEFT][RIGHT]</div></div>'
     var panel_left = '<div class="col-md-2 column">LEFT DIV<div class="layout_item_list" data-ng-mouseup="layout_dropped(layout_obj)" data-ng-repeat="layout_element in layout_elements"><div class="layout_item" ng-draggable="dragOptions">{{layout_element.name}}</div></div></div>';
-    var panel_right = '<div class="col-md-10 column grid_area ui-widget-header ui-droppable" ng-droppable="dropObject2"><div id="drop_div" uid="GEN_UID"></div></div>';
+    var panel_right = '<div class="col-md-10 column grid_area ui-widget-header ui-droppable" ng-droppable="dropObject2"><div id="drop_div" uid="GEN_UID">[CHILDREN]</div></div>';
 
     var layout_schema = {
         root: {
             id: '',
-            layout_type: 'ROOT',
+            name: 'ROOT',
             children: []
         }
 
@@ -101,13 +54,37 @@ angular.module('layoutCreater').directive('snLayout', function($templateCache, $
 
     function get_layout_item(uid, schema) {
         if (schema.root.uid === uid) {
-            return layout_type;
+            return name;
         } else {
             for (var i = 0; i < schema.children.length; ++i) {
-                return layout_type + '.';
+                return name + '.';
             }
         }
     }
+
+    function generate_item_schema(schema_name, item_uid) {
+        var new_html = '';
+        for (var i = 0; i < layout_elements.length; ++i) {
+            if (layout_elements[i].name == schema_name) {
+                new_html = layout_elements[i].schema;
+                if (layout_elements[i].options.hasOwnProperty('children')) {
+                    if (layout_elements[i].options.children) {
+                        new_html = new_html.replace('[OPTIONS]', '<div id="drop_div" uid="' + item_uid + '"></div>');
+                    } else {
+                        new_html = new_html.replace('[OPTIONS]', '');
+                    }
+                } else {
+                    new_html = new_html.replace('[OPTIONS]', '');
+                }
+                break;
+            }
+        }
+        return new_html;
+    }
+
+
+
+
 
     /**
      * Main link function
@@ -120,43 +97,121 @@ angular.module('layoutCreater').directive('snLayout', function($templateCache, $
 
         init();
 
-        scope.updateLayout = function(layout, container_item) {
+        function construct_item_layout(item_schema) {
+            var new_html = '';
+            // console.log('item_schema');
+            // console.log(item_schema);
+            for (var i = 0; i < layout_elements.length; ++i) {
+                if (layout_elements[i].name == item_schema.name) {
+                    new_html = layout_elements[i].schema;
+                    if (layout_elements[i].options.hasOwnProperty('children')) {
+                        if (layout_elements[i].options.children) {
+                            new_html = new_html.replace('[OPTIONS]', '<div id="drop_div" uid="' + item_schema.id + '">[CHILDREN]</div>');
+                            // console.log('New HTML Constructed:');
+                            // console.log(new_html);
+                            for (var i = 0; i < item_schema.children.length; ++i) {
+                                new_html = add_child_layout(new_html, construct_item_layout(item_schema.children[i]));
+                            }
+                        } else {
+                            new_html = new_html.replace('[OPTIONS]', '<div id="drop_div" uid="' + item_schema.id + '"></div>');
+                        }
+                    } else {
+                        new_html = new_html.replace('[OPTIONS]', '<div id="drop_div" uid="' + item_schema.id + '"></div>');
+                    }
+                    break;
+                }
+            }
+            new_html = new_html.replace('[CHILDREN]', '');
+            // console.log('Child HTML');
+            // console.log(new_html)
+            return new_html;
+        }
+
+        function add_child_layout(html, child_html) {
+            child_html = child_html.replace('[CHILDREN]', '');
+            return html.replace('[CHILDREN]', child_html + '[CHILDREN]');
+        }
+
+        function construct_generated_layout() {
+            var display_panel = panel_right.replace('GEN_UID', layout_schema.root.id);
+
+            for (var i = 0; i < layout_schema.root.children.length; ++i) {
+                display_panel = add_child_layout(display_panel, construct_item_layout(layout_schema.root.children[i]))
+            }
+
+            // console.log('display_panel');
+            // console.log(display_panel);
+            element.html(display_panel);
+            $compile(element.contents())(scope);
+        }
+
+        scope.updateLayout = function(layout, item_uid) {
             scope.layout_elements = layout_elements;
-            console.log(get_uid());
             console.log('Update layout: ' + layout);
-            console.log(container_item.html());
+            console.log(layout);
+            // console.log(container_item.html());
+
+            // var start = container_item.html().indexOf("uid=") + 5;
+            // var item_uid = container_item.html().substring(start, start + 36);
+            // console.log('UID:' + item_uid);
 
             var item = {
                 id: get_uid(),
-                layout_type: layout,
+                name: layout,
                 children: []
             };
 
-            layout_schema.root.children.push(item);
-            console.log(JSON.stringify(layout_schema));
-
-            var new_html = container_item.html();
-            for (var i = 0; i < layout_elements.length; ++i) {
-                if (layout_elements[i].name == layout) {
-                    new_html = new_html.replace('<div id="drop_div" uid="' + layout_schema.root.id + '"></div>', layout_elements[i].schema + '<div id="drop_div"></div>');
+            if (item_uid == layout_schema.root.id) {
+                layout_schema.root.children.push(item);
+            } else {
+                for (var i = 0; i < layout_schema.root.children.length; ++i) {
+                    console.log()
+                    if (item_uid == layout_schema.root.children[i].id) {
+                        layout_schema.root.children[i].children.push(item);
+                    }
                 }
             }
 
-            // console.log(element.html());
-            // var new_html = element.html().replace(container_item, layout);
-            // console.log('new_html');
-            // console.log(new_html);
-            container_item.html(new_html);
-            $compile(container_item.contents())(scope);
+            console.log('Current Layout Schema')
+            console.log(JSON.stringify(layout_schema));
 
-            // console.log(element.html());
+            construct_generated_layout();
+
+            // var new_html = container_item.html();
+            // var item_html = generate_item_schema(layout, item.id);
+            // console.log('item_html');
+            // console.log(item_html);
+            // new_html = new_html.replace('<div id="drop_div" uid="' + item_uid + '"></div>', '<div id="drop_div" uid="' + item_uid + '">' + item_html + '</div>');
+
+
+            // // console.log(element.html());
+            // // var new_html = element.html().replace(container_item, layout);
+            // // console.log('new_html');
+            // // console.log(new_html);
+            // container_item.html(new_html);
+            // $compile(container_item.contents())(scope);
+
+            // // console.log(element.html());
 
         }
 
         function init() {
-            scope.layout_elements = layout_elements;
 
-            create_elements_panel();
+            $http.get('/directives/layoutCreater/templates/layout_elements.json').
+            success(function(data, status, headers, config) {
+                layout_elements = data;
+                console.log('layout_elements');
+                console.log(layout_elements);
+                scope.layout_elements = layout_elements;
+
+                create_elements_panel();
+            }).
+            error(function(data, status, headers, config) {
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
+            });
+
+
         }
 
         function create_elements_panel() {
@@ -164,10 +219,11 @@ angular.module('layoutCreater').directive('snLayout', function($templateCache, $
             // var container = '<p>This is a paragraph</p>';
             var uid = get_uid();
             layout_schema.root.id = uid;
-            var display_panel = panel.replace('[LEFT]', panel_left).replace('[RIGHT]', panel_right).replace('GEN_UID', uid);
-            console.log('display_panel: ' + display_panel)
-            element.html(display_panel);
-            $compile(element.contents())(scope);
+            // var display_panel = panel.replace('[LEFT]', panel_left).replace('[RIGHT]', panel_right).replace('GEN_UID', uid);
+            // console.log('display_panel: ' + display_panel)
+            // element.html(display_panel);
+            // $compile(element.contents())(scope);
+            construct_generated_layout();
         }
     }
 
@@ -176,6 +232,7 @@ angular.module('layoutCreater').directive('snLayout', function($templateCache, $
 
 
     return {
+        require: '^snLayout',
         restrict: 'EA',
         link: link,
         transclude: 'true',
@@ -187,11 +244,40 @@ angular.module('layoutCreater').directive('snLayout', function($templateCache, $
         controller: function($scope) {
 
             $scope.dropped = true;
+            $scope.hover_items = [];
+
+            $scope.debug = function() {
+                console.log('DEBUG');
+            }
 
             this.item_dropped = function(dropped_item, container_item) {
-                console.log('Communication works');
-                $scope.updateLayout(dropped_item, container_item);
+                // $scope.updateLayout(dropped_item, container_item);
+                $scope.updateLayout(dropped_item, $scope.hover_items.pop());
+                $scope.hover_items = [];
                 // $scope.dropped = false;
+            }
+
+            function get_items_uid(item) {
+                var start = item.indexOf("uid=") + 5;
+                var item_uid = item.substring(start, start + 36);
+                return item_uid;
+            }
+
+            this.container_over = function(item) {
+                // console.log(item);
+                // var start = item.indexOf("uid=") + 5;
+                // var item_uid = item.substring(start, start + 36);
+                // console.log(item_uid);
+
+                // $scope.hover_items.push(item_uid);
+                $scope.hover_items.push(get_items_uid(item));
+                console.log($scope.hover_items);
+            }
+
+            this.container_out = function(item) {
+                $scope.hover_items.pop();
+                console.log($scope.hover_items);
+
             }
 
             this.accept_drop = function(container_item) {
@@ -200,10 +286,67 @@ angular.module('layoutCreater').directive('snLayout', function($templateCache, $
         }
     }
 
-}).directive('ngDraggable', function($document) {
+}).directive('ngDroppable', function($document) {
     return {
         require: '^snLayout',
-        restrict: 'A',
+        restrict: 'EA',
+        // transclude: true,
+        scope: {
+            dropOptions: '=ngDroppable'
+        },
+        link: function(scope, elem, attr, layoutCtrl) {
+            $(elem).droppable({
+                helper: 'clone',
+                drop: function(event, ui) {
+                    layoutCtrl.item_dropped($(ui.draggable).html(), elem);
+                    // console.log('ngDroppable::DROPPED: ' + JSON.stringify(scope.dropOptions));
+                    // console.log(elem.html());
+
+                    // $compile($(this).html(schema));
+                    // var schema = '<p>Item Dropped: ' + $(ui.draggable).html() + '</p>';
+
+                },
+                over: function(event, ui) {
+                    // console.log('ngDroppable::over: ' + $(ui.draggable).html());
+                    console.log('ngDroppable::over: ' + elem.html());
+                    // console.log('ngDroppable::over: ' + $(this).html());
+                    layoutCtrl.container_over(elem.html());
+                },
+                out: function(event, ui) {
+                    // console.log('ngDroppable::out: ' + $(ui.draggable).html());
+                    // Drag_Factory.valid_drop = false;
+                    layoutCtrl.container_out(elem.html());
+
+                },
+                // accept: '#grid'
+                accept: function(dragEl) {
+                    // console.log('Accept Drop: ' + layoutCtrl.accept_drop());
+                    // console.log($(this).html());
+                    return layoutCtrl.accept_drop();
+
+                }
+            });
+        }
+    }
+})
+
+angular.module('layoutCreater').directive('snLayouts', function($http) {
+    return {
+        templateUrl: '/directives/layoutCreater/templates/main.html',
+        controller: function($scope) {
+            $http.get('/directives/layoutCreater/templates/layout_elements.json').
+            success(function(data, status, headers, config) {
+                $scope.layout_elements = data;
+                console.log('layout_elements');
+                console.log($scope.layout_elements);
+            }).
+            error(function(data, status, headers, config) {});
+        }
+    };
+}).directive('ngDraggable', function($document) {
+    return {
+        require: '^snLayouts',
+        restrict: 'EA',
         scope: {
             dragOptions: '=ngDraggable'
         },
@@ -221,56 +364,4 @@ angular.module('layoutCreater').directive('snLayout', function($templateCache, $
             });
         }
     }
-}).directive('ngDroppable', ['$compile', function($compile) {
-    return {
-        require: '^snLayout',
-        restrict: 'A',
-        // transclude: true,
-        scope: {
-            dropOptions: '=ngDroppable'
-        },
-        link: function(scope, elem, attr, layoutCtrl) {
-            $(elem).droppable({
-                helper: 'clone',
-                drop: function(event, ui) {
-                    layoutCtrl.item_dropped($(ui.draggable).html(), $(this));
-                    // console.log('ngDroppable::DROPPED: ' + JSON.stringify(scope.dropOptions));
-                    console.log(elem.html());
-
-                    // $compile($(this).html(schema));
-                    // var schema = '<p>Item Dropped: ' + $(ui.draggable).html() + '</p>';
-                    // $(this).html(schema);
-                    // $compile($(this))(scope);
-
-                },
-                over: function(event, ui) {
-                    console.log('ngDroppable::over: ' + $(ui.draggable).html());
-                    console.log('ngDroppable::over: ' + elem.html());
-                    // Drag_Factory.valid_drop = true;
-                },
-                out: function(event, ui) {
-                    // console.log('ngDroppable::out: ' + $(ui.draggable).html());
-                    // Drag_Factory.valid_drop = false;
-                },
-                // accept: '#grid'
-                accept: function(dragEl) {
-                    // console.log('ngDroppable::ACCEPT: ' + JSON.stringify(scope.dropOptions));
-                    // console.log('ngDroppable::ACCEPT: ' + JSON.stringify(scope.dropOptions));
-
-                    // if (scope.dropOptions.itemCount >= 1) {
-                    //     Drag_Factory.drop_accepted = false;
-                    //     return false;
-                    // } else {
-                    //     Drag_Factory.drop_accepted = true;
-                    //     // Drag_Factory.itemCount = 1;
-                    //     return true;
-                    // }
-                    console.log('Accept Drop: ' + layoutCtrl.accept_drop());
-                    console.log($(this).html());
-                    return layoutCtrl.accept_drop();
-
-                }
-            });
-        }
-    }
-}])
+})
