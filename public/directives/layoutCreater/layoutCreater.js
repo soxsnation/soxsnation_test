@@ -82,17 +82,6 @@ angular.module('layoutCreater').directive('snLayout', function($http, $compile, 
         return new_html;
     }
 
-
-
-
-
-    /**
-     * Main link function
-     * @param  {[type]} scope   [description]
-     * @param  {[type]} element [description]
-     * @param  {[type]} attrs   [description]
-     * @return {[type]}         [description]
-     */
     function link(scope, element, attrs) {
 
         init();
@@ -145,6 +134,20 @@ angular.module('layoutCreater').directive('snLayout', function($http, $compile, 
             $compile(element.contents())(scope);
         }
 
+        function add_child_schema(schema, uid, child_schema) {
+            if (uid == schema.id) {
+                schema.children.push(child_schema);
+                return schema;
+            } else {
+                for (var i = 0; i < schema.children.length; ++i) {
+                    return add_child_schema(schema.children[i], uid, child_schema);
+                    // if (item_uid == schema.children[i].id) {
+                    //     schema.children[i].children.push(item);
+                    // } 
+                }
+            }
+        }
+
         scope.updateLayout = function(layout, item_uid) {
             scope.layout_elements = layout_elements;
             console.log('Update layout: ' + layout);
@@ -161,16 +164,17 @@ angular.module('layoutCreater').directive('snLayout', function($http, $compile, 
                 children: []
             };
 
-            if (item_uid == layout_schema.root.id) {
-                layout_schema.root.children.push(item);
-            } else {
-                for (var i = 0; i < layout_schema.root.children.length; ++i) {
-                    console.log()
-                    if (item_uid == layout_schema.root.children[i].id) {
-                        layout_schema.root.children[i].children.push(item);
-                    }
-                }
-            }
+            // if (item_uid == layout_schema.root.id) {
+            //     layout_schema.root.children.push(item);
+            // } else {
+            //     for (var i = 0; i < layout_schema.root.children.length; ++i) {
+            //         console.log()
+            //         if (item_uid == layout_schema.root.children[i].id) {
+            //             layout_schema.root.children[i].children.push(item);
+            //         }
+            //     }
+            // }
+            add_child_schema(layout_schema.root, item_uid, item);
 
             console.log('Current Layout Schema')
             console.log(JSON.stringify(layout_schema));
