@@ -35,9 +35,19 @@ angular.module('layoutCreater').directive('snLayout', function($http, $compile, 
 
     var layout_schema = {
         root: {
-            id: '',
+            uid: '08f4721a-3d14-4310-9afa-e547d9bcbd81',
             name: 'ROOT',
-            children: []
+            schema: {
+                uid: '08f4721a-3d14-4310-9afa-e547d9bcbd81',
+                name: 'root_layout',
+                containers: [{
+                    name: 'main',
+                    id: 'd1754bfa-427b-44e8-b26b-1b1cf7d73b14',
+                    html: "<div class='col-md-12 column snGrid' ng-droppable=''>[CHILDREN]</div>",
+                    children: []
+                }]
+            }
+
         }
 
     };
@@ -52,150 +62,132 @@ angular.module('layoutCreater').directive('snLayout', function($http, $compile, 
             s4() + '-' + s4() + s4() + s4();
     }
 
-    function get_layout_item(uid, schema) {
-        if (schema.root.uid === uid) {
-            return name;
-        } else {
-            for (var i = 0; i < schema.children.length; ++i) {
-                return name + '.';
-            }
-        }
-    }
-
-    function generate_item_schema(schema_name, item_uid) {
-        var new_html = '';
-        for (var i = 0; i < layout_elements.length; ++i) {
-            if (layout_elements[i].name == schema_name) {
-                new_html = layout_elements[i].schema;
-                if (layout_elements[i].options.hasOwnProperty('children')) {
-                    if (layout_elements[i].options.children) {
-                        new_html = new_html.replace('[OPTIONS]', '<div id="drop_div" uid="' + item_uid + '"></div>');
-                    } else {
-                        new_html = new_html.replace('[OPTIONS]', '');
-                    }
-                } else {
-                    new_html = new_html.replace('[OPTIONS]', '');
-                }
-                break;
-            }
-        }
-        return new_html;
-    }
-
     function link(scope, element, attrs) {
 
         init();
+
+        function get_layout_element(element_name) {
+            for (var i = 0; i < layout_elements.length; ++i) {
+                if (layout_elements[i].name == element_name) {
+                    var layout_element = layout_elements[i];
+                    // console.log('layout_element: ' + JSON.stringify(layout_element));
+                    for (var j = 0; j < layout_element.schema.containers.length; ++j) {
+                        layout_element.schema.containers[j].id = get_uid();
+                    }
+                    return layout_element;
+                }
+            }
+        }
 
         function construct_item_layout(item_schema) {
             var new_html = '';
             // console.log('item_schema');
             // console.log(item_schema);
-            for (var i = 0; i < layout_elements.length; ++i) {
-                if (layout_elements[i].name == item_schema.name) {
-                    new_html = layout_elements[i].schema;
-                    if (layout_elements[i].options.hasOwnProperty('children')) {
-                        if (layout_elements[i].options.children) {
-                            new_html = new_html.replace('[OPTIONS]', '<div id="drop_div" uid="' + item_schema.id + '">[CHILDREN]</div>');
-                            // console.log('New HTML Constructed:');
-                            // console.log(new_html);
-                            for (var i = 0; i < item_schema.children.length; ++i) {
-                                new_html = add_child_layout(new_html, construct_item_layout(item_schema.children[i]));
-                            }
-                        } else {
-                            new_html = new_html.replace('[OPTIONS]', '<div id="drop_div" uid="' + item_schema.id + '"></div>');
-                        }
-                    } else {
-                        new_html = new_html.replace('[OPTIONS]', '<div id="drop_div" uid="' + item_schema.id + '"></div>');
+
+            layout_element = item_schema; //get_layout_element(item_schema.name);
+            new_html = layout_element.html;
+
+            if (item_schema.schema.hasOwnProperty('containers')) {
+                for (var i = 0; i < item_schema.schema.containers.length; ++i) {
+                    var item_html = '';
+                    item_html += item_schema.schema.containers[i].html;
+                    item_html = item_html.replace('[CHILDREN]', '<div id="drop_div" uid="' + item_schema.schema.containers[i].id + '">' + item_schema.schema.containers[i].id + '[CHILDREN]</div>');
+                    for (var j = 0; j < item_schema.schema.containers[i].children.length; ++j) {
+
+                        item_html = add_child_layout(item_html, construct_item_layout(item_schema.schema.containers[i].children[j]));
                     }
-                    break;
+                    new_html = new_html.replace('[CONTAINERS]', item_html + '[CONTAINERS]');
+
                 }
+
+                new_html = new_html.replace('[CONTAINERS]', '');
+
             }
+
+
+
+            // if (layout_element.options.hasOwnProperty('children')) {
+            //     if (layout_element.options.children) {
+
+            //         while (new_html.indexOf('[OPTIONS]') > -1) {
+            //             new_html = new_html.replace('[OPTIONS]', '<div id="drop_div" uid="' + item_schema.containers[0].id + '">[CHILDREN]</div>');
+            //         }
+            //         for (var i = 0; i < item_schema.containers.length; ++i) {
+            //             for (var j = 0; j < item_schema.containers[i].children.length; ++j) {
+            //                 new_html = add_child_layout(new_html, construct_item_layout(item_schema.containers[i].children[j]));
+            //             }
+            //         }
+
+
+
+
+            //     } else {
+            //         new_html = new_html.replace('[OPTIONS]', '<div id="drop_div" uid="' + item_schema.id + '"></div>');
+            //     }
+            // } else {
+            //     new_html = new_html.replace('[OPTIONS]', '<div id="drop_div" uid="' + item_schema.id + '"></div>');
+            // }
+
             new_html = new_html.replace('[CHILDREN]', '');
             // console.log('Child HTML');
-            // console.log(new_html)
+            // console.log(new_html);
             return new_html;
         }
 
         function add_child_layout(html, child_html) {
-            child_html = child_html.replace('[CHILDREN]', '');
+            // child_html = child_html.replace('[CHILDREN]', '');
             return html.replace('[CHILDREN]', child_html + '[CHILDREN]');
         }
 
         function construct_generated_layout() {
-            var display_panel = panel_right.replace('GEN_UID', layout_schema.root.id);
+            var display_panel = panel_right.replace('GEN_UID', layout_schema.root.schema.containers[0].id);
 
-            for (var i = 0; i < layout_schema.root.children.length; ++i) {
-                display_panel = add_child_layout(display_panel, construct_item_layout(layout_schema.root.children[i]))
+            for (var i = 0; i < layout_schema.root.schema.containers[0].children.length; ++i) {
+                display_panel = add_child_layout(display_panel, construct_item_layout(layout_schema.root.schema.containers[0].children[i]))
             }
 
             // console.log('display_panel');
             // console.log(display_panel);
+            display_panel = display_panel.replace('[CHILDREN]', '');
             element.html(display_panel);
             $compile(element.contents())(scope);
         }
 
-        function add_child_schema(schema, uid, child_schema) {
-            if (uid == schema.id) {
-                schema.children.push(child_schema);
-                return schema;
-            } else {
-                for (var i = 0; i < schema.children.length; ++i) {
-                    return add_child_schema(schema.children[i], uid, child_schema);
-                    // if (item_uid == schema.children[i].id) {
-                    //     schema.children[i].children.push(item);
-                    // } 
+        function add_child_schema(layout, uid, child_schema) {
+            console.log('add_child_schema: ' + layout.name);
+            // console.log(layout);
+            console.log(child_schema);
+            if (layout.schema.hasOwnProperty('containers')) {
+                for (var i = 0; i < layout.schema.containers.length; ++i) {
+                    if (uid == layout.schema.containers[i].id) {
+                        console.log('FOUND container for child_schema');
+                        layout.schema.containers[i].children.push(child_schema);
+                        return layout;
+                    }
+                }
+
+                for (var i = 0; i < layout.schema.containers.length; ++i) {
+                    if (layout.schema.containers[i].hasOwnProperty('children')) {
+                        for (var j = 0; j < layout.schema.containers[i].children.length; ++j) {
+                            return add_child_schema(layout.schema.containers[i].children[j], uid, child_schema);
+                        }
+                    }
                 }
             }
+
+            // console.log('add_child_schema::END');
+            // return schema;
         }
 
         scope.updateLayout = function(layout, item_uid) {
             scope.layout_elements = layout_elements;
-            console.log('Update layout: ' + layout);
-            console.log(layout);
-            // console.log(container_item.html());
+            console.log('Add layout: ' + layout);
+            console.log(item_uid);
 
-            // var start = container_item.html().indexOf("uid=") + 5;
-            // var item_uid = container_item.html().substring(start, start + 36);
-            // console.log('UID:' + item_uid);
-
-            var item = {
-                id: get_uid(),
-                name: layout,
-                children: []
-            };
-
-            // if (item_uid == layout_schema.root.id) {
-            //     layout_schema.root.children.push(item);
-            // } else {
-            //     for (var i = 0; i < layout_schema.root.children.length; ++i) {
-            //         console.log()
-            //         if (item_uid == layout_schema.root.children[i].id) {
-            //             layout_schema.root.children[i].children.push(item);
-            //         }
-            //     }
-            // }
-            add_child_schema(layout_schema.root, item_uid, item);
-
-            console.log('Current Layout Schema')
-            console.log(JSON.stringify(layout_schema));
-
+            add_child_schema(layout_schema.root, item_uid, get_layout_element(layout));
+            console.log('Current Schema');
+            console.log(layout_schema.root);
             construct_generated_layout();
-
-            // var new_html = container_item.html();
-            // var item_html = generate_item_schema(layout, item.id);
-            // console.log('item_html');
-            // console.log(item_html);
-            // new_html = new_html.replace('<div id="drop_div" uid="' + item_uid + '"></div>', '<div id="drop_div" uid="' + item_uid + '">' + item_html + '</div>');
-
-
-            // // console.log(element.html());
-            // // var new_html = element.html().replace(container_item, layout);
-            // // console.log('new_html');
-            // // console.log(new_html);
-            // container_item.html(new_html);
-            // $compile(container_item.contents())(scope);
-
-            // // console.log(element.html());
 
         }
 
@@ -219,10 +211,9 @@ angular.module('layoutCreater').directive('snLayout', function($http, $compile, 
         }
 
         function create_elements_panel() {
-            // var container = $templateCache.get('angularChartsTemplate_' + config.legend.position);
-            // var container = '<p>This is a paragraph</p>';
-            var uid = get_uid();
-            layout_schema.root.id = uid;
+
+            layout_schema.root.uid = get_uid();
+            layout_schema.root.schema.containers[0].id = get_uid();
             // var display_panel = panel.replace('[LEFT]', panel_left).replace('[RIGHT]', panel_right).replace('GEN_UID', uid);
             // console.log('display_panel: ' + display_panel)
             // element.html(display_panel);
@@ -256,9 +247,18 @@ angular.module('layoutCreater').directive('snLayout', function($http, $compile, 
 
             this.item_dropped = function(dropped_item, container_item) {
                 // $scope.updateLayout(dropped_item, container_item);
-                $scope.updateLayout(dropped_item, $scope.hover_items.pop());
-                $scope.hover_items = [];
+                if ($scope.hover_items.length > 0) {
+                    $scope.updateLayout(dropped_item, $scope.hover_items.pop());
+                    $scope.hover_items = [];
+                }
                 // $scope.dropped = false;
+            }
+
+            $scope.parse_item_uid = function(item) {
+                console.log('$scope.parse_item_uid: ' + item);
+                var start = item.indexOf("uid=") + 5;
+                var item_uid = item.substring(start, start + 36);
+                return item_uid;
             }
 
             function get_items_uid(item) {
@@ -274,7 +274,7 @@ angular.module('layoutCreater').directive('snLayout', function($http, $compile, 
                 // console.log(item_uid);
 
                 // $scope.hover_items.push(item_uid);
-                $scope.hover_items.push(get_items_uid(item));
+                $scope.hover_items.push($scope.parse_item_uid(item));
                 console.log($scope.hover_items);
             }
 
@@ -311,14 +311,11 @@ angular.module('layoutCreater').directive('snLayout', function($http, $compile, 
 
                 },
                 over: function(event, ui) {
-                    // console.log('ngDroppable::over: ' + $(ui.draggable).html());
-                    console.log('ngDroppable::over: ' + elem.html());
-                    // console.log('ngDroppable::over: ' + $(this).html());
+                    // console.log('ngDroppable::over: ' + elem.html());
                     layoutCtrl.container_over(elem.html());
                 },
                 out: function(event, ui) {
                     // console.log('ngDroppable::out: ' + $(ui.draggable).html());
-                    // Drag_Factory.valid_drop = false;
                     layoutCtrl.container_out(elem.html());
 
                 },

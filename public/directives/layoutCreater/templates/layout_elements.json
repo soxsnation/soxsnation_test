@@ -1,46 +1,112 @@
 [{
+    "name": "Grid",
+    "id": "draggable",
+    "class": "layout_grid",
+    "text": "This is a grid",
+    "schema": {
+        "uid": "7fb013b7-7211-45d6-8d62-7c983cf60ccd",
         "name": "Grid",
-        "id": "draggable",
-        "class": "layout_grid",
-        "text": "This is a grid",
-        "schema": "<div class='container'><div class='row clearfix'><div class='col-md-4 column'>Left Side</div><div class='col-md-8 column'>Right Side</div></div></div>",
-        "options": {
+        "containers": [{
+            "id": "969e15dc-cda0-4af3-a2fc-ac89af5299d0",
+            "name": "left",
+            "html": "<div class='col-md-4 column snGrid' ng-droppable=''>Left Side[CHILDREN]</div>",
+            "children": []
+        }, {
+            "id": "61170a9c-9136-413a-ae00-0e01f0b65874",
+            "name": "right",
+            "html": "<div class='col-md-8 column snGrid' ng-droppable=''>Right Side[CHILDREN]</div>",
+            "children": []
+        }]
 
-        }
-    }, {
+    },
+    "html": "<div class='container'><div class='row clearfix'>[CONTAINERS]</div></div>",
+    "options": {
+
+    }
+}, {
+    "name": "Grid2",
+    "id": "draggable",
+    "class": "layout_grid",
+    "text": "This is a grid",
+    "schema": {
+        "uid": "7fb013b7-7211-45d6-8d62-7c983cf60ccd",
+        "name": "Grid",
+        "containers": [{
+            "id": "969e15dc-cda0-4af3-a2fc-ac89af5299d0",
+            "name": "left",
+            "html": "<div class='col-md-4 column snGrid' ng-droppable=''>Left Side[OPTIONS]</div>",
+            "children": []
+        }, {
+            "id": "61170a9c-9136-413a-ae00-0e01f0b65874",
+            "name": "right",
+            "html": "<div class='col-md-8 column snGrid' ng-droppable=''>Right Side[OPTIONS]</div>",
+            "children": []
+        }]
+
+    },
+    "html": "<div class='container'><div class='row clearfix'><div class='col-md-4 column snGrid' ng-droppable=''>Left Side[OPTIONS]</div><div class='col-md-8 column snGrid' ng-droppable=''>Right Side[OPTIONS]</div></div></div>",
+    "options": {
+
+    }
+},{
+    "name": "Paragraph",
+    "id": "draggable",
+    "class": "layout_paragraph",
+    "text": "This is a paragraph",
+    "schema": {
+        "uid": "81bb70fb-cb5b-4f77-9f81-4e19582cb878",
         "name": "Paragraph",
-        "id": "draggable",
-        "class": "layout_paragraph",
-        "text": "This is a paragraph",
-        "schema": "<p>This is a paragraph</p>",
-        "options": {
+        "containers": []
+    },
+    "html": "<p>This is a paragraph with a lot of text</p>",
+    "options": {
 
-        }
-    }, {
+    }
+}, {
+    "name": "Button",
+    "id": "draggable2",
+    "class": "btn btn-info layout_button",
+    "text": "This is a button",
+    "schema": {
+        "uid": "12d86105-5db8-48ed-b4e1-d6f488469612",
         "name": "Button",
-        "id": "draggable2",
-        "class": "btn btn-info layout_button",
-        "text": "This is a button",
-        "schema": "<input type='button' value='CLICK' class='container_item'>",
-        "options": {
-            "title": "Button"
-        }
-    }, {
+        "containers": []
+    },
+    "html": "<input type='button' value='CLICK' class='container_item'>",
+    "options": {
+        "title": "Button"
+    }
+}, {
+    "name": "Single Column",
+    "id": "grid",
+    "class": "layout_grid",
+    "text": "This is a column",
+    "schema": {
+        "uid": "0de238be-6ed1-48dc-ac6e-0e377cc4985d",
         "name": "Single Column",
-        "id": "grid",
-        "class": "layout_grid",
-        "text": "This is a button",
-        "schema": "<div class='col-md-8 column grid_area2 ui-widget-header ui-droppable' ng-droppable='dropObject2'>[OPTIONS]</div>",
-        "options": {
-            "title": "Single Column",
-            "children": true
-        }
-    }, {
-        "name": "Line Break",
-        "id": "linebreak",
-        "class": "draggable2",
-        "schema": "<div><br /></div>",
-        "options": {
-            "title": "Line Break"
-        }
-    }]
+        "containers": [{
+            "id": "264575c7-de7c-40e5-a36e-240f795496fc",
+            "name": "column",
+            "html": "<div>[CHILDREN]</div>",
+            "children": []
+        }]
+    },
+    "html": "<div class='col-md-10 column grid_area2 ui-widget-header ui-droppable' ng-droppable='dropObject2'>[CONTAINERS]</div>",
+    "options": {
+        "title": "Single Column",
+        "children": true
+    }
+}, {
+    "name": "Line Break",
+    "id": "linebreak",
+    "class": "draggable2",
+    "schema": {
+        "uid": "962dcb04-7698-4f2e-aa8f-0fd10da793fe",
+        "name": "linebreak",
+        "containers": []
+    },
+    "html": "<div><br /></div>",
+    "options": {
+        "title": "Line Break"
+    }
+}]
