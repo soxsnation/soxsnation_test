@@ -35,14 +35,14 @@ angular.module('layoutCreater').directive('snLayout', function($http, $compile, 
 
     var layout_schema = {
         root: {
-            uid: '08f4721a-3d14-4310-9afa-e547d9bcbd81',
+            uid: '00fdbf6d-0f1b-1444-5160-3cd3eb0d9e51',
             name: 'ROOT',
             schema: {
                 uid: '08f4721a-3d14-4310-9afa-e547d9bcbd81',
                 name: 'root_layout',
                 containers: [{
                     name: 'main',
-                    id: 'd1754bfa-427b-44e8-b26b-1b1cf7d73b14',
+                    id: '00fdbf6d-0f1b-1444-5160-3cd3eb011111',
                     html: "<div class='col-md-12 column snGrid' ng-droppable=''>[CHILDREN]</div>",
                     children: []
                 }]
@@ -51,6 +51,7 @@ angular.module('layoutCreater').directive('snLayout', function($http, $compile, 
         }
 
     };
+
 
     function get_uid() {
         function s4() {
@@ -69,8 +70,7 @@ angular.module('layoutCreater').directive('snLayout', function($http, $compile, 
         function get_layout_element(element_name) {
             for (var i = 0; i < layout_elements.length; ++i) {
                 if (layout_elements[i].name == element_name) {
-                    var layout_element = layout_elements[i];
-                    // console.log('layout_element: ' + JSON.stringify(layout_element));
+                    var layout_element = jQuery.extend(true, {}, layout_elements[i]);
                     for (var j = 0; j < layout_element.schema.containers.length; ++j) {
                         layout_element.schema.containers[j].id = get_uid();
                     }
@@ -81,53 +81,28 @@ angular.module('layoutCreater').directive('snLayout', function($http, $compile, 
 
         function construct_item_layout(item_schema) {
             var new_html = '';
-            // console.log('item_schema');
-            // console.log(item_schema);
+            console.log('item_schema: ');
+            console.log(item_schema);
 
-            layout_element = item_schema; //get_layout_element(item_schema.name);
+            layout_element = item_schema; 
             new_html = layout_element.html;
 
             if (item_schema.schema.hasOwnProperty('containers')) {
                 for (var i = 0; i < item_schema.schema.containers.length; ++i) {
+                    console.log('Adding Item: ' + item_schema.schema.containers[i].id);
                     var item_html = '';
                     item_html += item_schema.schema.containers[i].html;
                     item_html = item_html.replace('[CHILDREN]', '<div id="drop_div" uid="' + item_schema.schema.containers[i].id + '">' + item_schema.schema.containers[i].id + '[CHILDREN]</div>');
                     for (var j = 0; j < item_schema.schema.containers[i].children.length; ++j) {
 
-                        item_html = add_child_layout(item_html, construct_item_layout(item_schema.schema.containers[i].children[j]));
+                        item_html = add_child_layout(item_html, construct_item_layout(item_schema.schema.containers[i].children[j]));                        
                     }
                     new_html = new_html.replace('[CONTAINERS]', item_html + '[CONTAINERS]');
-
                 }
-
                 new_html = new_html.replace('[CONTAINERS]', '');
-
+            } else {
+                console.log('No Container: ' + item_schema.schema)
             }
-
-
-
-            // if (layout_element.options.hasOwnProperty('children')) {
-            //     if (layout_element.options.children) {
-
-            //         while (new_html.indexOf('[OPTIONS]') > -1) {
-            //             new_html = new_html.replace('[OPTIONS]', '<div id="drop_div" uid="' + item_schema.containers[0].id + '">[CHILDREN]</div>');
-            //         }
-            //         for (var i = 0; i < item_schema.containers.length; ++i) {
-            //             for (var j = 0; j < item_schema.containers[i].children.length; ++j) {
-            //                 new_html = add_child_layout(new_html, construct_item_layout(item_schema.containers[i].children[j]));
-            //             }
-            //         }
-
-
-
-
-            //     } else {
-            //         new_html = new_html.replace('[OPTIONS]', '<div id="drop_div" uid="' + item_schema.id + '"></div>');
-            //     }
-            // } else {
-            //     new_html = new_html.replace('[OPTIONS]', '<div id="drop_div" uid="' + item_schema.id + '"></div>');
-            // }
-
             new_html = new_html.replace('[CHILDREN]', '');
             // console.log('Child HTML');
             // console.log(new_html);
@@ -135,11 +110,13 @@ angular.module('layoutCreater').directive('snLayout', function($http, $compile, 
         }
 
         function add_child_layout(html, child_html) {
-            // child_html = child_html.replace('[CHILDREN]', '');
+            child_html = child_html.replace('[CHILDREN]', '');
             return html.replace('[CHILDREN]', child_html + '[CHILDREN]');
         }
 
         function construct_generated_layout() {
+            console.log('construct_generated_layout: ');
+            console.log(JSON.stringify(layout_schema.root.schema.containers[0]));
             var display_panel = panel_right.replace('GEN_UID', layout_schema.root.schema.containers[0].id);
 
             for (var i = 0; i < layout_schema.root.schema.containers[0].children.length; ++i) {
@@ -155,13 +132,14 @@ angular.module('layoutCreater').directive('snLayout', function($http, $compile, 
 
         function add_child_schema(layout, uid, child_schema) {
             console.log('add_child_schema: ' + layout.name);
-            // console.log(layout);
-            console.log(child_schema);
+            console.log(uid);
+            console.log(layout);
             if (layout.schema.hasOwnProperty('containers')) {
                 for (var i = 0; i < layout.schema.containers.length; ++i) {
                     if (uid == layout.schema.containers[i].id) {
-                        console.log('FOUND container for child_schema');
+                        console.log('FOUND container for child_schema: ' + JSON.stringify(layout.schema.containers[i]));
                         layout.schema.containers[i].children.push(child_schema);
+                        console.log('Layout with child: ' + JSON.stringify(layout.schema))
                         return layout;
                     }
                 }
@@ -169,7 +147,7 @@ angular.module('layoutCreater').directive('snLayout', function($http, $compile, 
                 for (var i = 0; i < layout.schema.containers.length; ++i) {
                     if (layout.schema.containers[i].hasOwnProperty('children')) {
                         for (var j = 0; j < layout.schema.containers[i].children.length; ++j) {
-                            return add_child_schema(layout.schema.containers[i].children[j], uid, child_schema);
+                            add_child_schema(layout.schema.containers[i].children[j], uid, child_schema);
                         }
                     }
                 }
@@ -181,12 +159,12 @@ angular.module('layoutCreater').directive('snLayout', function($http, $compile, 
 
         scope.updateLayout = function(layout, item_uid) {
             scope.layout_elements = layout_elements;
-            console.log('Add layout: ' + layout);
-            console.log(item_uid);
+            // console.log('Add layout: ' + layout);
+            // console.log(item_uid);
 
             add_child_schema(layout_schema.root, item_uid, get_layout_element(layout));
-            console.log('Current Schema');
-            console.log(layout_schema.root);
+            // console.log('Current Schema');
+            // console.log(layout_schema.root);
             construct_generated_layout();
 
         }
@@ -212,8 +190,8 @@ angular.module('layoutCreater').directive('snLayout', function($http, $compile, 
 
         function create_elements_panel() {
 
-            layout_schema.root.uid = get_uid();
-            layout_schema.root.schema.containers[0].id = get_uid();
+            // layout_schema.root.uid = get_uid();
+            // layout_schema.root.schema.containers[0].id = get_uid();
             // var display_panel = panel.replace('[LEFT]', panel_left).replace('[RIGHT]', panel_right).replace('GEN_UID', uid);
             // console.log('display_panel: ' + display_panel)
             // element.html(display_panel);
