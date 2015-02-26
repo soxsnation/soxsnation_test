@@ -31,7 +31,8 @@ angular.module('layoutCreater').directive('snLayout', function($http, $compile, 
     var panel_all = '<div class="container"><div class="rowclearfix"><div class="col-md-2 column"><div class="layout_item_list" data-ng-mouseup="layout_dropped(layout_obj)" data-ng-repeat="layout_element in layout_elements">{{layout_element.name}}</div><p>Left Panel</p></div><divclass="col-md-10 column grid_area ui-widget-header ui-droppable" ng-droppable="dropObject2">Right Panel</div></div></div>';
     var panel = '<div style="display:block;"><input type="button" data-ng-click="debug()" value="debug" ></div><div class="container"><div class="row clearfix">[LEFT][RIGHT]</div></div>'
     var panel_left = '<div class="col-md-2 column">LEFT DIV<div class="layout_item_list" data-ng-mouseup="layout_dropped(layout_obj)" data-ng-repeat="layout_element in layout_elements"><div class="layout_item" ng-draggable="dragOptions">{{layout_element.name}}</div></div></div>';
-    var panel_right = '<div class="col-md-10 column grid_area ui-widget-header ui-droppable" ng-droppable="dropObject2"><div id="drop_div" uid="GEN_UID">[CHILDREN]</div></div>';
+    // var panel_right = '<div class="col-md-10 column layout_area" ng-droppable="dropObject2"><div class="layout_element" uid="GEN_UID">[CHILDREN]</div></div>';
+    var panel_right = '<div class="col-md-10 column layout_area" ng-droppable="dropObject2"><div class="layout_element" uid="GEN_UID">[CHILDREN]</div></div>';
 
     var layout_schema = {
         root: {
@@ -116,6 +117,7 @@ angular.module('layoutCreater').directive('snLayout', function($http, $compile, 
 
         function construct_generated_layout() {
             console.log('construct_generated_layout: ');
+
             console.log(JSON.stringify(layout_schema.root.schema.containers[0]));
             var display_panel = panel_right.replace('GEN_UID', layout_schema.root.schema.containers[0].id);
 
@@ -171,6 +173,8 @@ angular.module('layoutCreater').directive('snLayout', function($http, $compile, 
 
         function init() {
 
+            
+
             $http.get('/directives/layoutCreater/templates/layout_elements.json').
             success(function(data, status, headers, config) {
                 layout_elements = data;
@@ -215,6 +219,7 @@ angular.module('layoutCreater').directive('snLayout', function($http, $compile, 
             snElements: '='
         },
         controller: function($scope) {
+
 
             $scope.dropped = true;
             $scope.hover_items = [];
@@ -313,6 +318,8 @@ angular.module('layoutCreater').directive('snLayouts', function($http) {
     return {
         templateUrl: '/directives/layoutCreater/templates/main.html',
         controller: function($scope) {
+            
+
             $http.get('/directives/layoutCreater/templates/layout_elements.json').
             success(function(data, status, headers, config) {
                 $scope.layout_elements = data;
@@ -320,6 +327,11 @@ angular.module('layoutCreater').directive('snLayouts', function($http) {
                 console.log($scope.layout_elements);
             }).
             error(function(data, status, headers, config) {});
+
+            $scope.submit_layout = function() {
+                console.log('$scope.submit_layout');
+
+            }
         }
     };
 }).directive('ngDraggable', function($document) {
