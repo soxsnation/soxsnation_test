@@ -6,6 +6,13 @@
  */
 
 angular.module('soxsnationApp')
+    .controller('TemplateController', ['$scope', '$location',
+        function($scope, $location) {
+            $scope.page = 'Templates'
+        }
+    ]);
+
+angular.module('soxsnationApp')
     .controller('DragController', ['$scope', '$location', 'soxsFactory',
         function($scope, $location, soxsFactory) {
 
@@ -16,12 +23,12 @@ angular.module('soxsnationApp')
 
             $scope.dropObject = {
                 title: 'do1'
-                
+
             };
 
             $scope.dropObject2 = {
                 title: 'do2'
-                
+
             };
 
             $scope.list1 = [];

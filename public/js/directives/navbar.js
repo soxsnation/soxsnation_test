@@ -175,7 +175,14 @@ angular.module('soxsnationApp')
 												permissionIndex: 2,
 												fields: []
 										}
+										var templateModel = {
+											name: 'template',
+											description: 'template',
+												permissionIndex: 4,
+												fields: []
+										}
 										$scope.data_models.push(dragModel);
+										$scope.data_models.push(templateModel);
 
 										configMenuItems();
 										configAdminMenuItems();

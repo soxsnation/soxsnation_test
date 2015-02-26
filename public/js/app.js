@@ -11,7 +11,8 @@ var soxsnationApp = angular.module('soxsnationApp', [
 	'soxsServices',
 	'angularCharts',
 	'ngDragDrop',
-	'layoutCreater'
+	'layoutCreater',
+	'templateCreator'
 ]);
 
 soxsnationApp.config(['$routeProvider',
@@ -24,6 +25,10 @@ soxsnationApp.config(['$routeProvider',
 		when('/drag', {
 			controller: 'DragController',
 			templateUrl: '../partials/drag.html'
+		}).
+		when('/template', {
+			controller: 'TemplateController',
+			templateUrl: '../partials/templates.html'
 		}).
 		when('/Home', {
 			controller: 'SoxsController',
