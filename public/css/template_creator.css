@@ -1,0 +1,73 @@
+.main_panel {
+    display: block;
+    margin: 0px;
+}
+.left_panel {
+    display: block;
+    background-color: red;
+    width: 100%;
+    height:560px;
+    left: 0;
+    position: fixed;
+
+    z-index: 100;
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translateX(-100%) rotate(-90deg);
+    -webkit-transform-origin: right top;
+    -moz-transform: translateX(-100%) rotate(-90deg);
+    -moz-transform-origin: right top;
+    -o-transform: translateX(-100%) rotate(-90deg);
+    -o-transform-origin: right top;
+    transform: translateX(-100%) rotate(-90deg);
+    transform-origin: right top;
+}
+.left_panel_container {
+    height:100%;
+    width: 100%;
+    overflow: hidden;
+
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translateX(-100%) rotate(90deg);
+    -webkit-transform-origin: right top;
+    -moz-transform: translateX(-100%) rotate(90deg);
+    -moz-transform-origin: right top;
+    -o-transform: translateX(-100%) rotate(90deg);
+    -o-transform-origin: right top;
+    transform: translateX(-100%) rotate(90deg);
+    transform-origin: right top;
+}
+
+.center_panel {
+    display: block;
+    background-color: blue;
+    width: 100%;
+    position: fixed;
+    margin-left: 260px;
+    margin-right: 260px;
+    left:0;
+}
+
+
+
+.right_panel {
+    display: block;
+    background-color: orange;
+    height:100%;
+    width: 260px;
+    right: 0;
+    position: fixed;
+
+}
+.right_panel_container {
+    height:100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+/*.collapse_width {
+    height:auto;
+    -webkit-transition: width 0.35s ease;
+    -moz-transition: width 0.35s ease;
+    -o-transition: width 0.35s ease;
+    transition: width 0.35s ease;
+}*/

@@ -57,7 +57,8 @@ angular.module('templateCreator').directive('snTemplates', function($http, $comp
         }
 
         function get_left_panel(cb) {
-            $http.get('/directives/templateCreator/templates/left_panel.html').
+            // $http.get('/directives/templateCreator/templates/left_panel.html').
+            $http.get('/directives/templateCreator/templates/templateCreator.html').
             success(function(data, status, headers, config) {
                 // console.log('got left panel');
                 cb(data);
@@ -74,16 +75,7 @@ angular.module('templateCreator').directive('snTemplates', function($http, $comp
             error(function(data, status, headers, config) {});
         }
 
-        function build_view(left_panel, template) {
-
-        }
-
-
-        function init() {
-
-            var html = '';
-            var stack = [];
-
+        function build_view() {
             get_json(function(template) {
                 scope.tags = template;
                 console.log('template');
@@ -97,6 +89,15 @@ angular.module('templateCreator').directive('snTemplates', function($http, $comp
                 })
 
             });
+        }
+
+
+        function init() {
+
+            var html = '';
+            var stack = [];
+
+build_view();
         };
 
 
@@ -107,13 +108,13 @@ angular.module('templateCreator').directive('snTemplates', function($http, $comp
     }
 
     return {
-        restrict: 'EA',
-        link: link,
+        restrict: 'E',
+        // link: link,
         transclude: 'true',
-        // templateUrl: '/directives/layoutCreater/templates/main.html',
+        templateUrl: '/directives/templateCreator/templates/templateCreator.html',
         controller: function($scope) {
 
-
+console.log('templateCreator');
 
         }
     };
