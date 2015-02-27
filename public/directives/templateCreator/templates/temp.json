@@ -1,0 +1,57 @@
+[{
+    "tag": "div",
+    "id": "345245",
+    "schema": {
+        "style": "background-color:blue",
+        "class": "myClass"
+    },
+    "children": [{
+        "tag": "div",
+        "schema": {
+            "class": "row clear fix"
+        },
+        "children": [{
+            "tag": "div",
+            "schema": {
+                "class": "col-md-6 column"
+            },
+            "children": [{
+                "tag": "p",
+                "text": "This is the paragraph text",
+                "schema": {}
+            }, {
+                "tag": "input",
+                "schema": {
+                    "type": "button",
+                    "class": "btn btn-default",
+                    "value": "Submit"
+                }
+            }]
+        }]
+    }]
+
+}, {
+    "tag": "div",
+    "id": "345645",
+    "schema": {
+        "style": "background-color:red;height:20px;width:300px;",
+        "class": "myClass2"
+    },
+    "children": []
+}, {
+    "tag": "div",
+    "id": "341245",
+    "schema": {
+        "style": "background-color:green;height:20px;width:300px;"
+    },
+    "children": []
+}, {
+    "tag": "div",
+    "id": "345525",
+    "schema": {
+        "style": "background-color:orange;height:20px;width:300px;",
+        "class": "myClass3",
+        "id": "lastDIV"
+    },
+    "children": []
+}]
