@@ -1,6 +1,6 @@
 angular.module('templateCreator', []);
 
-angular.module('templateCreator').directive('snTemplates', function($http, $compile) {
+angular.module('templateCreator', ['snDraggable']).directive('snTemplates', function($http, $compile) {
 
 
 
@@ -48,7 +48,8 @@ angular.module('templateCreator').directive('snTemplates', function($http, $comp
 
         function get_json(cb) {
             console.log('getting json data');
-            $http.get('/directives/templateCreator/templates/temp.json').
+            // $http.get('/directives/templateCreator/templates/temp.json').
+            $http.get('/directives/layoutCreater/templates/layout_elements.json').
             success(function(data, status, headers, config) {
                 console.log('got json data');
                 cb(data);
@@ -91,16 +92,28 @@ angular.module('templateCreator').directive('snTemplates', function($http, $comp
             });
         }
 
+        function load_data() {
+            get_json(function(template) {
+                scope.tags = template;
+            });
+        }
 
         function init() {
 
-            var html = '';
-            var stack = [];
+            load_data();
 
-build_view();
+            // var center_viewport = element.find('center-viewport');
+            var center_viewport = element.find('canvas').parent();
+            center_viewport.html('<p>This is the added content</p>')
+            $compile(center_viewport.contents())(scope);
+
+            // build_view();
         };
 
-
+        scope.item_dropped = function(item, parent) {
+parent.html(item);
+                    $compile(parent.contents())(scope);
+        }
 
 
         init();
@@ -109,13 +122,94 @@ build_view();
 
     return {
         restrict: 'E',
-        // link: link,
+        link: link,
         transclude: 'true',
         templateUrl: '/directives/templateCreator/templates/templateCreator.html',
         controller: function($scope) {
+            console.log('templateCreator');
 
-console.log('templateCreator');
+            $scope.sidebar_left_state = "expanded-left";
+            $scope.sidebar_left_collapsed = "";
+            $scope.sidebar_right_state = "expanded-right";
+            $scope.sidebar_right_collapsed = "";
 
+            $scope.id_one = "First";
+            $scope.id2 = "Second";
+            $scope.id3 = "Third";
+
+
+            $scope.sidebar_collapser_left_click = function() {
+                console.log('sidebar_collapser_left_click');
+                if ($scope.sidebar_left_collapsed == "collapsed") {
+                    $scope.sidebar_left_state = "expanded-left";
+                    $scope.sidebar_left_collapsed = "";
+                } else {
+                    $scope.sidebar_left_state = "collapsed-left";
+                    $scope.sidebar_left_collapsed = "collapsed";
+                }
+            }
+
+            $scope.sidebar_collapser_right_click = function() {
+                console.log('sidebar_collapser_right_click');
+                if ($scope.sidebar_right_collapsed == "collapsed") {
+                    $scope.sidebar_right_state = "expanded-right";
+                    $scope.sidebar_right_collapsed = "";
+                } else {
+                    $scope.sidebar_right_state = "collapsed-right";
+                    $scope.sidebar_right_collapsed = "collapsed";
+                }
+            }
+
+            $scope.onDropComplete1 = function(data, evt, id) {
+                console.log("Drop1: " + JSON.stringify(data));
+                // console.log("Drop1: " + JSON.stringify(id));
+                // $scope.item_dropped(data, id);
+            }
+
+            $scope.onItemClick = function(item_id) {
+                console.log("onItemClick: " + item_id);
+            }
         }
     };
 })
+// .directive('snDroppable', function($document) {
+//     return {
+//         require: '^snTemplates',
+//         restrict: 'EA',
+//         // transclude: true,
+//         scope: {
+//             dropOptions: '=ngDroppable'
+//         },
+//         link: function(scope, elem, attr, layoutCtrl) {
+//             $(elem).droppable({
+//                 helper: 'clone',
+//                 drop: function(event, ui) {
+//                     // layoutCtrl.item_dropped($(ui.draggable).html(), elem);
+//                     // console.log('ngDroppable::DROPPED: ' + JSON.stringify(scope.dropOptions));
+//                     console.log('elem.html()');
+//                     console.log(elem.html());
+
+//                     // $compile($(this).html(schema));
+//                     // var schema = '<p>Item Dropped: ' + $(ui.draggable).html() + '</p>';
+
+//                 },
+//                 over: function(event, ui) {
+//                     console.log('ngDroppable::over: ' + elem.html());
+//                     layoutCtrl.container_over(elem.html());
+//                 },
+//                 out: function(event, ui) {
+//                     console.log('ngDroppable::out: ' + $(ui.draggable).html());
+//                     layoutCtrl.container_out(elem.html());
+
+//                 },
+//                 // accept: '#grid'
+//                 accept: function(dragEl) {
+//                     // console.log('Accept Drop: ' + layoutCtrl.accept_drop());
+//                     // console.log($(this).html());
+//                     return layoutCtrl.accept_drop();
+
+//                 }
+//             });
+//         }
+//     }
+// })

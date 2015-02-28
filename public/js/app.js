@@ -11,7 +11,7 @@ var soxsnationApp = angular.module('soxsnationApp', [
 	'soxsServices',
 	'angularCharts',
 	'ngDragDrop',
-	'layoutCreater',
+	// 'snDraggable',
 	'templateCreator'
 ]);
 

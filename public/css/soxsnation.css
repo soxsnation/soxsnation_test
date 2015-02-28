@@ -130,7 +130,7 @@ body {
   margin-right: auto;
 }
 
-.discomNav2 {
+.soxsnationNav2 {
   margin-left: auto;
   margin-right: auto;
   display:block;
@@ -169,13 +169,6 @@ body {
   background: linear-gradient(#67C8CE, #2C77BB); /* Standard syntax */
 }
 
-#main {
-  /*position:relative;
-  left: 0px;
-  top: -20px;*/
-
-  /*z-index: 10;*/
-}
 
 .discom_footer {
 	background-color: #051d43;
@@ -273,7 +266,7 @@ body {
   border-color: #FFF;
 }
 
-.discomNav {
+.soxsnationNav {
   background-color: #ed171f;
 }
 

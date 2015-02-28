@@ -1,29 +1,49 @@
-<div class="main_panel">
+<div class="main" id="main" style="height:925; top:50px;">
+    <div class="view builder-view">
+        <div id="left-sidebar" class="sidebar left {{sidebar_left_collapsed}}">
+            <div class="sidebar-container">
+                <div id="components">
+                <div class="header">
+                <span class="header-text">Layout Elements</span>
+                </div>
+                    <ul id="controls-list draggable-objects">
+                        <!-- <li class="ui-dragable layout-component" data-ng-repeat="tag in tags"> -->
+                        <li class="layout-component" data-ng-repeat="tag in tags">
+                            <!-- <a href=''>{{tag.name}}</a> -->
+                            <div ng-drag="true" ng-drag-data="tag.name">{{tag.name}}</div>
+                        </li>
+                    </ul>
 
-    <div class="collapse left_panel" id="left_panel1">
-        <div class="left_panel_container"> 
-        <h3>
-            LEFT PANEL
-            </h3>
-
+                    <!-- <div class="list-group">
+                    <div class="list-group-item" data-ng-repeat='tag in tags'>
+                        <h4 class="list-group-item-heading">{{tag.tag}}</h4>
+                        <h5 class="list-group-item-text">{{tag.tag}}</h5>
+                    </div>
+                </div> -->
+                </div>
+            </div>
+            <div class="sidebar-collapser" data-side="left" data-ng-click="sidebar_collapser_left_click()">
+                <div class="sidebar-collapser-caret"></div>
+            </div>
         </div>
-    </div>
-    <div class="center_panel" id="center_panel">
-        <h1>CENTER PANEL</h1>
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#left_panel1" aria-expanded="false" aria-controls="left_panel1">
-            Button with data-target
-        </button>
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#right_panel" aria-expanded="false" aria-controls="right_panel">
-            Button with data-target
-        </button>
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#left_panel1" aria-expanded="false" aria-controls="left_panel1">
-            Button with data-target
-        </button>
-    </div>
 
-    <div class="collapse_width  right_panel" id="right_panel">
-        <div class="right_panel_container">
-            <h3>RIGHT PANEL</h3>
+
+        <div id="center-viewport" class="center-viewport {{sidebar_right_state}} {{sidebar_left_state}}">
+            <div id="snDroppable">
+            <!-- <canvas id="content"></canvas> -->
+             <div class="drop-item" ng-drop="true" ng-drop-success="onDropComplete1($data,$event,$id)" id="1"></div><br />
+             <div class="drop-item" sn-item="true" sn-item-click="onItemClick($id)" id="2"></div><br />
+             <div class="drop-item" sn-item="true" sn-item-click="onItemClick($id)" id="3"></div>
+            </div>
+        </div>
+
+        <div id="right-sidebar" class="sidebar right {{sidebar_right_collapsed}}">
+            <div class="sidebar-container">
+                <div id="components"></div>
+            </div>
+            <div class="sidebar-collapser" data-side="right" data-ng-click="sidebar_collapser_right_click()">
+                <div class="sidebar-collapser-caret"></div>
+            </div>
         </div>
     </div>
 </div>
