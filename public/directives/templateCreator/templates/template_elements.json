@@ -1,0 +1,52 @@
+[{
+    "name": "Grid (4,8)",
+    "html": "<div class'layout_element'><div class='row clearfix snGrid'><div class='col-md-4 column snGridRow' ng-droppable=''>Left Side[CHILDREN]</div><div class='col-md-8 column snGridRow' ng-droppable=''>Right Side[CHILDREN]</div></div></div>",
+    "options": {
+
+    }
+}, {
+    "name": "Grid (6,6)",
+    "html": "<div class'layout_element'><div class='row clearfix snGrid'><div class='col-md-6 column snGridRow' ng-droppable=''>Left Side[CHILDREN]</div><div class='col-md-6 column snGridRow' ng-droppable=''>Right Side[CHILDREN]</div></div></div>",
+    "options": {
+
+    }
+}, {
+    "name": "Paragraph",
+    "html": "<p  sn-item='true' sn-item-click='onItemClick($id)' id='Paragraph'>This is a paragraph with a lot of text</p>",
+    "options": [{
+    	"name": "text",
+        "type": "text"
+    }, {
+    	"name": "enabled",
+        "type": "checkbox"
+    }, {
+    	"name": "font",
+        "type": "text"
+    }]
+}, {
+    "name": "Button",
+    "html": "<input type='button' enabled='false' class='btn btn-default container_item' value='CLICK'  sn-item='true' sn-item-click='onItemClick($id)' id='Button'>",
+    "options": [{
+    	"name": "text",
+        "type": "text"
+    }, {
+    	"name": "enabled",
+        "type": "checkbox"
+    }, {
+    	"name": "action",
+        "type": "text"
+    }]
+}, {
+    "name": "Textbox",
+    "html": "<input type='text' class='form-control' sn-item='true' sn-item-click='onItemClick($id)' id='Textbox' >",
+    "options": [{
+    	"name": "text",
+        "type": "text"
+    }, {
+    	"name": "enabled",
+        "type": "checkbox"
+    }]
+
+
+
+}]

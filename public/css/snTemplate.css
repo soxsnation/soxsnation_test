@@ -14,31 +14,36 @@ body {
     background-size: cover;
 }
 /********************************* Andrew Brown *********************************/
-
+.content-canvas {
+    height: 1px;
+    width: 1px;
+}
 .layout-component {
     height: 25px;
     list-style-type: none;
-    background-color: red;
-    cursor: move;
+    /*background-color: red;*/
+    
+    margin: 15px;
 }
 #snDroppable {
     position: absolute;
-    left: 250px;
+    /*left: 250px;*/
     top: 0;
-    width: 125px;
+/*    width: 125px;
     height: 125px;
     background: #999;
-    color: #fff;
+    color: #fff;*/
     padding: 10px;
 }
 .drop-item {
     height: 250px;
     width: 600px;
-    background-color: green;
+    background-color: gray;
     opacity: 0.8;
 }
 [ng-drag] {
   position: fixed;
+  cursor: move;
 }
 [ng-drag].dragging {
     opacity: 0.5;

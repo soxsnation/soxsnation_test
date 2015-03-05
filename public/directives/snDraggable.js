@@ -299,8 +299,8 @@ angular.module("snDraggable", [])
                             }
 
                             $timeout(function(){
-                                // onDropCallback(scope, {$data: obj.data, $event: obj, $id: item_id});
-                                onDropCallback(scope, {$data: obj.data, $event: obj, $id: $(this)});
+                                onDropCallback(scope, {$data: obj.data, $event: obj, $id: item_id});
+                                // onDropCallback(scope, {$data: obj.data, $event: obj, $id: $(this)});
                             });
                         }
                         $timeout(function(){
