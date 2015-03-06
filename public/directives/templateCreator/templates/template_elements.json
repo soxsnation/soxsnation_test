@@ -25,10 +25,11 @@
     }]
 }, {
     "name": "Button",
-    "html": "<input type='button' enabled='false' class='btn btn-default container_item' value='CLICK'  sn-item='true' sn-item-click='onItemClick($id)' id='Button'>",
+    "html": "<input type='button' enabled='false' class='btn btn-default container_item' value='{{options[0].value}}'  sn-item='true' sn-item-click='onItemClick($id)' id='Button'>",
     "options": [{
     	"name": "text",
-        "type": "text"
+        "type": "text",
+        "value": "Click Me"
     }, {
     	"name": "enabled",
         "type": "checkbox"
@@ -38,10 +39,11 @@
     }]
 }, {
     "name": "Textbox",
-    "html": "<input type='text' class='form-control' sn-item='true' sn-item-click='onItemClick($id)' id='Textbox' >",
+    "html": "<input type='text' class='form-control' sn-item='true' sn-item-click='onItemClick($id)' id='Textbox' data-ng-value='options[0].value' >",
     "options": [{
     	"name": "text",
-        "type": "text"
+        "type": "text",
+        "value": "text"
     }, {
     	"name": "enabled",
         "type": "checkbox"

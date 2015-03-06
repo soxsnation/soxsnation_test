@@ -25,6 +25,9 @@ body {
     
     margin: 15px;
 }
+#components {
+  color: white;
+}
 #snDroppable {
     position: absolute;
     /*left: 250px;*/
@@ -845,7 +848,7 @@ header .right {
     float: left;
     font-weight: bold;
     font-size: 13px;
-    color: #fff;
+    color: #000;
     background-repeat: no-repeat;
     padding-top: 57px;
     list-style: none;
@@ -868,7 +871,7 @@ header .right {
     -webkit-transform: scale(1.1);
 }
 #components-sidepane ul li a {
-    color: #fff;
+    color: #000;
     text-decoration: none;
     text-shadow: none;
 }

@@ -158,6 +158,12 @@ angular.module('templateCreator', ['snDraggable']).directive('snTemplates', func
                 $scope.id2 = "Second";
                 $scope.id3 = "Third";
 
+                $scope.apply_options = function() {
+                    console.log('apply_options');
+                    console.log(JSON.stringify($scope.options));
+                    // $scope.$apply();
+                }
+
 
                 $scope.sidebar_collapser_left_click = function() {
                     console.log('sidebar_collapser_left_click');

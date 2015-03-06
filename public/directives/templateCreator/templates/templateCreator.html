@@ -45,16 +45,28 @@
         <div id="right-sidebar" class="sidebar right {{sidebar_right_collapsed}}">
             <div class="sidebar-container">
                 <div id="components">
-                    <form role="form">
-                        <div class="form-group">
-                                <div data-ng-repeat="option in options">
-
-                                    <label>{{option.name}}</label>
-                                    <input type='{{option.type}}' class='form-control' />
-
-                                </div>
+                    <div id="properties">
+                        <div class="header">
+                            <span class="header-text">Layout Properties</span>
                         </div>
-                    </form>
+                        <br />
+                        <!-- <form role="form"> -->
+                        <!-- <div class="form-group"> -->
+                        <div class="control-group clearfix" data-ng-repeat="option in options">
+
+                            <label>{{option.name}}</label>
+                            <div class="control">
+                                <input type='{{option.type}}' data-ng-model="option.value" />
+                            </div>
+
+                        </div>
+                        <br />
+                        <br />
+                        <br />
+                        <input type="button" class="btn btn-default" value="Apply" data-ng-click="apply_options()" />
+                        <!-- </div> -->
+                        <!-- </form> -->
+                    </div>
                 </div>
             </div>
             <div class="sidebar-collapser" data-side="right" data-ng-click="sidebar_collapser_right_click()">
