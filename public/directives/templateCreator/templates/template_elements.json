@@ -12,7 +12,7 @@
     }
 }, {
     "name": "Paragraph",
-    "html": "<div class='snItem'><p  sn-item='true' sn-item-click='onItemClick($id)' id='Paragraph'>This is a paragraph with a lot of text</p><div class='snText'>Paragraph</div></div>",
+    "html": "<div class='snOutDiv'><div class='snDiv'><div class='snItem'><p  sn-item='true' sn-item-click='onItemClick($id)' id='Paragraph'>This is a paragraph with a lot of text</p></div><div class='snText'>Paragraph</div></div></div>",
     "options": [{
     	"name": "text",
         "type": "text"
@@ -25,7 +25,7 @@
     }]
 }, {
     "name": "Button",
-    "html": "<div class='snItem'><input type='button' enabled='false' class='btn btn-default container_item' value='{{options[0].value}}'  sn-item='true' sn-item-click='onItemClick($id)' id='Button'><div class='snText'>Button</div></div>",
+    "html": "<div class='snOutDiv'><div class='snDiv'><div class='snItem'><input type='button' enabled='false' class='btn btn-default container_item' value='{{options[0].value}}'  sn-item='true' sn-item-click='onItemClick($id)' id='Button'></div><div class='snText'>Button</div></div></div>",
     "options": [{
     	"name": "text",
         "type": "text",
@@ -39,7 +39,7 @@
     }]
 }, {
     "name": "Textbox",
-    "html": "<div class='snDiv'><div class='snItem'><input type='text' class='form-control snItem' sn-item='true' sn-item-click='onItemClick($id)' id='Textbox' data-ng-value='options[0].value' ></div><div class='snText'>Textbox</div></div>",
+    "html": "<div class='snOutDiv'><div class='snDiv'><div class='snItem'><input type='text' class='form-control snItem' sn-item='true' sn-item-click='onItemClick($id)' id='Textbox' data-ng-value='options[0].value' ></div><div class='snText'>Textbox</div></div></div>",
     "options": [{
     	"name": "text",
         "type": "text",
@@ -51,4 +51,17 @@
 
 
 
+}, {
+    "name": "Heading",
+    "html": "<div class='snOutDiv'><div class='snDiv'><div class='snItem'><h2  sn-item='true' sn-item-click='onItemClick($id)' id='Paragraph'>This is a Heading with a lot of text</h2></div><div class='snText'>Heading</div></div></div>",
+    "options": [{
+        "name": "text",
+        "type": "text"
+    }, {
+        "name": "enabled",
+        "type": "checkbox"
+    }, {
+        "name": "font",
+        "type": "text"
+    }]
 }]

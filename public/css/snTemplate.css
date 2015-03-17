@@ -14,12 +14,16 @@ body {
     background-size: cover;
 }
 
+.snOutDiv {
 
+  display: block;
+  margin: 10px;
+
+}
 
 .snDiv {
-  border-color: blue;
-  border-width: 2px;
-  border-style: solid;
+
+  display: inline-block;
 }
 
 .snText {
@@ -28,11 +32,23 @@ body {
   background-color: transparent;
 }
 
+.snItem {
+    display: block;
+    border-color: blue;
+    border-width: 2px;
+    border-style: solid;
+}
+
 .snItem:hover + .snText {
   display: block;
   background-color: blue;
   color: white;
 }
+
+.snButton {
+    width: 
+}
+
 /********************************* Andrew Brown *********************************/
 .content-canvas {
     height: 1px;
