@@ -1,6 +1,6 @@
 [{
     "name": "Grid (4,8)",
-    "html": "<div class'layout_element'><div class='row clearfix snGrid'><div class='col-md-4 column snGridRow' ng-droppable=''>Left Side[CHILDREN]</div><div class='col-md-8 column snGridRow' ng-droppable=''>Right Side[CHILDREN]</div></div></div>",
+    "html": "<div class'layout_element'><div class='row clearfix snGrid'><div class='snDiv'><div class='col-md-4 column snGridRow snItem' ng-droppable=''>Left Side[CHILDREN]</div><div class='snText'>Left Side</div></div><div class='col-md-8 column snGridRow snItem' ng-droppable=''>Right Side[CHILDREN]</div><div class='snText'>Right Side</div></div></div>",
     "options": {
 
     }
@@ -12,7 +12,7 @@
     }
 }, {
     "name": "Paragraph",
-    "html": "<p  sn-item='true' sn-item-click='onItemClick($id)' id='Paragraph'>This is a paragraph with a lot of text</p>",
+    "html": "<div class='snItem'><p  sn-item='true' sn-item-click='onItemClick($id)' id='Paragraph'>This is a paragraph with a lot of text</p><div class='snText'>Paragraph</div></div>",
     "options": [{
     	"name": "text",
         "type": "text"
@@ -25,7 +25,7 @@
     }]
 }, {
     "name": "Button",
-    "html": "<input type='button' enabled='false' class='btn btn-default container_item' value='{{options[0].value}}'  sn-item='true' sn-item-click='onItemClick($id)' id='Button'>",
+    "html": "<div class='snItem'><input type='button' enabled='false' class='btn btn-default container_item' value='{{options[0].value}}'  sn-item='true' sn-item-click='onItemClick($id)' id='Button'><div class='snText'>Button</div></div>",
     "options": [{
     	"name": "text",
         "type": "text",
@@ -39,7 +39,7 @@
     }]
 }, {
     "name": "Textbox",
-    "html": "<input type='text' class='form-control' sn-item='true' sn-item-click='onItemClick($id)' id='Textbox' data-ng-value='options[0].value' >",
+    "html": "<div class='snDiv'><div class='snItem'><input type='text' class='form-control snItem' sn-item='true' sn-item-click='onItemClick($id)' id='Textbox' data-ng-value='options[0].value' ></div><div class='snText'>Textbox</div></div>",
     "options": [{
     	"name": "text",
         "type": "text",

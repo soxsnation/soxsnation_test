@@ -13,6 +13,26 @@ body {
     min-background-size: cover;
     background-size: cover;
 }
+
+
+
+.snDiv {
+  border-color: blue;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.snText {
+  display: none;
+  float:right;
+  background-color: transparent;
+}
+
+.snItem:hover + .snText {
+  display: block;
+  background-color: blue;
+  color: white;
+}
 /********************************* Andrew Brown *********************************/
 .content-canvas {
     height: 1px;
