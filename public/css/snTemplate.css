@@ -13,43 +13,47 @@ body {
     min-background-size: cover;
     background-size: cover;
 }
-
 .snOutDiv {
-
-  display: block;
-  margin: 10px;
-
+    display: block;
+    margin: 10px;
 }
-
 .snDiv {
-
-  display: inline-block;
+    display: inline-block;
 }
-
 .snText {
-  display: none;
-  float:right;
-  background-color: transparent;
+    position: absolute;
+    display: none;
+    float: right;
+    background-color: transparent;
 }
-
+.snText_selected {
+    position: absolute;
+    display: block;
+    float: left;
+    background-color: yellow;
+}
+.snText_unselected {
+    position: absolute;
+    display: none;
+    float: right;
+    background-color: transparent;
+}
 .snItem {
     display: block;
     border-color: blue;
     border-width: 2px;
     border-style: solid;
 }
-
 .snItem:hover + .snText {
-  display: block;
-  background-color: blue;
-  color: white;
+    display: block;
+    background-color: blue;
+    color: white;
 }
-
 .snButton {
-    width: 
+    width:
 }
-
 /********************************* Andrew Brown *********************************/
+
 .content-canvas {
     height: 1px;
     width: 1px;
@@ -62,16 +66,18 @@ body {
     margin: 15px;
 }
 #components {
-  color: white;
+    color: white;
 }
 #snDroppable {
     position: absolute;
     /*left: 250px;*/
+    
     top: 0;
-/*    width: 125px;
+    /*    width: 125px;
     height: 125px;
     background: #999;
     color: #fff;*/
+    
     padding: 10px;
 }
 .drop-item {
@@ -81,22 +87,22 @@ body {
     opacity: 0.8;
 }
 [ng-drag] {
-  position: fixed;
-  cursor: move;
+    position: fixed;
+    cursor: move;
 }
 [ng-drag].dragging {
     opacity: 0.5;
     z-index: 100;
 }
 [ng-drag].drag-over {
-    border: solid 1px red;
+    border: solid 2px red;
 }
-[ng-drop].drag-enter{
-        border:solid 5px red;
-    }
-    [sn-item].sn-selected{
-      border: solid 5px blue;
-    }
+[ng-drop].drag-enter {
+    border: solid 2px red;
+}
+[sn-item].sn-selected {
+    border: solid 2px green;
+}
 /********************************* BUILDER COMMON *********************************/
 
 .dashboard-view {

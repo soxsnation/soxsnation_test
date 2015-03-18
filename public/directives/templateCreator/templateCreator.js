@@ -6,6 +6,9 @@ angular.module('templateCreator', ['snDraggable']).directive('snTemplates', func
 
         function link(scope, element, attrs) {
 
+            var nextId = 1;
+
+
             function parse_tag(tag) {
                 var html = '<' + tag.tag;
 
@@ -99,6 +102,9 @@ angular.module('templateCreator', ['snDraggable']).directive('snTemplates', func
             }
 
             function init() {
+                scope.element_list = [];
+                scope.selected_element_id = 'none';
+                scope.css_class = 'snText_unselected';
 
                 load_data();
 
@@ -110,22 +116,106 @@ angular.module('templateCreator', ['snDraggable']).directive('snTemplates', func
                 // build_view();
             };
 
+            // function get_item_id(tag_obj_name) {
+            //     console.log('get_item_id: ' + tag_obj_name);
+            //     var id = tag_obj_name + nextId;
+            //     nextId += 1;
+            //     return id;
+            // }
+
+            function build_item_markup(ele_obj) {
+                console.log('build_item_markup');
+                console.log(ele_obj);
+                var item_markup = ele_obj.markup;
+
+                item_markup = item_markup.replace("[id]", ele_obj.id);
+                return item_markup;
+            }
+
+            function build_drop_area(ele_obj) {
+
+                cb(drop_markup);
+            }
+
+            function build_hover_div(ele_obj) {
+                console.log('build_hover_div');
+
+                var hover_markup = "<div class='snItem'>";
+                hover_markup += build_item_markup(ele_obj);
+                hover_markup += "</div><div class='snText'>" + ele_obj.id + " </div>";
+                return hover_markup;
+            }
+
+            function build_click_div(ele_obj) {
+                var c = "'({{selected_element_id}} == " + ele_obj.id +") ? \"snText_selected\" : \"snText_unselected\"'";
+                console.log('c: ' + c);
+                var click_markup = "<div class='snText-click' ng-class=" + c + ">" + ele_obj.id + " </div>";
+                return click_markup;
+            }
+
+            function build_outter_div(ele_obj) {
+
+                var markup = "<div class='snOutDiv' sn-item='true' sn-item-click='onItemClick($id)'  id='" + ele_obj.id +"'>";
+                markup += build_click_div(ele_obj);
+                markup += build_hover_div(ele_obj);
+                markup += "</div>";
+                return markup;
+
+
+            }
+
+            function build_element_markup(tag_obj) {
+
+                
+
+                console.log('build_element');
+                console.log(tag_obj);
+                if (tag_obj.hasOwnProperty('markup')) {
+                    return build_outter_div(tag_obj);
+                }
+
+                return '';
+            }
+
+            function build_element(tag_obj) {
+                var ele_id = tag_obj.name.concat(nextId.toString());
+                nextId++;
+
+                var ele = {
+                    id: ele_id,
+                    name: tag_obj.name,
+                    markup: tag_obj.markup,
+                    options: tag_obj.options,
+                    selected_class: 'snText_unselected'
+                };
+
+                return ele;
+            }
+
             scope.item_dropped = function(item, parent) {
                 for (var i = 0; i < scope.tags.length; ++i) {
                     if (scope.tags[i].name == item) {
+                        var new_element = build_element(scope.tags[i]);
+                        scope.element_list.push(new_element)
+
                         scope.options = scope.tags[i].options;
                         var center_viewport = element.find('canvas').parent();
                         // center_viewport.append("<p>" + item + "</p>");
-                        center_viewport.append(scope.tags[i].html);
+
+                        var markup = build_element_markup(new_element);
+                        console.log('markup: ' + markup);
+                        center_viewport.append(markup);
                         $compile(center_viewport.contents())(scope);
                     }
                 }
             }
 
             scope.item_selected = function(item) {
-                for (var i = 0; i < scope.tags.length; ++i) {
-                    if (scope.tags[i].name == item) {
-                        scope.options = scope.tags[i].options;
+                for (var i = 0; i < scope.element_list.length; ++i) {
+                    if (scope.element_list[i].id == item) {
+                        scope.options = scope.element_list[i].options;
+                        scope.selected_element_id = scope.element_list[i].id;
+
                         // var center_viewport = element.find('canvas').parent();
                         // center_viewport.append("<p>" + item + "</p>");
                         // center_viewport.append(scope.tags[i].html);
