@@ -89,20 +89,22 @@ body {
     color: white;
 }
 #snDroppable {
-    position: absolute;
-    /*left: 250px;*/
+    /*position: absolute;*/
+    position: relative;
+    height: 85%;
+    padding: 15px;
     
-    top: 0;
+    /*top: 0;*/
     /*    width: 125px;
     height: 125px;
     background: #999;
     color: #fff;*/
     
-    padding: 10px;
+
 }
 .drop-item {
-    height: 250px;
-    width: 600px;
+    height: 100%;
+    width: 100%;
     background-color: gray;
     opacity: 0.8;
 }

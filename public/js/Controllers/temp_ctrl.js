@@ -14,6 +14,10 @@ angular.module('soxsnationApp')
 
             $scope.template_data = template;
 
+            $scope.save_template = function(temp) {
+                console.log('OUTSIDE: save_template');
+            }
+
             $scope.save_layout = function() {
                 console.log('save_layout');
             }

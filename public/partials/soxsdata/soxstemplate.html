@@ -1,0 +1,20 @@
+<div data-ng-hide="show_template_creator">
+    <br />
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <input type="button" class="btn btn-standard" placeholder="search" data-ng-click="show_creator()" value="Create Template">
+                <br />
+                <input type="text" class="form-control" placeholder="search">
+            </div>
+            <div class="col-md-9" style="height: 500px;background-color: green;">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div data-ng-hide="show_template_list">
+    <sn-templates sn-template-data="template_data" sn-save="save_template"></sn-templates>
+</div>

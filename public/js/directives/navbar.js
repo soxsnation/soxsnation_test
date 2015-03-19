@@ -63,6 +63,10 @@ angular.module('soxsnationApp')
 								$scope.configAdminLinks = [];
 								if (soxsAuth.isAdminUser() !== false) {
 									$scope.configAdminLinks.push({
+										text: 'Template Setup',
+										value: 'SoxsTemplate'
+									});
+									$scope.configAdminLinks.push({
 										text: 'Data Setup',
 										value: 'SoxsData'
 									});
@@ -181,8 +185,8 @@ angular.module('soxsnationApp')
 												permissionIndex: 4,
 												fields: []
 										}
-										$scope.data_models.push(dragModel);
-										$scope.data_models.push(templateModel);
+										// $scope.data_models.push(dragModel);
+										// $scope.data_models.push(templateModel);
 
 										configMenuItems();
 										configAdminMenuItems();

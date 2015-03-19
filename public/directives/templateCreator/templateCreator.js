@@ -258,7 +258,8 @@ angular.module('templateCreator', ['snDraggable']).directive('snTemplates', func
             transclude: 'true',
             templateUrl: '/directives/templateCreator/templates/templateCreator.html',
             scope: {
-                snTemplateData: '='
+                snTemplateData: '=',
+                snSave: '='
             },
             controller: function($scope) {
                 console.log('templateCreator');
@@ -286,10 +287,12 @@ angular.module('templateCreator', ['snDraggable']).directive('snTemplates', func
                 $scope.save_layout = function() {
                     console.log('save_layout');
                     // console.log($scope.element_list);
-                    console.log(JSON.stringify($scope.element_list));
+                    // console.log(JSON.stringify($scope.element_list));
                     // $scope.snTemplateData = $scope.element_list[i];
 
-                    $scope.snTemplateData = JSON.parse(JSON.stringify($scope.element_list));
+                    // $scope.snTemplateData = JSON.parse(JSON.stringify($scope.element_list));
+
+                    $scope.snSave(JSON.parse(JSON.stringify($scope.element_list)));
                     
                 }
 
