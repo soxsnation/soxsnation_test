@@ -36,9 +36,11 @@
                     <canvas class="content-canvas"></canvas>
                 </div>
                 <br />
-                <div class="drop-item" sn-item="true" sn-item-click="onItemClick($id)" id="2"></div>
+                <input type="button"  class="btn btn-default" value="GET VALUES" data-ng-click="get_values()" />
+                <input type="button" class="btn btn-default" value="Save Layout" data-ng-click="save_layout()" />
+                <!-- <div class="drop-item" sn-item="true" sn-item-click="onItemClick($id)" id="2"></div>
                 <br />
-                <div class="drop-item" sn-item="true" sn-item-click="onItemClick($id)" id="3"></div>
+                <div class="drop-item" sn-item="true" sn-item-click="onItemClick($id)" id="3"></div> -->
             </div>
         </div>
 
@@ -52,18 +54,11 @@
                         <br />
                         <!-- <form role="form"> -->
                         <!-- <div class="form-group"> -->
-                        <div class="control-group clearfix" data-ng-repeat="option in options">
+                        
 
-                            <label>{{option.name}}</label>
-                            <div class="control">
-                                <input type='{{option.type}}' data-ng-model="option.value" />
-                            </div>
+                            <sn-element-property sn-element="selected_element"></sn-element-property>
 
-                        </div>
-                        <br />
-                        <br />
-                        <br />
-                        <input type="button" class="btn btn-default" value="Apply" data-ng-click="apply_options()" />
+                        
                         <!-- </div> -->
                         <!-- </form> -->
                     </div>

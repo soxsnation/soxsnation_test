@@ -1,0 +1,15 @@
+<div class="control-group clearfix" data-ng-repeat="option in snElement.options">
+    <div class="snElement_item">
+        <label>{{option.name}}</label>
+        <div class="control">
+            <input type='{{option.type}}' data-ng-model="option.value" />
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<br />
+<div ng-hide="is_empty">
+<input type="button"  class="btn btn-default" value="Apply" data-ng-click="apply_options()" />
+</div>
+

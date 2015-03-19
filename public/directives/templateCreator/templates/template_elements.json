@@ -13,7 +13,7 @@
 }, {
     "name": "Paragraph",
     "html": "<div class='snOutDiv'><div class='snDiv'><div class='snItem'><p  sn-item='true' sn-item-click='onItemClick($id)' id='Paragraph'>This is a paragraph with a lot of text</p></div><div class='snText'>Paragraph</div></div></div>",
-    "markup": "<p  sn-item='true' >This is a paragraph with a lot of text</p>",
+    "markup": "<p  sn-item='true' >{{elements.[id].options[0].value}}</p>",
     "options": [{
     	"name": "text",
         "type": "text"
@@ -27,7 +27,7 @@
 }, {
     "name": "Button",
     "html": "<div class='snOutDiv'><div class='snDiv'><div class='snItem'><input type='button' enabled='false' class='btn btn-default container_item' value='{{options[0].value}}'  sn-item='true' sn-item-click='onItemClick($id)' id='Button'></div><div class='snText'>Button</div></div></div>",
-    "markup": "<input type='button' enabled='false' class='btn btn-default container_item' value='{{options[0].value}}'>",
+    "markup": "<input type='button' enabled='false' class='btn btn-default container_item' value='{{elements.[id].options[0].value}}'>",
     "options": [{
     	"name": "text",
         "type": "text",
@@ -42,14 +42,15 @@
 }, {
     "name": "Textbox",
     "html": "<div class='snOutDiv'><div class='snDiv'><div class='snItem'><input type='text' class='form-control snItem' sn-item='true' sn-item-click='onItemClick($id)' id='Textbox' data-ng-value='options[0].value' ></div><div class='snText'>Textbox</div></div></div>",
-    "markup": "<input type='text' class='form-control snItem' data-ng-value='options[0].value' >",
+    "markup": "<input type='text' class='form-control snItem' data-ng-value='elements.[id].options[0].value'>",
     "options": [{
     	"name": "text",
         "type": "text",
         "value": "text"
     }, {
     	"name": "enabled",
-        "type": "checkbox"
+        "type": "checkbox",
+        "value": true
     }]
 
 
@@ -57,7 +58,7 @@
 }, {
     "name": "Heading",
     "html": "<div class='snOutDiv'><div class='snDiv'><div class='snItem'><h2  sn-item='true' sn-item-click='onItemClick($id)' id='Paragraph'>This is a Heading with a lot of text</h2></div><div class='snText'>Heading</div></div></div>",
-    "markup": "<h2>This is a Heading with a lot of text</h2>",
+    "markup": "<h2>a{{elements.[id].options[3].value}}</h2>",
     "options": [{
         "name": "text",
         "type": "text"
@@ -66,6 +67,9 @@
         "type": "checkbox"
     }, {
         "name": "font",
+        "type": "text"
+    }, {
+        "name": "value",
         "type": "text"
     }]
 }]

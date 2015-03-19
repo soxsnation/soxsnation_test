@@ -7,6 +7,7 @@ angular.module('templateCreator', ['snDraggable']).directive('snTemplates', func
         function link(scope, element, attrs) {
 
             var nextId = 1;
+            scope.elements = {};
 
 
             function parse_tag(tag) {
@@ -102,26 +103,21 @@ angular.module('templateCreator', ['snDraggable']).directive('snTemplates', func
             }
 
             function init() {
-                scope.element_list = [];
+                scope.element_list = scope.snTemplateData;
                 scope.selected_element_id = 'none';
-                scope.css_class = 'snText_unselected';
+                scope.selected_element = {};
+                
 
                 load_data();
-
-                // var center_viewport = element.find('center-viewport');
-                // var center_viewport = element.find('canvas'); //.parent();
-                // center_viewport.html('<p>This is the added content</p>')
-                // $compile(center_viewport.contents())(scope);
-
-                // build_view();
+                var markup = '';
+                var center_viewport = element.find('canvas').parent();
+                for (var i = 0; i < scope.element_list.length; ++i) {
+                    scope.elements[scope.element_list[i].id] = scope.element_list[i];
+                    markup += build_element_markup(scope.element_list[i]);
+                }
+                center_viewport.append(markup);
+                $compile(center_viewport.contents())(scope);
             };
-
-            // function get_item_id(tag_obj_name) {
-            //     console.log('get_item_id: ' + tag_obj_name);
-            //     var id = tag_obj_name + nextId;
-            //     nextId += 1;
-            //     return id;
-            // }
 
             function build_item_markup(ele_obj) {
                 console.log('build_item_markup');
@@ -140,16 +136,19 @@ angular.module('templateCreator', ['snDraggable']).directive('snTemplates', func
             function build_hover_div(ele_obj) {
                 console.log('build_hover_div');
 
-                var hover_markup = "<div class='snItem'>";
+                var hover_markup = "<div class='snItem {{elements." + ele_obj.id + ".css_box_class}}'>";
                 hover_markup += build_item_markup(ele_obj);
-                hover_markup += "</div><div class='snText'>" + ele_obj.id + " </div>";
+                hover_markup += "</div>";
+                hover_markup += '<span class="label label-info snText">' + ele_obj.id + '</span>';
                 return hover_markup;
             }
 
             function build_click_div(ele_obj) {
                 var c = "'({{selected_element_id}} == " + ele_obj.id +") ? \"snText_selected\" : \"snText_unselected\"'";
                 console.log('c: ' + c);
-                var click_markup = "<div class='snText-click' ng-class=" + c + ">" + ele_obj.id + " </div>";
+                // var click_markup = "<div class='snText-click' ng-class=\"{true: 'snText_selected'}[selected_element_id == "+ ele_obj.id +"] \">" + ele_obj.id + " </div>";
+                // var click_markup = "<div class='snText-click {{elements." + ele_obj.id + ".css_class}}'>" + ele_obj.id + "</div>";
+                var click_markup = '<div class="snText_header"><span class="label label-primary {{elements.' + ele_obj.id + '.css_class}}">' + ele_obj.id + '</span></div>';
                 return click_markup;
             }
 
@@ -168,8 +167,8 @@ angular.module('templateCreator', ['snDraggable']).directive('snTemplates', func
 
                 
 
-                console.log('build_element');
-                console.log(tag_obj);
+                // console.log('build_element');
+                // console.log(tag_obj);
                 if (tag_obj.hasOwnProperty('markup')) {
                     return build_outter_div(tag_obj);
                 }
@@ -184,9 +183,10 @@ angular.module('templateCreator', ['snDraggable']).directive('snTemplates', func
                 var ele = {
                     id: ele_id,
                     name: tag_obj.name,
-                    markup: tag_obj.markup,
+                    markup: tag_obj.markup.replace('[id]', ele_id),
                     options: tag_obj.options,
-                    selected_class: 'snText_unselected'
+                    css_class: 'snText_unselected',
+                    css_box_class: 'snText_hidebox'
                 };
 
                 return ele;
@@ -196,25 +196,46 @@ angular.module('templateCreator', ['snDraggable']).directive('snTemplates', func
                 for (var i = 0; i < scope.tags.length; ++i) {
                     if (scope.tags[i].name == item) {
                         var new_element = build_element(scope.tags[i]);
-                        scope.element_list.push(new_element)
+                        scope.element_list.push(new_element);
+                        scope.elements[new_element.id] = new_element;
 
                         scope.options = scope.tags[i].options;
                         var center_viewport = element.find('canvas').parent();
                         // center_viewport.append("<p>" + item + "</p>");
 
                         var markup = build_element_markup(new_element);
-                        console.log('markup: ' + markup);
+                        // console.log('markup: ' + markup);
                         center_viewport.append(markup);
                         $compile(center_viewport.contents())(scope);
                     }
                 }
             }
 
+            function update_css_classes() {
+                // console.log('update_css_classes: ' + scope.selected_element_id);
+                // console.log(scope.elements);
+                for (var ele in scope.elements) {
+                    // console.log('Checking item: ' + ele);
+                    if (ele == scope.selected_element_id) {
+                        // console.log('update_css_classes[snText_selected]: ' + ele);
+                        scope.elements[ele].css_class = 'snText_selected';
+                        scope.elements[ele].css_box_class = 'snText_showbox';
+                    }
+                    else {
+                        scope.elements[ele].css_class = 'snText_unselected';
+                        scope.elements[ele].css_box_class = 'snText_hidebox';
+                    }
+                }
+            }
+
             scope.item_selected = function(item) {
+                // console.log('item_selected: ' + item);
                 for (var i = 0; i < scope.element_list.length; ++i) {
                     if (scope.element_list[i].id == item) {
                         scope.options = scope.element_list[i].options;
+                        scope.selected_element = scope.element_list[i];
                         scope.selected_element_id = scope.element_list[i].id;
+                        update_css_classes();
 
                         // var center_viewport = element.find('canvas').parent();
                         // center_viewport.append("<p>" + item + "</p>");
@@ -222,7 +243,7 @@ angular.module('templateCreator', ['snDraggable']).directive('snTemplates', func
                         // $compile(center_viewport.contents())(scope);
                     }
                 }
-                console.log(scope.options);
+                // console.log(scope.options);
                 scope.$apply();
             }
 
@@ -236,8 +257,12 @@ angular.module('templateCreator', ['snDraggable']).directive('snTemplates', func
             link: link,
             transclude: 'true',
             templateUrl: '/directives/templateCreator/templates/templateCreator.html',
+            scope: {
+                snTemplateData: '='
+            },
             controller: function($scope) {
                 console.log('templateCreator');
+                
 
                 $scope.sidebar_left_state = "expanded-left";
                 $scope.sidebar_left_collapsed = "";
@@ -252,6 +277,20 @@ angular.module('templateCreator', ['snDraggable']).directive('snTemplates', func
                     console.log('apply_options');
                     console.log(JSON.stringify($scope.options));
                     // $scope.$apply();
+                }
+
+                $scope.get_values = function() {
+                    console.log($scope.element_list[0].options);
+                }
+
+                $scope.save_layout = function() {
+                    console.log('save_layout');
+                    // console.log($scope.element_list);
+                    console.log(JSON.stringify($scope.element_list));
+                    // $scope.snTemplateData = $scope.element_list[i];
+
+                    $scope.snTemplateData = JSON.parse(JSON.stringify($scope.element_list));
+                    
                 }
 
 
@@ -284,7 +323,7 @@ angular.module('templateCreator', ['snDraggable']).directive('snTemplates', func
                 }
 
                 $scope.onItemClick = function(item_id) {
-                    console.log("onItemClick: " + item_id);
+                    // console.log("onItemClick: " + item_id);
                     $scope.item_selected(item_id);
                     // for (var i = 0; i < $scope.tags.length; ++i) {
                     //     if ($scope.tags[i].name == item_id) {
@@ -295,6 +334,40 @@ angular.module('templateCreator', ['snDraggable']).directive('snTemplates', func
                 }
             }
         };
+    })
+.directive('snElementProperty', function($document) {
+        return {
+            restrict: 'E',
+            transclude: true,
+            scope: {
+                snElement: '='
+            },
+            templateUrl: '/directives/templateCreator/templates/right_panel.html',
+            controller: function($scope) {
+                $scope.is_empty = true; 
+
+                $scope.$watch('snElement', function() {
+                    console.log('snElementProperty Updated');
+                    console.log($scope.snElement);
+                    if ($scope.snElement.hasOwnProperty('id')) {
+                    $scope.is_empty = false;
+                }
+                })
+
+                $scope.show_element = function() {
+                    console.log('snElementProperty');
+                    console.log($scope.snElement);
+                }
+
+                $scope.apply_options = function() {
+console.log($scope.snElement.options[1].value);
+
+                }
+            }
+            // link:function(scope, elem, attr) {
+
+            // }
+        }
     })
     // .directive('snDroppable', function($document) {
     //     return {

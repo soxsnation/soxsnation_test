@@ -17,20 +17,23 @@ body {
     display: block;
     margin: 10px;
 }
-.snDiv {
+/*.snDiv {
     display: inline-block;
-}
+}*/
 .snText {
     position: absolute;
     display: none;
     float: right;
-    background-color: transparent;
+    /*background-color: transparent;*/
+}
+.snText_header {
+    display: block;
+    height: 16px;
 }
 .snText_selected {
-    position: absolute;
-    display: block;
-    float: left;
-    background-color: yellow;
+    display: inline-block;
+    float: right;
+    right:0px;
 }
 .snText_unselected {
     position: absolute;
@@ -38,19 +41,36 @@ body {
     float: right;
     background-color: transparent;
 }
-.snItem {
-    display: block;
+.snText_hidebox {
+
+}
+.snText_showbox {
     border-color: blue;
     border-width: 2px;
-    border-style: solid;
+    border-style: solid; 
+}
+.snItem {
+    display: block;
+    min-height: 15px;
+    
+}
+.snItem:hover {
+    border-color: blue;
+    border-width: 2px;
+    border-style: solid;    
 }
 .snItem:hover + .snText {
-    display: block;
-    background-color: blue;
+    display: inline-block;
+    /*background-color: blue;*/
     color: white;
+    
 }
 .snButton {
     width:
+}
+
+.snElement_item {
+    margin: 5px;
 }
 /********************************* Andrew Brown *********************************/
 
@@ -101,7 +121,7 @@ body {
     border: solid 2px red;
 }
 [sn-item].sn-selected {
-    border: solid 2px green;
+    /*border: solid 2px green;*/
 }
 /********************************* BUILDER COMMON *********************************/
 
