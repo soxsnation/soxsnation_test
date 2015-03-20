@@ -103,20 +103,21 @@ angular.module('templateCreator', ['snDraggable']).directive('snTemplates', func
             }
 
             function init() {
-                scope.element_list = scope.snTemplateData;
+                scope.element_list = [];//scope.snTemplateData;
                 scope.selected_element_id = 'none';
                 scope.selected_element = {};
                 
 
-                load_data();
-                var markup = '';
-                var center_viewport = element.find('canvas').parent();
-                for (var i = 0; i < scope.element_list.length; ++i) {
-                    scope.elements[scope.element_list[i].id] = scope.element_list[i];
-                    markup += build_element_markup(scope.element_list[i]);
-                }
-                center_viewport.append(markup);
-                $compile(center_viewport.contents())(scope);
+                // load_data();
+
+                // var markup = '';
+                // var center_viewport = element.find('canvas').parent();
+                // for (var i = 0; i < scope.element_list.length; ++i) {
+                //     scope.elements[scope.element_list[i].id] = scope.element_list[i];
+                //     markup += build_element_markup(scope.element_list[i]);
+                // }
+                // center_viewport.append(markup);
+                // $compile(center_viewport.contents())(scope);
             };
 
             function build_item_markup(ele_obj) {
@@ -184,7 +185,7 @@ angular.module('templateCreator', ['snDraggable']).directive('snTemplates', func
                     id: ele_id,
                     name: tag_obj.name,
                     markup: tag_obj.markup.replace('[id]', ele_id),
-                    options: tag_obj.options,
+                    properties: tag_obj.properties,
                     css_class: 'snText_unselected',
                     css_box_class: 'snText_hidebox'
                 };
@@ -193,13 +194,13 @@ angular.module('templateCreator', ['snDraggable']).directive('snTemplates', func
             }
 
             scope.item_dropped = function(item, parent) {
-                for (var i = 0; i < scope.tags.length; ++i) {
-                    if (scope.tags[i].name == item) {
-                        var new_element = build_element(scope.tags[i]);
+                for (var i = 0; i < scope.snTemplateElements.length; ++i) {
+                    if (scope.snTemplateElements[i].name == item) {
+                        var new_element = build_element(scope.snTemplateElements[i]);
                         scope.element_list.push(new_element);
                         scope.elements[new_element.id] = new_element;
 
-                        scope.options = scope.tags[i].options;
+                        scope.properties = scope.snTemplateElements[i].properties;
                         var center_viewport = element.find('canvas').parent();
                         // center_viewport.append("<p>" + item + "</p>");
 
@@ -232,7 +233,7 @@ angular.module('templateCreator', ['snDraggable']).directive('snTemplates', func
                 // console.log('item_selected: ' + item);
                 for (var i = 0; i < scope.element_list.length; ++i) {
                     if (scope.element_list[i].id == item) {
-                        scope.options = scope.element_list[i].options;
+                        scope.properties = scope.element_list[i].properties;
                         scope.selected_element = scope.element_list[i];
                         scope.selected_element_id = scope.element_list[i].id;
                         update_css_classes();
@@ -243,7 +244,6 @@ angular.module('templateCreator', ['snDraggable']).directive('snTemplates', func
                         // $compile(center_viewport.contents())(scope);
                     }
                 }
-                // console.log(scope.options);
                 scope.$apply();
             }
 
@@ -258,6 +258,7 @@ angular.module('templateCreator', ['snDraggable']).directive('snTemplates', func
             transclude: 'true',
             templateUrl: '/directives/templateCreator/templates/templateCreator.html',
             scope: {
+                snTemplateElements: '=',
                 snTemplateData: '=',
                 snSave: '=',
                 snCancel: '='
@@ -275,14 +276,14 @@ angular.module('templateCreator', ['snDraggable']).directive('snTemplates', func
                 $scope.id2 = "Second";
                 $scope.id3 = "Third";
 
-                $scope.apply_options = function() {
-                    console.log('apply_options');
-                    console.log(JSON.stringify($scope.options));
+                $scope.apply_properties = function() {
+                    console.log('apply_properties');
+                    console.log(JSON.stringify($scope.properties));
                     // $scope.$apply();
                 }
 
                 $scope.get_values = function() {
-                    console.log($scope.element_list[0].options);
+                    console.log($scope.element_list[0].properties);
                 }
 
                 $scope.cancel = function() {
@@ -336,7 +337,7 @@ angular.module('templateCreator', ['snDraggable']).directive('snTemplates', func
                     // for (var i = 0; i < $scope.tags.length; ++i) {
                     //     if ($scope.tags[i].name == item_id) {
                     //         console.log('Found item_id: ' + item_id);
-                    //         $scope.options = $scope.tags[i].options;
+                    //         $scope.properties = $scope.tags[i].properties;
                     //     }
                     // }
                 }
@@ -367,8 +368,8 @@ angular.module('templateCreator', ['snDraggable']).directive('snTemplates', func
                     console.log($scope.snElement);
                 }
 
-                $scope.apply_options = function() {
-console.log($scope.snElement.options[1].value);
+                $scope.apply_properties = function() {
+console.log($scope.snElement.properties[1].value);
 
                 }
             }

@@ -1,76 +1,106 @@
-// /* soxs_service.js
-//  *
-//  * Author(s):  Andrew Brown
-//  * Date:       10/31/2014
-//  *
-//  */
+/* soxs_service.js
+ *
+ * Author(s):  Andrew Brown
+ * Date:       3/20/2015
+ *
+ */
 
 
-// angular.module('soxsnationApp')
-//   .factory('soxsAuthService', function soxsAuthService($http, Session, $location, $rootScope, $window) {
+angular.module('soxsnationApp')
+    .factory('soxsService', ["soxsAuth", "$q",
+        function(soxsAuth, $q) {
 
-// $rootScope.currentToken = $window.sessionStorage.currentToken || null;
-// $rootScope.currentUser = $window.sessionStorage.currentUser || null;
+            function format_template_element(te) {
+                var nte = {
+                    name: te.name,
+                    markup: te.markup,
+                    properties: JSON.parse(te.properties)
+                }
+                return nte;
+            }
 
-// return {
-
-// 	login: function (credentials, cb) {
-// 		$http({
-//                 method: 'GET',
-//                 url: '/api/session/login',
-//                 headers: {
-//                     Authorization: 'Basic ' + Base64.encode(credentials.userName + ':' + credentials.password)
-//                 },
-//                 xhrFields: {
-//                     withCredentials: true
-//                 }
-//             }).then(function(res) {
-//             	Session.create(res.data.sessionId, res.data._id, res.data.permissions);
-//             	return res.data;
-//             })
-// 	}
+/*****************************************************************************************
+* soxs Templates Elements
+*****************************************************************************************/
 
 
-// }
+            function get_template_elements() {
+                var url = '/api/soxs/template_elements';
+                var deferred = $q.defer();
+
+                soxsAuth.http_get(url)
+                    .then(function(data) {
+                        var te_list = [];
+                        for (var i = 0; i < data.length; ++i) {
+                            te_list.push(format_template_element(data[i]));
+                        }
+                        deferred.resolve(te_list);
+                    }, function(err) {
+                        console.log('ERROR: ' + err);
+                        deferred.reject(err);
+                    });
+                return deferred.promise;
+            }
+
+            function insert_template_element(te) {
+                var url = '/api/soxs/template_element';
+                var deferred = $q.defer();
+
+                soxsAuth.http_post(url, te)
+                    .then(function(data) {
+                        deferred.resolve(data);
+                    }, function(err) {
+                        console.log('ERROR: ' + err);
+                        deferred.reject(err);
+                    })
+                return deferred.promise;
+            }
+
+/*****************************************************************************************
+* soxs Templates 
+*****************************************************************************************/
+
+            function get_templates() {
+                var url = '/api/soxs/templates';
+                var deferred = $q.defer();
+
+                soxsAuth.http_get(url)
+                    .then(function(data) {
+                        var te_list = [];
+                        for (var i = 0; i < data.length; ++i) {
+                            te_list.push(format_template_element(data[i]));
+                        }
+                        deferred.resolve(te_list);
+                    }, function(err) {
+                        console.log('ERROR: ' + err);
+                        deferred.reject(err);
+                    });
+                return deferred.promise;
+            }
+
+            function insert_template(t) {
+                var url = '/api/soxs/template';
+                var deferred = $q.defer();
+
+                soxsAuth.http_post(url, t)
+                    .then(function(data) {
+                        deferred.resolve(data);
+                    }, function(err) {
+                        console.log('ERROR: ' + err);
+                        deferred.reject(err);
+                    })
+                return deferred.promise;
+            }
 
 
 
-//   // 	var soxsAuthService = {};
 
-//   // 	soxsAuthService.login = function (credentials) {
-//   	// 	return $http({
-//    //              method: 'GET',
-//    //              url: '/api/session/login',
-//    //              headers: {
-//    //                  Authorization: 'Basic ' + Base64.encode(userName + ':' + password)
-//    //              },
-//    //              xhrFields: {
-//    //                  withCredentials: true
-//    //              }
-//    //          }).then(function(res) {
-//    //          	Session.create(res.data.sessionId, res.data._id, res.data.permissions);
-//    //          	return res.data;
-//    //          })
+            return {
+                get_template_elements: get_template_elements,
+                insert_template_element: insert_template_element,
+                get_templates: get_templates,
+                insert_template: insert_template
+            }
 
-//   	// }
-
-//   // 	soxsAuthService.isAuthenticated = function () {
-//   //   return !!Session.userId;
-//   // };
-//   //   return soxsAuthService;
-
-
-//   })
-// //   .service('Session', function () {
-// //   this.create = function (sessionId, userId, permissions) {
-// //     this.id = sessionId;
-// //     this.userId = userId;
-// //     this.permissions = permissions;
-// //   };
-// //   this.destroy = function () {
-// //     this.id = null;
-// //     this.userId = null;
-// //     this.permissions = null;
-// //   };
-// //   return this;
-// // })
+        }
+    ])

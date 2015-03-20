@@ -1,4 +1,4 @@
-/* soxsTemplate.js
+/* soxsTemplateItem.js
  *
  * Author(s):  Andrew Brown
  * Date:       3/19/2015
@@ -8,7 +8,7 @@
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
-var soxsTemplate = new Schema({
+var soxsTemplateElement = new Schema({
 	name: {
 		type: String,
 		default: '',
@@ -19,19 +19,14 @@ var soxsTemplate = new Schema({
 		default: '',
 		trim: true
 	},
-	settings: {
-		type: String,
-		default: '',
-		trim: true
-	},
-	created_by: {
+	properties: {
 		type: String,
 		default: '',
 		trim: true
 	}
 });
 
-soxsTemplate.methods = {
+soxsTemplateElement.methods = {
 
 	update: function(data, cb) {
 
@@ -45,7 +40,7 @@ soxsTemplate.methods = {
 }
 
 
-mongoose.model('soxsTemplate', soxsTemplate)
+mongoose.model('soxsTemplateElement', soxsTemplateElement)
 
 
 

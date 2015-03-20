@@ -150,12 +150,29 @@ module.exports = function(app, passport) {
 	app.post('/api/soxsType/update/:id', soxsController.updateType);
 
 /*****************************************************************************************
+* soxsTemplatesElements Routes
+*****************************************************************************************/
+
+	app.get('/api/soxs/template_elements', soxsController.get_template_elements);
+	app.get('/api/soxs/template_element/:id', soxsController.get_template_element);
+	app.post('/api/soxs/template_element', soxsController.post_template_element);
+	app.put('/api/soxs/template_element/:id', soxsController.put_template_element);
+	app.delete('/api/soxs/template_element/:id', soxsController.delete_template_element);
+
+/*****************************************************************************************
 * soxsTemplates Routes
 *****************************************************************************************/
 
-	app.get('/api/soxsTemplate/_all', soxsController.getTemplates);
-	app.get('/api/soxsTemplate/:id', soxsController.getTemplate);
-	app.post('/api/soxsTemplate/create', soxsController.createSoxsTemplate);
+	app.get('/api/soxs/templates', soxsController.get_templates);
+	app.get('/api/soxs/template/:id', soxsController.get_template);
+	app.post('/api/soxs/template', soxsController.post_template);
+	app.put('/api/soxs/template/:id', soxsController.put_template);
+	app.delete('/api/soxs/template/:id', soxsController.delete_template);
+
+	// app.get('/api/soxsTemplate/_all', soxsController.getTemplates);
+	// app.get('/api/soxsTemplate/:id', soxsController.getTemplate);
+	// app.post('/api/soxsTemplate/create', soxsController.createSoxsTemplate);
+
 
 
 

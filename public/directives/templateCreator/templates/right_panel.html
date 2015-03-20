@@ -1,8 +1,8 @@
-<div class="control-group clearfix" data-ng-repeat="option in snElement.options">
+<div class="control-group clearfix" data-ng-repeat="property in snElement.properties">
     <div class="snElement_item">
-        <label>{{option.name}}</label>
+        <label>{{property.name}}</label>
         <div class="control">
-            <input type='{{option.type}}' data-ng-model="option.value" />
+            <input type='{{property.type}}' data-ng-model="property.value" />
         </div>
     </div>
 </div>

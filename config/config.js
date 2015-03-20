@@ -1,6 +1,7 @@
 module.exports = {
     server: 'server.soxsnation.com',
     // server: '54.201.189.1',
+    debug_mode: true,
     port: 27017,
     development: {
         db: 'staging_soxsnation',
