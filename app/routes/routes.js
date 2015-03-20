@@ -149,6 +149,14 @@ module.exports = function(app, passport) {
 	app.post('/api/soxsType/create', soxsController.createType);
 	app.post('/api/soxsType/update/:id', soxsController.updateType);
 
+/*****************************************************************************************
+* soxsTemplates Routes
+*****************************************************************************************/
+
+	app.get('/api/soxsTemplate/_all', soxsController.getTemplates);
+	app.get('/api/soxsTemplate/:id', soxsController.getTemplate);
+	app.post('/api/soxsTemplate/create', soxsController.createSoxsTemplate);
+
 
 
 /*****************************************************************************************

@@ -259,7 +259,8 @@ angular.module('templateCreator', ['snDraggable']).directive('snTemplates', func
             templateUrl: '/directives/templateCreator/templates/templateCreator.html',
             scope: {
                 snTemplateData: '=',
-                snSave: '='
+                snSave: '=',
+                snCancel: '='
             },
             controller: function($scope) {
                 console.log('templateCreator');
@@ -282,6 +283,10 @@ angular.module('templateCreator', ['snDraggable']).directive('snTemplates', func
 
                 $scope.get_values = function() {
                     console.log($scope.element_list[0].options);
+                }
+
+                $scope.cancel = function() {
+                    $scope.snCancel();
                 }
 
                 $scope.save_layout = function() {

@@ -31,14 +31,22 @@ var env = 'development';
 // Bootstrap db connection
 // Connect to mongodb
 var connect = function() {
+
+	// var creds = config[env].options.username + ":" + config[env].options.password + "@";
+	// var connectionString = "mongodb://"   + config.server + ':27017/' + config[env].db;
+	// console.log('connectionString: ' + connectionString);
+
+	// mongoose.connect(connectionString , config[env].options);
+
 	var options = {
+		// user: 'soxsnation',
+		// pass: 's0xn@t10n'
 		server: {
 			socketOptions: {
 				keepAlive: 1
 			}
 		}
 	}
-
 	mongoose.connect('mongodb://' + config.server + '/' + config[env].db, options);
 }
 connect();

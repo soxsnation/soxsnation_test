@@ -129,6 +129,7 @@ soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
         }
 
         function http_post(url, data) {
+            console.log('http_post: ' + JSON.stringify(data));
             var deferred = $q.defer();
 
             $http({

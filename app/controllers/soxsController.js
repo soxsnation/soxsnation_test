@@ -10,6 +10,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var soxsSchema = mongoose.model('soxsSchema');
 var soxsType = mongoose.model('soxsType');
+var soxsTemplate = mongoose.model('soxsTemplate');
 var mailer = require('../lib/mailer');
 
 function parse_schema_fieldItems(schema, cb) {
@@ -164,6 +165,39 @@ exports.getSchemas = function(req, res, next) {
 
 		return res.json(models);
 	});
+}
+
+exports.getTemplate = function(req, res, next) {
+	console.log('exports.getTemplate');
+	res.send(200);
+}
+
+exports.getTemplates = function(req, res, next) {
+	console.log('exports.getTemplates');
+	soxsTemplate.find({}).exec(function(err, models) {
+		if (err) {
+			return next(err);
+		}
+		if (!models) {
+			return next(new Error('Failed to load models: ' + req.params.type));
+		}
+
+		return res.json(models);
+	});
+}
+
+exports.createSoxsTemplate = function(req, res, next) {
+	console.log('exports.createSoxsTemplate');
+	console.log(JSON.stringify(req.body));
+	var sch = new soxsTemplate(req.body);
+	sch.save(function(err) {
+		if (err) {
+			console.log(err);
+			return res.send(403);
+		} else {
+			res.send(200);
+		}
+	})
 }
 
 /*****************************************************************************************
