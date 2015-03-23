@@ -18,6 +18,20 @@ angular.module('soxsnationApp')
 			// 	return $http.get(URL + 'templates.json');
 			// };
 
+			var data = [];
+
+			var soxs_types = function() {
+				console.log('soxs_types: ' + data.length);
+				var deferred = $q.defer();
+				if (data.length == 0) {
+					return get_soxs_types();
+				}
+				else {
+					deferred.resolve(data);
+				}
+				return deferred.promise;
+			}
+
 			var get_soxs_types = function() {
 				console.log('get_soxs_types');
 				var deferred = $q.defer();
@@ -26,14 +40,16 @@ angular.module('soxsnationApp')
 					.then(function(data) {
 						
 						for (var i = 0; i < data.length; ++i) {
+							console.log('Data: ' + data[i]);
 							soxs_types.push(data[i]);
+							// data.push(data[i]);
 						}
+						// data.soxs_types = soxs_types;
 						deferred.resolve(soxs_types);
-						console.log(soxs_types);
+						// console.log(soxs_types);
 
 					})
 					// return soxs_types;
-
 				return deferred.promise;
 			};
 

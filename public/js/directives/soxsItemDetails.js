@@ -7,16 +7,27 @@
 
 
 angular.module('soxsnationApp')
-	.directive('soxsitemdetails', ['soxsAuth', '$location',
-		function(soxsAuth, $location) {
-			return {
-				restrict: 'E',
-				transclude: true,
-				templateUrl: '../partials/soxsItems/directives/soxsItemDetails.html',
-				controller: function($scope) {
+    .directive('soxsitemdetails', ['soxsAuth', '$location',
+        function(soxsAuth, $location) {
 
-				}
-			}
-		}
-		]);
+        	function link(scope, element, attrs) {
 
+
+
+        	}
+
+            return {
+                restrict: 'E',
+                link: link,
+                transclude: true,
+                templateUrl: '../partials/soxsItems/directives/soxsItemDetails.html',
+                controller: function($scope) {
+
+                	console.log('scope.currentDataModel');
+        			console.log($scope.currentDataModel);
+
+
+                }
+            }
+        }
+    ]);

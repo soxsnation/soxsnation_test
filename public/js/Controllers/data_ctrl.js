@@ -47,14 +47,14 @@ angular.module('soxsnationApp')
 							if (ignoreProps.indexOf(dm[i].name) == -1) {
 
 								console.log('Prop name: ' + dm[i].name);
-								console.log(dm[i]);
+								// console.log(dm[i]);
 								var field = {
 									name: dm[i].name,
 									isEditable: false,
 									buttonText: 'Edit',
 									type_id: dm[i].type_id
 								};
-								console.log('Adding Field: ' + JSON.stringify(field));
+								// console.log('Adding Field: ' + JSON.stringify(field));
 								$scope.currentDataModel.push(field);
 							}
 						}
@@ -89,8 +89,8 @@ angular.module('soxsnationApp')
 						// 		$scope.currentDataModel.push(field);
 						// 	}
 						// }
-						console.log('$scope.currentDataModel');
-						console.log($scope.currentDataModel);
+						// console.log('$scope.currentDataModel');
+						// console.log($scope.currentDataModel);
 
 
 					}, function(err) {
