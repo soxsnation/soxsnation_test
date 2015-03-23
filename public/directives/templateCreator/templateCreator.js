@@ -1,6 +1,8 @@
 angular.module('templateCreator', []);
 
-angular.module('templateCreator', ['snDraggable']).directive('snTemplates', function($http, $compile) {
+angular.module('templateCreator', ['snDraggable'])
+.directive('snTemplates', ['$http', '$compile', 'snTemplateService', 
+    function($http, $compile, snTemplateService) {
 
 
 
@@ -166,7 +168,7 @@ angular.module('templateCreator', ['snDraggable']).directive('snTemplates', func
 
             function build_element_markup(tag_obj) {
 
-                
+                return snTemplateService.build_element(tag_obj);
 
                 // console.log('build_element');
                 // console.log(tag_obj);
@@ -343,7 +345,7 @@ angular.module('templateCreator', ['snDraggable']).directive('snTemplates', func
                 }
             }
         };
-    })
+    }])
 .directive('snElementProperty', function($document) {
         return {
             restrict: 'E',
