@@ -25,15 +25,24 @@ angular.module('soxsnationApp')
             }
 
             function build_drop_area(ele_obj) {
-
-
+                var drop_markup = "<div class='snAcceptDrop'>";
+                drop_markup += build_item_markup(ele_obj);
+                drop_markup += "</div";
+                return drop_markup;
             }
 
+
+
             function build_hover_div(ele_obj) {
-                // console.log('build_hover_div');
+                console.log('build_hover_div');
 
                 var hover_markup = "<div class='snItem {{elements." + ele_obj.id + ".css_box_class}}'>";
-                hover_markup += build_item_markup(ele_obj);
+                if (ele_obj.hasOwnProperty("settings") && ele_obj.settings.children) {
+                    hover_markup += build_drop_area(ele_obj);
+                }
+                else {
+                    hover_markup += build_item_markup(ele_obj);
+                }
                 hover_markup += "</div>";
                 hover_markup += '<span class="label label-info snText">' + ele_obj.id + '</span>';
                 return hover_markup;
@@ -58,8 +67,8 @@ angular.module('soxsnationApp')
             }
 
             function build_element_markup(tag_obj) {
-                // console.log('build_element');
-                // console.log(tag_obj);
+                console.log('build_element');
+                console.log(tag_obj);
                 if (tag_obj.hasOwnProperty('markup')) {
                     return build_outter_div(tag_obj);
                 }

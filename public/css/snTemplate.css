@@ -72,6 +72,15 @@ body {
 .snElement_item {
     margin: 5px;
 }
+
+.snAcceptDrop:hover {
+    border-style: dashed;
+    border-color: green;
+    border-width: 2px;
+    margin-bottom: 15px;
+    background-color: red;
+}
+
 /********************************* Andrew Brown *********************************/
 
 .content-canvas {

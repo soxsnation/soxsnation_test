@@ -23,6 +23,11 @@ var soxsTemplateElement = new Schema({
 		type: String,
 		default: '',
 		trim: true
+	},
+	settings: {
+		type: String,
+		default: '',
+		trim: true
 	}
 });
 

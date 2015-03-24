@@ -188,6 +188,7 @@ angular.module('templateCreator', ['snDraggable'])
                     name: tag_obj.name,
                     markup: tag_obj.markup.replace('[id]', ele_id),
                     properties: tag_obj.properties,
+                    settings: tag_obj.settings,
                     css_class: 'snText_unselected',
                     css_box_class: 'snText_hidebox'
                 };

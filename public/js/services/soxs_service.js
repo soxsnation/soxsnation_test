@@ -14,8 +14,15 @@ angular.module('soxsnationApp')
                 var nte = {
                     name: te.name,
                     markup: te.markup,
-                    properties: JSON.parse(te.properties)
+                    properties: JSON.parse(te.properties),
+                    settings: {}
                 }
+                if (te.settings.length > 2) {
+                    console.log('Settings: ' + te.name);
+                    console.log(JSON.parse(te.settings));
+                    nte.settings = JSON.parse(te.settings);
+                }
+
                 return nte;
             }
 
