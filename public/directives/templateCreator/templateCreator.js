@@ -197,11 +197,16 @@ angular.module('templateCreator', ['snDraggable'])
                     return ele;
                 }
 
+                scope.clear_template = function() {
+                    var markup = '<canvas class="content-canvas"></canvas>';
+                    var center_viewport = element.find('canvas').parent();
+                    center_viewport.html(markup);
+                    $compile(center_viewport.contents())(scope);
+                }
+
                 scope.item_dropped = function(item, parent) {
                     console.log('item_dropped: ' + parent + ':' + scope.drop_current)
                     if (parent == scope.drop_current) {
-                        console.log('found dropped element');
-
                         var new_element = {};
                         for (var i = 0; i < scope.snTemplateElements.length; ++i) {
                             if (scope.snTemplateElements[i].name == item) {
@@ -215,7 +220,7 @@ angular.module('templateCreator', ['snDraggable'])
                         scope.template = snTemplateService.add_element(scope.template, new_element, parent);
                         var markup = snTemplateService.build_template(scope.template);
                         var center_viewport = element.find('canvas').parent();
-                        center_viewport.append(markup);
+                        center_viewport.html(markup);
                         $compile(center_viewport.contents())(scope);
 
                         // for (var i = 0; i < scope.snTemplateElements.length; ++i) {
@@ -293,6 +298,7 @@ angular.module('templateCreator', ['snDraggable'])
                     $scope.drop_current = "";
                     $scope.drop_stack = [];
                     $scope.sncurrent = "none";
+                    $scope.isDragging = false;
                     $scope.sidebar_left_state = "expanded-left";
                     $scope.sidebar_left_collapsed = "";
                     $scope.sidebar_right_state = "expanded-right";
@@ -328,6 +334,10 @@ angular.module('templateCreator', ['snDraggable'])
 
                     }
 
+                    $scope.clear = function() {
+                        $scope.clear_template();
+                    }
+
 
                     $scope.sidebar_collapser_left_click = function() {
                         console.log('sidebar_collapser_left_click');
@@ -355,26 +365,32 @@ angular.module('templateCreator', ['snDraggable'])
                         console.log("Dropped Element: " + JSON.stringify(data));
                         console.log("Element Dropped on: " + JSON.stringify(id));
                         console.log("$scope.drop_current: " + $scope.drop_current);
+                        $scope.isDragging = false;
                         $scope.item_dropped(data, id);
                     }
 
                     $scope.onDropEnter = function(id) {
-                        console.log('onDragEnter: ' + id);
+                        console.log('onDropEnter: ' + id);
+                        $scope.isDragging = true;
                         $scope.drop_current = id;
                         $scope.drop_stack.push(id);
+                        console.log("$scope.drop_current: " + $scope.drop_current);
                     }
 
                     $scope.onDropLeave = function(id) {
-                        console.log('onDragLeave: ' + id);
+                        console.log('onDropLeave: ' + id);
                         $scope.drop_stack.pop();
                         if ($scope.drop_stack.length > 0) {
                             $scope.drop_current = $scope.drop_stack[$scope.drop_stack.length - 1];
                         } else {
                             $scope.drop_current = "";
+                            $scope.isDragging = false;
                         }
+                        console.log("$scope.drop_current: " + $scope.drop_current);
                     }
 
                     $scope.onItemClick = function(item_id) {
+                        console.log("$scope.drop_current: " + $scope.drop_current);
                         // console.log("onItemClick: " + item_id);
                         $scope.item_selected(item_id);
                         // for (var i = 0; i < $scope.tags.length; ++i) {

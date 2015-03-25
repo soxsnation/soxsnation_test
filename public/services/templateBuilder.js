@@ -15,7 +15,9 @@ angular.module('soxsnationApp')
         		DIV: sn_div,
         		Button: sn_button,
         		Paragraph: sn_paragraph,
-        		Heading: sn_heading
+        		Heading: sn_heading,
+                Textbox: sn_textbox,
+                Grid: sn_grid
         	}
 
         	function sn_div(elm) {
@@ -23,11 +25,14 @@ angular.module('soxsnationApp')
         		var html = '<div>DIV';
 
         		for (var i = 0; i < elm.children.length; ++i) {
-            		html += build_element_markup(schema.children[i]);
+                    console.log(elm.children[i]);
+            		html += snTemplateElements[elm.children[i].name](elm.children[i]);
             	}
 
         		html += '</div>';
         		elm.markup = html;
+                console.log('div markup:');
+                console.log(html);
         		return build_outter_div(elm);
         		// return html;
         	}
@@ -59,6 +64,30 @@ angular.module('soxsnationApp')
         		// return html;
         	}
 
+            function sn_textbox(elm) {
+                console.log('sn_textbox');
+
+                var html = '<input type="text" class="form-control snItem" data-ng-value="elements.[id].properties[0].value">';
+                elm.markup = html;
+                return build_outter_div(elm);
+            }
+
+            function sn_grid(elm) {
+                console.log('sn_grid');
+
+                var html = '<div class="container"><div class="row clearfix"><div class="col-md-12 column">';
+
+                for (var i = 0; i < elm.children.length; ++i) {
+                    console.log(elm.children[i]);
+                    html += snTemplateElements[elm.children[i].name](elm.children[i]);
+                }
+
+                html += '</div></div></div>';
+                elm.markup = html;
+                return build_outter_div(elm);
+
+            }
+
         	
 
             /*****************************************************************************************
@@ -75,7 +104,11 @@ angular.module('soxsnationApp')
             }
 
             function build_drop_area(ele_obj) {
-                var drop_markup = "<div class='snAcceptDrop' ng-drop='true' ng-drop-success='onDropComplete1($data,$event,$id)' id='" + ele_obj.id  +"'>";
+                var drop_markup = "<div snAcceptDrop='{{isDragging}}' ng-drop='true'";
+                drop_markup += " ng-drop-success='onDropComplete1($data,$event,$id)'";
+                drop_markup += " ng-drop-enter='onDropEnter($id)'";
+                drop_markup += " ng-drop-leave='onDropLeave($id)'";
+                drop_markup += " id='" + ele_obj.id  +"'>";
                 drop_markup += build_item_markup(ele_obj);
                 drop_markup += "</div";
                 return drop_markup;
@@ -84,9 +117,9 @@ angular.module('soxsnationApp')
 
 
             function build_hover_div(ele_obj) {
-                console.log('build_hover_div');
+                // console.log('build_hover_div');
 
-                var hover_markup = "<div class='snItem {{elements." + ele_obj.id + ".css_box_class}}'>";
+                var hover_markup = "<div class='snItem {{elements." + ele_obj.id + ".css_box_class}}' name='" + ele_obj.id + "'>";
                 if (ele_obj.hasOwnProperty("settings") && ele_obj.settings.children) {
                     hover_markup += build_drop_area(ele_obj);
                 }
@@ -144,9 +177,9 @@ angular.module('soxsnationApp')
             function build_template(schema) {
             	console.log('build_template');
             	console.log(schema);
-            	var html = '';
+            	var html = '<canvas class="content-canvas"></canvas>';
             	for (var i = 0; i < schema.children.length; ++i) {
-            		html += build_element_markup(schema.children[i]);
+            		html += snTemplateElements[schema.children[i].name](schema.children[i]);
             	}
             	return html;
 

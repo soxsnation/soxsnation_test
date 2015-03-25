@@ -14,11 +14,10 @@ var soxsTemplate = new Schema({
 		default: '',
 		trim: true
 	},
-	markup: {
-		type: String,
-		default: '',
-		trim: true
-	},
+	schema: {
+		type: Object,
+		default: {}
+	}
 	settings: {
 		type: String,
 		default: '',

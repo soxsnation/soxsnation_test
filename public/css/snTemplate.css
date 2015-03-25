@@ -41,8 +41,8 @@ body {
     float: right;
     background-color: transparent;
 }
-.snText_hidebox {
-
+.snText_hidebox:before {
+   
 }
 .snText_showbox {
     border-color: blue;
@@ -54,10 +54,22 @@ body {
     min-height: 15px;
     
 }
+
+.snItem:hover::before {
+    content: attr(name);
+    background-color: blue;
+    color: white;
+    position: relative;
+    height: 16px;
+    top: -18px;
+    left: -2px;
+}
+
 .snItem:hover {
     border-color: blue;
     border-width: 2px;
-    border-style: solid;    
+    border-style: solid;   
+
 }
 .snItem:hover + .snText {
     display: inline-block;
@@ -73,12 +85,18 @@ body {
     margin: 5px;
 }
 
-.snAcceptDrop:hover {
+/*.snAcceptDrop:hover {
     border-style: dashed;
     border-color: green;
-    border-width: 2px;
+    border-width: 4px;
     margin-bottom: 15px;
-    background-color: red;
+}*/
+
+[snAcceptDrop=true]:hover {
+    border-style: dashed;
+    border-color: green;
+    border-width: 4px;
+    margin-bottom: 15px;
 }
 
 div[sncurrent="none"]:hover {
@@ -130,15 +148,15 @@ div[sncurrent="none"]:hover {
     z-index: 100;
 }
 [ng-drag].drag-over {
-    border: solid 2px red;
+    border: solid 4px blue;
 }
 [ng-drop].drag-enter {
-    border: solid 2px red;
+    border: solid 4px yellow;
 }
 [sn-item].sn-selected {
     /*border: solid 2px green;*/
 }
-[ng-current=true] {
+[ng-current1=true] {
     padding: 20px;
 }
 /********************************* BUILDER COMMON *********************************/

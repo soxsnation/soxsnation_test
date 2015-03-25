@@ -270,10 +270,6 @@ angular.module("snDraggable", [])
                 var onDragMoveCallback = $parse(attrs.ngDragMove);
                 var item_id = attrs.id;
 
-                var onElementDrop = function(evt, obj) {
-                    console.log('---------------onElementDrop: ' + item_id)
-                }
-
                 var toggleListeners = function(enable) {
                     // remove listeners
 
@@ -418,6 +414,43 @@ angular.module("snDraggable", [])
 
                 element.on("click", function() {
                     console.log('click event');
+                    element.addClass('sn-selected');
+                    onItemClickCallback(scope, {
+                        $id: item_id
+                    });
+                });
+
+                element.on("hover", function() {
+                    console.log('hover event');
+                });
+
+
+
+            }
+        }
+    }])
+    .directive('snHover', ['$parse', '$timeout', '$window', 'snDraggable', function($parse, $timeout, $window, snDraggable) {
+        return {
+            restrict: 'A',
+            link: function(scope, element, attrs) {
+                // console.log('snItem: ' + attrs.id);
+                scope.value = attrs.snItem;
+                // var _hasTouch = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
+                // var _pressEvents = 'touchstart mousedown';
+                // var _moveEvents = 'touchmove mousemove';
+                // var _releaseEvents = 'touchend mouseup';
+
+                var _myid = scope.$id;
+                var _data = null;
+
+                var onItemClickCallback = $parse(attrs.snItemClick);
+
+                var item_id = attrs.id;
+
+                // element.on('click', onpress);
+
+                element.on("hover", function() {
+                    console.log('hover event');
                     element.addClass('sn-selected');
                     onItemClickCallback(scope, {
                         $id: item_id
