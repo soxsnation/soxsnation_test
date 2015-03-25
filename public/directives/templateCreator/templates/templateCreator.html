@@ -32,7 +32,7 @@
         <div id="center-viewport" class="center-viewport {{sidebar_right_state}} {{sidebar_left_state}}">
             <div id="snDroppable">
 
-                <div class="drop-item" ng-drop="true" ng-drop-success="onDropComplete1($data,$event,$id)" id="1">
+                <div class="drop-item" ng-drop="true" ng-current="{{drop_current}}==baseDiv" ng-drop-success="onDropComplete1($data,$event,$id)" ng-drop-enter="onDropEnter($id)" ng-drop-leave="onDropLeave($id)" id="baseDiv">
                     <canvas class="content-canvas"></canvas>
                 </div>
                 <br />

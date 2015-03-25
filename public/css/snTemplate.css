@@ -81,6 +81,10 @@ body {
     background-color: red;
 }
 
+div[sncurrent="none"]:hover {
+    color: white;
+}
+
 /********************************* Andrew Brown *********************************/
 
 .content-canvas {
@@ -133,6 +137,9 @@ body {
 }
 [sn-item].sn-selected {
     /*border: solid 2px green;*/
+}
+[ng-current=true] {
+    padding: 20px;
 }
 /********************************* BUILDER COMMON *********************************/
 
