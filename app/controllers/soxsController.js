@@ -8,9 +8,13 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+
+
+var snTempSchema = mongoose.model('snTempSchema');
+
 var soxsSchema = mongoose.model('soxsSchema');
 var soxsType = mongoose.model('soxsType');
-var soxsTemplate = mongoose.model('soxsTemplate');
+var soxsTemplate = mongoose.model('snTemplate');
 var soxsTemplateElement = mongoose.model('soxsTemplateElement');
 var mailer = require('../lib/mailer');
 var soxsLog = require('../lib/soxsLog');

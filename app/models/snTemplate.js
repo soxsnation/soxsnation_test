@@ -8,16 +8,16 @@
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
-var soxsTemplate = new Schema({
+var snTemplate = new Schema({
 	name: {
 		type: String,
 		default: '',
 		trim: true
 	},
-	schema: {
-		type: Object,
-		default: {}
-	}
+	snSchema: {
+		type: Schema.Types.ObjectId,
+		ref: 'snTempSchema'
+	},
 	settings: {
 		type: String,
 		default: '',
@@ -27,10 +27,23 @@ var soxsTemplate = new Schema({
 		type: String,
 		default: '',
 		trim: true
+	},
+	created_date: {
+		type: Date,
+		default: Date.now
+	},
+	updated_by: {
+		type: String,
+		default: '',
+		trim: true
+	},
+	updated_date: {
+		type: Date,
+		default: Date.now
 	}
 });
 
-soxsTemplate.methods = {
+snTemplate.methods = {
 
 	update: function(data, cb) {
 
@@ -44,7 +57,7 @@ soxsTemplate.methods = {
 }
 
 
-mongoose.model('soxsTemplate', soxsTemplate)
+mongoose.model('snTemplate', snTemplate)
 
 
 

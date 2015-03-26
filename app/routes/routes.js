@@ -9,6 +9,10 @@
  * Controllers
  */
 
+var snController = require('../controllers/snController');
+
+
+
 var session = require('../controllers/sessionController');
 var soxsController = require('../controllers/soxsController');
 var soxsDataController = require('../controllers/soxsDataController');
@@ -163,18 +167,23 @@ module.exports = function(app, passport) {
 * soxsTemplates Routes
 *****************************************************************************************/
 
-	app.get('/api/soxs/templates', soxsController.get_templates);
-	app.get('/api/soxs/template/:id', soxsController.get_template);
-	app.post('/api/soxs/template', soxsController.post_template);
-	app.put('/api/soxs/template/:id', soxsController.put_template);
-	app.delete('/api/soxs/template/:id', soxsController.delete_template);
+	app.get('/api/soxs/templates', snController.get_templates);
+	// app.get('/api/soxs/template/:id', soxsController.get_template);
+	app.post('/api/soxs/template', snController.post_template);
+	// app.put('/api/soxs/template/:id', soxsController.put_template);
+	// app.delete('/api/soxs/template/:id', soxsController.delete_template);
 
 	// app.get('/api/soxsTemplate/_all', soxsController.getTemplates);
 	// app.get('/api/soxsTemplate/:id', soxsController.getTemplate);
 	// app.post('/api/soxsTemplate/create', soxsController.createSoxsTemplate);
 
 
+/*****************************************************************************************
+* Test
+*****************************************************************************************/
 
+app.get('/api/soxs/test', snController.get_tests);
+app.post('/api/soxs/test', snController.post_tests);
 
 /*****************************************************************************************
 * soxsData Routes

@@ -330,6 +330,8 @@ angular.module('templateCreator', ['snDraggable'])
 
                         // $scope.snTemplateData = JSON.parse(JSON.stringify($scope.element_list));
 
+                        
+
                         $scope.snSave(JSON.parse(JSON.stringify($scope.element_list)));
 
                     }
