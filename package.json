@@ -20,7 +20,8 @@
 		"underscore": "1.6.0",
 		"nodemailer": "0.7.1",
 		"password-hash":"1.2.2",
-		"colors": "1.0.3"
+		"colors": "1.0.3",
+		"jsdoc": "<=3.3.0"
 	},
 	"devDependencies": {
 	},
