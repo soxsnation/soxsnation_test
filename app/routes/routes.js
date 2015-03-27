@@ -10,6 +10,7 @@
  */
 
 var snController = require('../controllers/snController');
+var soxController = require('../controllers/soxController');
 
 
 
@@ -132,6 +133,14 @@ module.exports = function(app, passport) {
 app.get('/api/sn/:snDataType/:id', snController.get_snData_by_id);
 app.get('/api/sn/:snDataType', snController.get_snData);
 app.post('/api/sn/:snDataType', snController.post_snData);
+
+/*****************************************************************************************
+* soxsData
+*****************************************************************************************/
+
+app.get('/api/sox/:soxsDataType/:id', soxController.get_soxs_data_by_id);
+app.get('/api/sox/:soxsDataType', soxController.get_soxs_data);
+app.post('/api/sox/:soxsDataType', soxController.post_soxs_data);
 
 /*****************************************************************************************
 * Session Routes
