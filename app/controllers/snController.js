@@ -62,9 +62,10 @@ function make_model(snDataType, cb) {
             if (err) {
                 cb(err, null);
             } else {
+                console.log('snModels[sn_name].mongo_name: ' + snModels[sn_name].mongo_name);
                 var sn_model = mongoose.model(snModels[sn_name].mongo_name, sn_schema);
                 snModels[snDataType].model = sn_model;
-                cb(err, sn_model);
+                cb(null, sn_model);
             }
         });
     }
@@ -89,9 +90,15 @@ function save_snData(snDataType, data, res) {
     });
 }
 
-function getData(snDataType, cb) {
-    var sn_model = make_model(snDataType);
-    sn_model.find({}).exec(cb);
+function getData(snDataType, query, cb) {
+    make_model(snDataType, function(err, sn_model) {
+        if (err) {
+            cb(err, null);
+        }
+        else {
+            sn_model.find(query).exec(cb);
+        }
+    });    
 }
 
 function getDataById(snDataType, id, cb) {
@@ -103,7 +110,11 @@ function getDataById(snDataType, id, cb) {
 
 exports.get_snData_by_id = function(req, res, next) {
     var snDataType = req.params.snDataType;
-    getData(snDataType, function(err, data) {
+    var id = req.params.id;
+    var query = {
+        _id: id
+    };
+    getData(snDataType, query, function(err, data) {
         if (err) {
             console.log('err:' + err);
             res.send(403);
@@ -115,7 +126,7 @@ exports.get_snData_by_id = function(req, res, next) {
 
 exports.get_snData = function(req, res, next) {
     var snDataType = req.params.snDataType;
-    getData(snDataType, function(err, data) {
+    getData(snDataType, {},  function(err, data) {
         if (err) {
             console.log('err:' + err);
             res.send(403);

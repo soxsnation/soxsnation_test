@@ -1,0 +1,40 @@
+<h1>{{page}}</h1>
+
+<input type='button' data-ng-click='btn_clicked()' value='Item 1'>
+<br />
+<input type='button' data-ng-click='btn_clicked2()' value='Item 2'>
+<br />
+<br />
+<br />
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-2 column">
+            <div class="layout_item_list" data-ng-mouseup="layout_dropped(layout_obj)" data-ng-repeat="layout_obj in layout_objs">
+                <!-- <div class="layout_item_list" data-ng-repeat="layout_obj in layout_objs"> -->
+
+                <div id='{{layout_obj.id}}' class="layout_item" ng-draggable='layout_obj'>{{layout_obj.name}}</div>
+                <!-- {{layout_obj}} -->
+            </div>
+
+            <!-- 		<div class="layout_item" ng-draggable='dragOptions'>Item 1</div><br />
+		<div class="layout_item" ng-draggable='dragOptions'>Item 2</div><br />
+		<div class="layout_item" ng-draggable='dragOptions'>Item 3</div> -->
+        </div>
+        <div class="col-md-10 column">
+            <!-- <div id='layout_creation_area' class="creation_area" ng-droppable='dropObject'>
+                Holder 1
+                <br />                
+            </div> -->
+            <br />
+        <br />
+        <br />
+        <layout-creater style="display:block" layout='{{created_layout}}'>
+            <!-- <layout-area><p></p></layout-area> -->
+        </layout-creater>
+        </div>
+        
+
+    </div>
+</div>
+
+

@@ -7,7 +7,7 @@
 
 
 angular.module('soxsnationApp')
-	.factory('soxsFactory', ["soxsAuth", "$q",
+	.factory('soxsFactory2', ["soxsAuth", "$q",
 		function(soxsAuth, $q) {
 
 

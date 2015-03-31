@@ -72,7 +72,7 @@ angular.module('soxsnationApp')
 
 
 angular.module('soxsnationApp')
-    .controller('SoxsDataController', ['$scope', '$location', 'soxsAuth', 'soxsItemFactory',
+    .controller('SoxsDataController2', ['$scope', '$location', 'soxsAuth', 'soxsItemFactory',
         function($scope, $location, soxsAuth, soxsItemFactory) {
 
             soxsAuth.validateUser().then(function(user) {}, function(error) {
