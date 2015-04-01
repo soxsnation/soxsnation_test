@@ -10,7 +10,7 @@ var mongoose = require('mongoose'),
 
 
 
-var soxsSchemaField = {
+var soxsSchemaField = new Schema({
 	name: {
 		type: String,
 		default: '',
@@ -25,22 +25,26 @@ var soxsSchemaField = {
 		type: String,
 		default: '',
 		trim: true
+	},
+	ref: {
+		type: String,
+		default: '',
+		trim: true
 	}
-};
+});
 
 
-// soxsSchemaField.methods = {
+soxsSchemaField.methods = {
 
-// 	update: function(data, cb) {
+	update: function(data, cb) {
 
-// 		for (var key in data) {
-// 			this[key] = data[key];
-// 		}
+		for (var key in data) {
+			this[key] = data[key];
+		}
 
-// 		this.save(cb)
-// 	}
-
-// }
+		this.save(cb)
+	}
+}
 
 
 mongoose.model('soxs.Schema.Field', soxsSchemaField);

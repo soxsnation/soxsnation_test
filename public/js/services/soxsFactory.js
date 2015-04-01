@@ -58,10 +58,42 @@ angular.module('soxsnationApp')
 				return deferred.promise;
             }
 
+            function putData(snDataType, sn_data) {
+                var deferred = $q.defer();
+
+                var url = base_url + snDataType + '/' + sn_data._id;
+
+                soxsAuth.http_put(url, sn_data)
+                    .then(function(data) {
+                        deferred.resolve(data);
+                    }, function(err) {
+                        console.log('ERROR: ' + err);
+                        deferred.reject(err);
+                    })
+                return deferred.promise;
+            }
+
+            function deleteData(snDataType, id) {
+                var deferred = $q.defer();
+
+                var url = base_url + snDataType + '/' + id;
+
+                soxsAuth.http_delete(url)
+                    .then(function(data) {
+                        deferred.resolve(data);
+                    }, function(err) {
+                        console.log('ERROR: ' + err);
+                        deferred.reject(err);
+                    })
+                return deferred.promise;
+            }
+
 
             return {
                 getData: getData,
                 postData: postData,
+                putData: putData,
+                deleteData: deleteData,
                 getTypes: getTypes
             }
         }

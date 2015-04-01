@@ -6,6 +6,7 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var soxsLog = require('../lib/soxsLog')('snController');
 
 var snData = require('../models/sn/snData');
 var soxController = require('./soxController');
@@ -21,16 +22,16 @@ var snModels = {};
 // var soxsModels = {};
 
 function make_schema(snDataType, cb) {
-    // console.log('make_schema: ' + snDataType);
+    console.log('make_schema: ' + snDataType);
 
     soxController.get_soxs_schema(snDataType, function(sch) {
         if (!sch) {
-        	console.log('snController::make_schema::err: ');
-            cb(err, null);
+            console.log('snController::make_schema::err: ');
+            cb('snController::make_schema::err: ', null);
         } else {
-        	console.log('snController::make_schema got sch');
-        	var sch0 = sch[0];
-        	console.log(sch0);
+            console.log('snController::make_schema got sch');
+            var sch0 = sch[0];
+            console.log(sch0);
             snModels[sch0.name] = {
                 mongo_name: sch0.mongo_name,
                 active: sch0.active
@@ -38,13 +39,21 @@ function make_schema(snDataType, cb) {
 
             var s = {};
             for (var fc = 0; fc < sch0.fields.length; ++fc) {
-            	var f = sch0.fields[fc];
-        		console.log('f: ' + f);
+                var f = sch0.fields[fc];
+                console.log('f: ' + f);
                 var field = {};
-                s[f.name] = {
-                    type: f.type,
-                    default: f.default_value
-                };
+                if (f.type == 'ObjectId') {
+                    s[f.name] = {
+                        type: Schema.Types.ObjectId,
+                        ref: f.ref
+                    };
+                } else {
+                    s[f.name] = {
+                        type: f.type,
+                        default: f.default_value
+                    };
+                }
+
             }
 
             var temp_schema = new Schema(s);
@@ -71,34 +80,73 @@ function make_model(snDataType, cb) {
     }
 }
 
+function post_sn_field(field_schema, callback) {
+    make_model(field_schema.ref, function(err, sn_model) {
+        var d = sn_model(field_schema);
+        d.save(function(err) {
+            if (err) {
+                callback(err, null);
+            } else {
+                sn_model.findById(d, function(err, doc) {
+                    soxsLog.debug_info(d._id);
+                    callback(null, d._id);
+                })
+            }
+        });
+    });
+}
+
 function save_snData(snDataType, data, res) {
-    // console.log('save_snData');
-    make_model(snDataType, function(err, sn_model) {
-        if (err) {
-            res.send(403);
-        } else {
-            var d = new sn_model(data);
-            d.save(function(err) {
-                if (err) {
-                    console.log('err: ' + err);
-                    res.send(403);
-                } else {
-                    res.send(200);
-                }
+    console.log('save_snData');
+    console.log(data);
+    var f = [];
+    for (var attr in data) {
+        if (typeof data[attr] == "object") {
+            console.log('Found object: ' + attr)
+            f.push(function(callback) {
+                post_sn_field(field, callback);
             });
         }
-    });
+    }
+
+    // async.series(f, function(err, results) {
+    // 	soxsLog.debug_info('got sn_post async results:');
+    //     soxsLog.debug_info(results);
+    //     for (var i = 0; i < data.fields.length; ++i) {
+    //     	if (data.fields[i].type == 'ObjectId') {
+
+    //     	}
+    //     }
+
+    // });
+
+    // make_model(snDataType, function(err, sn_model) {
+    //     if (err) {
+    //         res.send(403);
+    //     } else {
+    //         var d = new sn_model(data);
+    //         d.save(function(err) {
+    //             if (err) {
+    //                 console.log('err: ' + err);
+    //                 res.send(403);
+    //             } else {
+    //                 res.send(200);
+    //             }
+    //         });
+    //     }
+    // });
+
+    res.send(200);
 }
 
 function getData(snDataType, query, cb) {
     make_model(snDataType, function(err, sn_model) {
         if (err) {
             cb(err, null);
-        }
-        else {
+        } else {
             sn_model.find(query).exec(cb);
         }
-    });    
+    });
 }
 
 function getDataById(snDataType, id, cb) {
@@ -126,7 +174,7 @@ exports.get_snData_by_id = function(req, res, next) {
 
 exports.get_snData = function(req, res, next) {
     var snDataType = req.params.snDataType;
-    getData(snDataType, {},  function(err, data) {
+    getData(snDataType, {}, function(err, data) {
         if (err) {
             console.log('err:' + err);
             res.send(403);

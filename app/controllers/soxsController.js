@@ -17,7 +17,7 @@ var soxsType = mongoose.model('soxsType');
 var soxsTemplate = mongoose.model('snTemplate');
 var soxsTemplateElement = mongoose.model('soxsTemplateElement');
 var mailer = require('../lib/mailer');
-var soxsLog = require('../lib/soxsLog');
+var soxsLog = require('../lib/soxsLog')('soxsController');
 
 /*****************************************************************************************
  * Functions

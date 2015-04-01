@@ -11,7 +11,7 @@ var Schema = mongoose.Schema;
 var soxsSchema = mongoose.model('soxsSchema');
 var soxsType = mongoose.model('soxsType');
 var mailer = require('../lib/mailer');
-var soxsLog = require('../lib/soxsLog');
+var soxsLog = require('../lib/soxsLog')('soxsDataController');
 
 function parse_schema_fieldItems(schema, cb) {
 

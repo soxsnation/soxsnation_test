@@ -141,6 +141,8 @@ app.post('/api/sn/:snDataType', snController.post_snData);
 app.get('/api/sox/:soxsDataType/:id', soxController.get_soxs_data_by_id);
 app.get('/api/sox/:soxsDataType', soxController.get_soxs_data);
 app.post('/api/sox/:soxsDataType', soxController.post_soxs_data);
+app.put('/api/sox/:soxsDataType/:id', soxController.put_soxs_data);
+app.delete('/api/sox/:soxsDataType/:id', soxController.delete_soxs_data);
 
 /*****************************************************************************************
 * Session Routes

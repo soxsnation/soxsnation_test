@@ -151,6 +151,51 @@ soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
             return deferred.promise;
         }
 
+        function http_put(url, data) {
+            console.log('http_put: ' + JSON.stringify(data));
+            var deferred = $q.defer();
+
+            $http({
+                method: "PUT",
+                url: url,
+                headers: {
+                    Authorization: $rootScope.currentToken
+                },
+                data: data,
+                xhrFields: {
+                    withCredentials: true
+                }
+            }).success(function(data) {
+                deferred.resolve(data);
+            }, function(error) {
+                deferred.reject(error);
+            });
+
+            return deferred.promise;
+        }
+
+        function http_delete(url) {
+            console.log('http_delete');
+            var deferred = $q.defer();
+
+            $http({
+                method: "DELETE",
+                url: url,
+                headers: {
+                    Authorization: $rootScope.currentToken
+                },
+                xhrFields: {
+                    withCredentials: true
+                }
+            }).success(function(data) {
+                deferred.resolve(data);
+            }, function(error) {
+                deferred.reject(error);
+            });
+
+            return deferred.promise;
+        }
+
         function http_call(url, data, method) {
             var deferred = $q.defer();
 
@@ -293,6 +338,8 @@ soxsServices.factory("soxsAuth", ["$rootScope", "$http", "$q", "$window",
             getUserInfo: getUserInfo,
             http_get: http_get,
             http_post: http_post,
+            http_put: http_put,
+            http_delete: http_delete,
             validateUser: validateUser,
             userLoggedIn: userLoggedIn,
             changePassword: changePassword,
