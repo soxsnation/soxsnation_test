@@ -13,7 +13,8 @@ var soxsnationApp = angular.module('soxsnationApp', [
 	'ngDragDrop',
 	// 'snDraggable',
 	// 'snTemplateService',
-	'templateCreator'
+	'templateCreator',
+	'ui.bootstrap'
 ]);
 
 soxsnationApp.config(['$routeProvider',

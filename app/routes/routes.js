@@ -130,6 +130,7 @@ module.exports = function(app, passport) {
 * snData
 *****************************************************************************************/
 
+app.get('/api/sn/_init_', snController.init_data);
 app.get('/api/sn/:snDataType/:id', snController.get_snData_by_id);
 app.get('/api/sn/:snDataType', snController.get_snData);
 app.post('/api/sn/:snDataType', snController.post_snData);

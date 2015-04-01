@@ -16,11 +16,55 @@ angular.module('soxsnationApp')
 
             $scope.current_model = {};
             $scope.current_mode = 'none';
+            $scope.snModels = [];
+            $scope.snTypes = [];
+            $scope.new_field_name = "";
+            $scope.new_field_type = "";
+            $scope.new_field_ref;
 
 
             /***********************************************************************************************************************
              * Common Functions
              ***********************************************************************************************************************/
+
+            var substringMatcher = function(strs) {
+                return function findMatches(q, cb) {
+                    var matches, substrRegex;
+
+                    // an array that will be populated with substring matches
+                    matches = [];
+
+                    // regex used to determine if a string contains the substring `q`
+                    substrRegex = new RegExp(q, 'i');
+
+                    // iterate through the pool of strings and for any string that
+                    // contains the substring `q`, add it to the `matches` array
+                    $.each(strs, function(i, str) {
+                        if (substrRegex.test(str)) {
+                            // the typeahead jQuery plugin expects suggestions to a
+                            // JavaScript object, refer to typeahead docs for more info
+                            matches.push({
+                                value: str
+                            });
+                        }
+                    });
+
+                    cb(matches);
+                };
+            };
+
+            function copy_sn_field(sn_field) {
+            	var f = {
+            		__v: sn_field.__v,
+            		_id: sn_field._id,
+            		default_value: sn_field.default_value,
+            		isArray: sn_field.isArray,
+            		name: sn_field.name,
+            		ref: sn_field.ref,
+            		type: sn_field.type
+            	}
+            	return f;
+            }
 
 
             function get_all_soxs_types() {
@@ -30,7 +74,7 @@ angular.module('soxsnationApp')
             function get_soxs_type(schemaName) {
                 soxsFactory.getData(schemaName)
                     .then(function(data) {
-                        $scope.soxsData = data;
+                        $scope.snModels = data;
                     }, function(err) {
                         console.log('ERROR: SoxsDataController get_soxs_type: ' + err);
                     });
@@ -42,10 +86,35 @@ angular.module('soxsnationApp')
                 soxsFactory.postData(schemaName, schemaData)
                     .then(function(data) {
                         console.log('post_soxs_type: success:' + data);
-                        $scope.soxsData.push(schemaData);
+                        $scope.snModels.push(schemaData);
                     }, function(err) {
                         console.log('ERROR: SoxsDataController post_soxs_type: ' + err);
                     });
+            }
+
+            function format_schema_data(schemaData) {
+                console.log('format_schema_data');
+                console.log(schemaData);
+                var s = {
+                    name: schemaData.name,
+                    mongo_name: schemaData.mongo_name,
+                    fields: [],
+                    active: schemaData.active,
+                    _v: schemaData._v,
+                    _id: schemaData._id
+                };
+                for (var i = 0; i < schemaData.fields.length; ++i) {
+
+                    if (typeof schemaData.fields[i].ref == 'object' && schemaData.fields[i].ref.hasOwnProperty('mongo_name')) {
+                    	console.log('format_schema_data::obj: ' + schemaData.fields[i].name);
+                        var f = copy_sn_field(schemaData.fields[i]);
+                        f.ref = schemaData.fields[i].ref.mongo_name;
+                        s.fields.push(f)
+                    } else {
+                        s.fields.push(schemaData.fields[i]);
+                    }
+                }
+                return s;
             }
 
             function put_soxs_type(schemaName, schemaData) {
@@ -66,9 +135,20 @@ angular.module('soxsnationApp')
                     });
             }
 
+            function set_snTypes() {
+                // $scope.snTypes.push({ text: "String", value: "String"});
+                // $scope.snTypes.push({ text: "Number", value: "Number"});
+                // $scope.snTypes.push({ text: "ObjectId", value: "ObjectId"});
+
+                $scope.snTypes.push("String");
+                $scope.snTypes.push("Number");
+                $scope.snTypes.push("ObjectId");
+            }
+
             function init() {
                 console.log('SoxsDataController::init');
                 get_soxs_type('soxsSchema');
+                set_snTypes();
 
             }
             init();
@@ -99,10 +179,11 @@ angular.module('soxsnationApp')
             }
 
             $scope.save_model = function() {
-                if ($scope.current_mode == 'update') {
-                    put_soxs_type('soxsSchema', $scope.current_model);
+            	
+                if ($scope.current_mode == 'update') {                	
+                    put_soxs_type('soxsSchema', format_schema_data($scope.current_model));
                 } else if ($scope.current_mode == 'add') {
-                    post_soxs_type('soxsSchema', $scope.current_model);
+                    post_soxs_type('soxsSchema', format_schema_data($scope.current_model));
                 }
             }
 

@@ -30,6 +30,10 @@ var soxsSchemaField = new Schema({
 		type: String,
 		default: '',
 		trim: true
+	},
+	isArray: {
+		type: Boolean,
+		default: false
 	}
 });
 

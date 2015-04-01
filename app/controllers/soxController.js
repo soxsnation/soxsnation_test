@@ -37,15 +37,15 @@ function make_soxs_model(soxsDataType) {
 
 function get_schema(schemaName, cb) {
     var query = {};
-    if (schemaName) {
+    if (schemaName && schemaName != '_all') {
         query._id = schemaName
     }
-    console.log(query);
+    soxsLog.debug_info(query);
     soxsSchema.find(query)
         .populate('fields')
         .exec(function(err, data) {
             if (err) {
-                console.log('soxController::get_schema::err:' + err);
+                soxsLog.error('soxController::get_schema::err:' + err);
                 cb(null);
             } else {
                 cb(data);
@@ -55,15 +55,15 @@ function get_schema(schemaName, cb) {
 
 function get_schema_by_name(schemaName, cb) {
     var query = {};
-    if (schemaName) {
+    if (schemaName  && schemaName != '_all') {
         query.name = schemaName
     }
-    console.log(query);
+    soxsLog.debug_info(query);
     soxsSchema.find(query)
         .populate('fields')
         .exec(function(err, data) {
             if (err) {
-                console.log('soxController::get_schema::err:' + err);
+                soxsLog.error('soxController::get_schema::err:' + err);
                 cb(null);
             } else {
                 cb(data);

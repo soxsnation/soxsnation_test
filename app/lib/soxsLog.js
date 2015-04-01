@@ -32,11 +32,16 @@ module.exports = function(calling_item) {
 
     };
 
+    log.alert = function(message) {
+        var d = new Date();
+        var lm = '[' + d.toISOString() + '] ---- ' + message;
+        console.log(lm.bold.magenta);
+    };
+
     log.error = function(message) {
         var d = new Date();
         var lm = '[' + d.toISOString() + '] -- ' + message;
         console.log(lm.bold.red);
-
     };
 
     log.debug_info = function(message) {
