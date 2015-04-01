@@ -19,6 +19,10 @@
             </ul>
         </div>
         <div class="col-md-9 soxsDataDetails">
+        <tabset>
+        <tab heading="Configure Data">
+        <div class="tab-content soxsContent">
+        <br />
             <div class="container">
                 <div class="row clearfix">
                     <div class="col-md-8 column">
@@ -58,7 +62,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" typeahead="snModel as snModel.name for snModel in snModels | filter:$viewValue | limitTo:8" data-ng-model="new_field_ref" placeholder="new field ref" />
+                                    <input type="text" class="form-control" typeahead="snModel as snModel.name for snModel in snModels | filter:$viewValue | limitTo:8" data-ng-model="new_field_ref.name" placeholder="new field ref" />
                                     
                                 </div>
                                 <div data-ng-repeat="field in current_model.fields">
@@ -94,6 +98,10 @@
                     </div>
                 </div>
             </div>
+            </div>
+            </tab>
+            <tab heading="Configure Layout"><div class="tab-content">Configure Layout</div></tab>
+  </tabset>
         </div>
     </div>
     <!-- <div class="modal-footer">
@@ -101,4 +109,17 @@
         <button type="button" class="btn btn-primary" data-ng-click="saveDataType()">{{modalSubmitText}}</button>
     </div> -->
 </div>
-</div>
+<!-- </div> -->
+<!-- <tabset> -->
+    <!-- <tab heading="Static title">Configure Data</tab> -->
+    <!-- <tab heading="Static title">Configure Layout</tab> -->
+    <!-- <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disabled="tab.disabled">
+      {{tab.content}}
+    </tab>
+    <tab select="alertMe()">
+      <tab-heading>
+        <i class="glyphicon glyphicon-bell"></i> Alert!
+      </tab-heading>
+      I've got an HTML heading, and a select callback. Pretty cool!
+    </tab> -->
+  <!-- </tabset> -->

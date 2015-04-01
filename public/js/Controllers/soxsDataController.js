@@ -20,7 +20,17 @@ angular.module('soxsnationApp')
             $scope.snTypes = [];
             $scope.new_field_name = "";
             $scope.new_field_type = "";
-            $scope.new_field_ref;
+            $scope.new_field_ref = {
+            	name: ""
+            };
+
+            $scope.tabs = [{
+                title: 'Data Layout',
+                content: 'Dynamic content 1'
+            }, {
+                title: 'Design',
+                content: 'Dynamic content 2'
+            }];
 
 
             /***********************************************************************************************************************
@@ -54,16 +64,16 @@ angular.module('soxsnationApp')
             };
 
             function copy_sn_field(sn_field) {
-            	var f = {
-            		__v: sn_field.__v,
-            		_id: sn_field._id,
-            		default_value: sn_field.default_value,
-            		isArray: sn_field.isArray,
-            		name: sn_field.name,
-            		ref: sn_field.ref,
-            		type: sn_field.type
-            	}
-            	return f;
+                var f = {
+                    __v: sn_field.__v,
+                    _id: sn_field._id,
+                    default_value: sn_field.default_value,
+                    isArray: sn_field.isArray,
+                    name: sn_field.name,
+                    ref: sn_field.ref,
+                    type: sn_field.type
+                }
+                return f;
             }
 
 
@@ -106,7 +116,7 @@ angular.module('soxsnationApp')
                 for (var i = 0; i < schemaData.fields.length; ++i) {
 
                     if (typeof schemaData.fields[i].ref == 'object' && schemaData.fields[i].ref.hasOwnProperty('mongo_name')) {
-                    	console.log('format_schema_data::obj: ' + schemaData.fields[i].name);
+                        console.log('format_schema_data::obj: ' + schemaData.fields[i].name);
                         var f = copy_sn_field(schemaData.fields[i]);
                         f.ref = schemaData.fields[i].ref.mongo_name;
                         s.fields.push(f)
@@ -168,19 +178,21 @@ angular.module('soxsnationApp')
             }
 
             $scope.add_field = function() {
+            	console.log('add_field: ' + $scope.new_field_ref)
                 $scope.current_model.fields.push({
                     name: $scope.new_field_name,
                     type: $scope.new_field_type,
-                    ref: $scope.new_field_ref
+                    ref: $scope.new_field_ref,
+                    isArray: $scope.new_field_isArray
                 });
                 $scope.new_field_name = "";
                 $scope.new_field_type = "";
-                $scope.new_field_ref = "";
+                $scope.new_field_ref = {};
             }
 
             $scope.save_model = function() {
-            	
-                if ($scope.current_mode == 'update') {                	
+
+                if ($scope.current_mode == 'update') {
                     put_soxs_type('soxsSchema', format_schema_data($scope.current_model));
                 } else if ($scope.current_mode == 'add') {
                     post_soxs_type('soxsSchema', format_schema_data($scope.current_model));
