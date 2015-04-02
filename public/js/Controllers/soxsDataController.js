@@ -21,8 +21,12 @@ angular.module('soxsnationApp')
             $scope.new_field_name = "";
             $scope.new_field_type = "";
             $scope.new_field_ref = {
-            	name: ""
+                name: ""
             };
+            $scope.show_layout = false;
+            $scope.show_data = true;
+            $scope.css_data = "active";
+            $scope.css_layout = "";
 
             $scope.tabs = [{
                 title: 'Data Layout',
@@ -153,6 +157,8 @@ angular.module('soxsnationApp')
                 $scope.snTypes.push("String");
                 $scope.snTypes.push("Number");
                 $scope.snTypes.push("ObjectId");
+                $scope.snTypes.push("Date");
+                $scope.snTypes.push("Boolean");
             }
 
             function init() {
@@ -178,16 +184,27 @@ angular.module('soxsnationApp')
             }
 
             $scope.add_field = function() {
-            	console.log('add_field: ' + $scope.new_field_ref)
-                $scope.current_model.fields.push({
+                console.log('add_field: ' + $scope.new_field_name);
+                console.log($scope.new_field_name);
+                console.log($scope.new_field_type);
+                console.log($scope.new_field_ref);
+                var f = {
                     name: $scope.new_field_name,
                     type: $scope.new_field_type,
                     ref: $scope.new_field_ref,
                     isArray: $scope.new_field_isArray
-                });
+                };
+                if ($scope.new_field_type == 'ObjectId' && $scope.new_field_ref != undefined) {
+                    f.ref = $scope.new_field_ref.mongo_name;
+                }
+                else {
+                    f.ref = "";
+                }
+                console.log(f);
+                $scope.current_model.fields.push(f);
                 $scope.new_field_name = "";
                 $scope.new_field_type = "";
-                $scope.new_field_ref = {};
+                $scope.new_field_ref = "";
             }
 
             $scope.save_model = function() {
@@ -211,6 +228,20 @@ angular.module('soxsnationApp')
 
             $scope.delete_model = function() {
                 put_delete_type('soxsSchema', $scope.current_model._id);
+            }
+
+            $scope.display_data = function() {
+                $scope.show_layout = false;
+                $scope.show_data = true;
+                $scope.css_data = "active";
+                $scope.css_layout = "";
+            }
+
+            $scope.display_layout = function() {
+                $scope.show_layout = true;
+                $scope.show_data = false;
+                $scope.css_data = "";
+                $scope.css_layout = "active";
             }
 
 

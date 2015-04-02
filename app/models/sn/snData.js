@@ -40,7 +40,7 @@ var snElementType = {
 	},
 	attributes: [{
 		type: Schema.Types.ObjectId,
-		ref: 'snAttribute'
+		ref: 'snAttributeType'
 	}]
 }
 

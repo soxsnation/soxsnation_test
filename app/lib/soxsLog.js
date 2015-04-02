@@ -13,6 +13,7 @@ debug_Items.push('soxController');
 debug_Items.push('soxsController');
 debug_Items.push('soxsDataController');
 debug_Items.push('snController');
+debug_Items.push('load_data');
 
 function is_debugging(item) {
     for (var i = 0; i < debug_Items.length; ++i) {

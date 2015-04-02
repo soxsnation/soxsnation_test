@@ -69,6 +69,7 @@ function make_schema(snDataType, cb) {
             cb('snController::make_schema::err: ', null);
         } else {
             soxsLog.debug_info('snController::make_schema got sch');
+            soxsLog.debug_info(JSON.stringify(sch));
             var sch0 = sch[0];
             var sn_props = {
                 name: sch0.name,
@@ -144,7 +145,9 @@ function load_model(raw_schema, callback) {
 }
 
 function load_data(cb) {
-    if (snModels.length > 0) { return cb}
+    if (snModels.length > 0) {
+        return cb
+    }
     var load_funs = [];
     soxController.get_soxs_schema('_all', function(soxs_schemas) {
 
@@ -167,10 +170,15 @@ function load_data(cb) {
             }
         });
     })
+};
+
+// load_data(function(err, data) {
+//     soxsLog.debug_info(data);
+// });
+
+exports.init = function(cb) {
+    load_data(cb);
 }
-load_data(function(err, data) {
-    soxsLog.debug_info(data);
-})
 
 exports.init_data = function(req, res, next) {
     soxsLog.debug_info_start('init_data');
@@ -178,14 +186,13 @@ exports.init_data = function(req, res, next) {
         soxsLog.debug_info_end('init_data');
         if (err) {
             res.send(403);
-        }
-        else {
+        } else {
             res.json(data);
         }
     })
 }
 
-function save_snData(snDataType, data, res) {
+function save_snData(snDataType, data, cb) {
     // soxsLog.debug_info('save_snData');
     // soxsLog.debug_info(data);
     var f = [];
@@ -225,9 +232,9 @@ function save_snData(snDataType, data, res) {
                         d.save(function(err) {
                             if (err) {
                                 soxsLog.error('err: ' + err);
-                                res.send(403);
+                                cb(err, null);
                             } else {
-                                res.send(200);
+                                cb(null, d.name);
                             }
                         });
                     }
@@ -335,10 +342,22 @@ exports.get_snData = function(req, res, next) {
     })
 }
 
+exports.post_schema = function(snDataType, snData, cb) {
+	soxsLog.alert('exports.post_schema: ' + snDataType);
+	soxsLog.alert(JSON.stringify(snData));
+    save_snData(snDataType, snData, cb);
+}
+
 exports.post_snData = function(req, res, next) {
     var snDataType = req.params.snDataType;
     var data = req.body;
-    save_snData(snDataType, data, res);
+    save_snData(snDataType, data, function(err, data) {
+        if (err) {
+            res.send(403);
+        } else {
+            res.send(200);
+        }
+    });
 }
 
 /*****************************************************************************************

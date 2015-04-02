@@ -19,10 +19,12 @@
             </ul>
         </div>
         <div class="col-md-9 soxsDataDetails">
-        <tabset>
-        <tab heading="Configure Data">
-        <div class="tab-content soxsContent">
-        <br />
+            <ul class="nav nav-tabs">
+                <li role="presentation" data-ng-class="css_data"><a data-ng-click="display_data()">Data</a></li>
+                <li role="presentation" data-ng-class="css_layout"><a data-ng-click="display_layout()">Layout</a></li>
+            </ul>
+            <div class="tab-content soxsContent"  data-ng-show="show_data" >
+            <br />
             <div class="container">
                 <div class="row clearfix">
                     <div class="col-md-8 column">
@@ -34,13 +36,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="mongonameInput" class="col-md-2 control-label">Mongo name:</label>
+                                <label class="col-md-2 control-label">Mongo name:</label>
                                 <div class="col-md-10">
-                                    <input type="text" class="form-control" id="mongonameInput" data-ng-model="current_model.mongo_name" />
+                                    <input type="text" class="form-control" data-ng-model="current_model.mongo_name" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="mongonameInput" class="col-md-2 control-label">Active</label>
+                                <label class="col-md-2 control-label">Active</label>
                                 <div class="col-md-10">
                                     <div class="checkbox" style="margin-left: 20px;">
                                         <input type="checkbox" data-ng-model="current_model.active" />
@@ -50,7 +52,7 @@
                             <div class="form-group">
                                 <label for="fieldsInput" class="col-md-2 control-label">Fields:</label>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" id="mongonameInput" data-ng-model="new_field_name" placeholder="new field name" />
+                                    <input type="text" class="form-control" data-ng-model="new_field_name" placeholder="new field name" />
                                 </div>
                                 <div class="col-md-3">
                                     <select class="form-control" data-ng-model="new_field_type" data-ng-options="snType for snType in snTypes"></select>
@@ -58,29 +60,28 @@
                                 </div>
                                 <div class="col-md-1">
                                     <div class="checkbox" style="margin-left: 20px;">
-                                        <input type="checkbox" id="mongonameInput" data-ng-model="new_field_isArray" />
+                                        <input type="checkbox" data-ng-model="new_field_isArray" />
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" typeahead="snModel as snModel.name for snModel in snModels | filter:$viewValue | limitTo:8" data-ng-model="new_field_ref.name" placeholder="new field ref" />
-                                    
+                                    <input type="text" class="form-control" typeahead="snModel as snModel.name for snModel in snModels | filter:$viewValue | limitTo:8" data-ng-model="new_field_ref" placeholder="new field ref" />
                                 </div>
                                 <div data-ng-repeat="field in current_model.fields">
                                     <div class="col-md-2"></div>
                                     <div class="col-md-3">
-                                        <input type="text" class="form-control" id="mongonameInput" data-ng-model="field.name" />
+                                        <input type="text" class="form-control" data-ng-model="field.name" />
                                     </div>
                                     <div class="col-md-3">
-                                        <!-- <input type="text" class="form-control" id="mongonameInput" data-ng-model="field.type" /> -->
+                                        <!-- <input type="text" class="form-control"  data-ng-model="field.type" /> -->
                                         <select class="form-control" data-ng-model="field.type" data-ng-options="snType for snType in snTypes"></select>
                                     </div>
                                     <div class="col-md-1">
                                         <div class="checkbox" style="margin-left: 20px;">
-                                            <input type="checkbox" id="mongonameInput" data-ng-model="field.isArray" />
+                                            <input type="checkbox" data-ng-model="field.isArray" />
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="text" class="form-control" id="mongonameInput" data-ng-model="field.ref.mongo_name" readonly="true" />
+                                        <input type="text" class="form-control" id="mongonameInput" data-ng-model="field.ref" readonly="true" />
                                     </div>
                                 </div>
                                 <div class="col-md-10"></div>
@@ -99,9 +100,9 @@
                 </div>
             </div>
             </div>
-            </tab>
-            <tab heading="Configure Layout"><div class="tab-content">Configure Layout</div></tab>
-  </tabset>
+            <div class="tab-content soxsContent" data-ng-show="show_layout">
+            <h3>Layout View</h3>
+            </div>
         </div>
     </div>
     <!-- <div class="modal-footer">
@@ -111,9 +112,9 @@
 </div>
 <!-- </div> -->
 <!-- <tabset> -->
-    <!-- <tab heading="Static title">Configure Data</tab> -->
-    <!-- <tab heading="Static title">Configure Layout</tab> -->
-    <!-- <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disabled="tab.disabled">
+<!-- <tab heading="Static title">Configure Data</tab> -->
+<!-- <tab heading="Static title">Configure Layout</tab> -->
+<!-- <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disabled="tab.disabled">
       {{tab.content}}
     </tab>
     <tab select="alertMe()">
@@ -122,4 +123,4 @@
       </tab-heading>
       I've got an HTML heading, and a select callback. Pretty cool!
     </tab> -->
-  <!-- </tabset> -->
+<!-- </tabset> -->

@@ -18,6 +18,21 @@ module.exports = {
             name: 'soxsnation DEV'
         }
     },
+    staging: {
+        db: 'test_soxsnation',
+        options: {
+            server: {
+                socketOptions: {
+                    keepAlive: 1
+                }
+            },
+            username: 'soxsnation',
+            password: 's0xn@t10n'
+        },
+        app: {
+            name: 'soxsnation DEV'
+        }
+    },
     production: {
         db: 'soxsnation',
         app: {

@@ -61,9 +61,10 @@ angular.module('soxsnationApp')
             // Gets called from the templateCreator directive to save the tempate
             $scope.save_template = function(temp) {
                 console.log('SoxsTemplateController: save_template');
+                console.log(JSON.stringify(temp));
                 $scope.show_template_creator = false;
                 $scope.show_template_list = true;
-                create_template(temp);
+                // create_template(temp);
             }
 
             $scope.cancel_edit = function() {

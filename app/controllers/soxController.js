@@ -159,7 +159,7 @@ function post_field(field_schema, callback) {
 
 
 
-function post_soxs_schema(schema_data, res) {
+function post_soxs_schema(schema_data, cb) {
     var f = [];
     for (var i = 0; i < schema_data.fields.length; ++i) {
         (function(i) {
@@ -185,13 +185,17 @@ function post_soxs_schema(schema_data, res) {
         d.save(function(err) {
             if (err) {
                 soxsLog.debug_info_end('post_soxs_schema::err:' + err);
-                res.send(403);
+                cb(err, null);
             } else {
                 soxsLog.debug_info_end('post_soxs_schema');
-                res.send(200);
+                cb(null, d.name);
             }
         });
     })
+}
+
+exports.post_schema = function(schema_data, cb) {
+	post_soxs_schema(schema_data, cb);
 }
 
 exports.post_soxs_data = function(req, res, next) {
@@ -201,7 +205,10 @@ exports.post_soxs_data = function(req, res, next) {
     var d = {};
 
     if (soxsDataType == 'soxsSchema') {
-        post_soxs_schema(data, res);
+        post_soxs_schema(data, function(err, data) {
+        	if(err) { res.send(403); }
+        	else { res.send(200); }
+        });
     } else if (soxsDataType == 'soxsSchemaField') {
         soxsLog.debug_info_end('post_soxs_data::soxsSchemaField: not defined');
         res.send(404);
