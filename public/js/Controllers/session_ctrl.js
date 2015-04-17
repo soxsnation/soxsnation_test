@@ -18,8 +18,8 @@ angular.module('soxsnationApp')
 			// });
 
 			$scope.username = '';//'soxsnation@gmail.com';
-			// $scope.username = 'soxsnation';
-			// $scope.password = '2';
+			$scope.username = 'soxsnation';
+			$scope.password = '2';
 
 			function user_login() {
 				soxsAuth.login($scope.username, $scope.password)

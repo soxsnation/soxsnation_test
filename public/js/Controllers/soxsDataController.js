@@ -1,4 +1,4 @@
-/* soxsDataController.js
+ /* soxsDataController.js
  *
  * Author(s):  Andrew Brown
  * Date:       3/31/2015
@@ -15,6 +15,8 @@ angular.module('soxsnationApp')
              ***********************************************************************************************************************/
 
             $scope.current_model = {};
+            $scope.current_model_formatted = {};
+            $scope.current_model_formatted_fields = [];
             $scope.current_mode = 'none';
             $scope.snModels = [];
             $scope.snTypes = [];
@@ -25,8 +27,10 @@ angular.module('soxsnationApp')
             };
             $scope.show_layout = false;
             $scope.show_data = true;
+            $scope.show_json = false;
             $scope.css_data = "active";
             $scope.css_layout = "";
+            $scope.css_json = "";
 
             $scope.tabs = [{
                 title: 'Data Layout',
@@ -181,6 +185,26 @@ angular.module('soxsnationApp')
                 $scope.current_mode = 'update';
                 $scope.current_model = sn_model;
 
+                
+                var cmf = {};
+                cmf._id = sn_model._id;
+                cmf.__v = sn_model.__v;
+                cmf.active = sn_model.active;
+                cmf.mongo_name = sn_model.mongo_name;
+                cmf.name = sn_model.name;
+                $scope.current_model_formatted = JSON.stringify(cmf);
+
+                $scope.current_model_formatted_fields = [];
+                for (var i = 0; i < sn_model.fields.length; ++i) {
+                    var f = {
+                        name: sn_model.fields[i].name,
+                        type: sn_model.fields[i].type,
+                        ref: sn_model.fields[i].ref,
+                        isArray: sn_model.fields[i].isArray,
+                    }
+                    $scope.current_model_formatted_fields.push(JSON.stringify(f));
+                }
+                
             }
 
             $scope.add_field = function() {
@@ -232,16 +256,29 @@ angular.module('soxsnationApp')
 
             $scope.display_data = function() {
                 $scope.show_layout = false;
+                $scope.show_json = false;
                 $scope.show_data = true;
-                $scope.css_data = "active";
+                $scope.css_json = "active";
+                $scope.css_data = "";
                 $scope.css_layout = "";
             }
 
             $scope.display_layout = function() {
                 $scope.show_layout = true;
+                $scope.show_json = false;
                 $scope.show_data = false;
                 $scope.css_data = "";
+                $scope.css_json = "";
                 $scope.css_layout = "active";
+            }
+
+            $scope.display_json = function() {
+                $scope.show_layout = false;
+                $scope.show_data = false;
+                $scope.show_json = true;
+                $scope.css_data = "";
+                $scope.css_layout = "";
+                $scope.css_json = "active";
             }
 
 
