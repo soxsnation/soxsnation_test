@@ -58,7 +58,7 @@ function get_schema_by_name(schemaName, cb) {
     if (schemaName  && schemaName != '_all') {
         query.name = schemaName
     }
-    soxsLog.debug_info(query);
+    soxsLog.debug_info(JSON.stringify(query));
     soxsSchema.find(query)
         .populate('fields')
         .exec(function(err, data) {
@@ -66,6 +66,8 @@ function get_schema_by_name(schemaName, cb) {
                 soxsLog.error('soxController::get_schema::err:' + err);
                 cb(null);
             } else {
+                soxsLog.debug_info("Got schema for: " + schemaName);
+                soxsLog.debug_info(JSON.stringify(data));
                 cb(data);
             }
         });
@@ -89,14 +91,14 @@ function get_schema_field(schemaField, cb) {
 }
 
 exports.get_soxs_schema = function(schemaName, cb) {
-    soxsLog.debug_info('get_soxs_schema: ' + schemaName);
+    soxsLog.apicall('get_soxs_schema: ' + schemaName);
     get_schema_by_name(schemaName, cb);
     // var soxs_model = make_soxs_model('soxsSchema');
     // soxs_model.find({name: schemaName}).exec(cb);
 }
 
 exports.get_soxs_data_by_id = function(req, res, next) {
-    soxsLog.debug_info('get_soxs_data_by_id: ' + req.params.soxsDataType);
+    soxsLog.apicall('get_soxs_data_by_id: ' + req.params.soxsDataType);
 
     var soxsDataType = req.params.soxsDataType;
     if (soxsDataType == 'soxsSchema') {
@@ -119,7 +121,7 @@ exports.get_soxs_data_by_id = function(req, res, next) {
 }
 
 exports.get_soxs_data = function(req, res, next) {
-    soxsLog.debug_info('get_soxs_data: ' + req.params.soxsDataType);
+    soxsLog.apicall('get_soxs_data: ' + req.params.soxsDataType);
 
     var soxsDataType = req.params.soxsDataType;
     if (soxsDataType == 'soxsSchema') {
@@ -195,11 +197,13 @@ function post_soxs_schema(schema_data, cb) {
 }
 
 exports.post_schema = function(schema_data, cb) {
+    soxsLog.apicall('post_schema: ' + schema_data);
 	post_soxs_schema(schema_data, cb);
 }
 
 exports.post_soxs_data = function(req, res, next) {
-    soxsLog.debug_info_start('post_soxs_data: ' + req.params.soxsDataType)
+    soxsLog.apicall('post_soxs_data: ' + req.params.soxsDataType);
+    // soxsLog.debug_info_start('post_soxs_data: ' + req.params.soxsDataType)
     var soxsDataType = req.params.soxsDataType;
     var data = req.body;
     var d = {};
@@ -216,7 +220,7 @@ exports.post_soxs_data = function(req, res, next) {
 }
 
 function put_field(id, field_schema, callback) {
-    soxsLog.debug_info('put_field: ' + id + JSON.stringify(field_schema));
+    soxsLog.apicall('put_field: ' + id + JSON.stringify(field_schema));
     if (id == undefined) {
         callback("put field failed: " + JSON.stringify(field_schema), null);
     } else {
@@ -312,7 +316,7 @@ function put_soxs_schema(id, schema_data, res) {
 }
 
 exports.put_soxs_data = function(req, res, next) {
-    soxsLog.debug_info_start('put_soxs_data: ' + req.params.soxsDataType)
+    soxsLog.apicall('put_soxs_data: ' + req.params.soxsDataType)
     var soxsDataType = req.params.soxsDataType;
     var id = req.params.id;
     var data = req.body;
@@ -326,7 +330,7 @@ exports.put_soxs_data = function(req, res, next) {
 }
 
 exports.delete_soxs_data = function(req, res, next) {
-    soxsLog.debug_info_start('delete_soxs_data: ' + req.params.soxsDataType)
+    soxsLog.apicall('delete_soxs_data: ' + req.params.soxsDataType)
     var soxsDataType = req.params.soxsDataType;
     var id = req.params.id;
     var query = {

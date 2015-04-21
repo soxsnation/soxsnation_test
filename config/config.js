@@ -4,7 +4,8 @@ module.exports = {
     debug_mode: true,
     port: 27017,
     development: {
-        db: 'staging_soxsnation',
+        db: 'staging2_soxsnation',
+        // db: 'soxsnation2',
         options: {
             server: {
                 socketOptions: {
@@ -19,7 +20,7 @@ module.exports = {
         }
     },
     staging: {
-        db: 'test_soxsnation',
+        db: 'staging2_soxsnation',
         options: {
             server: {
                 socketOptions: {

@@ -164,7 +164,7 @@ function load_snData() {
 
 
 exports.snData = function() {
-	soxsLog.debug_info('exports.snData ');
+	soxsLog.apicall('exports.snData ');
     snController.init(function(err, data) {
 
         load_snData();
@@ -172,7 +172,7 @@ exports.snData = function() {
 }
 
 exports.soxData = function() {
-    soxsLog.debug_info_start("soxData");
+    soxsLog.apicall("exports.soxData");
     soxController.post_schema(snAttributeType, function(err, data) {
         if (err) {
             soxsLog.error(err);

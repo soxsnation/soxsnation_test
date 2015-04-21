@@ -44,7 +44,7 @@ var textbox = {
 
 
 ele_list.push(div);
-ele_list.push(textbox);
+// ele_list.push(textbox);
 
 exports.elements = function() {
     return ele_list;

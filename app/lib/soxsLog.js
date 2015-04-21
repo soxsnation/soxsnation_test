@@ -26,6 +26,13 @@ function is_debugging(item) {
 
 module.exports = function(calling_item) {
     var log = {};
+
+    log.apicall = function(message) {
+        var d = new Date();
+        var lm = '[' + d.toISOString() + '] -- ' + message;
+        console.log(lm.yellow);
+    };
+
     log.event = function(message) {
         var d = new Date();
         var lm = '[' + d.toISOString() + '] -- ' + message;

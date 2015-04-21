@@ -1,134 +1,143 @@
-<h1>Soxs Data - {{new_field_ref.mongo_name}}</h1>
+
 <!-- {{page}} -->
 <!-- Button trigger modal -->
-<button class="btn btn-primary" data-toggle="modal" data-ng-click="add_data_model()">
-    Add Data Model
-</button>
-<br />
-<br />
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-3 soxsDataList">
-            <ul class="nav nav-pills nav-stacked">
-                <!-- <li class="active" role="presentation" data-ng-click="data_model_changed(model)">
+<div data-ng-show="show_data_builder">
+<h1>Soxs Data - {{new_field_ref.mongo_name}}</h1>
+    <button class="btn btn-primary" data-toggle="modal" data-ng-click="add_data_model()">
+        Add Data Model
+    </button>
+    <br />
+    <br />
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 soxsDataList">
+                <ul class="nav nav-pills nav-stacked">
+                    <!-- <li class="active" role="presentation" data-ng-click="data_model_changed(model)">
                             <a href="">Soxs Data</a>
                 </li> -->
-                <li data-ng-repeat="model in snModels" role="presentation" data-ng-click="sn_model_changed(model)" data-ng-class="{'active': model.name == currentDataModel.name}">
-                    <a href="">{{model.name}}</a>
-                </li>
-            </ul>
-        </div>
-        <div class="col-md-9 soxsDataDetails">
-            <ul class="nav nav-tabs">
-                <li role="presentation" data-ng-class="css_data"><a data-ng-click="display_data()">Data</a></li>
-                <li role="presentation" data-ng-class="css_layout"><a data-ng-click="display_layout()">Layout</a></li>
-                <li role="presentation" data-ng-class="css_json"><a data-ng-click="display_json()">JSON</a></li>
-            </ul>
-            <div class="tab-content soxsContent" data-ng-show="show_data">
-                <br />
-                <div class="container">
-                    <div class="row clearfix">
-                        <div class="col-md-8 column">
-                            <form class="form-horizontal" role="form">
-                                <div class="form-group">
-                                    <label for="nameInput" class="col-md-2 control-label">Name:</label>
-                                    <div class="col-md-10">
-                                        <input type="text" class="form-control" id="nameInput" data-ng-model="current_model.name" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label">Mongo name:</label>
-                                    <div class="col-md-10">
-                                        <input type="text" class="form-control" data-ng-model="current_model.mongo_name" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label">Active</label>
-                                    <div class="col-md-10">
-                                        <div class="checkbox" style="margin-left: 20px;">
-                                            <input type="checkbox" data-ng-model="current_model.active" />
+                    <li data-ng-repeat="model in snModels" role="presentation" data-ng-click="sn_model_changed(model)" data-ng-class="{'active': model.name == currentDataModel.name}">
+                        <a href="">{{model.name}}</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-9 soxsDataDetails">
+                <ul class="nav nav-tabs">
+                    <li role="presentation" data-ng-class="css_data"><a data-ng-click="display_data()">Data</a></li>
+                    <li role="presentation" data-ng-class="css_layout"><a data-ng-click="display_layout()">Layout</a></li>
+                    <li role="presentation" data-ng-class="css_json"><a data-ng-click="display_json()">JSON</a></li>
+                </ul>
+                <div class="tab-content soxsContent" data-ng-show="show_data">
+                    <br />
+                    <div class="container">
+                        <div class="row clearfix">
+                            <div class="col-md-8 column">
+                                <form class="form-horizontal" role="form">
+                                    <div class="form-group">
+                                        <label for="nameInput" class="col-md-2 control-label">Name:</label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" id="nameInput" data-ng-model="current_model.name" />
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="fieldsInput" class="col-md-2 control-label">Fields:</label>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" data-ng-model="new_field_name" placeholder="new field name" />
-                                    </div>
-                                    <div class="col-md-3">
-                                        <select class="form-control" data-ng-model="new_field_type" data-ng-options="snType for snType in snTypes"></select>
-                                        <!-- <input type="text" class="form-control" id="mongonameInput" data-ng-model="new_field_type" placeholder="new field type" /> -->
-                                    </div>
-                                    <div class="col-md-1">
-                                        <div class="checkbox" style="margin-left: 20px;">
-                                            <input type="checkbox" data-ng-model="new_field_isArray" />
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">Mongo name:</label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" data-ng-model="current_model.mongo_name" />
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" typeahead="snModel as snModel.name for snModel in snModels | filter:$viewValue | limitTo:8" data-ng-model="new_field_ref" placeholder="new field ref" />
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">Active</label>
+                                        <div class="col-md-10">
+                                            <div class="checkbox" style="margin-left: 20px;">
+                                                <input type="checkbox" data-ng-model="current_model.active" />
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div data-ng-repeat="field in current_model.fields">
-                                        <div class="col-md-2"></div>
+                                    <div class="form-group">
+                                        <label for="fieldsInput" class="col-md-2 control-label">Fields:</label>
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" data-ng-model="field.name" />
+                                            <input type="text" class="form-control" data-ng-model="new_field_name" placeholder="new field name" />
                                         </div>
                                         <div class="col-md-3">
-                                            <!-- <input type="text" class="form-control"  data-ng-model="field.type" /> -->
-                                            <select class="form-control" data-ng-model="field.type" data-ng-options="snType for snType in snTypes"></select>
+                                            <select class="form-control" data-ng-model="new_field_type" data-ng-options="snType for snType in snTypes"></select>
+                                            <!-- <input type="text" class="form-control" id="mongonameInput" data-ng-model="new_field_type" placeholder="new field type" /> -->
                                         </div>
                                         <div class="col-md-1">
                                             <div class="checkbox" style="margin-left: 20px;">
-                                                <input type="checkbox" data-ng-model="field.isArray" />
+                                                <input type="checkbox" data-ng-model="new_field_isArray" />
                                             </div>
                                         </div>
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" id="mongonameInput" data-ng-model="field.ref" readonly="true" />
+                                            <input type="text" class="form-control" typeahead="snModel as snModel.name for snModel in snModels | filter:$viewValue | limitTo:8" data-ng-model="new_field_ref" placeholder="new field ref" />
+                                        </div>
+                                        <div data-ng-repeat="field in current_model.fields">
+                                            <div class="col-md-2"></div>
+                                            <div class="col-md-3">
+                                                <input type="text" class="form-control" data-ng-model="field.name" />
+                                            </div>
+                                            <div class="col-md-3">
+                                                <!-- <input type="text" class="form-control"  data-ng-model="field.type" /> -->
+                                                <select class="form-control" data-ng-model="field.type" data-ng-options="snType for snType in snTypes"></select>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <div class="checkbox" style="margin-left: 20px;">
+                                                    <input type="checkbox" data-ng-model="field.isArray" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input type="text" class="form-control" id="mongonameInput" data-ng-model="field.ref" readonly="true" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-10"></div>
+                                        <div class="col-md-2">
+                                            <button type="submit" class="btn btn-primary" data-ng-click="add_field()">Add Field</button>
                                         </div>
                                     </div>
-                                    <div class="col-md-10"></div>
-                                    <div class="col-md-2">
-                                        <button type="submit" class="btn btn-primary" data-ng-click="add_field()">Add Field</button>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <button type="submit" class="btn btn-primary" data-ng-click="save_model()">Save</button>
+                                            <button type="submit" class="btn btn-primary" data-ng-click="delete_model()">Delete</button>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-10">
-                                        <button type="submit" class="btn btn-primary" data-ng-click="save_model()">Save</button>
-                                        <button type="submit" class="btn btn-primary" data-ng-click="delete_model()">Delete</button>
-                                    </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="tab-content soxsContent" data-ng-show="show_layout">
-                <h3>Layout View</h3>
-                <br />
-                <!-- <div style="display:block;width:100%">
+                <div class="tab-content soxsContent" data-ng-show="show_layout">
+                    <h3>Layout View</h3>
+                    <br />
+                    <button type="submit" class="btn btn-primary" data-ng-click="load_layout_builder()">Layout Builder</button>
+                    <!-- <div style="display:block;width:100%">
                     <p style="display:block; word-wrap: normal;">
                     {{current_model_formatted}}
                     </p>
                     <b>Fields</b>
                     <p data-ng-repeat="field in current_model_formatted_fields">{{field}}<br /></p>
                 </div> -->
-            </div>
-            <div class="tab-content soxsContent" data-ng-show="show_json">
-                <h3>JSON View</h3>
-                <br />
-                <div style="display:block;width:100%">
-                    <p style="display:block; word-wrap: normal;">
-                    {{current_model_formatted}}
-                    </p>
-                    <b>Fields</b>
-                    <p data-ng-repeat="field in current_model_formatted_fields track by $index">{{field}}<br /></p>
+                </div>
+                <div class="tab-content soxsContent" data-ng-show="show_json">
+                    <h3>JSON View</h3>
+                    <br />
+                    <div style="display:block;width:100%">
+                        <p style="display:block; word-wrap: normal;">
+                            {{current_model_formatted}}
+                        </p>
+                        <b>Fields</b>
+                        <p data-ng-repeat="field in current_model_formatted_fields track by $index">{{field}}
+                            <br />
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- <div class="modal-footer">
+        <!-- <div class="modal-footer">
         <h4 class="modal-footer-error">{{modal_error}}</h4>
         <button type="button" class="btn btn-primary" data-ng-click="saveDataType()">{{modalSubmitText}}</button>
     </div> -->
+    </div>
+</div>
+<div data-ng-show="show_template_builder">
+    <sn-templates sn-template-elements="template_elements" sn-template-data="template_data" sn-save="save_template" sn-cancel="cancel_edit"></sn-templates>
 </div>
 <!-- </div> -->
 <!-- <tabset> -->

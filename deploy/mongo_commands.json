@@ -1,0 +1,5 @@
+{ "copydb": 1,
+  "fromhost": "localhost",
+  "fromdb": "soxsnation_bare",
+  "todb": "staging2_soxsnation"
+}

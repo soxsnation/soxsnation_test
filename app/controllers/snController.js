@@ -67,10 +67,14 @@ function make_schema(snDataType, cb) {
         if (!sch) {
             soxsLog.error('snController::make_schema::err: ');
             cb('snController::make_schema::err: ', null);
+        } else if (sch.length == 0) {
+            soxsLog.error('snController::make_schema: Length is 0 ');
+            cb('snController::make_schema: Length is 0', null);
         } else {
             soxsLog.debug_info('snController::make_schema got sch');
-            soxsLog.debug_info(JSON.stringify(sch));
+            soxsLog.data(JSON.stringify(sch));
             var sch0 = sch[0];
+            console.log('sch0: ' + JSON.stringify(sch0));
             var sn_props = {
                 name: sch0.name,
                 mongo_name: sch0.mongo_name,
@@ -79,7 +83,7 @@ function make_schema(snDataType, cb) {
             var s = format_schema(sch0);
 
             soxsLog.debug_info('temp_schema');
-            soxsLog.debug_info(s);
+            soxsLog.data(JSON.stringify(s));
             var temp_schema = new Schema(s);
             cb(null, temp_schema, sn_props);
         }
@@ -88,7 +92,7 @@ function make_schema(snDataType, cb) {
 
 function make_model(snDataType, cb) {
     soxsLog.debug_info('make_model: ' + snDataType);
-    soxsLog.debug_info(JSON.stringify(snModels));
+    soxsLog.data(JSON.stringify(snModels));
     if (snModels.hasOwnProperty(snDataType)) {
         cb(null, snModels[snDataType].model);
     } else {
@@ -105,6 +109,22 @@ function make_model(snDataType, cb) {
                 };
 
                 soxsLog.alert('snModels[sn_props.name].mongo_name: ' + snModels[sn_props.name].mongo_name);
+                soxsLog.data("sn_props.name: " + sn_props.name);
+                for (var prop in snModels) {
+                    soxsLog.data("Model: " + JSON.stringify(prop.model));
+                }
+
+                // var modelsName = mongoose.connection.modelNames();
+                // soxsLog.data(JSON.stringify(mongoose.models));
+
+                var modelNames = mongoose.model() // ["Cars", "Drivers", "Pedestrians"]
+                    ,
+                    models = modelNames.map(function(modelName) {
+                        return mongoose.model(modelName);
+                    });
+                    soxsLog.data(JSON.stringify(modelNames));
+
+                // if ()
                 var sn_model = mongoose.model(snModels[sn_props.name].mongo_name, sn_schema);
                 snModels[snDataType].model = sn_model;
                 cb(null, sn_model);
@@ -177,11 +197,12 @@ function load_data(cb) {
 // });
 
 exports.init = function(cb) {
+    soxsLog.apicall('init');
     load_data(cb);
 }
 
 exports.init_data = function(req, res, next) {
-    soxsLog.debug_info_start('init_data');
+    soxsLog.apicall('init_data');
     load_data(function(err, data) {
         soxsLog.debug_info_end('init_data');
         if (err) {
@@ -247,7 +268,7 @@ function save_snData(snDataType, data, cb) {
 }
 
 function populateData(sn_model, query, pop_fields, cb) {
-    soxsLog.debug_info('populateData: ' + pop_fields);
+    soxsLog.alert('populateData: ' + JSON.stringify(pop_fields));
     if (pop_fields.length == 0) {
         sn_model.find(query)
             .exec(cb);
@@ -315,6 +336,7 @@ function getDataById(snDataType, id, cb) {
 }
 
 exports.get_snData_by_id = function(req, res, next) {
+    soxsLog.apicall('get_snData_by_id: ' + req.params.snDataType);
     var snDataType = req.params.snDataType;
     var id = req.params.id;
     var query = {
@@ -331,7 +353,9 @@ exports.get_snData_by_id = function(req, res, next) {
 }
 
 exports.get_snData = function(req, res, next) {
+    soxsLog.apicall('get_snData: ' + req.params.snDataType);
     var snDataType = req.params.snDataType;
+    soxsLog.debug_info('get_snData: ' + snDataType);
     getData(snDataType, {}, function(err, data) {
         if (err) {
             soxsLog.debug_info('err:' + err);
@@ -343,12 +367,13 @@ exports.get_snData = function(req, res, next) {
 }
 
 exports.post_schema = function(snDataType, snData, cb) {
-	soxsLog.alert('exports.post_schema: ' + snDataType);
-	soxsLog.alert(JSON.stringify(snData));
+    soxsLog.apicall('post_schema: ' + snDataType);
+    soxsLog.alert(JSON.stringify(snData));
     save_snData(snDataType, snData, cb);
 }
 
 exports.post_snData = function(req, res, next) {
+    soxsLog.apicall('post_snData: ' + req.params.snDataType);
     var snDataType = req.params.snDataType;
     var data = req.body;
     save_snData(snDataType, data, function(err, data) {
