@@ -55,10 +55,14 @@ function get_schema(schemaName, cb) {
 
 function get_schema_by_name(schemaName, cb) {
     var query = {};
-    if (schemaName  && schemaName != '_all') {
-        query.name = schemaName
+    if (schemaName && schemaName != '_all') {
+        if (schemaName.indexOf('.') == -1) {
+            query.name = schemaName
+        } else {
+            query.mongo_name = schemaName
+        }
     }
-    soxsLog.debug_info(JSON.stringify(query));
+    soxsLog.debug_info('query: ' + JSON.stringify(query));
     soxsSchema.find(query)
         .populate('fields')
         .exec(function(err, data) {
@@ -91,7 +95,7 @@ function get_schema_field(schemaField, cb) {
 }
 
 exports.get_soxs_schema = function(schemaName, cb) {
-    soxsLog.apicall('get_soxs_schema: ' + schemaName);
+    soxsLog.error('get_soxs_schema: ' + schemaName);
     get_schema_by_name(schemaName, cb);
     // var soxs_model = make_soxs_model('soxsSchema');
     // soxs_model.find({name: schemaName}).exec(cb);
@@ -198,7 +202,7 @@ function post_soxs_schema(schema_data, cb) {
 
 exports.post_schema = function(schema_data, cb) {
     soxsLog.apicall('post_schema: ' + schema_data);
-	post_soxs_schema(schema_data, cb);
+    post_soxs_schema(schema_data, cb);
 }
 
 exports.post_soxs_data = function(req, res, next) {
@@ -210,8 +214,11 @@ exports.post_soxs_data = function(req, res, next) {
 
     if (soxsDataType == 'soxsSchema') {
         post_soxs_schema(data, function(err, data) {
-        	if(err) { res.send(403); }
-        	else { res.send(200); }
+            if (err) {
+                res.send(403);
+            } else {
+                res.send(200);
+            }
         });
     } else if (soxsDataType == 'soxsSchemaField') {
         soxsLog.debug_info_end('post_soxs_data::soxsSchemaField: not defined');

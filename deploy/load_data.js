@@ -99,7 +99,7 @@ var snElement = {
         ref: "sn.Element.Attribute",
         default_value: ""
     }, {
-        name: "childred",
+        name: "children",
         type: "ObjectId",
         isArray: true,
         ref: "sn.Element",

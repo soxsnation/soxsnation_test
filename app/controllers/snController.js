@@ -18,11 +18,13 @@ var soxsTest = mongoose.model('soxs.Test');
 var snElmProperty = mongoose.model('snElmProperty');
 var snTempSchema = mongoose.model('snTempSchema');
 var snTemplate = mongoose.model('snTemplate');
+var initialized = false;
 
 var snModels = {};
 // var soxsModels = {};
 
 function format_schema(raw_schema) {
+    // soxsLog.debug_info('***raw_schema');
     var s = {};
     for (var fc = 0; fc < raw_schema.fields.length; ++fc) {
         var f = raw_schema.fields[fc];
@@ -35,10 +37,12 @@ function format_schema(raw_schema) {
                     ref: f.ref
                 }];
             } else {
+                // soxsLog.debug_info('***' + raw_schema.name + ' : ' + f.name)
                 s[f.name] = {
-                    type: Schema.Types.ObjectId,
-                    ref: f.ref
+                    ref: f.ref,
+                    'type': Schema.Types.ObjectId
                 };
+                // soxsLog.ds(s);
             }
 
         } else {
@@ -71,19 +75,25 @@ function make_schema(snDataType, cb) {
             soxsLog.error('snController::make_schema: Length is 0 ');
             cb('snController::make_schema: Length is 0', null);
         } else {
-            soxsLog.debug_info('snController::make_schema got sch');
-            soxsLog.data(JSON.stringify(sch));
+            soxsLog.error('----snController::make_schema got sch: ' + sch.length);
+            // soxsLog.data(sch);
+            // var sch0 = {};
+            // for (var i = 0; i < sch.length; ++i) {
+            //     if (sch[i].)
+            // }
             var sch0 = sch[0];
-            console.log('sch0: ' + JSON.stringify(sch0));
+            soxsLog.debug_info('sch0: ' + JSON.stringify(sch0));
             var sn_props = {
                 name: sch0.name,
                 mongo_name: sch0.mongo_name,
                 active: sch0.active
             }
+            // soxsLog.debug_info('temp_schema');
+            // soxsLog.data(JSON.stringify(sn_props));
+
             var s = format_schema(sch0);
 
-            soxsLog.debug_info('temp_schema');
-            soxsLog.data(JSON.stringify(s));
+
             var temp_schema = new Schema(s);
             cb(null, temp_schema, sn_props);
         }
@@ -91,11 +101,20 @@ function make_schema(snDataType, cb) {
 }
 
 function make_model(snDataType, cb) {
-    soxsLog.debug_info('make_model: ' + snDataType);
-    soxsLog.data(JSON.stringify(snModels));
-    if (snModels.hasOwnProperty(snDataType)) {
-        cb(null, snModels[snDataType].model);
-    } else {
+    soxsLog.error('make_model: ' + snDataType);
+
+    if (snModels.hasOwnProperty(snDataType) && snModels[snDataType].hasOwnProperty('mongo_name') && mongoose.models[snModels[snDataType].mongo_name]) {
+        soxsLog.debug_info('-----mongoose had model: ' + snModels[snDataType].mongo_name)
+        cb(null, mongoose.model(snModels[snDataType].mongo_name));
+    }
+    // else if (snModels.hasOwnProperty(snDataType) && snModels[snDataType].hasOwnProperty('model')) {
+    //     soxsLog.debug_info('Model exists: ' + snDataType)
+    //     soxsLog.debug_info(JSON.stringify(snModels[snDataType]))
+    //     soxsLog.ds(snModels[snDataType]);
+    //     cb(null, mongoose.model(snModels[snDataType].mongo_name));
+    //     // cb(null, snModels[snDataType].model);
+    // } 
+    else {
         make_schema(snDataType, function(err, sn_schema, sn_props) {
             if (err) {
                 cb(err, null);
@@ -103,38 +122,63 @@ function make_model(snDataType, cb) {
                 soxsLog.error('make_model::sn_schema could not be made');
                 cb('make_model::sn_schema could not be made', null);
             } else {
-                snModels[sn_props.name] = {
-                    mongo_name: sn_props.mongo_name,
-                    active: sn_props.active
-                };
+                // soxsLog.debug_info('sn_schema');
+                // soxsLog.ds(sn_schema);
+                if (!snModels.hasOwnProperty(snDataType)) {
+                    snModels[sn_props.name] = {
+                        mongo_name: sn_props.mongo_name,
+                        active: sn_props.active,
+                        model: {}
+                    };
+                }
 
                 soxsLog.alert('snModels[sn_props.name].mongo_name: ' + snModels[sn_props.name].mongo_name);
                 soxsLog.data("sn_props.name: " + sn_props.name);
-                for (var prop in snModels) {
-                    soxsLog.data("Model: " + JSON.stringify(prop.model));
-                }
+                // for (var prop in snModels) {
+                //     soxsLog.data("Model: " + JSON.stringify(prop));
+                // }
 
                 // var modelsName = mongoose.connection.modelNames();
-                // soxsLog.data(JSON.stringify(mongoose.models));
+                soxsLog.data(JSON.stringify(snModels[sn_props.name]));
 
-                var modelNames = mongoose.model() // ["Cars", "Drivers", "Pedestrians"]
-                    ,
-                    models = modelNames.map(function(modelName) {
-                        return mongoose.model(modelName);
-                    });
-                    soxsLog.data(JSON.stringify(modelNames));
+                var modelNames = mongoose.modelNames();
+                soxsLog.data('modelNames');
+                soxsLog.data(JSON.stringify(modelNames));
+                soxsLog.debug_info('Checking for model: ' + sn_props.name + ' : ' + snModels[sn_props.name].mongo_name);
+                soxsLog.debug_info(mongoose.model.hasOwnProperty(sn_props.name));
 
-                // if ()
-                var sn_model = mongoose.model(snModels[sn_props.name].mongo_name, sn_schema);
-                snModels[snDataType].model = sn_model;
-                cb(null, sn_model);
+                if (mongoose.models[sn_props.mongo_name]) {
+                    cb(null, mongoose.model(sn_props.mongo_name));
+                } else {
+                    var sn_model = mongoose.model(sn_props.mongo_name, sn_schema);
+                    soxsLog.error('sn_model');
+                    soxsLog.data(JSON.stringify(sn_model))
+                        // snModels[sn_props.name].model = sn_model;
+                    cb(null, mongoose.model(sn_props.mongo_name));
+                    // cb(null, sn_model);
+                }
+
+                // cb(null, snModels[sn_props.name].model);
+
+                // if (modelNames.indexOf(sn_props.name) < 0) {
+                //     var sn_model = mongoose.model(snModels[sn_props.name].mongo_name, sn_schema);
+                //     snModels[snDataType].model = sn_model;
+                //     cb(null, sn_model);
+                // } else if (snModels[sn_props.name].hasOwnProperty('model')) {
+                //     cb(null, snModels[sn_props.name].model);
+                // } else {
+                // 	cb('model not found', null);
+                // }
+
             }
+
         });
     }
 }
 
 function post_sn_field(snDataFieldType, field_schema, callback) {
     make_model(snDataFieldType, function(err, sn_model) {
+        soxsLog.alert('post_sn_field: ' + snDataFieldType);
         var d = sn_model(field_schema);
         d.save(function(err) {
             if (err) {
@@ -150,24 +194,36 @@ function post_sn_field(snDataFieldType, field_schema, callback) {
 }
 
 function load_model(raw_schema, callback) {
-
-
+    // soxsLog.debug_info('raw_schema: ' + JSON.stringify(raw_schema));
     var s = format_schema(raw_schema);
+    // soxsLog.error('format_schema')
+    // soxsLog.ds(s);
     var temp_schema = new Schema(s);
     var sn_model = mongoose.model(raw_schema.mongo_name, temp_schema);
+    // soxsLog.debug_info('sn_model');
+    // soxsLog.debug_info(raw_schema.name);
+    // soxsLog.debug_info(sn_model);
     snModels[raw_schema.name] = {
         mongo_name: raw_schema.mongo_name,
         active: raw_schema.active,
         model: sn_model
     };
-    callback(null, raw_schema.name);
+    var m = {
+        mongo_name: raw_schema.mongo_name,
+        active: raw_schema.active,
+        model: sn_model,
+        name: raw_schema.name
+    };
+
+    callback(null, m);
 
 }
 
 function load_data(cb) {
-    if (snModels.length > 0) {
-        return cb
-    }
+    soxsLog.debug_info('load_data');
+    // if (snModels.length > 0) {
+    //     return cb
+    // }
     var load_funs = [];
     soxController.get_soxs_schema('_all', function(soxs_schemas) {
 
@@ -185,7 +241,11 @@ function load_data(cb) {
                 cb(err, null);
             } else {
                 soxsLog.debug_info('load_data complete');
-                soxsLog.debug_info(results);
+                for (var i = 0; i < results.length; ++i) {
+                    snModels[results[i].name] = results[i];
+                }
+                // soxsLog.debug_info(results);
+                initialized = true;
                 cb(null, results);
             }
         });
@@ -206,6 +266,7 @@ exports.init_data = function(req, res, next) {
     load_data(function(err, data) {
         soxsLog.debug_info_end('init_data');
         if (err) {
+            soxsLog.error(err);
             res.send(403);
         } else {
             res.json(data);
@@ -224,10 +285,23 @@ function save_snData(snDataType, data, cb) {
         } else {
             for (var attr in data) {
                 if (typeof data[attr] == "object") {
-                    soxsLog.debug_info('Found object: ' + attr)
-                    f.push(function(callback) {
-                        post_sn_field(sn_schema.paths[attr].options.ref, data[attr], callback);
-                    });
+                    soxsLog.debug_info('Found object: ' + attr);
+                    soxsLog.ds(sn_schema.paths[attr]);
+                    soxsLog.debug_info(JSON.stringify(sn_schema.paths[attr]));
+
+                    if (sn_schema.paths[attr].options.hasOwnProperty('ref')) {
+                        f.push(function(callback) {
+                            post_sn_field(sn_schema.paths[attr].options.ref, data[attr], callback);
+                        });
+                    } else if (sn_schema.paths[attr].hasOwnProperty('caster') && sn_schema.paths[attr].caster.options.hasOwnProperty('ref')) {
+                        f.push(function(callback) {
+                            post_sn_field(sn_schema.paths[attr].caster.options.ref, data[attr], callback);
+                        });
+                    }
+
+                    // f.push(function(callback) {
+                    //     post_sn_field(sn_schema.paths[attr].options.ref, data[attr], callback);
+                    // });
                 }
             }
 
@@ -269,6 +343,7 @@ function save_snData(snDataType, data, cb) {
 
 function populateData(sn_model, query, pop_fields, cb) {
     soxsLog.alert('populateData: ' + JSON.stringify(pop_fields));
+    soxsLog.ds(pop_fields);
     if (pop_fields.length == 0) {
         sn_model.find(query)
             .exec(cb);
@@ -311,16 +386,24 @@ function getData(snDataType, query, cb) {
             cb(err, null);
         } else {
             soxsLog.debug_info('getData: ' + snDataType);
+            soxsLog.debug_info(JSON.stringify(sn_model.schema));
+            // soxsLog.debug_info(JSON.stringify(mongoose.model('soxs.Schema').schema))
 
             var pop_fields = [];
 
             for (var f in sn_model.schema.paths) {
-                soxsLog.debug_info('f');
-                soxsLog.debug_info(JSON.stringify(f));
+                // soxsLog.debug_info('f');
+                // soxsLog.debug_info(JSON.stringify(sn_model.schema.paths[f]));
                 if (sn_model.schema.paths[f].options.hasOwnProperty('ref')) {
+                    pop_fields.push(f);
+                } else if (sn_model.schema.paths[f].hasOwnProperty('caster') && sn_model.schema.paths[f].caster.options.hasOwnProperty('ref')) {
                     pop_fields.push(f);
                 }
             }
+
+            // sn_model.find(query)
+            //     .populate('sub')
+            //     .exec(cb);
 
             populateData(sn_model, query, pop_fields, cb);
 
@@ -335,7 +418,7 @@ function getDataById(snDataType, id, cb) {
     }).exec(cb);
 }
 
-exports.get_snData_by_id = function(req, res, next) {
+function fn_get_snData_by_id(req, res, next) {
     soxsLog.apicall('get_snData_by_id: ' + req.params.snDataType);
     var snDataType = req.params.snDataType;
     var id = req.params.id;
@@ -352,10 +435,22 @@ exports.get_snData_by_id = function(req, res, next) {
     })
 }
 
-exports.get_snData = function(req, res, next) {
+exports.get_snData_by_id = function(req, res, next) {
+    if (!initialized) {
+        load_data(function() {
+            initialized = true;
+            fn_get_snData_by_id(req, res, next);
+        });
+    } else {
+        fn_get_snData_by_id(req, res, next);
+    }
+}
+
+
+
+function fn_get_snData(req, res, next) {
     soxsLog.apicall('get_snData: ' + req.params.snDataType);
     var snDataType = req.params.snDataType;
-    soxsLog.debug_info('get_snData: ' + snDataType);
     getData(snDataType, {}, function(err, data) {
         if (err) {
             soxsLog.debug_info('err:' + err);
@@ -366,13 +461,24 @@ exports.get_snData = function(req, res, next) {
     })
 }
 
+exports.get_snData = function(req, res, next) {
+    if (!initialized) {
+        load_data(function() {
+            initialized = true;
+            fn_get_snData(req, res, next);
+        });
+    } else {
+        fn_get_snData(req, res, next);
+    }
+}
+
 exports.post_schema = function(snDataType, snData, cb) {
     soxsLog.apicall('post_schema: ' + snDataType);
     soxsLog.alert(JSON.stringify(snData));
     save_snData(snDataType, snData, cb);
 }
 
-exports.post_snData = function(req, res, next) {
+function fn_post_snData(req, res, next) {
     soxsLog.apicall('post_snData: ' + req.params.snDataType);
     var snDataType = req.params.snDataType;
     var data = req.body;
@@ -384,6 +490,18 @@ exports.post_snData = function(req, res, next) {
         }
     });
 }
+
+exports.post_snData = function(req, res, next) {
+    if (!initialized) {
+        load_data(function() {
+            initialized = true;
+            fn_post_snData(req, res, next);
+        });
+    } else {
+        fn_post_snData(req, res, next);
+    }
+}
+
 
 /*****************************************************************************************
  * soxsData

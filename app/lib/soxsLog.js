@@ -77,7 +77,15 @@ module.exports = function(calling_item) {
     };
 
     log.data = function(data) {
-        console.log(data.cyan);
+        var d = new Date();
+        var lm = '[' + d.toISOString() + '] ---- ' + JSON.stringify(data);
+        console.log(lm.cyan);
+    }
+
+    log.ds = function(data) {
+        var d = new Date();
+        var lm = '[' + d.toISOString() + '] ---- ' + JSON.stringify(data);
+        console.log(lm.cyan);
     }
 
     return log;
