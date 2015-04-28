@@ -21,6 +21,11 @@ var soxsSchema = new Schema({
 		default: '',
 		trim: true
 	},
+	prefix: {
+		type: String,
+		default: 'sn',
+		trim: true
+	},
 	fields: [{
 		type: Schema.Types.ObjectId,
 		ref: 'soxs.Schema.Field'

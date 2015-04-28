@@ -210,6 +210,7 @@ function post_soxs_schema(schema_data, cb) {
         var sd = {
             name: schema_data.name,
             mongo_name: schema_data.mongo_name,
+            prefix: schema_data.prefix,
             fields: []
         };
         for (var i = 0; i < results.length; ++i) {

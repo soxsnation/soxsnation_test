@@ -14,7 +14,7 @@ var soxsLog = require('../app/lib/soxsLog')('load_data');
 var config = require('../config/config');
 // var load_data = require('./load_data');
 
-var env = 'staging';
+var env = 'development';
 // console.log('config:' + config.server + ' : ' + 'mongodb://' + config.server + '/' + config[env].db);
 
 // Bootstrap db connection
@@ -44,6 +44,16 @@ mongoose.connection.on('disconnected', function() {
     connect()
 });
 
+function install_sn_types() {
+    var load_data = require('./load_data');
+    load_data.soxData();
+}
+
+function install_element_types() {
+    var load_elementTypes = require('./load_elementTypes');
+    load_elementTypes.install_elements();
+}
+
 function bootstrap_models() {
     // Bootstrap models
     var models_path = __dirname.replace('deploy', 'app/models'); // + '../app/models';
@@ -60,9 +70,12 @@ function bootstrap_models() {
         if (~file.indexOf('.js')) require(models_path + '/' + file)
     });
     // console.log('done loading models');
-    var load_data = require('./load_data');
-    load_data.snData();
-    // load_data.soxData();
+    
+    
+
+    // install_sn_types();
+
+    install_element_types();
 }
 
 function init() {
@@ -70,7 +83,7 @@ function init() {
         bootstrap_models();
         // load_data.soxData();
     }
-    // init();
+    init();
 
 
 function test_sub_docs() {

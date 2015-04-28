@@ -15,9 +15,11 @@
               ***********************************************************************************************************************/
 
              $scope.current_model = {};
+             $scope.current_model_group = {};
              $scope.current_model_formatted = {};
              $scope.current_model_formatted_fields = [];
              $scope.current_mode = 'none';
+             $scope.snModelGroups = [];
              $scope.snModels = [];
              $scope.snTypes = [];
              $scope.new_field_name = "";
@@ -35,6 +37,8 @@
              $scope.css_add_data = "";
              $scope.show_template_builder = false;
              $scope.show_data_builder = true;
+             $scope.data_groups_isCollapsed = false;
+             $scope.data_items_isCollapsed = true;
 
              $scope.tabs = [{
                  title: 'Data Layout',
@@ -100,6 +104,7 @@
              function get_soxs_type(schemaName) {
                  soxsFactory.getData(schemaName)
                      .then(function(data) {
+                        console.log('got soxs types: ' + data.length)
                          $scope.snModels = data;
                      }, function(err) {
                          console.log('ERROR: SoxsDataController get_soxs_type: ' + err);
@@ -161,6 +166,14 @@
                      });
              }
 
+             function set_Model_Groups() {
+                $scope.snModelGroups.push('rs');
+                $scope.snModelGroups.push('sn');
+                $scope.snModelGroups.push('snt');
+                $scope.snModelGroups.push('test');
+                $scope.current_model_group = 'sn';
+             }
+
              function set_snTypes() {
                  // $scope.snTypes.push({ text: "String", value: "String"});
                  // $scope.snTypes.push({ text: "Number", value: "Number"});
@@ -176,6 +189,7 @@
              function init() {
                  console.log('SoxsDataController::init');
                  get_soxs_type('soxsSchema');
+                 set_Model_Groups();
                  set_snTypes();
 
              }
@@ -212,7 +226,12 @@
                      }
                      $scope.current_model_formatted_fields.push(JSON.stringify(f));
                  }
+             }
 
+             $scope.sn_model_group_changed = function(model_group) {
+                $scope.current_model_group = model_group;
+                $scope.data_groups_isCollapsed = true;
+                $scope.data_items_isCollapsed = false;
              }
 
              $scope.add_field = function() {
@@ -253,6 +272,7 @@
                      name: '',
                      mongo_name: '',
                      fields: [],
+                     prefix: 'sn',
                      active: true
                  }
              }
@@ -303,6 +323,18 @@
                  $scope.css_layout = "";
                  $scope.css_json = "";
                  $scope.css_add_data = "active";
+             }
+
+             $scope.display_data_groups = function() {
+                console.log('display_data_groups')
+                 $scope.data_groups_isCollapsed = !$scope.data_groups_isCollapsed;
+                 // $scope.data_items_isCollapsed = !$scope.data_items_isCollapsed;
+             }
+
+             $scope.display_data_items = function() {
+                console.log('display_data_items:' + $scope.data_models.length)
+                 // $scope.data_groups_isCollapsed = !$scope.data_groups_isCollapsed;
+                 $scope.data_items_isCollapsed = !$scope.data_items_isCollapsed;
              }
 
              /***********************************************************************************************************************

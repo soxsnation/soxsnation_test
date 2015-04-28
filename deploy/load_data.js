@@ -16,6 +16,7 @@ var load_elementTypes = require('./load_elementTypes');
 var snAttributeType = {
     name: "snAttributeType",
     mongo_name: "sn.Attribute.Type",
+    prefix: "sn",
     active: true,
     fields: [{
         name: "name",
@@ -41,6 +42,7 @@ var snAttributeType = {
 var snElementType = {
     name: "snElementType",
     mongo_name: "sn.Element.Type",
+    prefix: "sn",
     active: true,
     fields: [{
         name: "name",
@@ -60,6 +62,7 @@ var snElementType = {
 var snElementAttribute = {
     name: "snElementAttribute",
     mongo_name: "sn.Element.Attribute",
+    prefix: "sn",
     active: true,
     fields: [{
         name: "name",
@@ -79,6 +82,7 @@ var snElementAttribute = {
 var snElement = {
     name: "snElement",
     mongo_name: "sn.Element",
+    prefix: "sn",
     active: true,
     fields: [{
         name: "name",
@@ -110,6 +114,7 @@ var snElement = {
 var snTemplate = {
     name: "snTemplate",
     mongo_name: "sn.Template",
+    prefix: "sn",
     active: true,
     fields: [{
         name: "name",
@@ -164,11 +169,11 @@ function load_snData() {
 
 
 exports.snData = function() {
-	soxsLog.apicall('exports.snData ');
-    snController.init(function(err, data) {
+	// soxsLog.apicall('exports.snData ');
+ //    snController.init(function(err, data) {
 
-        load_snData();
-    })
+ //        load_snData();
+ //    })
 }
 
 exports.soxData = function() {

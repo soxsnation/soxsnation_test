@@ -1,0 +1,17 @@
+
+
+sn
+	User data types
+	Defined in mongo
+
+rs
+	System data types
+	Defined in mongo
+
+test
+	Test user data types
+	Defined in mongo
+
+soxs
+	Built in data types
+	Defined in modelsox folder

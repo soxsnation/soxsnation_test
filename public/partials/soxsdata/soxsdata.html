@@ -1,8 +1,7 @@
-
 <!-- {{page}} -->
 <!-- Button trigger modal -->
 <div data-ng-show="show_data_builder">
-<h1>Soxs Data - {{new_field_ref.mongo_name}}</h1>
+    <h1>Soxs Data - {{new_field_ref.mongo_name}}</h1>
     <button class="btn btn-primary" data-toggle="modal" data-ng-click="add_data_model()">
         Add Data Model
     </button>
@@ -11,14 +10,46 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3 soxsDataList">
-                <ul class="nav nav-pills nav-stacked">
-                    <!-- <li class="active" role="presentation" data-ng-click="data_model_changed(model)">
-                            <a href="">Soxs Data</a>
-                </li> -->
-                    <li data-ng-repeat="model in snModels" role="presentation" data-ng-click="sn_model_changed(model)" data-ng-class="{'active': model.name == currentDataModel.name}">
+
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+        <a data-ng-click="display_data_groups()">Group Selection ( {{current_model_group}} )</a>
+         </h4>
+                        </div>
+                        <div id="collapseOne" collapse="data_groups_isCollapsed" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <ul class="nav nav-pills nav-stacked">
+                    <li data-ng-repeat="mg in snModelGroups" role="presentation" data-ng-click="sn_model_group_changed(mg)" >
+                        <a href="">{{mg}}</a>
+                    </li>
+                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+        <a data-ng-click="display_data_items()">Item Selection</a>
+      </h4>
+                        </div>
+                        <div id="collapseTwo" collapse="data_items_isCollapsed"  class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                <ul class="nav nav-pills nav-stacked">
+                    <li data-ng-repeat="model in snModels | filter:{ prefix: current_model_group}" role="presentation" data-ng-click="sn_model_changed(model)" data-ng-class="{'active': model.name == currentDataModel.name}">
                         <a href="">{{model.name}}</a>
                     </li>
                 </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <ul class="nav nav-pills nav-stacked">
+                    <li data-ng-repeat="model in snModels" role="presentation" data-ng-click="sn_model_changed(model)" data-ng-class="{'active': model.name == currentDataModel.name}">
+                        <a href="">{{model.name}}</a>
+                    </li>
+                </ul> -->
             </div>
             <div class="col-md-9 soxsDataDetails">
                 <ul class="nav nav-tabs">
@@ -43,6 +74,12 @@
                                         <label class="col-md-2 control-label">Mongo name:</label>
                                         <div class="col-md-10">
                                             <input type="text" class="form-control" data-ng-model="current_model.mongo_name" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">Group</label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" data-ng-model="current_model.prefix" />
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -132,9 +169,6 @@
                 <div class="tab-content soxsContent" data-ng-show="show_add_data">
                     <h3>Add Data View</h3>
                     <br />
-                    
-                    
-                    
                 </div>
             </div>
         </div>
