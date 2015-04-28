@@ -28,9 +28,11 @@
              $scope.show_layout = false;
              $scope.show_data = true;
              $scope.show_json = false;
+             $scope.show_add_data = false;
              $scope.css_data = "active";
              $scope.css_layout = "";
              $scope.css_json = "";
+             $scope.css_add_data = "";
              $scope.show_template_builder = false;
              $scope.show_data_builder = true;
 
@@ -44,7 +46,7 @@
 
 
              $scope.templates = [];
-            $scope.template_elements = [];
+             $scope.template_elements = [];
 
 
              /***********************************************************************************************************************
@@ -262,28 +264,45 @@
              $scope.display_data = function() {
                  $scope.show_layout = false;
                  $scope.show_json = false;
+                 $scope.show_add_data = false;
                  $scope.show_data = true;
-                 $scope.css_json = "active";
-                 $scope.css_data = "";
+                 $scope.css_json = "";
+                 $scope.css_data = "active";
                  $scope.css_layout = "";
+                 $scope.css_add_data = "";
              }
 
              $scope.display_layout = function() {
                  $scope.show_layout = true;
                  $scope.show_json = false;
+                 $scope.show_add_data = false;
                  $scope.show_data = false;
                  $scope.css_data = "";
                  $scope.css_json = "";
+                 $scope.css_add_data = "";
                  $scope.css_layout = "active";
              }
 
              $scope.display_json = function() {
                  $scope.show_layout = false;
                  $scope.show_data = false;
+                 $scope.show_add_data = false;
                  $scope.show_json = true;
                  $scope.css_data = "";
                  $scope.css_layout = "";
                  $scope.css_json = "active";
+                 $scope.css_add_data = "";
+             }
+
+             $scope.display_add_data = function() {
+                 $scope.show_layout = false;
+                 $scope.show_data = false;
+                 $scope.show_add_data = true;
+                 $scope.show_json = false;
+                 $scope.css_data = "";
+                 $scope.css_layout = "";
+                 $scope.css_json = "";
+                 $scope.css_add_data = "active";
              }
 
              /***********************************************************************************************************************
@@ -294,26 +313,26 @@
              $scope.load_layout_builder = function() {
                  console.log('$scope.load_layout_builder');
                  soxsService.get_template_elements()
-                    .then(function(data) {
-                        console.log(JSON.stringify(data));
-                        $scope.template_elements = data;
-                    });
+                     .then(function(data) {
+                         console.log(JSON.stringify(data));
+                         $scope.template_elements = data;
+                     });
                  $scope.show_template_builder = true;
                  $scope.show_data_builder = false;
              }
 
              $scope.save_template = function(temp) {
-                console.log('SoxsTemplateController: save_template');
-                console.log(JSON.stringify(temp));
-                $scope.show_template_builder = false;
-                $scope.show_data_builder = true;
-                // create_template(temp);
-            }
+                 console.log('SoxsTemplateController: save_template');
+                 console.log(JSON.stringify(temp));
+                 $scope.show_template_builder = false;
+                 $scope.show_data_builder = true;
+                 // create_template(temp);
+             }
 
-            $scope.cancel_edit = function() {
-                $scope.show_template_builder = false;
-                $scope.show_data_builder = true;
-            }
+             $scope.cancel_edit = function() {
+                 $scope.show_template_builder = false;
+                 $scope.show_data_builder = true;
+             }
 
 
 

@@ -71,7 +71,13 @@ function get_schema_by_name(schemaName, cb) {
                 cb(null);
             } else {
                 soxsLog.debug_info("Got schema for: " + schemaName);
-                soxsLog.debug_info(JSON.stringify(data));
+                // soxsLog.debug_info(JSON.stringify(data));
+                for (var i = 0; i < data.length; ++i) {
+                    if (!soxsModels.hasOwnProperty(data[i].name)) {
+                        soxsLog.debug_info('Adding model: ' + data[i].name);
+                        soxsModels[data[i].name] = data[i];
+                    }
+                }
                 cb(data);
             }
         });
@@ -94,7 +100,30 @@ function get_schema_field(schemaField, cb) {
         });
 }
 
-exports.get_soxs_schema = function(schemaName, cb) {
+exports.get_soxs_schema = function(schemaName) {
+    soxsLog.apicall('get_soxs_schema: ' + schemaName);
+    if (soxsModels.hasOwnProperty(schemaName)) {
+        return soxsModels[schemaName];
+    } else {
+        return undefined;
+    }
+}
+
+exports.get_soxs_schema_mongo_name = function(mongoName) {
+    soxsLog.apicall('get_soxs_schema_mongo_name: ' + mongoName);
+    // soxsLog.data(soxsModels);
+    for (var sc in soxsModels) {
+        // soxsLog.debug_info('Checking: ' + JSON.stringify(sc));
+        if (soxsModels[sc].mongo_name == mongoName) {
+            return soxsModels[sc];
+        }
+    }
+    soxsLog.error('Could NOT find model for: ' + mongoName);
+    return undefined;
+
+}
+
+exports.load_soxs_schema = function(schemaName, cb) {
     soxsLog.error('get_soxs_schema: ' + schemaName);
     get_schema_by_name(schemaName, cb);
     // var soxs_model = make_soxs_model('soxsSchema');

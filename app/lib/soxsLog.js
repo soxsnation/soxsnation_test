@@ -33,6 +33,12 @@ module.exports = function(calling_item) {
         console.log(lm.yellow);
     };
 
+    log.funcall = function(message) {
+        var d = new Date();
+        var lm = '[' + d.toISOString() + '] -- ' + message;
+        console.log(lm.green);
+    };
+
     log.event = function(message) {
         var d = new Date();
         var lm = '[' + d.toISOString() + '] -- ' + message;
@@ -64,7 +70,7 @@ module.exports = function(calling_item) {
         if (config.debug_mode && is_debugging(calling_item)) {
             var d = new Date();
             var lm = '[' + d.toISOString() + '] ---- ' + message;
-            console.log(lm.green);
+            console.log(lm.white);
         }
     };
 
@@ -72,7 +78,7 @@ module.exports = function(calling_item) {
         if (config.debug_mode && is_debugging(calling_item)) {
             var d = new Date();
             var lm = '[' + d.toISOString() + '] ---- ' + message;
-            console.log(lm.green);
+            console.log(lm.white);
         }
     };
 

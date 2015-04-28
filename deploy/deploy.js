@@ -7,6 +7,7 @@
 
 
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 var fs = require('fs');
 var soxsLog = require('../app/lib/soxsLog')('load_data');
 
@@ -65,8 +66,41 @@ function bootstrap_models() {
 }
 
 function init() {
-	console.log('init');
-    bootstrap_models();
-    // load_data.soxData();
+        console.log('init');
+        bootstrap_models();
+        // load_data.soxData();
+    }
+    // init();
+
+
+function test_sub_docs() {
+
+    // var models_path = __dirname.replace('deploy', 'app/models/test');
+    var childSchema = new Schema({
+        name: 'String'
+    });
+
+    var parentSchema = new Schema({
+        child: [childSchema],
+        age: 'Number'
+    });
+
+    console.log(JSON.stringify(parentSchema))
+
+    var Parent = mongoose.model('Parent', parentSchema);
+
+    var pars = Parent.find().exec(function(err, d) {
+        console.log(err);
+        console.log(d);
+    });
+
+    // var p = new Parent({ child: [{name: 'Andrew'}], age: 34});
+    // p.save(function(err,d) {
+    //     console.log(err);
+    //     console.log(d);
+    // });
+
+
+
 }
-init();
+// test_sub_docs();

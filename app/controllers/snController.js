@@ -64,10 +64,98 @@ function format_schema(raw_schema) {
     return s;
 }
 
+function format_get_schema(raw_schema) {
+    var s = {};
+    for (var fc = 0; fc < raw_schema.fields.length; ++fc) {
+        var f = raw_schema.fields[fc];
+        var field = {};
+        if (f.type == 'ObjectId') {
+            soxsLog.debug_info('Getting child schema: ' + f.ref);
+            // soxsLog.data(f);
+            var child_sc = soxController.get_soxs_schema_mongo_name(f.ref);
+            // soxsLog.debug_info('Got child_sc for: ' + f.ref);
+            // soxsLog.data(child_sc);
+            if (child_sc != undefined) {
+                var csc = get_schema(child_sc.name).schema;
+                soxsLog.error('Got child schema: ' + f.name)
+                soxsLog.data(csc);
+                if (f.isArray) {
+                    s[f.name] = [csc];
+                } else {
+
+                    s[f.name] = csc;
+                }
+            } else {
+                soxsLog.error('Child schema is undefined: ' + f.name);
+                s[f.name] = undefined;
+            }
+
+        } else {
+            if (f.isArray) {
+                s[f.name] = [{
+                    type: f.type
+                        // default: f.default_value
+                }];
+            } else {
+                s[f.name] = {
+                    type: f.type
+                        // default: f.default_value
+                };
+            }
+
+        }
+
+    }
+    return s;
+}
+
+function get_schema(snDataType) {
+    var sc = soxController.get_soxs_schema(snDataType);
+    if (sc != undefined) {
+        soxsLog.debug_info('Schema: ' + snDataType);
+        soxsLog.data(sc);
+        var s = format_get_schema(sc);
+        soxsLog.alert('Got formated schema for: ' + snDataType);
+        soxsLog.data(s);
+
+        var temp_schema = new Schema(s);
+        soxsLog.debug_info('Made schema: ' + snDataType);
+        var sn_schema = {
+            name: sc.name,
+            mongo_name: sc.mongo_name,
+            active: sc.active,
+            schema: temp_schema
+        }
+        soxsLog.debug_info('------ Returning schema for: ' + snDataType);
+        return sn_schema;
+
+    } else {
+        soxsLog.error('Could NOT find schema: ' + snDataType);
+        return undefined;
+    }
+}
+
+function get_model(snDataType) {
+
+    var sc = get_schema(snDataType);
+    if (sc != undefined) {
+        if (mongoose.models[sc.mongo_name]) {
+            return mongoose.model(sc.mongo_name);
+        } else {
+            var sn_model = mongoose.model(sc.mongo_name, sc.schema);
+            return sn_model;
+        }
+    } else {
+        return undefined;
+    }
+
+}
+
 function make_schema(snDataType, cb) {
     soxsLog.debug_info('make_schema: ' + snDataType);
 
-    soxController.get_soxs_schema(snDataType, function(sch) {
+
+    soxController.load_soxs_schema(snDataType, function(sch) {
         if (!sch) {
             soxsLog.error('snController::make_schema::err: ');
             cb('snController::make_schema::err: ', null);
@@ -84,12 +172,12 @@ function make_schema(snDataType, cb) {
             var sch0 = sch[0];
             soxsLog.debug_info('sch0: ' + JSON.stringify(sch0));
             var sn_props = {
-                name: sch0.name,
-                mongo_name: sch0.mongo_name,
-                active: sch0.active
-            }
-            // soxsLog.debug_info('temp_schema');
-            // soxsLog.data(JSON.stringify(sn_props));
+                    name: sch0.name,
+                    mongo_name: sch0.mongo_name,
+                    active: sch0.active
+                }
+                // soxsLog.debug_info('temp_schema');
+                // soxsLog.data(JSON.stringify(sn_props));
 
             var s = format_schema(sch0);
 
@@ -98,6 +186,7 @@ function make_schema(snDataType, cb) {
             cb(null, temp_schema, sn_props);
         }
     });
+
 }
 
 function make_model(snDataType, cb) {
@@ -225,7 +314,7 @@ function load_data(cb) {
     //     return cb
     // }
     var load_funs = [];
-    soxController.get_soxs_schema('_all', function(soxs_schemas) {
+    soxController.load_soxs_schema('_all', function(soxs_schemas) {
 
         for (var i = 0; i < soxs_schemas.length; ++i) {
             (function(i) {
@@ -275,7 +364,7 @@ exports.init_data = function(req, res, next) {
 }
 
 function save_snData(snDataType, data, cb) {
-    // soxsLog.debug_info('save_snData');
+    soxsLog.funcall('save_snData');
     // soxsLog.debug_info(data);
     var f = [];
 
@@ -290,18 +379,19 @@ function save_snData(snDataType, data, cb) {
                     soxsLog.debug_info(JSON.stringify(sn_schema.paths[attr]));
 
                     if (sn_schema.paths[attr].options.hasOwnProperty('ref')) {
-                        f.push(function(callback) {
-                            post_sn_field(sn_schema.paths[attr].options.ref, data[attr], callback);
-                        });
-                    } else if (sn_schema.paths[attr].hasOwnProperty('caster') && sn_schema.paths[attr].caster.options.hasOwnProperty('ref')) {
-                        f.push(function(callback) {
-                            post_sn_field(sn_schema.paths[attr].caster.options.ref, data[attr], callback);
-                        });
-                    }
+                        (function(attr) {
+                            f.push(function(callback) {
+                                post_sn_field(sn_schema.paths[attr].options.ref, data[attr], callback);
+                            });
+                        })(attr);
 
-                    // f.push(function(callback) {
-                    //     post_sn_field(sn_schema.paths[attr].options.ref, data[attr], callback);
-                    // });
+                    } else if (sn_schema.paths[attr].hasOwnProperty('caster') && sn_schema.paths[attr].caster.options.hasOwnProperty('ref')) {
+                        (function(attr) {
+                            f.push(function(callback) {
+                                post_sn_field(sn_schema.paths[attr].caster.options.ref, data[attr], callback);
+                            });
+                        })(attr);
+                    }
                 }
             }
 
@@ -476,6 +566,18 @@ exports.post_schema = function(snDataType, snData, cb) {
     soxsLog.apicall('post_schema: ' + snDataType);
     soxsLog.alert(JSON.stringify(snData));
     save_snData(snDataType, snData, cb);
+}
+
+function save_snData2(snDataType, data, cb) {
+    soxsLog.funcall('save_snData2: ' + snDataType);
+    var m = get_model(snDataType);
+    if (m != undefined) {
+        soxsLog.debug_info('Got model for: ' + snDataType);
+        var doc = new m(data);
+        doc.save(cb);
+    } else {
+        save_snData(snDataType, data, cb);
+    }
 }
 
 function fn_post_snData(req, res, next) {
