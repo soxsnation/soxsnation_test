@@ -7,13 +7,14 @@
 
 
  angular.module('soxsnationApp')
-     .controller('SoxsDataController', ['$scope', '$location', 'soxsAuth', 'soxsFactory', 'snBuilder',
-         function($scope, $location, soxsAuth, soxsFactory, snBuilder) {
+     .controller('SoxsDataController', ['$scope', '$compile', 'soxsFactory', 'snFactory', 'snBuilder',
+         function($scope, $compile, soxsFactory, snFactory, snBuilder) {
 
              /***********************************************************************************************************************
               * Init scope values
               ***********************************************************************************************************************/
 
+             $scope.active_data = {};
              $scope.current_model = {};
              $scope.current_model_group = {};
              $scope.current_model_formatted = {};
@@ -21,6 +22,7 @@
              $scope.current_mode = 'none';
              $scope.snModelGroups = [];
              $scope.snModels = [];
+             $scope.snElements = [];
              $scope.snTypes = [];
              $scope.new_field_name = "";
              $scope.new_field_type = "";
@@ -41,13 +43,13 @@
              $scope.data_items_isCollapsed = true;
 
              $scope.nav = {
-                groups_open: true,
-                items_open: false
+                 groups_open: true,
+                 items_open: false
              }
              $scope.css = {
-                nav_home: "active",
-                nav_group: "",
-                nav_item: ""
+                 nav_home: "active",
+                 nav_group: "",
+                 nav_item: ""
              }
 
              $scope.tabs = [{
@@ -114,7 +116,7 @@
              function get_soxs_type(schemaName) {
                  soxsFactory.getData(schemaName)
                      .then(function(data) {
-                        console.log('got soxs types: ' + data.length)
+                         console.log('got soxs types: ' + data.length)
                          $scope.snModels = data;
                      }, function(err) {
                          console.log('ERROR: SoxsDataController get_soxs_type: ' + err);
@@ -177,11 +179,11 @@
              }
 
              function set_Model_Groups() {
-                $scope.snModelGroups.push('rs');
-                $scope.snModelGroups.push('sn');
-                $scope.snModelGroups.push('snt');
-                $scope.snModelGroups.push('test');
-                $scope.current_model_group = 'sn';
+                 $scope.snModelGroups.push('rs');
+                 $scope.snModelGroups.push('sn');
+                 $scope.snModelGroups.push('snt');
+                 $scope.snModelGroups.push('test');
+                 $scope.current_model_group = 'sn';
              }
 
              function set_snTypes() {
@@ -196,11 +198,26 @@
                  $scope.snTypes.push("Boolean");
              }
 
+             function get_element_types() {
+                 snFactory.getData('snElementType')
+                     .then(function(data) {
+                         $scope.snElements = data;
+                         console.log('Got snElementType');
+                         console.log($scope.snElements);
+                     }, function(err) {
+                         console.log('ERROR: ' + err);
+                         deferred.reject(err);
+                     })
+
+
+             }
+
              function init() {
                  console.log('SoxsDataController::init');
                  get_soxs_type('soxsSchema');
                  set_Model_Groups();
                  set_snTypes();
+                 get_element_types();
 
              }
              init();
@@ -239,10 +256,10 @@
              }
 
              $scope.sn_model_group_changed = function(model_group) {
-                $scope.current_model_group = model_group;
-                $scope.nav.items_open = true;
-                // $scope.data_groups_isCollapsed = true;
-                // $scope.data_items_isCollapsed = false;
+                 $scope.current_model_group = model_group;
+                 $scope.nav.items_open = true;
+                 // $scope.data_groups_isCollapsed = true;
+                 // $scope.data_items_isCollapsed = false;
              }
 
              $scope.add_field = function() {
@@ -334,29 +351,46 @@
                  $scope.css_layout = "";
                  $scope.css_json = "";
                  $scope.css_add_data = "active";
-                 snBuilder.build('template', 'options');
+                 var markup = snBuilder.build_snModel($scope.current_model, 'options');
+
+                 var ele = angular.element($('#myBuildElement'));
+                 ele.append(markup);
+                 $compile(ele.contents())($scope);
+             }
+
+             $scope.add_data = function() {
+                 console.log('$scope.add_data');
+                 console.log($scope.active_data);
+
+                 snFactory.postData($scope.current_model.name, $scope.active_data)
+                     .then(function(data) {
+                         console.log('Posted active data: ' + $scope.current_model.name);
+                     }, function(err) {
+                         console.log('ERROR: ' + err);
+                         deferred.reject(err);
+                     })
              }
 
              $scope.display_data_groups = function() {
-                console.log('display_data_groups');
-                $scope.nav.groups_open = true;
-                // $scope.nav.items_open = false;
+                 console.log('display_data_groups');
+                 $scope.nav.groups_open = true;
+                 // $scope.nav.items_open = false;
                  // $scope.data_groups_isCollapsed = !$scope.data_groups_isCollapsed;
                  // $scope.data_items_isCollapsed = !$scope.data_items_isCollapsed;
              }
 
              $scope.display_data_items = function() {
-                console.log('display_data_items:' + $scope.data_models.length);
-                // $scope.nav.groups_open = false;
-                $scope.nav.items_open = true;
+                 console.log('display_data_items:' + $scope.data_models.length);
+                 // $scope.nav.groups_open = false;
+                 $scope.nav.items_open = true;
                  // $scope.data_groups_isCollapsed = !$scope.data_groups_isCollapsed;
                  // $scope.data_items_isCollapsed = !$scope.data_items_isCollapsed;
              }
 
              $scope.display_reset_selection = function() {
-                $scope.nav.groups_open = true;
-                $scope.current_model_group = '';
-                $scope.current_model = {};
+                 $scope.nav.groups_open = true;
+                 $scope.current_model_group = '';
+                 $scope.current_model = {};
              }
 
              /***********************************************************************************************************************

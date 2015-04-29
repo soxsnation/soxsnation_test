@@ -29,7 +29,7 @@ angular.module('soxsnationApp')
 
                 soxsAuth.http_get(url)
                     .then(function(data) {
-                    	console.log('snFactory::getData: got data');
+                    	console.log('snFactory::getData: got data: ' + snDataType);
                     	deferred.resolve(data);
 
                     }, function(err) {

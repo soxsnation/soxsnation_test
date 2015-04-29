@@ -15,6 +15,7 @@ var ele_list = [];
 
 var div = {
     name: "div",
+    html: "<div></div>",
     // mongo_name: "rs.gui.div",
     // prefix: "rs",
     active: true,
@@ -31,6 +32,7 @@ var div = {
 
 var textbox = {
     name: "textbox",
+    html: "<input type='text' />",
     // mongo_name: "rs.gui.textbox",
     // prefix: "rs",
     active: true,
@@ -55,6 +57,7 @@ var textbox = {
 
 var paragraph = {
     name: "paragraph",
+    html: "<p>text</p>",
     // mongo_name: "rs.gui.paragraph",
     // prefix: "rs",
     active: true,
@@ -75,6 +78,7 @@ var paragraph = {
 
 var button = {
     name: "button",
+    html: "<button >text</button>",
     // mongo_name: "rs.gui.button",
     // prefix: "rs",
     active: true,
@@ -98,6 +102,7 @@ var button = {
 
 var heading = {
     name: "heading",
+    html: "<h1 >text</h1>",    
     // mongo_name: "rs.gui.heading",
     // prefix: "rs",
     active: true,
@@ -124,10 +129,10 @@ var heading = {
 
 
 ele_list.push(div);
-// ele_list.push(textbox);
-// ele_list.push(paragraph);
-// ele_list.push(button);
-// ele_list.push(heading);
+ele_list.push(textbox);
+ele_list.push(paragraph);
+ele_list.push(button);
+ele_list.push(heading);
 
 function install_ele(ele, cb) {
     soxsLog.funcall('install_ele: ' + ele.name);

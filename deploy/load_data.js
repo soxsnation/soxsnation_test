@@ -51,6 +51,12 @@ var snElementType = {
         ref: "",
         default_value: ""
     }, {
+        name: "html",
+        type: "String",
+        isArray: false,
+        ref: "",
+        default_value: ""
+    },{
         name: "active",
         type: "Boolean",
         isArray: false,

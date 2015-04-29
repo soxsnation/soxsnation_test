@@ -18,73 +18,90 @@ angular.module('soxsnationApp')
             }
 
             function build_item_markup(ele_obj) {
-                    console.log('build_item_markup');
-                    console.log(ele_obj);
-                    var item_markup = ele_obj.markup;
+                console.log('build_item_markup');
+                console.log(ele_obj);
+                var item_markup = ele_obj.markup;
 
-                    item_markup = item_markup.replace("[id]", ele_obj.id);
-                    return item_markup;
+                item_markup = item_markup.replace("[id]", ele_obj.id);
+                return item_markup;
+            }
+
+            function build_drop_area(ele_obj) {
+
+                cb(drop_markup);
+            }
+
+            function build_hover_div(ele_obj) {
+                console.log('build_hover_div');
+
+                var hover_markup = "<div class='snItem {{elements." + ele_obj.id + ".css_box_class}}'>";
+                hover_markup += build_item_markup(ele_obj);
+                hover_markup += "</div>";
+                hover_markup += '<span class="label label-info snText">' + ele_obj.id + '</span>';
+                return hover_markup;
+            }
+
+            function build_click_div(ele_obj) {
+                var c = "'({{selected_element_id}} == " + ele_obj.id + ") ? \"snText_selected\" : \"snText_unselected\"'";
+                console.log('c: ' + c);
+                // var click_markup = "<div class='snText-click' ng-class=\"{true: 'snText_selected'}[selected_element_id == "+ ele_obj.id +"] \">" + ele_obj.id + " </div>";
+                // var click_markup = "<div class='snText-click {{elements." + ele_obj.id + ".css_class}}'>" + ele_obj.id + "</div>";
+                var click_markup = '<div class="snText_header"><span class="label label-primary {{elements.' + ele_obj.id + '.css_class}}">' + ele_obj.id + '</span></div>';
+                return click_markup;
+            }
+
+            function build_outter_div(ele_obj) {
+
+                var markup = "<div class='snOutDiv' sn-item='true' sn-item-click='onItemClick($id)'  id='" + ele_obj.id + "'>";
+                markup += build_click_div(ele_obj);
+                markup += build_hover_div(ele_obj);
+                markup += "</div>";
+                return markup;
+
+
+            }
+
+            function build_element_markup(tag_obj) {
+
+                return snTemplateService.build_element(tag_obj);
+
+                // console.log('build_element');
+                // console.log(tag_obj);
+                if (tag_obj.hasOwnProperty('markup')) {
+                    return build_outter_div(tag_obj);
                 }
 
-                function build_drop_area(ele_obj) {
+                return '';
+            }
 
-                    cb(drop_markup);
-                }
+            function build_snModel(snModel) {
+            	console.log('snBuilder::build_snModel: ' + snModel.name);
+            	var html = '<div class="form-group">';
+            	for (var i = 0; i < snModel.fields.length; ++i) {
+            		html += '<label class="col-md-2 control-label">' + snModel.fields[i].name + '</label>';
+            		html += '<input type="text" class="form-control" placeholder="field" data-ng-model="active_data.' + snModel.fields[i].name + '" />';
+            		html += '<br />';
+            	}
+            	html += '<br />';
+            	html += '<button class="btn btn-primary" data-toggle="modal" data-ng-click="add_data()">';
+        		html += 'Add Data';
+    			html += '</button>';
 
-                function build_hover_div(ele_obj) {
-                    console.log('build_hover_div');
-
-                    var hover_markup = "<div class='snItem {{elements." + ele_obj.id + ".css_box_class}}'>";
-                    hover_markup += build_item_markup(ele_obj);
-                    hover_markup += "</div>";
-                    hover_markup += '<span class="label label-info snText">' + ele_obj.id + '</span>';
-                    return hover_markup;
-                }
-
-                function build_click_div(ele_obj) {
-                    var c = "'({{selected_element_id}} == " + ele_obj.id + ") ? \"snText_selected\" : \"snText_unselected\"'";
-                    console.log('c: ' + c);
-                    // var click_markup = "<div class='snText-click' ng-class=\"{true: 'snText_selected'}[selected_element_id == "+ ele_obj.id +"] \">" + ele_obj.id + " </div>";
-                    // var click_markup = "<div class='snText-click {{elements." + ele_obj.id + ".css_class}}'>" + ele_obj.id + "</div>";
-                    var click_markup = '<div class="snText_header"><span class="label label-primary {{elements.' + ele_obj.id + '.css_class}}">' + ele_obj.id + '</span></div>';
-                    return click_markup;
-                }
-
-                function build_outter_div(ele_obj) {
-
-                    var markup = "<div class='snOutDiv' sn-item='true' sn-item-click='onItemClick($id)'  id='" + ele_obj.id + "'>";
-                    markup += build_click_div(ele_obj);
-                    markup += build_hover_div(ele_obj);
-                    markup += "</div>";
-                    return markup;
-
-
-                }
-
-                function build_element_markup(tag_obj) {
-
-                    return snTemplateService.build_element(tag_obj);
-
-                    // console.log('build_element');
-                    // console.log(tag_obj);
-                    if (tag_obj.hasOwnProperty('markup')) {
-                        return build_outter_div(tag_obj);
-                    }
-
-                    return '';
-                }
-
+            	html += '</div>';
+                return html;
+            }
 
             function build(template, options) {
                 console.log('snBuilder::build: ' + template + ' ;; ' + options);
-                var html = '<html>';
+                var html = template.html;
 
 
                 return html;
             }
 
             return {
-                build: build
+                build: build,
+                build_snModel: build_snModel
             }
         }
     ]);
