@@ -17,18 +17,22 @@
             </ol>
             <accordion close-others="true">
                 <accordion-group heading="Item Groups" is-open="nav.groups_open">
+                <div style="max-height:450px; overflow-y: auto;overflow-x: hidden;">
                   <ul class="nav nav-pills nav-stacked">
                                     <li data-ng-repeat="mg in snModelGroups" role="presentation" data-ng-click="sn_model_group_changed(mg)">
                                         <a href="">{{mg}}</a>
                                     </li>
                                 </ul>
+                                </div>
                 </accordion-group>
-                <accordion-group heading="Items" is-open="nav.items_open">
+                <accordion-group heading="Items" is-open="nav.items_open" >
+                <div style="max-height:450px; overflow-y: auto;overflow-x: hidden;">
                   <ul class="nav nav-pills nav-stacked">
                                     <li data-ng-repeat="model in snModels | filter:{ prefix: current_model_group}" role="presentation" data-ng-click="sn_model_changed(model)" data-ng-class="{'active': model.name == currentDataModel.name}">
                                         <a href="">{{model.name}}</a>
                                     </li>
                                 </ul>
+                                </div>
                 </accordion-group>
             </accordion>
 
