@@ -50,8 +50,10 @@ function install_sn_types() {
 }
 
 function install_element_types() {
-    var load_elementTypes = require('./load_elementTypes');
-    load_elementTypes.install_elements();
+    // var load_elementTypes = require('./load_elementTypes');
+    // load_elementTypes.install_elements();
+    var load_data = require('./load_data');
+    load_data.snData();
 }
 
 function bootstrap_models() {

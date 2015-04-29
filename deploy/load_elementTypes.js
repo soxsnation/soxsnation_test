@@ -15,10 +15,10 @@ var ele_list = [];
 
 var div = {
     name: "div",
-    mongo_name: "rs.gui.div",
-    prefix: "rs",
+    // mongo_name: "rs.gui.div",
+    // prefix: "rs",
     active: true,
-    fields: [{
+    attributes: [{
         name: "class",
         type: "String",
         valid_values: []
@@ -31,10 +31,10 @@ var div = {
 
 var textbox = {
     name: "textbox",
-    mongo_name: "rs.gui.textbox",
-    prefix: "rs",
+    // mongo_name: "rs.gui.textbox",
+    // prefix: "rs",
     active: true,
-    fields: [{
+    attributes: [{
         name: "class",
         type: "String",
         valid_values: []
@@ -55,10 +55,10 @@ var textbox = {
 
 var paragraph = {
     name: "paragraph",
-    mongo_name: "rs.gui.paragraph",
-    prefix: "rs",
+    // mongo_name: "rs.gui.paragraph",
+    // prefix: "rs",
     active: true,
-    fields: [{
+    attributes: [{
         name: "class",
         type: "String",
         valid_values: []
@@ -75,10 +75,10 @@ var paragraph = {
 
 var button = {
     name: "button",
-    mongo_name: "rs.gui.button",
-    prefix: "rs",
+    // mongo_name: "rs.gui.button",
+    // prefix: "rs",
     active: true,
-    fields: [{
+    attributes: [{
         name: "class",
         type: "String",
         valid_values: []
@@ -98,10 +98,10 @@ var button = {
 
 var heading = {
     name: "heading",
-    mongo_name: "rs.gui.heading",
-    prefix: "rs",
+    // mongo_name: "rs.gui.heading",
+    // prefix: "rs",
     active: true,
-    fields: [{
+    attributes: [{
         name: "class",
         type: "String",
         valid_values: []
@@ -124,10 +124,10 @@ var heading = {
 
 
 ele_list.push(div);
-ele_list.push(textbox);
-ele_list.push(paragraph);
-ele_list.push(button);
-ele_list.push(heading);
+// ele_list.push(textbox);
+// ele_list.push(paragraph);
+// ele_list.push(button);
+// ele_list.push(heading);
 
 function install_ele(ele, cb) {
     soxsLog.funcall('install_ele: ' + ele.name);
@@ -164,4 +164,8 @@ function load_elementTypes() {
 
 exports.install_elements = function() {
     load_elementTypes();
+}
+
+exports.elements = function() {
+	return ele_list;
 }

@@ -7,8 +7,8 @@
 
 
  angular.module('soxsnationApp')
-     .controller('SoxsDataController', ['$scope', '$location', 'soxsAuth', 'soxsFactory',
-         function($scope, $location, soxsAuth, soxsFactory) {
+     .controller('SoxsDataController', ['$scope', '$location', 'soxsAuth', 'soxsFactory', 'snBuilder',
+         function($scope, $location, soxsAuth, soxsFactory, snBuilder) {
 
              /***********************************************************************************************************************
               * Init scope values
@@ -39,6 +39,16 @@
              $scope.show_data_builder = true;
              $scope.data_groups_isCollapsed = false;
              $scope.data_items_isCollapsed = true;
+
+             $scope.nav = {
+                groups_open: true,
+                items_open: false
+             }
+             $scope.css = {
+                nav_home: "active",
+                nav_group: "",
+                nav_item: ""
+             }
 
              $scope.tabs = [{
                  title: 'Data Layout',
@@ -230,8 +240,9 @@
 
              $scope.sn_model_group_changed = function(model_group) {
                 $scope.current_model_group = model_group;
-                $scope.data_groups_isCollapsed = true;
-                $scope.data_items_isCollapsed = false;
+                $scope.nav.items_open = true;
+                // $scope.data_groups_isCollapsed = true;
+                // $scope.data_items_isCollapsed = false;
              }
 
              $scope.add_field = function() {
@@ -323,18 +334,29 @@
                  $scope.css_layout = "";
                  $scope.css_json = "";
                  $scope.css_add_data = "active";
+                 snBuilder.build('template', 'options');
              }
 
              $scope.display_data_groups = function() {
-                console.log('display_data_groups')
-                 $scope.data_groups_isCollapsed = !$scope.data_groups_isCollapsed;
+                console.log('display_data_groups');
+                $scope.nav.groups_open = true;
+                // $scope.nav.items_open = false;
+                 // $scope.data_groups_isCollapsed = !$scope.data_groups_isCollapsed;
                  // $scope.data_items_isCollapsed = !$scope.data_items_isCollapsed;
              }
 
              $scope.display_data_items = function() {
-                console.log('display_data_items:' + $scope.data_models.length)
+                console.log('display_data_items:' + $scope.data_models.length);
+                // $scope.nav.groups_open = false;
+                $scope.nav.items_open = true;
                  // $scope.data_groups_isCollapsed = !$scope.data_groups_isCollapsed;
-                 $scope.data_items_isCollapsed = !$scope.data_items_isCollapsed;
+                 // $scope.data_items_isCollapsed = !$scope.data_items_isCollapsed;
+             }
+
+             $scope.display_reset_selection = function() {
+                $scope.nav.groups_open = true;
+                $scope.current_model_group = '';
+                $scope.current_model = {};
              }
 
              /***********************************************************************************************************************

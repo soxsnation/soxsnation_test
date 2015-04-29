@@ -124,7 +124,7 @@ exports.get_soxs_schema_mongo_name = function(mongoName) {
 }
 
 exports.load_soxs_schema = function(schemaName, cb) {
-    soxsLog.error('get_soxs_schema: ' + schemaName);
+    soxsLog.apicall('get_soxs_schema: ' + schemaName);
     get_schema_by_name(schemaName, cb);
     // var soxs_model = make_soxs_model('soxsSchema');
     // soxs_model.find({name: schemaName}).exec(cb);

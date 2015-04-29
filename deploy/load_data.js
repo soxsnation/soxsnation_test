@@ -51,6 +51,12 @@ var snElementType = {
         ref: "",
         default_value: ""
     }, {
+        name: "active",
+        type: "Boolean",
+        isArray: false,
+        ref: "",
+        default_value: true
+    },{
         name: "attributes",
         type: "ObjectId",
         isArray: true,
@@ -150,7 +156,7 @@ function load_snData_item(snDataType, snData, callback) {
 function load_snData() {
     var f = [];
     var d = load_elementTypes.elements();
-    console.log(d);
+    soxsLog.debug_info(d.length);
 
     for (var i = 0; i < d.length; ++i) {
         (function(i) {
@@ -169,11 +175,11 @@ function load_snData() {
 
 
 exports.snData = function() {
-	// soxsLog.apicall('exports.snData ');
- //    snController.init(function(err, data) {
+	soxsLog.apicall('exports.snData ');
+    snController.init(function(err, data) {
 
- //        load_snData();
- //    })
+        load_snData();
+    })
 }
 
 exports.soxData = function() {

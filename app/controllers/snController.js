@@ -163,7 +163,7 @@ function make_schema(snDataType, cb) {
             soxsLog.error('snController::make_schema: Length is 0 ');
             cb('snController::make_schema: Length is 0', null);
         } else {
-            soxsLog.error('----snController::make_schema got sch: ' + sch.length);
+            soxsLog.debug_info('----snController::make_schema got sch: ' + sch.length);
             // soxsLog.data(sch);
             // var sch0 = {};
             // for (var i = 0; i < sch.length; ++i) {
@@ -190,7 +190,7 @@ function make_schema(snDataType, cb) {
 }
 
 function make_model(snDataType, cb) {
-    soxsLog.error('make_model: ' + snDataType);
+    soxsLog.funcall('make_model: ' + snDataType);
 
     if (snModels.hasOwnProperty(snDataType) && snModels[snDataType].hasOwnProperty('mongo_name') && mongoose.models[snModels[snDataType].mongo_name]) {
         soxsLog.debug_info('-----mongoose had model: ' + snModels[snDataType].mongo_name)
@@ -256,7 +256,7 @@ function make_model(snDataType, cb) {
                 // } else if (snModels[sn_props.name].hasOwnProperty('model')) {
                 //     cb(null, snModels[sn_props.name].model);
                 // } else {
-                // 	cb('model not found', null);
+                //  cb('model not found', null);
                 // }
 
             }
@@ -280,6 +280,28 @@ function post_sn_field(snDataFieldType, field_schema, callback) {
             }
         });
     });
+}
+
+function post_sn_array_field(snDataFieldType, data_array, callback) {
+    soxsLog.error('post_sn_array_field: ' + snDataFieldType);
+    soxsLog.data(data_array.length);
+    // callback(null,['5540294329166f917eb73289', '5540294429166f917eb7328a']);
+
+    var f = [];
+    for (var i = 0; i < data_array.length; ++i) {
+        (function(i) {
+            f.push(function(c) {
+                post_sn_field(snDataFieldType, data_array[i], c);
+            })
+        })(i);
+    }
+
+    async.series(f, function(err, results) {
+        soxsLog.debug_info('---Got Sub async results')
+        soxsLog.data(results);
+        callback(err, results);
+    });
+
 }
 
 function load_model(raw_schema, callback) {
@@ -364,7 +386,7 @@ exports.init_data = function(req, res, next) {
 }
 
 function save_snData(snDataType, data, cb) {
-    soxsLog.funcall('save_snData');
+    soxsLog.funcall('save_snData: ' + snDataType);
     // soxsLog.debug_info(data);
     var f = [];
 
@@ -384,6 +406,27 @@ function save_snData(snDataType, data, cb) {
                                 post_sn_field(sn_schema.paths[attr].options.ref, data[attr], callback);
                             });
                         })(attr);
+
+                    } else if (sn_schema.paths[attr].hasOwnProperty('options')) {
+                        // soxsLog.debug_info('--------Got attr options: ' + sn_schema.paths[attr].options.hasOwnProperty('type'));
+                        soxsLog.debug_info('Is Array: ' + Array.isArray(sn_schema.paths[attr].options.type));
+                        if (Array.isArray(sn_schema.paths[attr].options.type)) {
+                            soxsLog.debug_info('Adding items for array: ' + attr + ' : ' + data[attr].length);
+                            // for (var j = 0; j < data[attr].length; ++j) {
+                                (function(attr) {
+                                    f.push(function(callback) {
+                                        // soxsLog.debug_info('Item: ' + j + ' : ' + JSON.stringify(data[attr]));
+                                        post_sn_array_field(sn_schema.paths[attr].caster.options.ref, data[attr], callback);
+                                    });
+                                })(attr);
+                            // }
+                        } else {
+                            (function(attr) {
+                                f.push(function(callback) {
+                                    post_sn_field(sn_schema.paths[attr].caster.options.ref, data[attr], callback);
+                                });
+                            })(attr);
+                        }
 
                     } else if (sn_schema.paths[attr].hasOwnProperty('caster') && sn_schema.paths[attr].caster.options.hasOwnProperty('ref')) {
                         (function(attr) {
@@ -588,7 +631,7 @@ function fn_post_snData(req, res, next) {
         if (err) {
             res.send(403);
         } else {
-            res.send(200);
+            res.json(data);
         }
     });
 }
@@ -603,6 +646,7 @@ exports.post_snData = function(req, res, next) {
         fn_post_snData(req, res, next);
     }
 }
+
 
 
 /*****************************************************************************************

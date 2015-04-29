@@ -10,21 +10,42 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3 soxsDataList">
+            <ol class="breadcrumb">
+            <li><a href="" data-ng-click="display_reset_selection()" data-ng-class="css.nav_home">data</a></li>
+            <li><a href="" data-ng-click="display_data_groups()" data-ng-class="css.nav_group">{{ current_model_group }}</a></li>
+            <li><a href="" data-ng-click="display_data_items()" data-ng-class="css.nav_item">{{current_model.name}}</a></li>
+            </ol>
+            <accordion close-others="true">
+                <accordion-group heading="Item Groups" is-open="nav.groups_open">
+                  <ul class="nav nav-pills nav-stacked">
+                                    <li data-ng-repeat="mg in snModelGroups" role="presentation" data-ng-click="sn_model_group_changed(mg)">
+                                        <a href="">{{mg}}</a>
+                                    </li>
+                                </ul>
+                </accordion-group>
+                <accordion-group heading="Items" is-open="nav.items_open">
+                  <ul class="nav nav-pills nav-stacked">
+                                    <li data-ng-repeat="model in snModels | filter:{ prefix: current_model_group}" role="presentation" data-ng-click="sn_model_changed(model)" data-ng-class="{'active': model.name == currentDataModel.name}">
+                                        <a href="">{{model.name}}</a>
+                                    </li>
+                                </ul>
+                </accordion-group>
+            </accordion>
 
-                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <!-- <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                     <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="headingOne">
                             <h4 class="panel-title">
-        <a data-ng-click="display_data_groups()">Group Selection ( {{current_model_group}} )</a>
-         </h4>
+                                    <a data-ng-click="display_data_groups()">Group Selection ( {{current_model_group}} )</a>
+                                 </h4>
                         </div>
                         <div id="collapseOne" collapse="data_groups_isCollapsed" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                             <div class="panel-body">
                                 <ul class="nav nav-pills nav-stacked">
-                    <li data-ng-repeat="mg in snModelGroups" role="presentation" data-ng-click="sn_model_group_changed(mg)" >
-                        <a href="">{{mg}}</a>
-                    </li>
-                </ul>
+                                    <li data-ng-repeat="mg in snModelGroups" role="presentation" data-ng-click="sn_model_group_changed(mg)">
+                                        <a href="">{{mg}}</a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -34,17 +55,17 @@
         <a data-ng-click="display_data_items()">Item Selection</a>
       </h4>
                         </div>
-                        <div id="collapseTwo" collapse="data_items_isCollapsed"  class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                        <div id="collapseTwo" collapse="data_items_isCollapsed" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                             <div class="panel-body">
                                 <ul class="nav nav-pills nav-stacked">
-                    <li data-ng-repeat="model in snModels | filter:{ prefix: current_model_group}" role="presentation" data-ng-click="sn_model_changed(model)" data-ng-class="{'active': model.name == currentDataModel.name}">
-                        <a href="">{{model.name}}</a>
-                    </li>
-                </ul>
+                                    <li data-ng-repeat="model in snModels | filter:{ prefix: current_model_group}" role="presentation" data-ng-click="sn_model_changed(model)" data-ng-class="{'active': model.name == currentDataModel.name}">
+                                        <a href="">{{model.name}}</a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <!-- <ul class="nav nav-pills nav-stacked">
                     <li data-ng-repeat="model in snModels" role="presentation" data-ng-click="sn_model_changed(model)" data-ng-class="{'active': model.name == currentDataModel.name}">
                         <a href="">{{model.name}}</a>
@@ -169,6 +190,7 @@
                 <div class="tab-content soxsContent" data-ng-show="show_add_data">
                     <h3>Add Data View</h3>
                     <br />
+                    
                 </div>
             </div>
         </div>
