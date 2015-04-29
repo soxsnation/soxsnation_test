@@ -16,6 +16,7 @@
 
              $scope.active_data = {};
              $scope.current_model = {};
+             $scope.current_model_add = {};
              $scope.current_model_group = {};
              $scope.current_model_formatted = {};
              $scope.current_model_formatted_fields = [];
@@ -178,6 +179,16 @@
                      });
              }
 
+             function build_add_data() {
+                var markup = '<div id="myBuildElement">';
+                markup += snBuilder.build_add_data($scope.current_model_add, 'active_data', 'add_data');
+                markup += '</div>';
+
+                 var ele = angular.element($('#myBuildElement'));
+                 ele.html(markup);
+                 $compile(ele.contents())($scope);
+             }
+
              function set_Model_Groups() {
                  $scope.snModelGroups.push('rs');
                  $scope.snModelGroups.push('sn');
@@ -253,6 +264,29 @@
                      }
                      $scope.current_model_formatted_fields.push(JSON.stringify(f));
                  }
+
+                 $scope.current_model_add = {
+                    name: sn_model.name,
+                    fields: []
+                 };
+
+                 for (var i = 0; i < sn_model.fields.length; ++i) {
+                    if (sn_model.fields[i].type == 'ObjectId') {
+                        for (var j = 0; j < $scope.snModels.length; ++j) {
+                            if ($scope.snModels[j].mongo_name == sn_model.fields[i].ref) {
+                                sn_model.fields[i].child = $scope.snModels[j];
+                                $scope.current_model_add.fields.push(sn_model.fields[i]);
+                            }
+                        }
+
+                    } else {
+                        $scope.current_model_add.fields.push(sn_model.fields[i]);
+                    }
+                 }
+
+
+
+                 build_add_data();
              }
 
              $scope.sn_model_group_changed = function(model_group) {
@@ -351,11 +385,7 @@
                  $scope.css_layout = "";
                  $scope.css_json = "";
                  $scope.css_add_data = "active";
-                 var markup = snBuilder.build_snModel($scope.current_model, 'options');
-
-                 var ele = angular.element($('#myBuildElement'));
-                 ele.append(markup);
-                 $compile(ele.contents())($scope);
+                 
              }
 
              $scope.add_data = function() {

@@ -17,6 +17,10 @@ angular.module('soxsnationApp')
 
             }
 
+            /***********************************************************************************************************************
+             * Private functions
+             ***********************************************************************************************************************/
+
             function build_item_markup(ele_obj) {
                 console.log('build_item_markup');
                 console.log(ele_obj);
@@ -75,21 +79,78 @@ angular.module('soxsnationApp')
             }
 
             function build_snModel(snModel) {
-            	console.log('snBuilder::build_snModel: ' + snModel.name);
-            	var html = '<div class="form-group">';
-            	for (var i = 0; i < snModel.fields.length; ++i) {
-            		html += '<label class="col-md-2 control-label">' + snModel.fields[i].name + '</label>';
-            		html += '<input type="text" class="form-control" placeholder="field" data-ng-model="active_data.' + snModel.fields[i].name + '" />';
-            		html += '<br />';
-            	}
-            	html += '<br />';
-            	html += '<button class="btn btn-primary" data-toggle="modal" data-ng-click="add_data()">';
-        		html += 'Add Data';
-    			html += '</button>';
+                console.log('snBuilder::build_snModel: ' + snModel.name);
+                var html =  '<div class="form-group">';
+                for (var i = 0; i < snModel.fields.length; ++i) {
+                    html += '<label class="col-md-2 control-label">' + snModel.fields[i].name + '</label>';
+                    html += '<input type="text" class="form-control" placeholder="field" data-ng-model="active_data.' + snModel.fields[i].name + '" />';
+                    html += '<br />';
+                }
+                html += '<br />';
+                html += '<button class="btn btn-primary" data-toggle="modal" data-ng-click="add_data()">';
+                html += 'Add Data';
+                html += '</button>';
 
-            	html += '</div>';
+                html += '</div>';
                 return html;
             }
+
+            function build_add_model(snModel, scope_var, add_fun, is_parent) {
+            	console.log('build_add_model: ' + snModel.name);
+            	console.log(snModel);
+                var markup = '<h3>' + snModel.name + '</h3>';
+                if (is_parent) {
+                	markup += '<form class="form-horizontal">';
+                }
+
+                // markup += '<div class="form-group">';
+                for (var i = 0; i < snModel.fields.length; ++i) {
+                    markup += build_add_field(snModel.fields[i], scope_var);
+                }
+
+                if (is_parent) {
+                	markup += '<div class="form-group"><div class="col-sm-offset-2 col-sm-10">';
+                    markup += '<button class="btn btn-primary" type="submit" data-ng-click="'+ add_fun +'()">';
+                    markup += 'Add Data';
+                    markup += '</button>';
+                    markup += '</div>';
+                    // markup += '</div>';
+                    markup += '</form>';
+                }
+                return markup;
+            }
+
+            function build_add_field(snField, scope_var) {
+            	console.log('--build_add_field: ' + snField.name + ' is of type: ' + snField.type);
+                var markup = '<div class="form-group">';
+                if (snField.type != 'ObjectId') {
+                markup += '<label class="col-md-2 control-label">' + snField.name + '</label>';
+                markup += '<div class="col-sm-8">';
+            } else {
+            	markup += '<div class="col-sm-1">&nbsp;</div>';
+            	markup += '<div class="col-sm-10">';
+            }
+
+                if (snField.type == 'String') {
+                    markup += '<input type="text" class="form-control" data-ng-model="' + scope_var + '.' + snField.name + '" />';
+                } else if (snField.type == 'Number') {
+                    markup += '<input type="number" class="form-control" data-ng-model="' + scope_var + '.' + snField.name + '" />';
+                } else if (snField.type == 'Boolean') {
+                    markup += '<input type="checkbox" data-ng-model="' + scope_var + '.' + snField.name + '" />';
+                } else if (snField.type == 'Date') {
+                    markup += '<input type="date" class="form-control" data-ng-model="' + scope_var + '.' + snField.name + '" />';
+                } else if (snField.type == 'ObjectId') {
+                	console.log('Adding field that is an object: ' + snField.name);
+                	console.log(snField);
+                	markup += build_add_model(snField.child, scope_var + '.' + snField.name, null, false);
+                }
+                markup += '</div></div>';
+                return markup;
+            }
+
+            /***********************************************************************************************************************
+             * Public functions
+             ***********************************************************************************************************************/
 
             function build(template, options) {
                 console.log('snBuilder::build: ' + template + ' ;; ' + options);
@@ -99,9 +160,21 @@ angular.module('soxsnationApp')
                 return html;
             }
 
+            function build_add_data(snModel, scope_var, add_fun) {
+                console.log('snBuilder::build_add_data: ' + snModel.name);
+                return build_add_model(snModel, scope_var, add_fun, true);
+
+
+            }
+
+            /***********************************************************************************************************************
+             * Return
+             ***********************************************************************************************************************/
+
             return {
                 build: build,
-                build_snModel: build_snModel
+                build_snModel: build_snModel,
+                build_add_data: build_add_data
             }
         }
     ]);
