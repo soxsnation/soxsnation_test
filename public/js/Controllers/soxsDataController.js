@@ -181,9 +181,9 @@
              }
 
              function build_add_data() {
-                var markup = '<div id="myBuildElement">';
-                markup += snBuilder.build_add_data($scope.current_model_add, 'active_data', 'add_data');
-                markup += '</div>';
+                 var markup = '<div id="myBuildElement">';
+                 markup += snBuilder.build_add_data($scope.current_model_add, 'active_data', 'add_data');
+                 markup += '</div>';
 
                  var ele = angular.element($('#myBuildElement'));
                  ele.html(markup);
@@ -238,7 +238,9 @@
              /***********************************************************************************************************************
               * $scope Functions
               ***********************************************************************************************************************/
+             $scope.sn_model_changed2 = function(sn_model) {
 
+             }
 
              $scope.sn_model_changed = function(sn_model) {
                  console.log('sn_model_changed: ');
@@ -267,22 +269,22 @@
                  }
 
                  $scope.current_model_add = {
-                    name: sn_model.name,
-                    fields: []
+                     name: sn_model.name,
+                     fields: []
                  };
 
                  for (var i = 0; i < sn_model.fields.length; ++i) {
-                    if (sn_model.fields[i].type == 'ObjectId') {
-                        for (var j = 0; j < $scope.snModels.length; ++j) {
-                            if ($scope.snModels[j].mongo_name == sn_model.fields[i].ref) {
-                                sn_model.fields[i].child = $scope.snModels[j];
-                                $scope.current_model_add.fields.push(sn_model.fields[i]);
-                            }
-                        }
+                     if (sn_model.fields[i].type == 'ObjectId') {
+                         for (var j = 0; j < $scope.snModels.length; ++j) {
+                             if ($scope.snModels[j].mongo_name == sn_model.fields[i].ref) {
+                                 sn_model.fields[i].child = $scope.snModels[j];
+                                 $scope.current_model_add.fields.push(sn_model.fields[i]);
+                             }
+                         }
 
-                    } else {
-                        $scope.current_model_add.fields.push(sn_model.fields[i]);
-                    }
+                     } else {
+                         $scope.current_model_add.fields.push(sn_model.fields[i]);
+                     }
                  }
 
 
@@ -386,7 +388,7 @@
                  $scope.css_layout = "";
                  $scope.css_json = "";
                  $scope.css_add_data = "active";
-                 
+
              }
 
              $scope.add_data = function() {

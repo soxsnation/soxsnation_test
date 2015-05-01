@@ -85,7 +85,8 @@ soxsnationApp.config(['$routeProvider',
 			templateUrl: '../partials/soxsdata/soxs_data_layout.html'
 		}).
 		when('/SoxsTypes', {
-			controller: 'SoxsTypeController',
+			controller: 'SoxsDataController',
+			// controller: 'SoxsTypeController',
 			templateUrl: '../partials/soxsdata/soxstype.html'
 		}).
 		when('/Users', {
