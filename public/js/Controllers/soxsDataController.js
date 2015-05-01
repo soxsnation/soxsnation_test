@@ -142,9 +142,10 @@
                  var s = {
                      name: schemaData.name,
                      mongo_name: schemaData.mongo_name,
+                     prefix: schemaData.prefix,
                      fields: [],
                      active: schemaData.active,
-                     _v: schemaData._v,
+                     __v: schemaData.__v,
                      _id: schemaData._id
                  };
                  for (var i = 0; i < schemaData.fields.length; ++i) {
