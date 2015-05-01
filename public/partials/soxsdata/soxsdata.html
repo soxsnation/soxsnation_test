@@ -1,7 +1,6 @@
-<!-- {{page}} -->
 <!-- Button trigger modal -->
 <div data-ng-show="show_data_builder">
-    <h1>Soxs Data - {{new_field_ref.mongo_name}}</h1>
+    <h1>Soxs Data</h1>
     <button class="btn btn-primary" data-toggle="modal" data-ng-click="add_data_model()">
         Add Data Model
     </button>
@@ -28,7 +27,7 @@
                 <accordion-group heading="Items" is-open="nav.items_open" >
                 <div style="max-height:450px; overflow-y: auto;overflow-x: hidden;">
                   <ul class="nav nav-pills nav-stacked">
-                                    <li data-ng-repeat="model in snModels | filter:{ prefix: current_model_group}" role="presentation" data-ng-click="sn_model_changed(model)" data-ng-class="{'active': model.name == currentDataModel.name}">
+                                    <li data-ng-repeat="model in snModels | filter:{ prefix: current_model_group} : ture" role="presentation" data-ng-click="sn_model_changed(model)" data-ng-class="{'active': model.name == currentDataModel.name}">
                                         <a href="">{{model.name}}</a>
                                     </li>
                                 </ul>

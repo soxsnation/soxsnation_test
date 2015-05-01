@@ -7,6 +7,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var soxsLog = require('../lib/soxsLog')('snController');
+var Promise = require('promise');
 var async = require('async');
 
 var snData = require('../models/sn/snData');
@@ -22,6 +23,91 @@ var initialized = false;
 
 var snModels = {};
 // var soxsModels = {};
+
+/***********************************************************************************************************************
+ * EXPORTS
+ ***********************************************************************************************************************/
+
+exports.init = function(cb) {
+    soxsLog.apicall('init');
+    load_data(cb);
+}
+
+exports.init_data = function(req, res, next) {
+    soxsLog.apicall('init_data');
+    load_data(function(err, data) {
+        soxsLog.debug_info_end('init_data');
+        if (err) {
+            soxsLog.error(err);
+            res.send(403);
+        } else {
+            res.json(data);
+        }
+    })
+}
+
+exports.get_snData_by_id = function(req, res, next) {
+    if (!initialized) {
+        load_data(function() {
+            initialized = true;
+            fn_get_snData_by_id(req, res, next);
+        });
+    } else {
+        fn_get_snData_by_id(req, res, next);
+    }
+}
+
+
+exports.get_snData = function(req, res, next) {
+    if (!initialized) {
+        load_data(function() {
+            initialized = true;
+            fn_get_snData(req, res, next);
+        });
+    } else {
+        fn_get_snData(req, res, next);
+    }
+}
+
+exports.post_schema = function(snDataType, snData, cb) {
+    soxsLog.apicall('post_schema: ' + snDataType);
+    soxsLog.alert(JSON.stringify(snData));
+    save_snData(snDataType, snData, cb);
+}
+
+
+
+exports.post_snData = function(req, res, next) {
+    if (!initialized) {
+        load_data(function() {
+            initialized = true;
+            fn_post_snData(req, res, next);
+        });
+    } else {
+        fn_post_snData(req, res, next);
+    }
+}
+
+
+ /***********************************************************************************************************************
+ * FUNCTIONS
+ ***********************************************************************************************************************/
+
+function save_sn_data(id, sn_data, cb) {
+    soxsLog.debug_info('save_sn_data');
+    soxsLog.data(sn_data);
+
+}
+
+function save_sn_field(sn_field) {
+    return new Promise(function(fulfill, reject) {
+        if (sn_field.hasOwnProperty('_id')) {
+
+        } else {
+            
+        }
+    });
+}
 
 function format_schema(raw_schema) {
     // soxsLog.debug_info('***raw_schema');
@@ -367,23 +453,6 @@ function load_data(cb) {
 //     soxsLog.debug_info(data);
 // });
 
-exports.init = function(cb) {
-    soxsLog.apicall('init');
-    load_data(cb);
-}
-
-exports.init_data = function(req, res, next) {
-    soxsLog.apicall('init_data');
-    load_data(function(err, data) {
-        soxsLog.debug_info_end('init_data');
-        if (err) {
-            soxsLog.error(err);
-            res.send(403);
-        } else {
-            res.json(data);
-        }
-    })
-}
 
 function save_snData(snDataType, data, cb) {
     soxsLog.funcall('save_snData: ' + snDataType);
@@ -519,7 +588,7 @@ function getData(snDataType, query, cb) {
             cb(err, null);
         } else {
             soxsLog.debug_info('getData: ' + snDataType);
-            soxsLog.debug_info(JSON.stringify(sn_model.schema));
+            // soxsLog.debug_info(JSON.stringify(sn_model.schema));
             // soxsLog.debug_info(JSON.stringify(mongoose.model('soxs.Schema').schema))
 
             var pop_fields = [];
@@ -533,11 +602,7 @@ function getData(snDataType, query, cb) {
                     pop_fields.push(f);
                 }
             }
-
-            // sn_model.find(query)
-            //     .populate('sub')
-            //     .exec(cb);
-
+            
             populateData(sn_model, query, pop_fields, cb);
 
         }
@@ -568,16 +633,6 @@ function fn_get_snData_by_id(req, res, next) {
     })
 }
 
-exports.get_snData_by_id = function(req, res, next) {
-    if (!initialized) {
-        load_data(function() {
-            initialized = true;
-            fn_get_snData_by_id(req, res, next);
-        });
-    } else {
-        fn_get_snData_by_id(req, res, next);
-    }
-}
 
 
 
@@ -594,22 +649,6 @@ function fn_get_snData(req, res, next) {
     })
 }
 
-exports.get_snData = function(req, res, next) {
-    if (!initialized) {
-        load_data(function() {
-            initialized = true;
-            fn_get_snData(req, res, next);
-        });
-    } else {
-        fn_get_snData(req, res, next);
-    }
-}
-
-exports.post_schema = function(snDataType, snData, cb) {
-    soxsLog.apicall('post_schema: ' + snDataType);
-    soxsLog.alert(JSON.stringify(snData));
-    save_snData(snDataType, snData, cb);
-}
 
 function save_snData2(snDataType, data, cb) {
     soxsLog.funcall('save_snData2: ' + snDataType);
@@ -634,17 +673,6 @@ function fn_post_snData(req, res, next) {
             res.json(data);
         }
     });
-}
-
-exports.post_snData = function(req, res, next) {
-    if (!initialized) {
-        load_data(function() {
-            initialized = true;
-            fn_post_snData(req, res, next);
-        });
-    } else {
-        fn_post_snData(req, res, next);
-    }
 }
 
 
@@ -731,80 +759,55 @@ exports.post_snData = function(req, res, next) {
 
 
 /** This is a description of the save_template_schema function. */
-function save_template_schema(schema) {
-    var tempSchema = new snTempSchema(schema);
-    tempSchema.save(function(err) {
-        if (err) {
-            console.log(err);
-            return res.send(403);
-        } else {
-            res.send(200);
-        }
-    })
-}
+// function save_template_schema(schema) {
+//     var tempSchema = new snTempSchema(schema);
+//     tempSchema.save(function(err) {
+//         if (err) {
+//             console.log(err);
+//             return res.send(403);
+//         } else {
+//             res.send(200);
+//         }
+//     })
+// }
 
 
 exports.get_templates = function(req, res, next) {
-
-    snTemplate.find({})
-        .populate('snSchema')
-        .populate('snSchema.snProps')
-        .exec(function(err, data) {
-            if (err) {
-                return next(err);
-            }
-
-            return res.json(data);
-        })
-}
-
-exports.post_template = function(req, res, next) {
-    console.log('post_template');
-    console.log(req.body);
-
-    var ep = req.body.snSchema.snProps;
-    var tempProps = new snElmProperty(ep);
-    tempProps.save();
-
-    var ts = req.body.snSchema;
-    ts.snProps = tempProps._id;
-    var tempSchema = new snTempSchema(ts);
-    tempSchema.save();
-
-    var temp = req.body;
-    temp.snSchema = tempSchema._id;
-
-    console.log('snTemplate');
-    console.log(temp);
-    var t = new snTemplate(temp);
-    t.save(function(err) {
-        if (err) {
-            console.log(err);
-            return res.send(403);
-        } else {
-            res.send(200);
-        }
-    })
-};
-
-exports.get_tests = function(req, res, next) {
-    run_get_test(req, res);
-    // soxsTest.find({})
-    //     // .populate('snSchema')
-    //     // .populate('snSchema.snProps')
+    soxsLog.error('snController::exports.get_templates');
+    res.send(403);
+    // snTemplate.find({})
+    //     .populate('snSchema')
+    //     .populate('snSchema.snProps')
     //     .exec(function(err, data) {
     //         if (err) {
     //             return next(err);
     //         }
+
     //         return res.json(data);
     //     })
 }
 
-exports.post_tests = function(req, res, next) {
-    console.log('post_tests');
+exports.post_template = function(req, res, next) {
+    soxsLog.error('snController::exports.post_template');
+    res.send(403);
+    // console.log('post_template');
     // console.log(req.body);
-    run_post_test(res);
-    // var t = new soxsTest(req.body);
+
+    // var ep = req.body.snSchema.snProps;
+    // var tempProps = new snElmProperty(ep);
+    // tempProps.save();
+
+    // var ts = req.body.snSchema;
+    // ts.snProps = tempProps._id;
+    // var tempSchema = new snTempSchema(ts);
+    // tempSchema.save();
+
+    // var temp = req.body;
+    // temp.snSchema = tempSchema._id;
+
+    // console.log('snTemplate');
+    // console.log(temp);
+    // var t = new snTemplate(temp);
     // t.save(function(err) {
     //     if (err) {
     //         console.log(err);
@@ -813,7 +816,16 @@ exports.post_tests = function(req, res, next) {
     //         res.send(200);
     //     }
     // })
+};
 
+exports.get_tests = function(req, res, next) {
+    soxsLog.error('snController::exports.get_tests');
+    res.send(403);
+}
+
+exports.post_tests = function(req, res, next) {
+    soxsLog.error('snController::exports.post_tests');
+    res.send(403);
 }
 
 
@@ -822,71 +834,71 @@ exports.post_tests = function(req, res, next) {
  * Tests
  ***********************************************************************************************************************/
 
-function run_get_test(req, res) {
-    var snDataType = req.params.id;
-    get_snData(snDataType, function(err, data) {
-        if (err) {
-            console.log('err:' + err);
-            res.send(403);
-        } else {
-            res.json(data);
-        }
-    })
-}
+// function run_get_test(req, res) {
+//     var snDataType = req.params.id;
+//     get_snData(snDataType, function(err, data) {
+//         if (err) {
+//             console.log('err:' + err);
+//             res.send(403);
+//         } else {
+//             res.json(data);
+//         }
+//     })
+// }
 
-function run_post_test(res) {
-    console.log('run_test');
+// function run_post_test(res) {
+//     console.log('run_test');
 
-    var data = {
-        name: 'id',
-        type: 'string',
-        valid_values: []
-    };
+//     var data = {
+//         name: 'id',
+//         type: 'string',
+//         valid_values: []
+//     };
 
-    save_snData('snAttributeType', data, function(err) {
-        if (err) {
-            console.log('err:' + err);
-            res.send(403);
-        } else {
-            res.send(200);
-        }
-    });
+//     save_snData('snAttributeType', data, function(err) {
+//         if (err) {
+//             console.log('err:' + err);
+//             res.send(403);
+//         } else {
+//             res.send(200);
+//         }
+//     });
 
-    // console.log(snData.snTemplate);
-    // // var snTest_schema = make_schema(snTempSchema());
-    // var snTest_schema = new Schema(snData.snTemplate);
-    // var snTest = mongoose.model('snTestTemplate', snTest_schema);
-    // console.log('made model');
-    // var data = {
-    //     name: 'template',
-    //     created_by: '4074355467'
-    // };
+//     // console.log(snData.snTemplate);
+//     // // var snTest_schema = make_schema(snTempSchema());
+//     // var snTest_schema = new Schema(snData.snTemplate);
+//     // var snTest = mongoose.model('snTestTemplate', snTest_schema);
+//     // console.log('made model');
+//     // var data = {
+//     //     name: 'template',
+//     //     created_by: '4074355467'
+//     // };
 
-    // var d = new snTest(data);
-    // d.save(function(err) {
-    //     if (err) {
-    //         console.log(err);
-    //         return res.send(403);
-    //     } else {
-    //         res.send(200);
-    //     }
-    // })
+//     // var d = new snTest(data);
+//     // d.save(function(err) {
+//     //     if (err) {
+//     //         console.log(err);
+//     //         return res.send(403);
+//     //     } else {
+//     //         res.send(200);
+//     //     }
+//     // })
 
-}
+// }
 
-function snTestSchema() {
-    var snTest = {
-        name: {
-            type: String,
-            default: '',
-            trim: true
-        },
-        phone_number: {
-            type: String,
-            default: '',
-            trim: true
-        }
-    };
+// function snTestSchema() {
+//     var snTest = {
+//         name: {
+//             type: String,
+//             default: '',
+//             trim: true
+//         },
+//         phone_number: {
+//             type: String,
+//             default: '',
+//             trim: true
+//         }
+//     };
 
-    return snTest;
-}
+//     return snTest;
+// }

@@ -369,16 +369,9 @@ function save_soxs_schema(id, schema_data, cb) {
 function save_soxs_schema_field(field_schema) {
     return new Promise(function(fulfill, reject) {
         // Check if we are inserting or updating by checking for _id
-        var opts = {
-            new: true,
-            upsert: false
-        };
-        var id = '';
         if (field_schema.hasOwnProperty('_id')) {
-            opts.upsert = false;
             field_schema.__v = field_schema.__v + 1;
-            id = field_schema._id;
-            soxsSchemaField.findByIdAndUpdate(id, field_schema, opts, function(err, data) {
+            soxsSchemaField.findByIdAndUpdate(field_schema._id, field_schema, function(err, data) {
                 if (err) {
                     reject(err);
                 } else {
