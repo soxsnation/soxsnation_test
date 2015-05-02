@@ -72,7 +72,8 @@ exports.get_snData = function(req, res, next) {
 exports.post_schema = function(snDataType, snData, cb) {
     soxsLog.apicall('post_schema: ' + snDataType);
     soxsLog.alert(JSON.stringify(snData));
-    save_snData(snDataType, snData, cb);
+    // save_snData(snDataType, snData, cb);
+    save_data(snDataType, snData, cb);
 }
 
 
@@ -88,26 +89,37 @@ exports.post_snData = function(req, res, next) {
     }
 }
 
+exports.put_snData = function(req, res, next) {
+    if (!initialized) {
+        load_data(function() {
+            initialized = true;
+            fn_put_snData(req, res, next);
+        });
+    } else {
+        fn_put_snData(req, res, next);
+    }
+}
 
- /***********************************************************************************************************************
+
+/***********************************************************************************************************************
  * FUNCTIONS
  ***********************************************************************************************************************/
 
-function save_sn_data(id, sn_data, cb) {
-    soxsLog.debug_info('save_sn_data');
-    soxsLog.data(sn_data);
+// function save_sn_data(id, sn_data, cb) {
+//     soxsLog.debug_info('save_sn_data');
+//     soxsLog.data(sn_data);
 
-}
+// }
 
-function save_sn_field(sn_field) {
-    return new Promise(function(fulfill, reject) {
-        if (sn_field.hasOwnProperty('_id')) {
+// function save_sn_field(sn_field) {
+//     return new Promise(function(fulfill, reject) {
+//         if (sn_field.hasOwnProperty('_id')) {
 
-        } else {
-            
-        }
-    });
-}
+//         } else {
+
+//         }
+//     });
+// }
 
 function format_schema(raw_schema) {
     // soxsLog.debug_info('***raw_schema');
@@ -453,6 +465,135 @@ function load_data(cb) {
 //     soxsLog.debug_info(data);
 // });
 
+function find_model_by_mongo_name(mongo_name) {
+    for (var m in snModels) {
+        if (snModels[m].mongo_name == mongo_name) {
+            return snModels[m];
+        }
+    }
+}
+
+function save_data_field(data_field) {
+    // soxsLog.error(JSON.stringify(data_field));
+    // soxsLog.debug_info(Object.keys(data_field)[0]);
+    return new Promise(function(fulfill, reject) {
+        if (mongoose.models.hasOwnProperty(data_field.options.ref)) {
+            soxsLog.debug_info('found mongoose model')
+            var sn_model = mongoose.models[data_field.options.ref];
+
+            if (data_field.data.hasOwnProperty('_id')) {
+                sn_model.findByIdAndUpdate(data_field.data._id, data_field.data, function(err, data) {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        fulfill(data);
+                    }
+                })
+            } else {
+                sn_model.create(data_field.data, function(err, data) {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        soxsLog.debug_info('created doc');
+                        var r = {};
+                        r[data_field.path] = data._id;
+                        fulfill(r);
+                    }
+                });
+            }
+        } else {
+            reject('Model not found: ' + data_field.path);
+        }
+        // make_model(snDataFieldType, function(err, sn_model) {
+        //     if (err) {
+        //         reject(err);
+        //     } else {
+        //         soxsLog.alert('save_data_field: ' + snDataFieldType);
+        // if (data_field.hasOwnProperty('_id')) {
+        //     sn_model.findByIdAndUpdate(data_field._id, data_field, function(err, data) {
+        //         if (err) {
+        //             reject(err);
+        //         } else {
+        //             fulfill(data);
+        //         }
+        //     })
+        // } else {
+        //     sn_model.create(field_schema, function(err, data) {
+        //         if (err) {
+        //             reject(err);
+        //         } else {
+        //             fulfill(data._id);
+        //         }
+        //     });
+        // }
+        //     }
+        // });
+    });
+}
+
+function save_data(snDataType, snData, cb) {
+    soxsLog.debug_info('save_data: ' + snDataType);
+    soxsLog.data(snData);
+
+    var obj_fields = [];
+    make_schema(snDataType, function(err, sn_schema, sn_name) {
+        if (err) {
+            cb(err, null);
+        } else {
+            soxsLog.debug_info('Paths');
+            soxsLog.data(sn_schema.paths);
+
+            for (var f in sn_schema.paths) {
+                if (f != '_id' && sn_schema.paths[f].instance == 'ObjectID') {
+                    var fd = sn_schema.paths[f];
+                    fd.data = snData[f];
+                    obj_fields.push(fd);
+                }
+            }
+            soxsLog.debug_info('Obj field count: ' + obj_fields.length)
+
+            Promise.all(obj_fields.map(save_data_field)).done(function(results) {
+                soxsLog.debug_info('Results');
+                soxsLog.data(results);
+                // cb('error', null);
+
+                for (var i = 0; i < results.length; ++i) {
+                    soxsLog.debug_info('Setting: ' + Object.keys(results[i])[0] + ' to value: ' + results[i][Object.keys(results[i])[0]]);
+                    snData[Object.keys(results[i])[0]] = results[i][Object.keys(results[i])[0]];
+                }
+
+                make_model(snDataType, function(err, sn_model) {
+                    if (err) {
+                        cb(err, null);
+                    } else {
+                        if (snData.hasOwnProperty('_id')) {
+                            sn_model.findByIdAndUpdate(snData._id, snData, function(err, data) {
+                                if (err) {
+                                    soxsLog.error('save_soxs_schema.1::err:' + err);
+                                    cb(err, null);
+                                } else {
+                                    cb(null, data);
+                                }
+                            });
+                        } else {
+                            sn_model.create(snData, function(err, data) {
+                                if (err) {
+                                    soxsLog.error('save_soxs_schema.2::err:' + err);
+                                    cb(err, null);
+                                } else {
+                                    cb(null, data);
+                                }
+                            })
+                        }
+                    }
+                });
+            });
+        }
+    })
+
+
+
+}
 
 function save_snData(snDataType, data, cb) {
     soxsLog.funcall('save_snData: ' + snDataType);
@@ -482,12 +623,12 @@ function save_snData(snDataType, data, cb) {
                         if (Array.isArray(sn_schema.paths[attr].options.type)) {
                             soxsLog.debug_info('Adding items for array: ' + attr + ' : ' + data[attr].length);
                             // for (var j = 0; j < data[attr].length; ++j) {
-                                (function(attr) {
-                                    f.push(function(callback) {
-                                        // soxsLog.debug_info('Item: ' + j + ' : ' + JSON.stringify(data[attr]));
-                                        post_sn_array_field(sn_schema.paths[attr].caster.options.ref, data[attr], callback);
-                                    });
-                                })(attr);
+                            (function(attr) {
+                                f.push(function(callback) {
+                                    // soxsLog.debug_info('Item: ' + j + ' : ' + JSON.stringify(data[attr]));
+                                    post_sn_array_field(sn_schema.paths[attr].caster.options.ref, data[attr], callback);
+                                });
+                            })(attr);
                             // }
                         } else {
                             (function(attr) {
@@ -602,7 +743,7 @@ function getData(snDataType, query, cb) {
                     pop_fields.push(f);
                 }
             }
-            
+
             populateData(sn_model, query, pop_fields, cb);
 
         }
@@ -664,6 +805,20 @@ function save_snData2(snDataType, data, cb) {
 
 function fn_post_snData(req, res, next) {
     soxsLog.apicall('post_snData: ' + req.params.snDataType);
+    var snDataType = req.params.snDataType;
+    var data = req.body;
+    // save_snData(snDataType, data, function(err, data) {
+    save_data(snDataType, data, function(err, data) {
+        if (err) {
+            res.send(403);
+        } else {
+            res.json(data);
+        }
+    });
+}
+
+function fn_put_snData(req, res, next) {
+    soxsLog.apicall('put_snData: ' + req.params.snDataType);
     var snDataType = req.params.snDataType;
     var data = req.body;
     save_snData(snDataType, data, function(err, data) {

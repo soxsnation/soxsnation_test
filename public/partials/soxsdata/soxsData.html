@@ -1,0 +1,42 @@
+<h1>Soxs Type</h1>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-3 column">
+            <accordion close-others="true">
+                <accordion-group heading="Item Groups - {{current_model_group}}" is-open="nav.groups_open">
+                    <div style="max-height:450px; overflow-y: auto;overflow-x: hidden;">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li data-ng-repeat="mg in snModelGroups" role="presentation" data-ng-click="sn_model_group_changed(mg)">
+                                <a href="">{{mg}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </accordion-group>
+                <accordion-group heading="Item Types - {{current_model.name}}" is-open="nav.items_open">
+                    <div style="max-height:450px; overflow-y: auto;overflow-x: hidden;">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li data-ng-repeat="model in snModels | filter:{ prefix: current_model_group} : ture" role="presentation" data-ng-click="sn_model_changed(model)" data-ng-class="{'active': model.name == currentDataModel.name}">
+                                <a href="">{{model.name}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </accordion-group>
+                <accordion-group heading="Items" is-open="nav.items_view_open">
+                    <div style="max-height:450px; overflow-y: auto;overflow-x: hidden;">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li data-ng-repeat="sn_data in snData track by $index" role="presentation" data-ng-click="sn_data_changed(sn_data)">
+                                <a href="">{{sn_data._id}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </accordion-group>
+            </accordion>
+        </div>
+        <div class="col-md-9 column">
+            <h3>Model: {{current_model.name}}</h3>
+            <br />
+            <h4>{{current_data._id}}</h4>
+            <div id="myBuildElement"></div>
+        </div>
+    </div>
+</div>

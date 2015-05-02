@@ -120,6 +120,31 @@ angular.module('soxsnationApp')
                 return markup;
             }
 
+            function build_update_model(snModel, scope_var, update_fun, is_parent) {
+                console.log('build_update_model: ' + snModel.name);
+                console.log(snModel);
+                var markup = '<h3>' + snModel.name + '</h3>';
+                if (is_parent) {
+                    markup += '<form class="form-horizontal">';
+                }
+
+                // markup += '<div class="form-group">';
+                for (var i = 0; i < snModel.fields.length; ++i) {
+                    markup += build_add_field(snModel.fields[i], scope_var);
+                }
+
+                if (is_parent) {
+                    markup += '<div class="form-group"><div class="col-sm-offset-2 col-sm-10">';
+                    markup += '<button class="btn btn-primary" type="submit" data-ng-click="'+ update_fun +'()">';
+                    markup += 'Update Data';
+                    markup += '</button>';
+                    markup += '</div>';
+                    // markup += '</div>';
+                    markup += '</form>';
+                }
+                return markup;
+            }
+
             function build_add_field(snField, scope_var) {
             	console.log('--build_add_field: ' + snField.name + ' is of type: ' + snField.type);
                 var markup = '<div class="form-group">';
@@ -164,6 +189,11 @@ angular.module('soxsnationApp')
                 console.log('snBuilder::build_add_data: ' + snModel.name);
                 return build_add_model(snModel, scope_var, add_fun, true);
 
+            }
+
+            function build_update_data(snModel, scope_var, update_fun) {
+                console.log('snBuilder::build_update_data: ' + snModel.name);
+                return build_update_model(snModel, scope_var, update_fun, true);
 
             }
 
@@ -174,7 +204,8 @@ angular.module('soxsnationApp')
             return {
                 build: build,
                 build_snModel: build_snModel,
-                build_add_data: build_add_data
+                build_add_data: build_add_data,
+                build_update_data: build_update_data
             }
         }
     ]);

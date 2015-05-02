@@ -15,6 +15,8 @@
               ***********************************************************************************************************************/
 
              $scope.active_data = {};
+             $scope.snData = {};
+             $scope.current_data = {};
              $scope.current_model = {};
              $scope.current_model_add = {};
              $scope.current_model_group = {};
@@ -45,7 +47,8 @@
 
              $scope.nav = {
                  groups_open: true,
-                 items_open: false
+                 items_open: false,
+                 items_view_open: false
              }
              $scope.css = {
                  nav_home: "active",
@@ -234,12 +237,68 @@
              }
              init();
 
+             function format_current_model() {
+                 var cmf = {};
+                 cmf._id = $scope.current_model._id;
+                 cmf.__v = $scope.current_model.__v;
+                 cmf.active = $scope.current_model.active;
+                 cmf.mongo_name = $scope.current_model.mongo_name;
+                 cmf.name = $scope.current_model.name;
+                 $scope.current_model_formatted = JSON.stringify(cmf);
+
+                 $scope.current_model_formatted_fields = [];
+                 for (var i = 0; i < $scope.current_model.fields.length; ++i) {
+                     var f = {
+                         name: $scope.current_model.fields[i].name,
+                         type: $scope.current_model.fields[i].type,
+                         ref: $scope.current_model.fields[i].ref,
+                         isArray: $scope.current_model.fields[i].isArray,
+                     }
+                     $scope.current_model_formatted_fields.push(JSON.stringify(f));
+                 }
+
+                 $scope.current_model_add = {
+                     name: $scope.current_model.name,
+                     fields: []
+                 };
+
+                 for (var i = 0; i < $scope.current_model.fields.length; ++i) {
+                     if ($scope.current_model.fields[i].type == 'ObjectId') {
+                         for (var j = 0; j < $scope.snModels.length; ++j) {
+                             if ($scope.snModels[j].mongo_name == $scope.current_model.fields[i].ref) {
+                                 $scope.current_model.fields[i].child = $scope.snModels[j];
+                                 $scope.current_model_add.fields.push($scope.current_model.fields[i]);
+                             }
+                         }
+
+                     } else {
+                         $scope.current_model_add.fields.push($scope.current_model.fields[i]);
+                     }
+                 }
+             }
 
              /***********************************************************************************************************************
               * $scope Functions
               ***********************************************************************************************************************/
              $scope.sn_model_changed2 = function(sn_model) {
+                 console.log('sn_model_changed: ');
+                 console.log(sn_model);
+                 $scope.current_mode = 'view_data';
+                 $scope.current_model = sn_model;
 
+                 snFactory.getData(sn_model.name)
+                     .then(function(data) {
+                         $scope.snData = data;
+                     }, function(err) {
+                         console.log('Could not load data for: ' + sn_model.name);
+                     });
+                 format_current_model();
+                 build_add_data();
+             }
+
+             $scope.sn_data_changed = function(sn_data) {
+                 console.log('sn_data_changed: ' + sn_data._id);
+                 $scope.current_data = sn_data;
              }
 
              $scope.sn_model_changed = function(sn_model) {
@@ -247,45 +306,45 @@
                  console.log(sn_model);
                  $scope.current_mode = 'update';
                  $scope.current_model = sn_model;
+                 format_current_model();
 
+                 // var cmf = {};
+                 // cmf._id = sn_model._id;
+                 // cmf.__v = sn_model.__v;
+                 // cmf.active = sn_model.active;
+                 // cmf.mongo_name = sn_model.mongo_name;
+                 // cmf.name = sn_model.name;
+                 // $scope.current_model_formatted = JSON.stringify(cmf);
 
-                 var cmf = {};
-                 cmf._id = sn_model._id;
-                 cmf.__v = sn_model.__v;
-                 cmf.active = sn_model.active;
-                 cmf.mongo_name = sn_model.mongo_name;
-                 cmf.name = sn_model.name;
-                 $scope.current_model_formatted = JSON.stringify(cmf);
+                 // $scope.current_model_formatted_fields = [];
+                 // for (var i = 0; i < sn_model.fields.length; ++i) {
+                 //     var f = {
+                 //         name: sn_model.fields[i].name,
+                 //         type: sn_model.fields[i].type,
+                 //         ref: sn_model.fields[i].ref,
+                 //         isArray: sn_model.fields[i].isArray,
+                 //     }
+                 //     $scope.current_model_formatted_fields.push(JSON.stringify(f));
+                 // }
 
-                 $scope.current_model_formatted_fields = [];
-                 for (var i = 0; i < sn_model.fields.length; ++i) {
-                     var f = {
-                         name: sn_model.fields[i].name,
-                         type: sn_model.fields[i].type,
-                         ref: sn_model.fields[i].ref,
-                         isArray: sn_model.fields[i].isArray,
-                     }
-                     $scope.current_model_formatted_fields.push(JSON.stringify(f));
-                 }
+                 // $scope.current_model_add = {
+                 //     name: sn_model.name,
+                 //     fields: []
+                 // };
 
-                 $scope.current_model_add = {
-                     name: sn_model.name,
-                     fields: []
-                 };
+                 // for (var i = 0; i < sn_model.fields.length; ++i) {
+                 //     if (sn_model.fields[i].type == 'ObjectId') {
+                 //         for (var j = 0; j < $scope.snModels.length; ++j) {
+                 //             if ($scope.snModels[j].mongo_name == sn_model.fields[i].ref) {
+                 //                 sn_model.fields[i].child = $scope.snModels[j];
+                 //                 $scope.current_model_add.fields.push(sn_model.fields[i]);
+                 //             }
+                 //         }
 
-                 for (var i = 0; i < sn_model.fields.length; ++i) {
-                     if (sn_model.fields[i].type == 'ObjectId') {
-                         for (var j = 0; j < $scope.snModels.length; ++j) {
-                             if ($scope.snModels[j].mongo_name == sn_model.fields[i].ref) {
-                                 sn_model.fields[i].child = $scope.snModels[j];
-                                 $scope.current_model_add.fields.push(sn_model.fields[i]);
-                             }
-                         }
-
-                     } else {
-                         $scope.current_model_add.fields.push(sn_model.fields[i]);
-                     }
-                 }
+                 //     } else {
+                 //         $scope.current_model_add.fields.push(sn_model.fields[i]);
+                 //     }
+                 // }
 
 
 

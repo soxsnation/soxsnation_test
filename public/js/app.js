@@ -64,21 +64,17 @@ soxsnationApp.config(['$routeProvider',
 			controller: 'DataController',
 			templateUrl: '../partials/soxsItems/soxsItems.html'
 		}).
-		// when('/recipes', {
-		// 	controller: 'DataController',
-		// 	templateUrl: '../partials/soxsItem.html'
-		// }).
-		// when('/recipes', {
-		// 	controller: 'RecipeController',
-		// 	templateUrl: '../partials/recipes.html'
-		// }).
 		when('/SoxsTemplate', {
 			controller: 'SoxsTemplateController',
 			templateUrl: '../partials/soxsdata/soxstemplate.html'
 		}).
 		when('/SoxsData', {
+			controller: 'SnDataController',
+			templateUrl: '../partials/soxsdata/soxsData.html'
+		}).
+		when('/SoxsDataSetup', {
 			controller: 'SoxsDataController',
-			templateUrl: '../partials/soxsdata/soxsdata.html'
+			templateUrl: '../partials/soxsdata/soxsDataSetup.html'
 		}).
 		when('/SoxsDataLayout', {
 			controller: 'SoxsDataLayoutController',

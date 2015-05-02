@@ -68,6 +68,10 @@ angular.module('soxsnationApp')
 									});
 									$scope.configAdminLinks.push({
 										text: 'Data Setup',
+										value: 'SoxsDataSetup'
+									});
+									$scope.configAdminLinks.push({
+										text: 'Soxs Data',
 										value: 'SoxsData'
 									});
 									$scope.configAdminLinks.push({
