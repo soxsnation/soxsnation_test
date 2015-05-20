@@ -4,7 +4,12 @@
         "dictionaries": ["jsdoc", "closure"]
     },
     "source": {
-        "include": ["../app", "../config"],
+        "include": ["./soxsnation/app", 
+                        "./soxsnation/config", 
+                        "./soxsnation/public/js/services/",
+                        "./soxsnation/public/js/soxs_Auth.js",
+                        "./soxsnation/public/js/Controllers/snDataController.js"
+                        ],
         "exclude": ["myProject/lib/ignore.js"],
         "includePattern": ".+\\.js(doc)?$",
         "excludePattern": "(^|\\/|\\\\)_"

@@ -1,4 +1,32 @@
-/* snBuilder.js
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: public/js/services/snBuilder.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: public/js/services/snBuilder.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* snBuilder.js
  *
  * Author(s):  Andrew Brown
  * Date:       4/28/2015
@@ -41,28 +69,28 @@ angular.module('soxsnationApp')
             function build_hover_div(ele_obj) {
                 console.log('build_hover_div');
 
-                var hover_markup = "<div class='snItem {{elements." + ele_obj.id + ".css_box_class}}'>";
+                var hover_markup = "&lt;div class='snItem {{elements." + ele_obj.id + ".css_box_class}}'>";
                 hover_markup += build_item_markup(ele_obj);
-                hover_markup += "</div>";
-                hover_markup += '<span class="label label-info snText">' + ele_obj.id + '</span>';
+                hover_markup += "&lt;/div>";
+                hover_markup += '&lt;span class="label label-info snText">' + ele_obj.id + '&lt;/span>';
                 return hover_markup;
             }
 
             function build_click_div(ele_obj) {
                 var c = "'({{selected_element_id}} == " + ele_obj.id + ") ? \"snText_selected\" : \"snText_unselected\"'";
                 console.log('c: ' + c);
-                // var click_markup = "<div class='snText-click' ng-class=\"{true: 'snText_selected'}[selected_element_id == "+ ele_obj.id +"] \">" + ele_obj.id + " </div>";
-                // var click_markup = "<div class='snText-click {{elements." + ele_obj.id + ".css_class}}'>" + ele_obj.id + "</div>";
-                var click_markup = '<div class="snText_header"><span class="label label-primary {{elements.' + ele_obj.id + '.css_class}}">' + ele_obj.id + '</span></div>';
+                // var click_markup = "&lt;div class='snText-click' ng-class=\"{true: 'snText_selected'}[selected_element_id == "+ ele_obj.id +"] \">" + ele_obj.id + " &lt;/div>";
+                // var click_markup = "&lt;div class='snText-click {{elements." + ele_obj.id + ".css_class}}'>" + ele_obj.id + "&lt;/div>";
+                var click_markup = '&lt;div class="snText_header">&lt;span class="label label-primary {{elements.' + ele_obj.id + '.css_class}}">' + ele_obj.id + '&lt;/span>&lt;/div>';
                 return click_markup;
             }
 
             function build_outter_div(ele_obj) {
 
-                var markup = "<div class='snOutDiv' sn-item='true' sn-item-click='onItemClick($id)'  id='" + ele_obj.id + "'>";
+                var markup = "&lt;div class='snOutDiv' sn-item='true' sn-item-click='onItemClick($id)'  id='" + ele_obj.id + "'>";
                 markup += build_click_div(ele_obj);
                 markup += build_hover_div(ele_obj);
-                markup += "</div>";
+                markup += "&lt;/div>";
                 return markup;
 
 
@@ -89,42 +117,42 @@ angular.module('soxsnationApp')
              */
             function build_snModel(snModel) {
                 console.log('snBuilder::build_snModel: ' + snModel.name);
-                var html = '<div class="form-group">';
-                for (var i = 0; i < snModel.fields.length; ++i) {
-                    html += '<label class="col-md-2 control-label">' + snModel.fields[i].name + '</label>';
-                    html += '<input type="text" class="form-control" placeholder="field" data-ng-model="active_data.' + snModel.fields[i].name + '" />';
-                    html += '<br />';
+                var html = '&lt;div class="form-group">';
+                for (var i = 0; i &lt; snModel.fields.length; ++i) {
+                    html += '&lt;label class="col-md-2 control-label">' + snModel.fields[i].name + '&lt;/label>';
+                    html += '&lt;input type="text" class="form-control" placeholder="field" data-ng-model="active_data.' + snModel.fields[i].name + '" />';
+                    html += '&lt;br />';
                 }
-                html += '<br />';
-                html += '<button class="btn btn-primary" data-toggle="modal" data-ng-click="add_data()">';
+                html += '&lt;br />';
+                html += '&lt;button class="btn btn-primary" data-toggle="modal" data-ng-click="add_data()">';
                 html += 'Add Data';
-                html += '</button>';
+                html += '&lt;/button>';
 
-                html += '</div>';
+                html += '&lt;/div>';
                 return html;
             }
 
             function build_add_model(snModel, scope_var, add_fun, is_parent) {
                 console.log('build_add_model: ' + snModel.name);
                 console.log(snModel);
-                var markup = '<h3>' + snModel.name + '</h3>';
+                var markup = '&lt;h3>' + snModel.name + '&lt;/h3>';
                 if (is_parent) {
-                    markup += '<form class="form-horizontal">';
+                    markup += '&lt;form class="form-horizontal">';
                 }
 
-                // markup += '<div class="form-group">';
-                for (var i = 0; i < snModel.fields.length; ++i) {
+                // markup += '&lt;div class="form-group">';
+                for (var i = 0; i &lt; snModel.fields.length; ++i) {
                     markup += build_add_field(snModel.fields[i], scope_var);
                 }
 
                 if (is_parent) {
-                    markup += '<div class="form-group"><div class="col-sm-offset-2 col-sm-10">';
-                    markup += '<button class="btn btn-primary" type="submit" data-ng-click="' + add_fun + '()">';
+                    markup += '&lt;div class="form-group">&lt;div class="col-sm-offset-2 col-sm-10">';
+                    markup += '&lt;button class="btn btn-primary" type="submit" data-ng-click="' + add_fun + '()">';
                     markup += 'Add Data';
-                    markup += '</button>';
-                    markup += '</div>';
-                    // markup += '</div>';
-                    markup += '</form>';
+                    markup += '&lt;/button>';
+                    markup += '&lt;/div>';
+                    // markup += '&lt;/div>';
+                    markup += '&lt;/form>';
                 }
                 return markup;
             }
@@ -132,53 +160,53 @@ angular.module('soxsnationApp')
             function build_update_model(snModel, scope_var, update_fun, is_parent) {
                 console.log('build_update_model: ' + snModel.name);
                 console.log(snModel);
-                var markup = '<h3>' + snModel.name + '</h3>';
+                var markup = '&lt;h3>' + snModel.name + '&lt;/h3>';
                 if (is_parent) {
-                    markup += '<form class="form-horizontal">';
+                    markup += '&lt;form class="form-horizontal">';
                 }
 
-                // markup += '<div class="form-group">';
-                for (var i = 0; i < snModel.fields.length; ++i) {
+                // markup += '&lt;div class="form-group">';
+                for (var i = 0; i &lt; snModel.fields.length; ++i) {
                     markup += build_add_field(snModel.fields[i], scope_var);
                 }
 
                 if (is_parent) {
-                    markup += '<div class="form-group"><div class="col-sm-offset-2 col-sm-10">';
-                    markup += '<button class="btn btn-primary" type="submit" data-ng-click="' + update_fun + '()">';
+                    markup += '&lt;div class="form-group">&lt;div class="col-sm-offset-2 col-sm-10">';
+                    markup += '&lt;button class="btn btn-primary" type="submit" data-ng-click="' + update_fun + '()">';
                     markup += 'Update Data';
-                    markup += '</button>';
-                    markup += '</div>';
-                    // markup += '</div>';
-                    markup += '</form>';
+                    markup += '&lt;/button>';
+                    markup += '&lt;/div>';
+                    // markup += '&lt;/div>';
+                    markup += '&lt;/form>';
                 }
                 return markup;
             }
 
             function build_add_field(snField, scope_var) {
                 console.log('--build_add_field: ' + snField.name + ' is of type: ' + snField.type);
-                var markup = '<div class="form-group">';
+                var markup = '&lt;div class="form-group">';
                 if (snField.type != 'ObjectId') {
-                    markup += '<label class="col-md-2 control-label">' + snField.name + '</label>';
-                    markup += '<div class="col-sm-8">';
+                    markup += '&lt;label class="col-md-2 control-label">' + snField.name + '&lt;/label>';
+                    markup += '&lt;div class="col-sm-8">';
                 } else {
-                    markup += '<div class="col-sm-1">&nbsp;</div>';
-                    markup += '<div class="col-sm-10">';
+                    markup += '&lt;div class="col-sm-1">&amp;nbsp;&lt;/div>';
+                    markup += '&lt;div class="col-sm-10">';
                 }
 
                 if (snField.type == 'String') {
-                    markup += '<input type="text" class="form-control" data-ng-model="' + scope_var + '.' + snField.name + '" />';
+                    markup += '&lt;input type="text" class="form-control" data-ng-model="' + scope_var + '.' + snField.name + '" />';
                 } else if (snField.type == 'Number') {
-                    markup += '<input type="number" class="form-control" data-ng-model="' + scope_var + '.' + snField.name + '" />';
+                    markup += '&lt;input type="number" class="form-control" data-ng-model="' + scope_var + '.' + snField.name + '" />';
                 } else if (snField.type == 'Boolean') {
-                    markup += '<input type="checkbox" data-ng-model="' + scope_var + '.' + snField.name + '" />';
+                    markup += '&lt;input type="checkbox" data-ng-model="' + scope_var + '.' + snField.name + '" />';
                 } else if (snField.type == 'Date') {
-                    markup += '<input type="date" class="form-control" data-ng-model="' + scope_var + '.' + snField.name + '" />';
+                    markup += '&lt;input type="date" class="form-control" data-ng-model="' + scope_var + '.' + snField.name + '" />';
                 } else if (snField.type == 'ObjectId') {
                     console.log('Adding field that is an object: ' + snField.name);
                     console.log(snField);
                     markup += build_add_model(snField.child, scope_var + '.' + snField.name, null, false);
                 }
-                markup += '</div></div>';
+                markup += '&lt;/div>&lt;/div>';
                 return markup;
             }
 
@@ -244,3 +272,26 @@ angular.module('soxsnationApp')
             }
         }
     ]);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-snController.html">snController</a></li><li><a href="module-soxController.html">soxController</a></li></ul><h3>Classes</h3><ul><li><a href="snBuilder.html">snBuilder</a></li><li><a href="snDataController.html">snDataController</a></li><li><a href="snFactory.html">snFactory</a></li><li><a href="soxs_Auth.html">soxs_Auth</a></li></ul><h3>Global</h3><ul><li><a href="global.html#create">create</a></li><li><a href="global.html#getTags">getTags</a></li><li><a href="global.html#iterations">iterations</a></li><li><a href="global.html#len">len</a></li><li><a href="global.html#list">list</a></li><li><a href="global.html#mongoose">mongoose</a></li><li><a href="global.html#recipe">recipe</a></li><li><a href="global.html#RecipeSchema">RecipeSchema</a></li><li><a href="global.html#setTags">setTags</a></li><li><a href="global.html#snAttributeType">snAttributeType</a></li><li><a href="global.html#snController">snController</a></li><li><a href="global.html#snElementType">snElementType</a></li><li><a href="global.html#user">user</a></li><li><a href="global.html#UserSchema">UserSchema</a></li><li><a href="global.html#validatePresenceOf">validatePresenceOf</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0</a> on Tue May 19 2015 22:41:50 GMT-0400 (EDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

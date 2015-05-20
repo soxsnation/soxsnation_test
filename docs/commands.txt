@@ -1,0 +1,2 @@
+Run this from the scratch folder
+jsdoc ./soxsnation/server.js -c ./soxsnation/docs/conf.json -r -d ./soxsnation/docs/html

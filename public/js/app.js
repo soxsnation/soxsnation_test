@@ -5,6 +5,10 @@
  *
  */
 
+  /**
+ * soxsnationApp module.
+ * @module soxsnationApp
+ */
 
 var soxsnationApp = angular.module('soxsnationApp', [
 	'ngRoute',
@@ -17,6 +21,10 @@ var soxsnationApp = angular.module('soxsnationApp', [
 	'ui.bootstrap'
 ]);
 
+/**
+ * Configures the angular views
+ * @param  {$routeProvider} $routeProvider Provides teh routes
+ */
 soxsnationApp.config(['$routeProvider',
 	function($routeProvider) {
 		$routeProvider.

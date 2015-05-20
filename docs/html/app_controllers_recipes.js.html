@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: app/controllers/recipes.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: app/controllers/recipes.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* recipes.js
+ *
+ * Author(s):  Andrew Brown
+ * Date:       6/10/2014
+ *
+ */
+
+var mongoose = require('mongoose'),
+	Recipe = mongoose.model('Recipe'),
+	extend = require('util')._extend;
+	// Utils = require('../lib/Utils');
+
+
+
+function parse(req, callback) {
+	// Create new empty buffer
+	var buf = new Buffer('');
+
+	// Concatenate data to buffer
+	req.on('data', function(data) {
+		buf = Buffer.concat([buf, data]);
+	});
+
+	// Parse object
+	req.on('end', function(data) {
+		var obj;
+		try {
+			obj = JSON.parse(buf);
+		} catch (e) {
+			callback({
+				status_code: 400,
+				message: 'Invalid JSON'
+			}, null);
+			return;
+		}
+		callback(null, JSON.parse(buf));
+	});
+}
+
+/**
+ * Create recipe
+ */
+
+exports.create = function(req, res, next) {
+	console.log('recipes.create');
+	// Utils.parse(req, function(err, data) {
+		// console.log(data);
+		var recipe = new Recipe(req.body);
+		recipe.save(function(err) {
+			if (err) {
+				console.log(err);
+				return res.send(403);
+			} else {
+				return res.json(recipe);
+			}
+		})
+	// })
+}
+
+/**
+ * List recipes
+ */
+
+exports.list = function(req, res, next) {
+	console.log('recipes.recipe');
+	Recipe.find({}).exec(function(err, recipes) {
+		if (err) {
+			return next(err);
+		}
+		if (!recipes) {
+			return next(new Error('Failed to load recipe ' + id));
+		}
+
+		res.json(recipes);
+	})
+}
+
+/**
+ * recipe
+ */
+
+exports.recipe = function(req, res, next) {
+	// console.log('recipes.recipe');
+	Recipe.findOne({
+		_id: req.params.id
+	}).exec(function(err, recipe) {
+		if (err) {
+			return next(err);
+		}
+		if (!recipe) {
+			return next(new Error('Failed to load recipe ' + req.params.id));
+		}
+		res.json(recipe);
+	})
+}
+
+/**
+ * Update recipe
+ */
+
+// exports.update = function(req, res, next) {
+
+// 	parse(req, function(err, data) {
+// 		console.log('Update Recipe');
+// 		// data['user'] = 'Andrew';
+// 		if (data._id == null) {
+// 			res.send(405);
+// 		} else {
+// 			var recipe = new Recipe(data);
+// 			console.log(recipe);
+
+// 			recipe.save(function(err) {
+// 				if (err) {
+// 					console.log(err);
+// 					return res.send(403);
+// 				} else {
+// 					return res.json(recipe);
+// 				}
+// 			})
+// 		}
+// 	});
+// }
+
+/***********************************************************************************************************************
+ * Functions
+ ***********************************************************************************************************************/
+
+
+
+/***********************************************************************************************************************
+ * Step Exports
+ ***********************************************************************************************************************/
+
+exports.addStep = function(req, res, next) {
+	console.log('addStep');
+	console.log(req.params.id);
+	console.log(req.body);
+	// parse(req, function(err, step) {
+		Recipe.findOne({
+			_id: req.params.id
+		}).exec(function(err, recipe) {
+			if (err) {
+				console.log(err);
+				return next(err);
+			} else {
+				console.log('found recipe, now to add step')
+				recipe.addStep(req.body, function(data) {
+					res.send(200);
+					// res.json(recipe);
+				});
+			}
+		});
+	// });
+}
+
+exports.editStep = function(req, res, next) {
+	console.log('exports.editStep');
+	Recipe.findOne({
+			_id: req.params.id
+		}).exec(function(err, recipe) {
+			if (err) {
+				return next(err);
+			} else {
+				recipe.editStep(req.body, function(data) {
+					console.log(data);
+					res.send(200);
+					// res.json(recipe);
+				});
+			}
+		});
+}
+
+
+/***********************************************************************************************************************
+ * Ingredient Exports
+ ***********************************************************************************************************************/
+
+exports.addIngredient = function(req, res, next) {
+	// parse(req, function(err, ingredient) {
+		Recipe.findOne({
+			_id: req.params.id
+		}).exec(function(err, recipe) {
+			if (err) {
+				return next(err);
+			} else {
+				recipe.addIngredient(req.body, function(data) {
+					console.log(data);
+					res.send(200);
+					// res.json(recipe);
+				});
+			}
+		});
+	// });
+}
+
+exports.editIngredient = function(req, res, next) {
+	console.log('exports.editIngredient');
+	// parse(req, function(err, ingredient) {
+		Recipe.findOne({
+			_id: req.params.id
+		}).exec(function(err, recipe) {
+			if (err) {
+				return next(err);
+			} else {
+				recipe.editIngredient(req.body, function(data) {
+					console.log(data);
+					res.send(200);
+					// res.json(recipe);
+				});
+			}
+		});
+	// });
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-snController.html">snController</a></li><li><a href="module-soxController.html">soxController</a></li></ul><h3>Classes</h3><ul><li><a href="snBuilder.html">snBuilder</a></li><li><a href="snDataController.html">snDataController</a></li><li><a href="snFactory.html">snFactory</a></li><li><a href="soxs_Auth.html">soxs_Auth</a></li></ul><h3>Global</h3><ul><li><a href="global.html#create">create</a></li><li><a href="global.html#getTags">getTags</a></li><li><a href="global.html#iterations">iterations</a></li><li><a href="global.html#len">len</a></li><li><a href="global.html#list">list</a></li><li><a href="global.html#mongoose">mongoose</a></li><li><a href="global.html#recipe">recipe</a></li><li><a href="global.html#RecipeSchema">RecipeSchema</a></li><li><a href="global.html#setTags">setTags</a></li><li><a href="global.html#snAttributeType">snAttributeType</a></li><li><a href="global.html#snController">snController</a></li><li><a href="global.html#snElementType">snElementType</a></li><li><a href="global.html#user">user</a></li><li><a href="global.html#UserSchema">UserSchema</a></li><li><a href="global.html#validatePresenceOf">validatePresenceOf</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0</a> on Tue May 19 2015 22:41:50 GMT-0400 (EDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

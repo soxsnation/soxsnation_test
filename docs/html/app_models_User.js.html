@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: app/models/User.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: app/models/User.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* User.js
+ *
+ * Author(s):  Andrew Brown
+ * Date:       6/10/2014
+ *
+ */
+
+var mongoose = require('mongoose'),
+	Schema = mongoose.Schema,
+	crypto = require('crypto'),
+	hash = require('../lib/hash');
+var guid = require('guid');
+
+
+/**
+ * User Schema
+ */
+
+var UserSchema = new Schema({
+	firstName: {
+		type: String,
+		default: ''
+	},
+	lastName: {
+		type: String,
+		default: ''
+	},
+	email: {
+		type: String,
+		default: ''
+	},
+	username: {
+		type: String,
+		default: ''
+	},
+	provider: {
+		type: String,
+		default: ''
+	},
+	password: {
+		type: String,
+		default: ''
+	},
+	salt: {
+		type: String,
+		default: ''
+	},
+	authToken: {
+		type: String,
+		default: ''
+	},
+	sessionId: {
+		type: String,
+		default: ''
+	},
+	permissions: {
+		type: Number,
+		default: 0
+	},
+	tokens: {
+		// tokenId: {
+		type: String,
+		default: ''
+		// }
+		// ,
+		// username: {
+		// 	type: String,
+		// 	default: ''
+		// },
+		// name: {
+		// 	type: String,
+		// 	default: ''
+		// },
+		// email: {
+		// 	type: String,
+		// 	default: ''
+		// },
+		// expiration: {
+		// 	type: Number,
+		// 	default: Date.UTC(2014, 07, 01)
+		// }		
+	},
+})
+
+
+/**
+ * Virtuals
+ */
+
+// UserSchema
+// 	.virtual('password')
+// 	.set(function(password) {
+// 		this._password = password
+// 		this.salt = this.makeSalt()
+// 		this.password = this.encryptPassword(password)
+// 	})
+// 	.get(function() {
+// 		return this._password
+// 	})
+
+
+/**
+ * Validations
+ */
+
+var validatePresenceOf = function(value) {
+	return value &amp;&amp; value.length
+}
+
+// the below 5 validations only apply if you are signing up traditionally
+
+UserSchema.path('firstName').validate(function(name) {
+	if (this.doesNotRequireValidation()) return true
+	return name.length
+}, 'Name cannot be blank')
+
+UserSchema.path('email').validate(function(email) {
+	if (this.doesNotRequireValidation()) return true
+	return email.length
+}, 'Email cannot be blank')
+
+UserSchema.path('email').validate(function(email, fn) {
+	var User = mongoose.model('User')
+	if (this.doesNotRequireValidation()) fn(true)
+
+	// Check only when it is a new user or when email field is modified
+	if (this.isNew || this.isModified('email')) {
+		User.find({
+			email: email
+		}).exec(function(err, users) {
+			fn(!err &amp;&amp; users.length === 0)
+		})
+	} else fn(true)
+}, 'Email already exists')
+
+UserSchema.path('username').validate(function(username) {
+	if (this.doesNotRequireValidation()) return true
+	return username.length
+}, 'Username cannot be blank')
+
+UserSchema.path('password').validate(function(password) {
+	if (this.doesNotRequireValidation()) return true
+	return password.length
+}, 'Password cannot be blank')
+
+
+/**
+ * Pre-save hook
+ */
+
+UserSchema.pre('save', function(next) {
+	if (!this.isNew) return next()
+
+	if (!validatePresenceOf(this.password) &amp;&amp; !this.doesNotRequireValidation()) {
+		next();
+		// next(new Error('Invalid password'))
+	} else {
+		next();
+	}
+})
+
+/**
+ * Methods
+ */
+
+UserSchema.statics.isValidUserPassword = function(email, password, done) {
+	console.log('isValidUserPassword');
+	console.log(email);
+	console.log(password);
+	this.findOne({
+		email: email
+	}, function(err, user) {
+		if (err) {
+			return done(err);
+		}
+		if (!user) {
+			return done(null, false, {
+				message: 'Incorrect email.'
+			})
+		}
+		if (password === user.password) {
+			return done(null, user);
+		} else {
+			return done(null, false, {
+				message: 'Incorrect password'
+			});
+		}
+	})
+}
+
+UserSchema.methods = {
+
+	/**
+	 * Authenticate - check if the passwords are the same
+	 *
+	 * @param {String} plainText
+	 * @return {Boolean}
+	 * @api public
+	 */
+
+
+
+	authenticate: function(plainText) {
+		return this.encryptPassword(plainText) === this.password
+	},
+
+	/**
+	 * Make salt
+	 *
+	 * @return {String}
+	 * @api public
+	 */
+
+	makeSalt: function() {
+		return Math.round((new Date().valueOf() * Math.random())) + ''
+	},
+
+	/**
+	 * Encrypt password
+	 *
+	 * @param {String} password
+	 * @return {String}
+	 * @api public
+	 */
+
+	encryptPassword: function(password) {
+		if (!password) return ''
+		var encrypred
+		try {
+			encrypred = crypto.createHmac('sha1', this.salt).update(password).digest('hex')
+			return encrypred
+		} catch (err) {
+			return ''
+		}
+	},
+
+	login: function(token, cb) {
+		console.log('User.login');
+		this.tokens = token;
+		this.save(cb);
+	},
+
+	logout: function(token, cb) {
+		// var index = this.tokens.indexOf(token);
+		// this.tokens.splice(index, 1);
+		this.tokens = '';
+		this.save(cb);
+	},
+	removeToken: function(token, cb) {
+		// var index = this.tokens.indexOf(token);
+		// this.tokens.splice(index, 1);
+		this.tokens = '';
+		this.save(cb);
+	},
+	changePassword: function(password, cb) {
+		this.password = password;
+		this.save(cb);
+	},
+
+	/**
+	 * Validation is not required if using OAuth
+	 */
+
+	doesNotRequireValidation: function() {
+		return false;
+	}
+}
+
+mongoose.model('User', UserSchema)</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-snController.html">snController</a></li><li><a href="module-soxController.html">soxController</a></li></ul><h3>Classes</h3><ul><li><a href="snBuilder.html">snBuilder</a></li><li><a href="snDataController.html">snDataController</a></li><li><a href="snFactory.html">snFactory</a></li><li><a href="soxs_Auth.html">soxs_Auth</a></li></ul><h3>Global</h3><ul><li><a href="global.html#create">create</a></li><li><a href="global.html#getTags">getTags</a></li><li><a href="global.html#iterations">iterations</a></li><li><a href="global.html#len">len</a></li><li><a href="global.html#list">list</a></li><li><a href="global.html#mongoose">mongoose</a></li><li><a href="global.html#recipe">recipe</a></li><li><a href="global.html#RecipeSchema">RecipeSchema</a></li><li><a href="global.html#setTags">setTags</a></li><li><a href="global.html#snAttributeType">snAttributeType</a></li><li><a href="global.html#snController">snController</a></li><li><a href="global.html#snElementType">snElementType</a></li><li><a href="global.html#user">user</a></li><li><a href="global.html#UserSchema">UserSchema</a></li><li><a href="global.html#validatePresenceOf">validatePresenceOf</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0</a> on Tue May 19 2015 22:41:50 GMT-0400 (EDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,4 +1,32 @@
-/* soxController.js
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: app/controllers/soxController.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: app/controllers/soxController.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* soxController.js
  *
  * Author(s):  Andrew Brown
  * Date:       3/25/2015 *
@@ -240,7 +268,7 @@ exports.delete_soxs_data = function(req, res, next) {
  */
 function get_schema(id, cb) {
     var query = {};
-    if (id && id != '_all') {
+    if (id &amp;&amp; id != '_all') {
         query._id = id
     }
     soxsLog.debug_info(query);
@@ -264,7 +292,7 @@ function get_schema(id, cb) {
  */
 function get_schema_by_name(schemaName, cb) {
     var query = {};
-    if (schemaName && schemaName != '_all') {
+    if (schemaName &amp;&amp; schemaName != '_all') {
         if (schemaName.indexOf('.') == -1) {
             query.name = schemaName
         } else {
@@ -281,7 +309,7 @@ function get_schema_by_name(schemaName, cb) {
             } else {
                 soxsLog.debug_info("Got schema for: " + schemaName);
                 // soxsLog.debug_info(JSON.stringify(data));
-                for (var i = 0; i < data.length; ++i) {
+                for (var i = 0; i &lt; data.length; ++i) {
                     if (!soxsModels.hasOwnProperty(data[i].name)) {
                         soxsLog.debug_info('Adding model: ' + data[i].name);
                         soxsModels[data[i].name] = data[i];
@@ -336,7 +364,7 @@ function save_soxs_schema(id, schema_data, cb) {
             schema_data.__v = schema_data.__v + 1;
         }
         schema_data.fields = [];
-        for (var i = 0; i < results.length; ++i) {
+        for (var i = 0; i &lt; results.length; ++i) {
             schema_data.fields.push(results[i]);
         }
         if (schema_data.hasOwnProperty('_id')) {
@@ -444,7 +472,7 @@ function save_soxs_schema_field(field_schema) {
 
 // function post_soxs_schema(schema_data, cb) {
 //     var f = [];
-//     for (var i = 0; i < schema_data.fields.length; ++i) {
+//     for (var i = 0; i &lt; schema_data.fields.length; ++i) {
 //         (function(i) {
 //             var field = schema_data.fields[i];
 //             f.push(function(callback) {
@@ -461,7 +489,7 @@ function save_soxs_schema_field(field_schema) {
 //             prefix: schema_data.prefix,
 //             fields: []
 //         };
-//         for (var i = 0; i < results.length; ++i) {
+//         for (var i = 0; i &lt; results.length; ++i) {
 //             sd.fields.push(results[i]);
 //         }
 //         soxsLog.debug_info(sd);
@@ -511,7 +539,7 @@ function save_soxs_schema_field(field_schema) {
 //     soxsLog.data(schema_data);
 //     var put_f = [];
 //     var post_f = [];
-//     for (var i = 0; i < schema_data.fields.length; ++i) {
+//     for (var i = 0; i &lt; schema_data.fields.length; ++i) {
 //         (function(i) {
 //             var field = schema_data.fields[i];
 //             if (field.hasOwnProperty("_id")) {
@@ -539,10 +567,10 @@ function save_soxs_schema_field(field_schema) {
 //                 mongo_name: schema_data.mongo_name,
 //                 fields: []
 //             };
-//             for (var i = 0; i < put_results.length; ++i) {
+//             for (var i = 0; i &lt; put_results.length; ++i) {
 //                 sd.fields.push(put_results[i]);
 //             }
-//             for (var i = 0; i < post_results.length; ++i) {
+//             for (var i = 0; i &lt; post_results.length; ++i) {
 //                 sd.fields.push(post_results[i]);
 //             }
 //             soxsLog.debug_info('put_soxs_schema final sd value:')
@@ -573,4 +601,26 @@ function save_soxs_schema_field(field_schema) {
 //             });
 //         })
 //     })
-// }
+// }</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-snController.html">snController</a></li><li><a href="module-soxController.html">soxController</a></li></ul><h3>Classes</h3><ul><li><a href="snBuilder.html">snBuilder</a></li><li><a href="snDataController.html">snDataController</a></li><li><a href="snFactory.html">snFactory</a></li><li><a href="soxs_Auth.html">soxs_Auth</a></li></ul><h3>Global</h3><ul><li><a href="global.html#create">create</a></li><li><a href="global.html#getTags">getTags</a></li><li><a href="global.html#iterations">iterations</a></li><li><a href="global.html#len">len</a></li><li><a href="global.html#list">list</a></li><li><a href="global.html#mongoose">mongoose</a></li><li><a href="global.html#recipe">recipe</a></li><li><a href="global.html#RecipeSchema">RecipeSchema</a></li><li><a href="global.html#setTags">setTags</a></li><li><a href="global.html#snAttributeType">snAttributeType</a></li><li><a href="global.html#snController">snController</a></li><li><a href="global.html#snElementType">snElementType</a></li><li><a href="global.html#user">user</a></li><li><a href="global.html#UserSchema">UserSchema</a></li><li><a href="global.html#validatePresenceOf">validatePresenceOf</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0</a> on Tue May 19 2015 22:41:50 GMT-0400 (EDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

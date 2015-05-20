@@ -1,4 +1,32 @@
-/* snController.js
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: app/controllers/snController.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: app/controllers/snController.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* snController.js
  *
  * Author(s):  Andrew Brown
  * Date:       3/25/2015 *
@@ -150,7 +178,7 @@ exports.put_snData = function(req, res, next) {
 function format_schema(raw_schema) {
     // soxsLog.debug_info('***raw_schema');
     var s = {};
-    for (var fc = 0; fc < raw_schema.fields.length; ++fc) {
+    for (var fc = 0; fc &lt; raw_schema.fields.length; ++fc) {
         var f = raw_schema.fields[fc];
         // soxsLog.debug_info('f: ' + f);
         var field = {};
@@ -190,7 +218,7 @@ function format_schema(raw_schema) {
 
 function format_get_schema(raw_schema) {
     var s = {};
-    for (var fc = 0; fc < raw_schema.fields.length; ++fc) {
+    for (var fc = 0; fc &lt; raw_schema.fields.length; ++fc) {
         var f = raw_schema.fields[fc];
         var field = {};
         if (f.type == 'ObjectId') {
@@ -290,7 +318,7 @@ function make_schema(snDataType, cb) {
             soxsLog.debug_info('----snController::make_schema got sch: ' + sch.length);
             // soxsLog.data(sch);
             // var sch0 = {};
-            // for (var i = 0; i < sch.length; ++i) {
+            // for (var i = 0; i &lt; sch.length; ++i) {
             //     if (sch[i].)
             // }
             var sch0 = sch[0];
@@ -316,11 +344,11 @@ function make_schema(snDataType, cb) {
 function make_model(snDataType, cb) {
     soxsLog.funcall('make_model: ' + snDataType);
 
-    if (snModels.hasOwnProperty(snDataType) && snModels[snDataType].hasOwnProperty('mongo_name') && mongoose.models[snModels[snDataType].mongo_name]) {
+    if (snModels.hasOwnProperty(snDataType) &amp;&amp; snModels[snDataType].hasOwnProperty('mongo_name') &amp;&amp; mongoose.models[snModels[snDataType].mongo_name]) {
         soxsLog.debug_info('-----mongoose had model: ' + snModels[snDataType].mongo_name)
         cb(null, mongoose.model(snModels[snDataType].mongo_name));
     }
-    // else if (snModels.hasOwnProperty(snDataType) && snModels[snDataType].hasOwnProperty('model')) {
+    // else if (snModels.hasOwnProperty(snDataType) &amp;&amp; snModels[snDataType].hasOwnProperty('model')) {
     //     soxsLog.debug_info('Model exists: ' + snDataType)
     //     soxsLog.debug_info(JSON.stringify(snModels[snDataType]))
     //     soxsLog.ds(snModels[snDataType]);
@@ -373,7 +401,7 @@ function make_model(snDataType, cb) {
 
                 // cb(null, snModels[sn_props.name].model);
 
-                // if (modelNames.indexOf(sn_props.name) < 0) {
+                // if (modelNames.indexOf(sn_props.name) &lt; 0) {
                 //     var sn_model = mongoose.model(snModels[sn_props.name].mongo_name, sn_schema);
                 //     snModels[snDataType].model = sn_model;
                 //     cb(null, sn_model);
@@ -412,7 +440,7 @@ function post_sn_array_field(snDataFieldType, data_array, callback) {
     // callback(null,['5540294329166f917eb73289', '5540294429166f917eb7328a']);
 
     var f = [];
-    for (var i = 0; i < data_array.length; ++i) {
+    for (var i = 0; i &lt; data_array.length; ++i) {
         (function(i) {
             f.push(function(c) {
                 post_sn_field(snDataFieldType, data_array[i], c);
@@ -462,7 +490,7 @@ function load_data(cb) {
     var load_funs = [];
     soxController.load_soxs_schema('_all', function(soxs_schemas) {
 
-        for (var i = 0; i < soxs_schemas.length; ++i) {
+        for (var i = 0; i &lt; soxs_schemas.length; ++i) {
             (function(i) {
                 load_funs.push(function(callback) {
                     load_model(soxs_schemas[i], callback)
@@ -476,7 +504,7 @@ function load_data(cb) {
                 cb(err, null);
             } else {
                 soxsLog.debug_info('load_data complete');
-                for (var i = 0; i < results.length; ++i) {
+                for (var i = 0; i &lt; results.length; ++i) {
                     snModels[results[i].name] = results[i];
                 }
                 // soxsLog.debug_info(results);
@@ -570,7 +598,7 @@ function save_data(snDataType, snData, cb) {
             soxsLog.data(sn_schema.paths);
 
             for (var f in sn_schema.paths) {
-                if (f != '_id' && sn_schema.paths[f].instance == 'ObjectID') {
+                if (f != '_id' &amp;&amp; sn_schema.paths[f].instance == 'ObjectID') {
                     var fd = sn_schema.paths[f];
                     fd.data = snData[f];
                     obj_fields.push(fd);
@@ -583,7 +611,7 @@ function save_data(snDataType, snData, cb) {
                 soxsLog.data(results);
                 // cb('error', null);
 
-                for (var i = 0; i < results.length; ++i) {
+                for (var i = 0; i &lt; results.length; ++i) {
                     soxsLog.debug_info('Setting: ' + Object.keys(results[i])[0] + ' to value: ' + results[i][Object.keys(results[i])[0]]);
                     snData[Object.keys(results[i])[0]] = results[i][Object.keys(results[i])[0]];
                 }
@@ -648,7 +676,7 @@ function save_snData(snDataType, data, cb) {
                         soxsLog.debug_info('Is Array: ' + Array.isArray(sn_schema.paths[attr].options.type));
                         if (Array.isArray(sn_schema.paths[attr].options.type)) {
                             soxsLog.debug_info('Adding items for array: ' + attr + ' : ' + data[attr].length);
-                            // for (var j = 0; j < data[attr].length; ++j) {
+                            // for (var j = 0; j &lt; data[attr].length; ++j) {
                             (function(attr) {
                                 f.push(function(callback) {
                                     // soxsLog.debug_info('Item: ' + j + ' : ' + JSON.stringify(data[attr]));
@@ -664,7 +692,7 @@ function save_snData(snDataType, data, cb) {
                             })(attr);
                         }
 
-                    } else if (sn_schema.paths[attr].hasOwnProperty('caster') && sn_schema.paths[attr].caster.options.hasOwnProperty('ref')) {
+                    } else if (sn_schema.paths[attr].hasOwnProperty('caster') &amp;&amp; sn_schema.paths[attr].caster.options.hasOwnProperty('ref')) {
                         (function(attr) {
                             f.push(function(callback) {
                                 post_sn_field(sn_schema.paths[attr].caster.options.ref, data[attr], callback);
@@ -765,7 +793,7 @@ function getData(snDataType, query, cb) {
                 // soxsLog.debug_info(JSON.stringify(sn_model.schema.paths[f]));
                 if (sn_model.schema.paths[f].options.hasOwnProperty('ref')) {
                     pop_fields.push(f);
-                } else if (sn_model.schema.paths[f].hasOwnProperty('caster') && sn_model.schema.paths[f].caster.options.hasOwnProperty('ref')) {
+                } else if (sn_model.schema.paths[f].hasOwnProperty('caster') &amp;&amp; sn_model.schema.paths[f].caster.options.hasOwnProperty('ref')) {
                     pop_fields.push(f);
                 }
             }
@@ -1098,3 +1126,26 @@ exports.post_tests = function(req, res, next) {
 
 //     return snTest;
 // }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-snController.html">snController</a></li><li><a href="module-soxController.html">soxController</a></li></ul><h3>Classes</h3><ul><li><a href="snBuilder.html">snBuilder</a></li><li><a href="snDataController.html">snDataController</a></li><li><a href="snFactory.html">snFactory</a></li><li><a href="soxs_Auth.html">soxs_Auth</a></li></ul><h3>Global</h3><ul><li><a href="global.html#create">create</a></li><li><a href="global.html#getTags">getTags</a></li><li><a href="global.html#iterations">iterations</a></li><li><a href="global.html#len">len</a></li><li><a href="global.html#list">list</a></li><li><a href="global.html#mongoose">mongoose</a></li><li><a href="global.html#recipe">recipe</a></li><li><a href="global.html#RecipeSchema">RecipeSchema</a></li><li><a href="global.html#setTags">setTags</a></li><li><a href="global.html#snAttributeType">snAttributeType</a></li><li><a href="global.html#snController">snController</a></li><li><a href="global.html#snElementType">snElementType</a></li><li><a href="global.html#user">user</a></li><li><a href="global.html#UserSchema">UserSchema</a></li><li><a href="global.html#validatePresenceOf">validatePresenceOf</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0</a> on Tue May 19 2015 22:41:50 GMT-0400 (EDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
