@@ -10,8 +10,8 @@ node_modules/
 ## music
 #############
 
-music/
-public/music/
+music_repo/
+public/music_repo/
 
 #############
 ## Bittorrent Sync
