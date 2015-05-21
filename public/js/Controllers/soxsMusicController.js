@@ -31,8 +31,8 @@ angular.module('soxsnationApp')
             $scope.player.on('loadedmetadata',
                 function(data) {
                     // $scope.player_message = 'ERROR: ' + error;
-                    console.log('loadMetadata');
-                    console.log(data);
+                    // console.log('loadMetadata');
+                    // console.log(data);
                 });
 
             $scope.player.on('canplay',
