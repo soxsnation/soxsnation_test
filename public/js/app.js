@@ -18,7 +18,8 @@ var soxsnationApp = angular.module('soxsnationApp', [
 	// 'snDraggable',
 	// 'snTemplateService',
 	'templateCreator',
-	'ui.bootstrap'
+	'ui.bootstrap',
+	'Audio5'
 ]);
 
 /**
@@ -43,6 +44,10 @@ soxsnationApp.config(['$routeProvider',
 		when('/Home', {
 			controller: 'SoxsController',
 			templateUrl: '../partials/home.html'
+		}).
+		when('/Music', {
+			controller: 'soxsMusicController',
+			templateUrl: '../partials/music/playing.html'
 		}).
 		when('/Login', {
 			controller: 'LoginController',

@@ -189,6 +189,13 @@ angular.module('soxsnationApp')
 												permissionIndex: 4,
 												fields: []
 										}
+										var musicPage = {
+											name: 'Music',
+											description: 'Music',
+												permissionIndex: 4,
+												fields: []
+										}
+										$scope.data_models.push(musicPage);
 										// $scope.data_models.push(dragModel);
 										// $scope.data_models.push(templateModel);
 
