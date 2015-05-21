@@ -72,6 +72,11 @@ fs.readdirSync(models_path).forEach(function(file) {
 	if (~file.indexOf('.js')) require(models_path + '/' + file)
 });
 
+var models_path = __dirname + '/app/soxsModels/musicModels';
+fs.readdirSync(models_path).forEach(function(file) {
+	if (~file.indexOf('.js')) require(models_path + '/' + file)
+});
+
 
 var passport = require('passport');
 require('./app/lib/passport')(passport)

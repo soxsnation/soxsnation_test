@@ -31,6 +31,11 @@ var songSchema = new Schema({
 		default: '',
 		trim: true
 	},
+	genre: {
+		type: String,
+		default: '',
+		trim: true
+	},
 	date_added: {
 		type: Date
 	},

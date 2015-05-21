@@ -133,6 +133,12 @@ module.exports = function(app, passport) {
 *****************************************************************************************/
 
 app.get('/music/list', musicController.getFileList);
+app.get('/music/song', musicController.getSongs);
+app.get('/music/songinfo/:id', musicController.getSongInfo);
+app.get('/music/populatesongs', musicController.populatesongs);
+app.get('/music/playlist', musicController.getPlaylists);
+app.post('/music/song', musicController.insertSongs);
+app.post('/music/playlist', musicController.insertPlaylists);
 
 /*****************************************************************************************
 * snData

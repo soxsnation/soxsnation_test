@@ -9,8 +9,14 @@
  * @module musicController
  */
 
-
+var mongoose = require('mongoose');
+var songSchema = mongoose.model('soxs.Music.Song');
+var playlistSchema = mongoose.model('soxs.Music.Playlist');
 var fs = require('fs');
+var id3 = require('id3js');
+var Promise = require('promise');
+
+var soxsLog = require('../lib/soxsLog')('musicController');
 
 function getFiles(dir, files_) {
     files_ = files_ || [];
@@ -39,6 +45,17 @@ exports.getFileList = function(req, res, next) {
 
 }
 
+function getSongDataById(id, cb) {
+    songSchema.findById(id).exec(function(err, data) {
+        if (err) {
+            soxsLog.error('getSongs: ' + err);
+            cb(err, null);
+        } else {
+            cb(null, data);
+        }
+    })
+}
+
 /**
  * Gets songs from db
  * @param {request} req The request.
@@ -47,7 +64,48 @@ exports.getFileList = function(req, res, next) {
  */
 exports.getSongs = function(req, res, next) {
     console.log('exports.getSongs');
-    res.send(200);
+    var query = {};
+    songSchema.find(query).exec(function(err, data) {
+        if (err) {
+            soxsLog.error('getSongs: ' + err);
+            res.send(406);
+        } else {
+            res.json(data);
+        }
+    })
+}
+
+function populate_song_info(song_file, cb) {
+    id3({
+        file: song_file,
+        type: id3.OPEN_LOCAL
+    }, function(err, tags) {
+        if (err) {
+            soxsLog.error('getSongInfo: ' + err);
+        }
+        cb(err, tags);
+    });
+}
+
+exports.getSongInfo = function(req, res, next) {
+    console.log('exports.getSongInfo');
+    getSongDataById(req.params.id, function(err, songData) {
+        if (err) {
+            res.send(403);
+        } else {
+            populate_song_info(songData.file_name, function(err, tags) {
+                if (err) {
+                    soxsLog.error('getSongInfo: ' + err);
+                    soxsLog.debug_info(songData.file_name);
+                    res.send(406)
+                } else {
+                    res.json(tags);
+                }
+            });
+        }
+    });
+
+
 }
 
 /**
@@ -58,6 +116,15 @@ exports.getSongs = function(req, res, next) {
  */
 exports.getPlaylists = function(req, res, next) {
     console.log('exports.getSongs');
+    var query = {};
+    playlistSchema.find(query).exec(function(err, data) {
+        if (err) {
+            soxsLog.error('getSongs: ' + err);
+            res.send(406)
+        } else {
+            res.json(data);
+        }
+    })
     res.send(200);
 }
 
@@ -69,7 +136,14 @@ exports.getPlaylists = function(req, res, next) {
  */
 exports.insertSongs = function(req, res, next) {
     console.log('exports.insertSongs');
-    res.send(200);
+    songSchema.create(req.body, function(err, data) {
+        if (err) {
+            soxsLog.error('insertSongs: ' + err);
+            res.json(420);
+        } else {
+            res.json(data);
+        }
+    });
 }
 
 /**
@@ -80,5 +154,94 @@ exports.insertSongs = function(req, res, next) {
  */
 exports.insertPlaylists = function(req, res, next) {
     console.log('exports.insertPlaylists');
+    playlistSchema.create(req.body, function(err, data) {
+        if (err) {
+            soxsLog.error('insertSongs: ' + err);
+            res.json(420);
+        } else {
+            res.json(data);
+        }
+    });
     res.send(200);
+}
+
+function addSongData(songData) {
+
+    songSchema.create(songData, function(err, data) {
+        if (err) {
+            soxsLog.error('insertSongs: ' + err);
+            // res.json(420);
+        } else {
+            // res.json(data);
+        }
+    });
+}
+
+function populate_song_data(song_file) {
+    return new Promise(function(fulfill, reject) {
+        id3({
+            file: song_file,
+            type: id3.OPEN_LOCAL
+        }, function(err, tags) {
+            if (err) {
+                soxsLog.error('populate_song_data: ' + err);
+                reject(err);
+            }
+            var song = {
+                name: tags.title,
+                file_name: song_file,
+                album: (tags.hasOwnProperty('album') ? tags.album : ''),
+                artist: tags.artist,
+                // track: tags.v2.track,
+                // track: Number(tags.v2.track.split('/')[0]),
+                // album_tracks: Number(tags.v2.track.split('/')[1]),
+                genre: tags.v2.genre
+            }
+            fulfill(song);
+        });
+    });
+}
+
+function store_song_data(song_data) {
+    return new Promise(function(fulfill, reject) {
+        songSchema.create(song_data, function(err, data) {
+            if (err) {
+                soxsLog.error('store_song_data: ' + err);
+                reject(err);
+            } else {
+                fulfill(data);
+            }
+        });
+    });
+}
+
+function parse_directory(dir) {
+    var songs = getFiles(dir);
+
+    Promise.all(songs.map(populate_song_data)).done(function(song_list) {
+
+    })
+
+
+}
+
+exports.populatesongs = function(req, res, next) {
+    console.log('exports.populatesongs');
+    var songs = getFiles('./music_repo/');
+    console.log('got songs');
+
+    Promise.all(songs.map(populate_song_data)).done(function(song_list) {
+        var songlist = [];
+        for (var i = 0; i < song_list.length; ++i) {
+            if (song_list[i].name != null) {
+                songlist.push(song_list[i]);
+            }
+        }
+        Promise.all(songlist.map(store_song_data)).done(function(song_data_list) {
+
+            res.json(song_data_list);
+        })
+    });
+
+
 }

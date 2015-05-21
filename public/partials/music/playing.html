@@ -25,9 +25,9 @@
 <br />
 <div class="container">
 <div style="max-height:650px; overflow-y: auto;overflow-x: hidden;">
-    <ul>
-        <li data-ng-repeat="file in filelist track by $index">
-            <div data-ng-click="play_song(file)">{{file}}</div>
+    <ul class="list-group">
+        <li class="list-group-item {{file.active}}" data-ng-repeat="file in filelist track by $index">
+            <div data-ng-click="play_song(file.file_name)">{{file.name}}</div>
         </li>
     </ul>
 </div>

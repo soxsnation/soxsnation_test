@@ -10,7 +10,7 @@ angular.module('soxsnationApp')
         function($scope, AudioService, $http) {
 
             $scope.player = AudioService;
-            $scope.player.load('/music/ClintEastwood.mp3');
+            // $scope.player.load('/music/ClintEastwood.mp3');
             $scope.filelist = {};
             $scope.current_song = 'ClintEastwood.mp3';
             $scope.player_message = '';
@@ -85,7 +85,7 @@ angular.module('soxsnationApp')
 
             function getMusicFiles() {
                 $http({
-                    url: '/music/list',
+                    url: '/music/song',
                     method: 'GET',
                 }).then(function(res) {
                     console.log('Got music file list');
@@ -115,6 +115,15 @@ angular.module('soxsnationApp')
 
             $scope.play_song = function(song) {
                 $scope.disable_controls = true;
+
+                for (var i = 0; i < $scope.filelist.length; ++i) {
+                    if ($scope.filelist[i].file_name == song) {
+                        $scope.filelist[i].active = 'active';
+                    } else {
+                        $scope.filelist[i].active = '';
+                    }
+                }
+
                 start_song(song);
 
             }
