@@ -56,6 +56,10 @@ var songSchema = new Schema({
 		type: Boolean,
 		default: true
 	},
+	displayed: {
+		type: Boolean,
+		default: true
+	},
 	tags: [String]
 });
 

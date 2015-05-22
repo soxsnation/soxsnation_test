@@ -148,7 +148,7 @@ angular.module('soxsnationApp')
             $scope.create_playlist = function() {
                 var playlist = {
                     name: $scope.new_playlist_name,
-                    songs: ['555e5f441b3625244b14cf7a', '555e5f441b3625244b14cf77', '555e5f441b3625244b14cf76']
+                    songs: []
                 };
                 $http({
                     url: '/music/playlist',
@@ -221,13 +221,13 @@ angular.module('soxsnationApp')
             	// $scope.search.artist = $scope.searchText;
             	for (var i = 0; $scope.songlist.length; ++i) {
             		if ($scope.songlist[i].name.toLowerCase().indexOf($scope.searchText.toLowerCase()) > -1) {
-            			$scope.songlist[i].active = true;
+            			$scope.songlist[i].displayed = true;
             		} 
             		else if ($scope.songlist[i].artist.toLowerCase().indexOf($scope.searchText.toLowerCase()) > -1) {
-            			$scope.songlist[i].active = true;
+            			$scope.songlist[i].displayed = true;
             		} 
             		else {
-            			$scope.songlist[i].active = false;
+            			$scope.songlist[i].displayed = false;
             		}
             	}
             }
