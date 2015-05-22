@@ -1,34 +1,110 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">{{playpause_action}}</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Playlists <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li data-ng-repeat="playlist in playlists track by $index"><a href="" data-ng-click="load_playlist(playlist._id)">{{playlist.name}}</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search" data-ng-model="searchText" data-ng-change="search_songs()">
+                    <!-- <input type="text" class="form-control" placeholder="Search" data-ng-model="searchText" > -->
+                </div>
+                <button type="submit" class="btn btn-default">Search</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Link</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Playlists <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="" data-ng-click="load_all_songs()">All songs</a></li>
+                        <li class="divider"></li>
+                        <li data-ng-repeat="playlist in playlists track by $index"><a href="" data-ng-click="load_playlist(playlist._id)">{{playlist.name}}</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
 <h4>{{player_message}}</h4>
 <br />
 <progressbar animate="true" value="current_song_progress" type="info"><b>{{current_song_progress}}%</b></progressbar>
 <h5>{{song_status}}</h5>
 <br />
-<button class="btn btn-primary" ng-click="player.playPause()" >Play/Pause</button>
-<br />
+<button class="btn btn-primary" ng-click="player.playPause()">Play/Pause</button>
 <button class="btn btn-primary" ng-click="seek()">Seek</button>
-<br />
 <button class="btn btn-primary" ng-click="play()" data-ng-disabled="disable_controls">Play</button>
-<br />
 <button class="btn btn-primary" ng-click="pause()" data-ng-disabled="disable_controls">Pause</button>
-<br />
-<span>Position: {{player.position}}</span>
-<br />
-<span>Duration: {{player.duration}}</span>
-<br />
-<span>Volume: {{player.volume}}</span>
-<br />
-<br />
-<br />
-<button class="btn btn-primary" data-toggle="modal" data-ng-click="getFileList()">
-    Get File List
-</button>
-<br />
-<div class="container">
-<div style="max-height:650px; overflow-y: auto;overflow-x: hidden;">
-    <ul class="list-group">
-        <li class="list-group-item {{file.active}}" data-ng-repeat="file in filelist track by $index">
-            <div data-ng-click="play_song(file.file_name)">{{file.name}}</div>
-        </li>
+<!-- <button class="btn btn-primary" ng-click="add_to_playlist()" data-ng-disabled="disable_controls">Add to playlist</button> -->
+<div class="btn-group">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+        Add to playlist <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+        <li data-ng-repeat="playlist in playlists track by $index"><a href="" data-ng-click="add_to_playlist(playlist._id)">{{playlist.name}}</a></li>
     </ul>
 </div>
+<br />
+<br />
+<div class="container">
+    <!--     <button class="btn btn-primary" data-toggle="modal" data-ng-click="getFileList()">
+        Get File List
+    </button><br /> -->
+    <!-- <div class="btn-group">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            Playlists <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li data-ng-repeat="playlist in playlists track by $index"><a href="" data-ng-click="load_playlist(playlist._id)">{{playlist.name}}</a></li>
+            <li class="divider"></li>
+            <li><a href="" data-ng-click="load_all_songs()">Show all songs</a></li>
+        </ul>
+    </div> -->
+    <div class="row clearfix">
+        <div class="col-md-4 column">
+            <div style="max-height:650px; overflow-y: auto;overflow-x: hidden;">
+                <ul class="list-group">
+                    <li class="list-group-item {{song.active}}" data-ng-repeat="song in songlist | filter:{active: true} track by $index " >
+                        <div data-ng-click="play_song(song)">{{song.name}} - {{song.artist}} </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-8 column">
+            <button class="btn btn-primary" data-toggle="modal" data-ng-click="create_playlist()">
+                Create Playlist
+            </button>
+            <input type="text" class="form-control" data-ng-model="new_playlist_name" />
+            <br />
+            <br />
+            <div style="max-height:650px; overflow-y: auto;overflow-x: hidden;">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <div data-ng-click="load_all_songs()">All Songs</div>
+                    </li>
+                    <li class="list-group-item" data-ng-repeat="playlist in playlists track by $index">
+                        <div data-ng-click="load_playlist(playlist._id)">{{playlist.name}}</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
+<br />

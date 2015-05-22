@@ -180,7 +180,7 @@ header a.link:hover, footer a.link:hover {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  padding: 0px;
+  /*padding: 0px;*/
   border: none;
   text-shadow: none;
 }

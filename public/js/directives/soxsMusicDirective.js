@@ -20,9 +20,9 @@ angular.module('Audio5').directive('audio', function(AudioService){
     replace: true,
     transclude: true,
     controller: function($scope, $element, $attrs, $transclude) {
-      $scope.player = AudioService;
+      $scope.player2 = AudioService.audio5js;
 
-      $scope.player.on('timeupdate',function(time, duration){
+      $scope.player2.on('timeupdate',function(time, duration){
         $scope.$apply(function(){
           $scope.position = time;
           $scope.duration = duration;
@@ -30,7 +30,7 @@ angular.module('Audio5').directive('audio', function(AudioService){
       });
 
       $scope.$watch('src', function(new_value, old_value){
-        $scope.player.load(new_value);
+        $scope.player2.load(new_value);
       });
     }
   }

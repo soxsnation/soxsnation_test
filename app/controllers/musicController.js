@@ -104,8 +104,45 @@ exports.getSongInfo = function(req, res, next) {
             });
         }
     });
+}
 
+function getSongDataById_async(id) {
+    return new Promise(function(fulfill, reject) {
+        songSchema.findById(id).exec(function(err, data) {
+            if (err) {
+                soxsLog.error('getSongs: ' + err);
+                reject(err);
+            } else {
+                fulfill(data);
+            }
+        })
+    });
+}
 
+/**
+ * Loads playlists from db
+ * @param {request} req The request.
+ * @param {response} res The response.
+ * @param {next} next The next.
+ */
+exports.loadPlaylists = function(req, res, next) {
+    console.log('exports.loadPlaylists');
+
+    playlistSchema.findById(req.params.id).exec(function(err, data) {
+        if (err) {
+            soxsLog.error('getSongs: ' + err);
+            res.send(406)
+        } else {
+        	var playlist = {
+        		name: data.name,
+        		songs: []
+        	}
+            Promise.all(data.songs.map(getSongDataById_async)).done(function(song_list) {
+            	playlist.songs = song_list;
+            	res.json(playlist);
+            })
+        }
+    })
 }
 
 /**
@@ -115,7 +152,7 @@ exports.getSongInfo = function(req, res, next) {
  * @param {next} next The next.
  */
 exports.getPlaylists = function(req, res, next) {
-    console.log('exports.getSongs');
+    console.log('exports.getPlaylists');
     var query = {};
     playlistSchema.find(query).exec(function(err, data) {
         if (err) {
@@ -124,8 +161,7 @@ exports.getPlaylists = function(req, res, next) {
         } else {
             res.json(data);
         }
-    })
-    res.send(200);
+    });
 }
 
 /**
@@ -162,7 +198,23 @@ exports.insertPlaylists = function(req, res, next) {
             res.json(data);
         }
     });
-    res.send(200);
+}
+
+/**
+ * Updates playlists to db
+ * @param {request} req The request.
+ * @param {response} res The response.
+ * @param {next} next The next.
+ */
+exports.updatePlaylists = function(req, res, next) {
+	console.log('exports.updatePlaylists');
+	playlistSchema.findByIdAndUpdate(req.body._id, req.body, function(err, data) {
+		if (err) {
+			res.send(406);
+		} else {
+			res.json(data);
+		}
+	})
 }
 
 function addSongData(songData) {

@@ -137,8 +137,10 @@ app.get('/music/song', musicController.getSongs);
 app.get('/music/songinfo/:id', musicController.getSongInfo);
 app.get('/music/populatesongs', musicController.populatesongs);
 app.get('/music/playlist', musicController.getPlaylists);
+app.get('/music/loadplaylist/:id', musicController.loadPlaylists);
 app.post('/music/song', musicController.insertSongs);
 app.post('/music/playlist', musicController.insertPlaylists);
+app.put('/music/playlist', musicController.updatePlaylists);
 
 /*****************************************************************************************
 * snData

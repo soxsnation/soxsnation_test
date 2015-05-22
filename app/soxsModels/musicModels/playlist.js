@@ -16,10 +16,7 @@ var playlistSchema = new Schema({
 		default: '',
 		trim: true
 	},
-	songs: [{
-		type: Schema.Types.ObjectId,
-		ref: 'soxs.Music.Song'
-	}]
+	songs: [String]
 });
 
 
