@@ -10,12 +10,21 @@
             </button>
             <a class="navbar-brand" href="#">[{{playpause_action}}]</a>
         </div>
-<!--         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-0">
+        <!--         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-0">
         <button type="button" class="btn btn-default navbar-btn">Play</button>
         </div> -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <button type="button" class="btn btn-default navbar-btn">Play</button>
-            <ul class="nav navbar-nav">                
+        <button type="button" class="btn btn-default navbar-btn navbar-left" data-ng-click="pervious_song()">
+                <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="btn btn-default navbar-btn navbar-left" data-ng-click="play_pause()">
+                <span class="glyphicon glyphicon-play" aria-hidden="true" data-ng-hide="isPlaying"></span>
+                <span class="glyphicon glyphicon-pause" aria-hidden="true" data-ng-show="isPlaying"></span>
+            </button>
+            <button type="button" class="btn btn-default navbar-btn navbar-left" data-ng-click="next_song()">
+                <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+            </button>
+            <ul class="nav navbar-nav">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Playlists <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
@@ -30,8 +39,11 @@
                 </div>
                 <button type="submit" class="btn btn-default">Search</button>
             </form>
+            <!-- <button type="button" class="btn btn-default navbar-btn navbar-right">Refresh Songs</button> -->
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Link</a></li>
+                <li>
+                    <button type="button" class="btn btn-default navbar-btn" data-ng-click="refresh_songs()">Refresh Songs</button>
+                </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Playlists <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
@@ -51,10 +63,12 @@
 <progressbar animate="true" value="current_song_progress" type="info"><b>{{current_song_progress}}%</b></progressbar>
 <h5>{{song_status}}</h5>
 <br />
-<button class="btn btn-primary" ng-click="player.playPause()">Play/Pause</button>
+<br />
+<input type="range" min=0 max=100 data-ng-model="volume" class="vertical1" orient="vertical1" data-ng-change="volume_changed()">
+<!-- <button class="btn btn-primary" ng-click="player.playPause()">Play/Pause</button>
 <button class="btn btn-primary" ng-click="seek()">Seek</button>
 <button class="btn btn-primary" ng-click="play()" data-ng-disabled="disable_controls">Play</button>
-<button class="btn btn-primary" ng-click="pause()" data-ng-disabled="disable_controls">Pause</button>
+<button class="btn btn-primary" ng-click="pause()" data-ng-disabled="disable_controls">Pause</button> -->
 <!-- <button class="btn btn-primary" ng-click="add_to_playlist()" data-ng-disabled="disable_controls">Add to playlist</button> -->
 <div class="btn-group">
     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -84,7 +98,7 @@
         <div class="col-md-4 column">
             <div style="max-height:650px; overflow-y: auto;overflow-x: hidden;">
                 <ul class="list-group">
-                    <li class="list-group-item {{song.displayed}}" data-ng-repeat="song in songlist | filter:{displayed: true} track by $index " >
+                    <li class="list-group-item {{song.displayed}}" data-ng-repeat="song in songlist | filter:{displayed: true} track by $index ">
                         <div data-ng-click="play_song(song)">{{song.name}} - {{song.artist}} </div>
                     </li>
                 </ul>

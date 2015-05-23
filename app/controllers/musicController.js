@@ -133,13 +133,13 @@ exports.loadPlaylists = function(req, res, next) {
             soxsLog.error('getSongs: ' + err);
             res.send(406)
         } else {
-        	var playlist = {
-        		name: data.name,
-        		songs: []
-        	}
+            var playlist = {
+                name: data.name,
+                songs: []
+            }
             Promise.all(data.songs.map(getSongDataById_async)).done(function(song_list) {
-            	playlist.songs = song_list;
-            	res.json(playlist);
+                playlist.songs = song_list;
+                res.json(playlist);
             })
         }
     })
@@ -207,14 +207,14 @@ exports.insertPlaylists = function(req, res, next) {
  * @param {next} next The next.
  */
 exports.updatePlaylists = function(req, res, next) {
-	console.log('exports.updatePlaylists');
-	playlistSchema.findByIdAndUpdate(req.body._id, req.body, function(err, data) {
-		if (err) {
-			res.send(406);
-		} else {
-			res.json(data);
-		}
-	})
+    console.log('exports.updatePlaylists');
+    playlistSchema.findByIdAndUpdate(req.body._id, req.body, function(err, data) {
+        if (err) {
+            res.send(406);
+        } else {
+            res.json(data);
+        }
+    })
 }
 
 function addSongData(songData) {
@@ -256,14 +256,31 @@ function populate_song_data(song_file) {
 
 function store_song_data(song_data) {
     return new Promise(function(fulfill, reject) {
-        songSchema.create(song_data, function(err, data) {
+        songSchema.find({
+            name: song_data.name,
+            artist: song_data.artist
+        }).exec(function(err, data) {
             if (err) {
                 soxsLog.error('store_song_data: ' + err);
                 reject(err);
             } else {
-                fulfill(data);
+                if (data && data.hasOwnProperty('name') && data.name == song_data.name) {
+                	soxsLog.debug_info('Song already exists: ' + song_data.name);
+                    fulfill(data);
+                } else {
+                	soxsLog.debug_info('Adding song: ' + song_data.name);
+                    songSchema.create(song_data, function(err, data) {
+                        if (err) {
+                            soxsLog.error('store_song_data: ' + err);
+                            reject(err);
+                        } else {
+                            fulfill(data);
+                        }
+                    });
+                }
             }
         });
+
     });
 }
 
